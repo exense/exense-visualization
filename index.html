@@ -14,10 +14,11 @@
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/nvd3/build/nv.d3.js"></script>
 <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script src="src/viz-dashlet.js"></script>
+<script src="src/viz-mgd-widget.js"></script>
 <script src="app.js"></script>
 
 <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css">
@@ -34,54 +35,24 @@
     
     
     <div class="container">
-
-		
-
-
       <div class="page-header">
-        <h1>nvd3 + bootstrap grid on angularJS</h1>
-        <p class="lead">Basic grid layout for charts.</p>
+        <h1>Visualization Widget Manager</h1>
+        <p class="lead">Using basic grid layout.</p>
       </div>
-      
         <div>
             <a class="btn btn-primary" ng-click="addWidget()" href="#">Add Widget</a>
             <a class="btn btn-primary" ng-click="clearWidgets()" href="#">Clear Widgets</a>
-        </div>
+		</div>
+		<br /><br />
 
       <div class="row">
-		  
-
       	<div ng-repeat="o in widgets">	  
 			<!--<span> wId={{o.widgetId}};</span><span>width={{o.widgetWidth}};</span><span>cWidth={{o.options.chart.width}};</span>-->
-      		<div ng-if="o.widgetWidth == 'col-md-6'">
-      		 <div class='col-md-6'>
+		<viz-mgd-widget options="o.options" data="o.data" widgetwidth="o.widgetWidth" widgetid="o.widgetId"></viz-mgd-widget>
+	  </div>
 
-					<span class="glyphicon glyphicon-arrow-left" ng-click="reduceWidget(o.widgetId)" href="#" style="float: right"></span>
-					<span class="glyphicon glyphicon-remove" ng-click="removeWidget(o.widgetId)" href="#" style="float: right"></span>
-					<viz-dashlet options='o.options' data='o.data'></viz-dashlet>
-					
-			</div>
-      		</div>
-      		<div ng-if="o.widgetWidth == 'col-md-12'">
-      		 <div class='col-md-12'>
-      				<span class="glyphicon glyphicon-arrow-left" ng-click="reduceWidget(o.widgetId)" href="#" style="float: right"></span>
-      				<span class="glyphicon glyphicon-remove" ng-click="removeWidget(o.widgetId)" href="#" style="float: right"></span>
-      				<viz-dashlet options='o.options' data='o.data'></viz-dashlet>
-			 </div>
-      		</div>
-            
-      	</div>
-        
-      </div>
-      
-
-    </div>
-    
-   
-
-    
+	</div>
 </div>
-
 
 </body>
 </html>

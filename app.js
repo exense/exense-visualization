@@ -1,5 +1,5 @@
 
-var myApp = angular.module('myApp', ['viz-dashlet']);
+var myApp = angular.module('myApp', ['viz-mgd-widget']);
 
 myApp.controller('myCtrl', function($scope){
 
@@ -58,7 +58,6 @@ $scope.extendWidget = function(wId) {
 };
 
 $scope.addWidget = function() {
- 
  wId = Math.random().toString(36).substr(2, 9);
  
  widget = {
@@ -76,12 +75,13 @@ $scope.addWidget = function() {
  };
  
  $scope.removeWidget = function(wId){
- 
+ console.log(wId)
      for(i=0; i<$scope.widgets.length; i++){
          if($scope.widgets[i].widgetId === wId)
              $scope.widgets.splice(i,i+1);
      }
- };
+    
+    };
  
  /*Random Data Generator */
  function sinAndCos() {
