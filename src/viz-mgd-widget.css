@@ -1,0 +1,15 @@
+.dashletcontainer {
+    margin-top: 20px;
+}
+
+.glyphicon-control{
+    float: right;
+    padding-top: 20px;
+    font-size: 1.5em;
+    color: rgb(0, 172, 0);
+}
+
+.glyphicon-control:hover{
+    font-size: 1.7em;
+    color: rgb(68, 247, 68);
+}

@@ -1,15 +1,36 @@
 <uib-tabset>
     <uib-tab index="0">
+                <uib-tab-heading>
+                    <span class="glyphicon glyphicon-search glyphicon-viz"></span> Query
+                </uib-tab-heading>
+                <div class="configcontainer">
+                    Query content (selectors)
+                </div>
+            </uib-tab>
+    <uib-tab index="1">
         <uib-tab-heading>
-            <span class="glyphicon glyphicon-picture glyphicon-viz"></span> Viz
+            <span class="glyphicon glyphicon-eye-open glyphicon-viz"></span> View
         </uib-tab-heading>
         <nvd3 options='options' data='data' style="text-align: center; justify-content: center;"></nvd3>
     </uib-tab>
-    <uib-tab index="1">
+    <uib-tab index="2">
         <uib-tab-heading>
-            <span class="glyphicon glyphicon-wrench glyphicon-viz"></span> Config
+            <span class="glyphicon glyphicon-cog glyphicon-viz"></span> Config
         </uib-tab-heading>
-
-        Vertical content 2
+        <div class="configcontainer">
+                <h4>Visualization</h4>
+                <pre>Type</pre>
+                <div class="btn-group">
+                    <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Left'">Table</label>
+                    <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Middle'">LineChart</label>
+                    <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Right'">BarChart</label>
+                </div>
+        </div>
     </uib-tab>
+    <uib-tab index="3">
+            <uib-tab-heading>
+                <span class="glyphicon glyphicon-info-sign glyphicon-viz"></span> Info
+            </uib-tab-heading>
+        </uib-tab>
 </uib-tabset>
+</div>

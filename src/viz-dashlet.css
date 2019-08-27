@@ -1,10 +1,19 @@
 .glyphicon-viz {
-    color: red;
+    color: rgb(0, 172, 0);
     text-shadow: 1px 1px 1px #ccc;
     font-size: 1.5em;
 }
+
 .glyphicon-viz:hover {
-    color: black;
+    color: rgb(68, 247, 68);
     text-shadow: 1px 1px 1px #ccc;
     font-size: 1.5em;
+}
+
+svg.nvd3-svg{
+    display: inline !important;
+}
+
+.configcontainer {
+    height: 249px;
 }
