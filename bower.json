@@ -1,0 +1,25 @@
+{
+  "name": "exense-viz",
+  "description": "vizualisation packages for exense's web apps",
+  "main": "index.html",
+  "authors": [
+    "Dorian Cransac <reachme@doriancransac.info>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-nvd3": "^1.0.9",
+    "angular": "^1.7.8",
+    "d3": "https://github.com/mbostock-bower/d3-bower.git#3.4.4",
+    "nvd3": "^1.8.6",
+    "angular-bootstrap": "^2.5.0",
+    "bootstrap": "^3.3.4"
+  }
+}

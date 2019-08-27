@@ -1,0 +1,15 @@
+{
+  "name": "exense-viz",
+  "version": "1.0.0",
+  "description": "vizualisation packages for exense's web apps",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -o",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.9.0"
+  }
+}
