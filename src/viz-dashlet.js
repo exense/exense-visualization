@@ -1,11 +1,15 @@
 angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
 
-.directive('viz-dashlet', function(){
+.directive('vizDashlet', function(){
     return {
-        restric: 'AECM',
+        restric: 'E',
+        scope: {
+            data: '=',
+            options: '=',
+        },
+        templateUrl: 'src/templates/viz-dashlet.html',
         controller: function () {
-          console.log('hello world.');
-          alert('sup');
+            console.log('vizDashlet controller fired.')
       }  
     };
 });
