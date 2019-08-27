@@ -1,0 +1,10 @@
+.glyphicon {
+    color: red;
+    text-shadow: 1px 1px 1px #ccc;
+    font-size: 1.5em;
+}
+.glyphicon:hover {
+    color: black;
+    text-shadow: 1px 1px 1px #ccc;
+    font-size: 1.5em;
+}
