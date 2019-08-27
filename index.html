@@ -15,7 +15,7 @@
 <script src="bower_components/nvd3/build/nv.d3.js"></script>
 <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-<script src="bower_components/bootstrap/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <script src="src/viz-dashlet.js"></script>
 <script src="app.js"></script>
@@ -35,6 +35,10 @@
     
     <div class="container">
 
+		
+		<viz-dashlet></viz-dashlet>
+
+
       <div class="page-header">
         <h1>nvd3 + bootstrap grid on angularJS</h1>
         <p class="lead">Basic grid layout for charts.</p>
@@ -46,6 +50,8 @@
         </div>
 
       <div class="row">
+		  
+
       	<div ng-repeat="o in widgets">	
       		<!--<span> wId={{o.widgetId}};</span><span>width={{o.widgetWidth}};</span><span>cWidth={{o.options.chart.width}};</span>-->
       		<div ng-if="o.widgetWidth == 'col-md-6'">
@@ -60,7 +66,7 @@
       				<span class="glyphicon glyphicon-arrow-left" ng-click="reduceWidget(o.widgetId)" href="#" style="float: right"></span>
       				<span class="glyphicon glyphicon-remove" ng-click="removeWidget(o.widgetId)" href="#" style="float: right"></span>
       				<nvd3 options='o.options' data='o.data'  style="text-align: center; justify-content: center;"></nvd3>
-      			</div>
+			 </div>
       		</div>
             
       	</div>

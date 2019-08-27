@@ -1,5 +1,5 @@
 
-var myApp = angular.module('myApp', ['nvd3', 'ui.bootstrap']);
+var myApp = angular.module('myApp', ['viz-dashlet']);
 
 myApp.controller('myCtrl', function($scope){
 
@@ -73,8 +73,6 @@ $scope.addWidget = function() {
  };
  
  $scope.widgets.push(widget);
- 
- console.log(widget);
  };
  
  $scope.removeWidget = function(wId){
@@ -118,44 +116,6 @@ $scope.addWidget = function() {
              area: true      //area - set to true if you want this line to turn into a filled area chart.
          }
      ];
- };
- 
- function DefaultChartOptions(){
-     return {
-         chart: {
-             type: 'lineChart',
-             height: 250,
-             width: 500,
-             margin : {
-                 top: 20,
-                 right: 20,
-                 bottom: 40,
-                 left: 55
-             },
-             x: function(d){ return d.x; },
-             y: function(d){ return d.y; },
-             useInteractiveGuideline: true,
-             dispatch: {
-                 stateChange: function(e){ console.log("stateChange"); },
-                 changeState: function(e){ console.log("changeState"); },
-                 tooltipShow: function(e){ console.log("tooltipShow"); },
-                 tooltipHide: function(e){ console.log("tooltipHide"); }
-             },
-             xAxis: {
-                 axisLabel: 'Time (ms)'
-             },
-             yAxis: {
-                 axisLabel: 'Voltage (v)',
-                 tickFormat: function(d){
-                     return d3.format('.02f')(d);
-                 },
-                 axisLabelDistance: -10
-             },
-             callback: function(chart){
-                 console.log("!!! lineChart callback !!!");
-             }
-             }
-         };
  };
 
 });
