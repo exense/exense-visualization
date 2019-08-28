@@ -3,7 +3,7 @@
                 <uib-tab-heading>
                     <span class="glyphicon glyphicon-search glyphicon-viz"></span> Query
                 </uib-tab-heading>
-                <div class="innercontainer">
+                <div class="innercontainer" ng-style="{ height: options.chart.height+'px'}">
                     <viz-query></viz-query>
                 </div>
             </uib-tab>
@@ -17,7 +17,7 @@
         <uib-tab-heading>
             <span class="glyphicon glyphicon-cog glyphicon-viz"></span> Config
         </uib-tab-heading>
-        <div class="innercontainer">
+        <div class="innercontainer" ng-style="{ height: options.chart.height+'px'}">
                 <h4>Visualization</h4>
                 <pre>Type</pre>
                 <div class="btn-group">
@@ -31,8 +31,8 @@
             <uib-tab-heading>
                 <span class="glyphicon glyphicon-info-sign glyphicon-viz"></span> Info
             </uib-tab-heading>
-            <div class="innercontainer">
-                some info
+            <div class="innercontainer" ng-style="{ height: options.chart.height+'px'}">
+                {{options.chart.height}}px
             </div>
         </uib-tab>
 </uib-tabset>

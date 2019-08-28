@@ -15,7 +15,6 @@ svg.nvd3-svg{
 }
 
 .innercontainer {
-    height: 249px;
     overflow-y: auto;
     overflow-wrap: break-word;
 }
