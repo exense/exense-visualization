@@ -58,7 +58,6 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
                     });
 
                     //could handle errors/warnings like this
-                    console.log($scope.$parent.$parent.$parent);
                     $scope.$parent.$parent.$parent.pushBroadcast('sup');
                 }
             }
@@ -66,15 +65,15 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
     });
 
 
-function DefaultOptions() {
+function DefaultOptions(chartHeightSmall, chartWidthSmall, innerContainerHeightSmall) {
     return {
         innercontainer : {
-            height : 240,
+            height : innerContainerHeightSmall,
         },
         chart: {
             type: 'lineChart',
-            height: 240,
-            width: 490,
+            height: chartHeightSmall,
+            width: chartWidthSmall,
             margin: {
                 top: 20,
                 right: 20,

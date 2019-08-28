@@ -1,39 +1,41 @@
 <uib-tabset active="active" ng-click="saveState()">
     <uib-tab index="0">
-                <uib-tab-heading>
-                    <span class="glyphicon glyphicon-search glyphicon-viz"></span> Query
-                </uib-tab-heading>
-                <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
-                    <viz-query></viz-query>
-                </div>
-            </uib-tab>
+        <uib-tab-heading>
+            <span class="glyphicon glyphicon-search glyphicon-viz"></span> Query
+        </uib-tab-heading>
+        <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
+            <viz-query></viz-query>
+        </div>
+    </uib-tab>
     <uib-tab index="1">
         <uib-tab-heading>
             <span class="glyphicon glyphicon-eye-open glyphicon-viz"></span> View
         </uib-tab-heading>
-        <nvd3 options='options' data='data' style="text-align: center; justify-content: center;"></nvd3>
+        <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
+            <nvd3 options='options' data='data' style="text-align: center; justify-content: center;"></nvd3>
+        </div>
     </uib-tab>
     <uib-tab index="2">
         <uib-tab-heading>
             <span class="glyphicon glyphicon-cog glyphicon-viz"></span> Config
         </uib-tab-heading>
         <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
-                <h4>Visualization</h4>
-                <pre>Type</pre>
-                <div class="btn-group">
-                    <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Left'">Table</label>
-                    <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Middle'">LineChart</label>
-                    <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Right'">BarChart</label>
-                </div>
+            <h4>Visualization</h4>
+            <pre>Type</pre>
+            <div class="btn-group">
+                <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Left'">Table</label>
+                <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Middle'">LineChart</label>
+                <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Right'">BarChart</label>
+            </div>
         </div>
     </uib-tab>
     <uib-tab index="3">
-            <uib-tab-heading>
-                <span class="glyphicon glyphicon-info-sign glyphicon-viz"></span> Info
-            </uib-tab-heading>
-            <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
-                {{options.innercontainer.height}}px
-            </div>
-        </uib-tab>
+        <uib-tab-heading>
+            <span class="glyphicon glyphicon-info-sign glyphicon-viz"></span> Info
+        </uib-tab-heading>
+        <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
+            {{options.innercontainer.height}}px
+        </div>
+    </uib-tab>
 </uib-tabset>
 </div>

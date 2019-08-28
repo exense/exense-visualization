@@ -12,21 +12,19 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
         },
         templateUrl: 'src/templates/viz-mgd-widget.html',
         controller: function ($scope) {
-            console.log('defstate')
-            console.log($scope.state);
             $scope.currentstate = JSON.parse(JSON.stringify($scope.state));
-            console.log('currentstate')
-            console.log($scope.currentstate);
             
             $scope.reduceWidget = function(wId){
                 $scope.$parent.$parent.reduceWidget(wId);
             };
 
             $scope.extendWidget = function(wId){
+                alert('extend1')
                 $scope.$parent.$parent.extendWidget(wId);
             };
 
             $scope.removeWidget = function(wId){
+                alert('remove1')
                 $scope.$parent.$parent.removeWidget(wId);
             };
 
