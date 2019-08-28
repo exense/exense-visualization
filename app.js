@@ -63,6 +63,9 @@ $scope.addWidget = function() {
  widget = {
    widgetId : wId,
    widgetWidth : 'col-md-6',
+   defstate : {
+       tabindex : 1
+   },
    options :  new DefaultChartOptions(),
    title: {
          enable: true,

@@ -4,7 +4,7 @@
                         <span class="glyphicon glyphicon-refresh glyphicon-control" ng-click="autorefreshWidget(widgetid)" href="#"></span>
                         <span class="glyphicon glyphicon-remove glyphicon-control" ng-click="removeWidget(widgetid)" href="#"></span>
                         <span class="glyphicon glyphicon-new-window glyphicon-control" ng-click="extendWidget(widgetid)" href="#"></span>
-                        <viz-dashlet options='options' data='data'></viz-dashlet>
+                        <viz-dashlet options='options' data='data' state='currentstate'></viz-dashlet>
                 </div>
         </div>
         <div ng-if="widgetwidth == 'col-md-12'">
@@ -12,7 +12,7 @@
                         <span class="glyphicon glyphicon-refresh glyphicon-control" ng-click="autorefreshWidget(widgetid)" href="#"></span>
                         <span class="glyphicon glyphicon-remove glyphicon-control" ng-click="removeWidget(widgetid)" href="#"></span>
                         <span class="glyphicon glyphicon-modal-window glyphicon-control" ng-click="reduceWidget(widgetid)" href="#"></span>
-                        <viz-dashlet options='  options' data='data'></viz-dashlet>
+                        <viz-dashlet options='  options' data='data' state='currentstate'></viz-dashlet>
                 </div>
         </div>
 </div>

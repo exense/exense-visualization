@@ -6,23 +6,27 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
             scope: {
                 data: '=',
                 options: '=',
+                state: '='
             },
             templateUrl: 'src/templates/viz-dashlet.html',
             controller: function ($scope) {
 
-                $scope.tabindexstate = 2;
-
                 $scope.broadcasts = [];
 
-                $scope.saveState = function(index){
-                    $scope.tabindexstate = index;
+                $scope.saveState = function () {
+                    $scope.state.tabindex = $scope.active;
                 };
 
-                $scope.pushBroadcast = function(msg){
+                $scope.setActiveTab = function (index) {
+                    $scope.active = index;
+                };
+
+                $scope.pushBroadcast = function (msg) {
                     $scope.broadcasts.push(msg);
                 }
 
                 console.log('vizDashlet controller fired.')
+                $scope.setActiveTab($scope.state.tabindex);
             }
         };
     })
