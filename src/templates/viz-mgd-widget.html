@@ -3,7 +3,7 @@
                 <div class="dashletcontainer">
                         <ul class="ul-control">
                                 <li class="li-title">
-                                        test
+                                        <span class="title">Dashlet title</span>
                                 </li>
 
                                 <li class="li-control">
@@ -22,16 +22,29 @@
                         <viz-dashlet options='options' data='data' state='currentstate'></viz-dashlet>
                 </div>
         </div>
-        <div ng-if="widgetwidth == 'col-md-12'">
-                <div class='col-md-12'>
-                        <div class="dashletcontainer">
-                                <span class="glyphicon glyphicon-refresh glyphicon-control" ng-click="autorefreshWidget(widgetid)"
-                                        href="#"></span>
-                                <span class="glyphicon glyphicon-remove glyphicon-control" ng-click="removeWidget(widgetid)"
-                                        href="#"></span>
-                                <span class="glyphicon glyphicon-resize-small glyphicon-control" ng-click="reduceWidget(widgetid)"
-                                        href="#"></span>
-                                <viz-dashlet options='options' data='data' state='currentstate'></viz-dashlet>
-                        </div>
+</div>
+<div ng-if="widgetwidth == 'col-md-12'">
+        <div class='col-md-12'>
+                <div class="dashletcontainer">
+                        <ul class="ul-control">
+                                <li class="li-title">
+                                        Dashlet title
+                                </li>
+                                <li class="li-control">
+                                        <span class="glyphicon glyphicon-refresh glyphicon-control" ng-click="autorefreshWidget(widgetid)"
+                                                href="#"></span>
+                                </li>
+                                <li class="li-control">
+                                        <span class="glyphicon glyphicon-remove glyphicon-control" ng-click="removeWidget(widgetid)"
+                                                href="#"></span>
+                                </li>
+                                <li class="li-control">
+                                        <span class="glyphicon glyphicon-resize-small glyphicon-control" ng-click="reduceWidget(widgetid)"
+                                                href="#"></span>
+
+                                </li>
+                        </ul>
+                        <viz-dashlet options='options' data='data' state='currentstate'></viz-dashlet>
                 </div>
         </div>
+</div>

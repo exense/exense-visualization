@@ -19,12 +19,10 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
             };
 
             $scope.extendWidget = function(wId){
-                alert('extend1')
                 $scope.$parent.$parent.extendWidget(wId);
             };
 
             $scope.removeWidget = function(wId){
-                alert('remove1')
                 $scope.$parent.$parent.removeWidget(wId);
             };
 

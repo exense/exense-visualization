@@ -1,11 +1,14 @@
 .dashletcontainer {
     margin-top: 20px;
+    border: 1px solid #ddd;
 }
 
 .glyphicon-control{
     font-size: 1.5em;
     background-color: rgb(0, 172, 0);
     color: white;
+    margin: 3px;
+    padding: 1px;
 }
 
 .glyphicon-control:hover{
@@ -23,7 +26,9 @@
   }
 
   .li-title {
-    float: center;
+    float: left;
+    margin-left: 10px;
+    padding: 5px;
     color: white;
   }
 .li-control {

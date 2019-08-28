@@ -1,13 +1,13 @@
 .glyphicon-viz {
     color: rgb(0, 172, 0);
     text-shadow: 1px 1px 1px #ccc;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 .glyphicon-viz:hover {
     color: rgb(68, 247, 68);
     text-shadow: 1px 1px 1px #ccc;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 svg.nvd3-svg{
@@ -25,4 +25,8 @@ svg.nvd3-svg{
 .tab-content {
     border: 1px solid #ddd;
     padding: 10px;
+}
+
+.nav-link {
+    padding: 7px !important;
 }
