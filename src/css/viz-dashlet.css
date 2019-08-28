@@ -30,3 +30,14 @@ svg.nvd3-svg{
 .nav-link {
     padding: 7px !important;
 }
+
+.btn-dashlet {
+    background-color: rgb(0, 240, 0) !important;
+    float: right;
+    margin: 5px;
+    margin-bottom: 15px;
+}
+
+.btn-dashlet:hover {
+    background-color: rgb(0, 255, 106) !important;
+}
