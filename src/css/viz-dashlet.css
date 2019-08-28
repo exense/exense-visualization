@@ -14,6 +14,16 @@ svg.nvd3-svg{
     display: inline !important;
 }
 
-.configcontainer {
+.innercontainer {
     height: 249px;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+}
+.innerwell {
+    margin-left: 0;
+}
+
+.tab-content {
+    border: 1px solid #ddd;
+    padding: 10px;
 }

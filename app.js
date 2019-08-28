@@ -41,7 +41,7 @@ $scope.extendWidget = function(wId) {
      for(i=0; i<$scope.widgets.length; i++){
          if($scope.widgets[i].widgetId === wId){
              $scope.widgets[i].widgetWidth = 'col-md-12';
-             $scope.widgets[i].options.chart.height = 500;
+             $scope.widgets[i].options.chart.height = 490;
              $scope.widgets[i].options.chart.width = 1000;
          }
      }
@@ -51,8 +51,8 @@ $scope.extendWidget = function(wId) {
      for(i=0; i<$scope.widgets.length; i++){
          if($scope.widgets[i].widgetId === wId){
              $scope.widgets[i].widgetWidth = 'col-md-6';
-             $scope.widgets[i].options.chart.height = 250;
-             $scope.widgets[i].options.chart.width = 500;
+             $scope.widgets[i].options.chart.height = 240;
+             $scope.widgets[i].options.chart.width = 490;
          }
      }
 };

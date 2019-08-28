@@ -1,0 +1,11 @@
+<h4>Dashlet config</h4>
+<p class="form-group">
+    <label>JSON query</label>
+    <input type="text" ng-model="queryinput" class="form-control" />
+    <label>Service URL</label>
+    <input type="text" ng-model="serviceurl" class="form-control" />
+    <button class="btn btn-primary" ng-click="fireQuery()"><span class="glyphicon glyphicon-check"></span></button>
+    <hr />
+    <label>Raw</label>
+    <div class="well well-lg innerwell">{{rawresponse}}</div>
+</p>

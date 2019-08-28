@@ -9,7 +9,7 @@
 	<meta name="author" content="">
 	<link rel="shortcut icon" href="img/favicon.png">
 
-	<title>RTM 3.0</title>
+	<title>RTM</title>
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/d3/d3.js"></script>
@@ -18,16 +18,16 @@
 	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<script src="src/viz-dashlet.js"></script>
-	<script src="src/viz-mgd-widget.js"></script>
+	<script src="src/js/viz-dashlet.js"></script>
+	<script src="src/js/viz-mgd-widget.js"></script>
 	<script src="app.js"></script>
 
 	<link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css">
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
 
-	<link rel="stylesheet" href="src/viz-dashlet.css">
-	<link rel="stylesheet" href="src/viz-mgd-widget.css">
+	<link rel="stylesheet" href="src/css/viz-dashlet.css">
+	<link rel="stylesheet" href="src/css/viz-mgd-widget.css">
 	<link rel="stylesheet" href="app.css">
 
 </head>
@@ -38,24 +38,23 @@
 		<div ng-controller='myCtrl'>
 			<nav class="navbar navbar-inverse navbar-fixed-left" role="navigation" style="justify-content: center; text-align: center;">
 				<ul class="nav navbar-nav nav-pills nav-stacked">
-					<li><img src="src/images/brandlogo.png" height="40px"></li>
+					<li><img src="src/img/brandlogo.png" height="40px"></li>
 					<li><button class="btn btn-primary btn-nav" ng-click="addWidget()"><span class="glyphicon glyphicon-plus glyphicon-app"></span></button></li>
 					<li><button class="btn btn-primary btn-nav" ng-click="clearWidgets()"><span class="glyphicon glyphicon-trash glyphicon-app"></span></button></li>
 				</ul>
 			</nav>
-			<div class="well" style="justify-content: center; text-align: center;">
-
-				<div ng-repeat="o in widgets">
-					<div ng-if="widget.length%2==0">
-						<div class="row">
+			<div class="well mainwell" style="justify-content: center; text-align: center;">
+				
+					<div class="row">
+						<div ng-repeat="o in widgets">
 							<!--<span> wId={{o.widgetId}};</span><span>width={{o.widgetWidth}};</span><span>cWidth={{o.options.chart.width}};</span>-->
 							<viz-mgd-widget options="o.options" data="o.data" widgetwidth="o.widgetWidth" widgetid="o.widgetId"></viz-mgd-widget>
 						</div>
 					</div>
-
-				</div>
+				
 			</div>
 		</div>
+	</div>
 </body>
 
 </html>
