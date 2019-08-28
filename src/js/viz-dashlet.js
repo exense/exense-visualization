@@ -66,12 +66,15 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
     });
 
 
-function DefaultChartOptions() {
+function DefaultOptions() {
     return {
+        innercontainer : {
+            height : 240,
+        },
         chart: {
             type: 'lineChart',
             height: 240,
-            width: 500,
+            width: 490,
             margin: {
                 top: 20,
                 right: 20,

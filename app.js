@@ -42,7 +42,8 @@ $scope.extendWidget = function(wId) {
          if($scope.widgets[i].widgetId === wId){
              $scope.widgets[i].widgetWidth = 'col-md-12';
              $scope.widgets[i].options.chart.height = 490;
-             $scope.widgets[i].options.chart.width = 1000;
+             $scope.widgets[i].options.chart.width = 990;
+             $scope.widgets[i].options.innercontainer.height = 490;
          }
      }
 };
@@ -53,6 +54,7 @@ $scope.extendWidget = function(wId) {
              $scope.widgets[i].widgetWidth = 'col-md-6';
              $scope.widgets[i].options.chart.height = 240;
              $scope.widgets[i].options.chart.width = 490;
+             $scope.widgets[i].options.innercontainer.height = 240;
          }
      }
 };
@@ -66,7 +68,7 @@ $scope.addWidget = function() {
    defstate : {
        tabindex : 1
    },
-   options :  new DefaultChartOptions(),
+   options :  new DefaultOptions(),
    title: {
          enable: true,
          text: 'Title for Line Chart'
