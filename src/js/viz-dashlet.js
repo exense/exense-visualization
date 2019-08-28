@@ -62,8 +62,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
                 }
             }
         };
-    });
-
+    })
 
 function DefaultOptions(chartHeightSmall, chartWidthSmall, innerContainerHeightSmall) {
     return {
