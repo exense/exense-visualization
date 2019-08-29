@@ -4,7 +4,6 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
         return {
             restric: 'E',
             scope: {
-                data: '=',
                 options: '=',
                 state: '='
             },
@@ -40,56 +39,86 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
             },
             templateUrl: 'src/templates/viz-query.html',
             controller: function ($scope, $http) {
-
                 $scope.currentquery = JSON.parse(JSON.stringify($scope.state.initialquery));
-                
-                console.log('vizQuery controller fired.');
-
-                console.log($scope.rawresponse);
-
                 $scope.counter = 0;
 
                 $scope.fireQuery = function () {
                     $scope.counter++;
                     $http.get($scope.currentquery.url)
-                    .then(function (response) {
-                        $scope.response = response.data;
-                        $scope.rawresponse = JSON.stringify(response);
-                        console.log('rawresponse=' + $scope.rawresponse);
-                    }   , function(response){
-                        console.log('error:' + JSON.stringify(response));
-                    }
-                    );
+                        .then(function (response) {
+                            $scope.response = response;
+                            $scope.rawresponse = JSON.stringify(response);
+                            $scope.state.data = $scope.postProcess();
+                            console.log('$scope.state.data');console.log($scope.state.data)
+                            
+                        }, function (response) {
+                            console.log('error:' + JSON.stringify(response));
+                            //could handle errors/warnings like this
+                            $scope.$parent.$parent.$parent.pushBroadcast('sup');
+                        }
+                        );
+                };
 
-                    //could handle errors/warnings like this
-                    $scope.$parent.$parent.$parent.pushBroadcast('sup');
-                }
+                $scope.postProcess = function () {
+                    var retData = [];
+
+                    var accessor = $scope.resolve($scope.response,$scope.currentquery.dataaccess);
+                    console.log('accessor');console.log(accessor)
+                    //Data is represented as an array of {x,y} pairs.
+                    for (var i = 0; i < accessor.length; i++) {
+                        console.log('x');console.log($scope.currentquery.keyaccess);
+                        retData.push({ x: $scope.resolve(accessor[i],$scope.currentquery.keyaccess), y: $scope.resolve(accessor[i],$scope.currentquery.valueaccess) });
+                    }
+
+                    //Line chart data should be sent as an array of series objects.
+                    return [
+                        {
+                            values: retData,      //values - represents the array of {x,y} data points
+                            key: $scope.currentquery.valueaccess, //key  - the name of the series.
+                            color: '#ff7f0e',  //color - optional: choose your own line color.
+                            strokeWidth: 2,
+                            classed: 'dashed'
+                        }
+                    ];
+                };
+
+                $scope.resolve = function (obj, path){
+                    path = path.split('.');
+                    var current = obj;
+                    while(path.length) {
+                        if(typeof current !== 'object') return undefined;
+                        current = current[path.shift()];
+                    }
+                    return current;
+                };
+
+                $scope.fireQuery();
             }
-        };
+        }
     })
-    .directive('jsonText', function() {
+    .directive('jsonText', function () {
         return {
             restrict: 'A',
             require: 'ngModel',
-            link: function(scope, element, attr, ngModel) {            
-              function into(input) {
-                return JSON.parse(input);
-              }
-              function out(data) {
-                return JSON.stringify(data);
-              }
-              ngModel.$parsers.push(into);
-              ngModel.$formatters.push(out);
-    
+            link: function (scope, element, attr, ngModel) {
+                function into(input) {
+                    return JSON.parse(input);
+                }
+                function out(data) {
+                    return JSON.stringify(data);
+                }
+                ngModel.$parsers.push(into);
+                ngModel.$formatters.push(out);
+
             }
         };
     });
 
 function DefaultOptions(chartHeight, chartWidth, innerContainerHeight, innerContainerWidth) {
     return {
-        innercontainer : {
-            height : innerContainerHeight,
-            width : innerContainerWidth,
+        innercontainer: {
+            height: innerContainerHeight,
+            width: innerContainerWidth,
         },
         chart: {
             type: 'lineChart',

@@ -52,20 +52,24 @@ myApp.controller('myCtrl', function ($scope) {
             widgetId: wId,
             widgetWidth: 'col-md-6',
             defstate: {
-                tabindex: 0,
+                tabindex: 1,
                 initialquery : {
                     type: 'Simple',
                     url: '/mock_data1.json',
                     method: 'post',
                     data: {"selectors1":[{"textFilters":[{"key":"eId","value":"5d67ce7e48322f000b931026","regex":"false"}],"numericalFilters":[]}],"serviceParams":{"measurementService.nextFactor":"0","aggregateService.sessionId":"defaultSid","aggregateService.granularity":"auto","aggregateService.groupby":"name","aggregateService.cpu":"1","aggregateService.partition":"8","aggregateService.timeout":"600"}}
-                }
+                    ,
+                    dataaccess: 'data.payload',
+                    keyaccess: 'begin',
+                    valueaccess: 'value'
+                },
+                data: []
             },
             options: new DefaultOptions($scope.chartHeightSmall, $scope.chartWidthSmall, $scope.innerContainerHeightSmall, $scope.innerContainerWidthSmall),
             title: {
                 enable: true,
                 text: 'Title for Line Chart'
             },
-            data: sinAndCos()
         };
 
         $scope.widgets.push(widget);
@@ -80,43 +84,5 @@ myApp.controller('myCtrl', function ($scope) {
     };
 
     $scope.addWidget();
-
-
-
-    
-    /*Random Data Generator */
-    function sinAndCos() {
-        var sin = [], sin2 = [],
-            cos = [];
-
-        //Data is represented as an array of {x,y} pairs.
-        for (var i = 0; i < 100; i++) {
-            sin.push({ x: i, y: Math.sin(i / 10) });
-            sin2.push({ x: i, y: i % 10 == 5 ? null : Math.sin(i / 10) * 0.25 + 0.5 });
-            cos.push({ x: i, y: .5 * Math.cos(i / 10 + 2) + Math.random() / 10 });
-        }
-
-        //Line chart data should be sent as an array of series objects.
-        return [
-            {
-                values: sin,      //values - represents the array of {x,y} data points
-                key: 'Sine Wave', //key  - the name of the series.
-                color: '#ff7f0e',  //color - optional: choose your own line color.
-                strokeWidth: 2,
-                classed: 'dashed'
-            },
-            {
-                values: cos,
-                key: 'Cosine Wave',
-                color: '#2ca02c'
-            },
-            {
-                values: sin2,
-                key: 'Another sine wave',
-                color: '#7777ff',
-                area: true      //area - set to true if you want this line to turn into a filled area chart.
-            }
-        ];
-    };
 
 });
