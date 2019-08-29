@@ -33,7 +33,12 @@ svg.nvd3-svg{
     padding: 5px !important;
 }
 
-ul {
+ul.ul-control, div.ul-viewtab > ul {
+    border: 1px solid #333333;
+    margin-top: -1px;
+}
+
+ul.ul-control {
     border: 1px solid #333333;
     margin-top: -1px;
 }
