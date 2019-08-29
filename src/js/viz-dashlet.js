@@ -47,13 +47,19 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
 
                 console.log($scope.rawresponse);
 
-                $scope.fireQuery = function () {
+                $scope.counter = 0;
 
-                    $http.get($scope.currentquery.url).then(function (response) {
+                $scope.fireQuery = function () {
+                    $scope.counter++;
+                    $http.get($scope.currentquery.url)
+                    .then(function (response) {
                         $scope.response = response.data;
                         $scope.rawresponse = JSON.stringify(response);
                         console.log('rawresponse=' + $scope.rawresponse);
-                    });
+                    }   , function(response){
+                        console.log('error:' + JSON.stringify(response));
+                    }
+                    );
 
                     //could handle errors/warnings like this
                     $scope.$parent.$parent.$parent.pushBroadcast('sup');
