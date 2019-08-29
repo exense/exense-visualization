@@ -1,7 +1,7 @@
 <uib-tabset active="active" ng-click="saveState()">
     <uib-tab index="0">
         <uib-tab-heading class="vertical-center">
-            <span class="glyphicon glyphicon-search glyphicon-viz"></span> Query
+            <span class="glyphicon glyphicon-search glyphicon-viz"></span><span style="margin-left: 5px;">Query</span>
         </uib-tab-heading>
         <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
             <viz-query></viz-query>
@@ -9,7 +9,7 @@
     </uib-tab>
     <uib-tab index="1">
         <uib-tab-heading>
-            <span class="glyphicon glyphicon-eye-open glyphicon-viz"></span> View
+            <span class="glyphicon glyphicon-eye-open glyphicon-viz"></span><span style="margin-left: 5px;">View</span>
         </uib-tab-heading>
         <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
             <nvd3 options='options' data='data' style="text-align: center; justify-content: center;"></nvd3>
@@ -17,7 +17,7 @@
     </uib-tab>
     <uib-tab index="2">
         <uib-tab-heading>
-            <span class="glyphicon glyphicon-cog glyphicon-viz"></span> Config
+            <span class="glyphicon glyphicon-cog glyphicon-viz"></span><span style="margin-left: 5px;">Config</span>
         </uib-tab-heading>
         <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
             <h4>Visualization</h4>
@@ -31,7 +31,7 @@
     </uib-tab>
     <uib-tab index="3">
         <uib-tab-heading>
-            <span class="glyphicon glyphicon-info-sign glyphicon-viz"></span> Info
+            <span class="glyphicon glyphicon-info-sign glyphicon-viz"></span><span style="margin-left: 5px;">Info</span>
         </uib-tab-heading>
         <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
             {{options.innercontainer.height}}px

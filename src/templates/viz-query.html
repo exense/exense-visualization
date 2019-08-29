@@ -1,13 +1,18 @@
 <h4>Datasource</h4>
-<p class="form-group">
-    <label>JSON query</label>
-    <input type="text" ng-model="queryinput" class="form-control" />
-    <label>Service URL</label>
-    <input type="text" ng-model="serviceurl" class="form-control" />
-    <button class="btn btn-primary btn-dashlet" ng-click="fireQuery()"><span class="glyphicon glyphicon-ok"></span></button>
-
-</p>
-<p class="form-group">
-    <label>Raw</label>
-    <div class="well well-lg innerwell">{{rawresponse}}</div>
-</p>
+<div class="form-wrapper">
+    <p class="form-group">
+        <label>JSON query</label>
+        <input type="text" ng-model="queryinput" class="form-control" />
+        <label>Service URL</label>
+        <input type="text" ng-model="serviceurl" class="form-control" />
+        <div class="btn-container">
+            <button class="btn btn-primary btn-dashlet" ng-click="fireQuery()"><span class="glyphicon glyphicon-ok"></span></button>
+        </div>
+    </p>
+</div>
+<div class="form-wrapper">
+    <p class="form-group">
+        <label>Raw</label>
+        <div class="well well-lg innerwell">{{rawresponse}}</div>
+    </p>
+</div>
