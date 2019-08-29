@@ -36,22 +36,20 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
             restric: 'E',
             scope: {
                 formwidth: '=',
+                state: '='
             },
             templateUrl: 'src/templates/viz-query.html',
             controller: function ($scope, $http) {
 
-                $scope.queryinput = '';
-                $scope.queryType = 'Simple';
-                $scope.serviceurl = '';
-
-                $scope.rawresponse = '';
-
-                $scope.response = {};
-
+                $scope.currentquery = JSON.parse(JSON.stringify($scope.state.initialquery));
+                
                 console.log('vizQuery controller fired.');
 
+                console.log($scope.rawresponse);
+
                 $scope.fireQuery = function () {
-                    $http.get("/getConfiguration.json").then(function (response) {
+
+                    $http.get($scope.currentquery.url).then(function (response) {
                         $scope.response = response.data;
                         $scope.rawresponse = JSON.stringify(response);
                         console.log('rawresponse=' + $scope.rawresponse);
@@ -63,6 +61,23 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
             }
         };
     })
+    .directive('jsonText', function() {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function(scope, element, attr, ngModel) {            
+              function into(input) {
+                return JSON.parse(input);
+              }
+              function out(data) {
+                return JSON.stringify(data);
+              }
+              ngModel.$parsers.push(into);
+              ngModel.$formatters.push(out);
+    
+            }
+        };
+    });
 
 function DefaultOptions(chartHeight, chartWidth, innerContainerHeight, innerContainerWidth) {
     return {

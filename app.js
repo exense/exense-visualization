@@ -52,7 +52,13 @@ myApp.controller('myCtrl', function ($scope) {
             widgetId: wId,
             widgetWidth: 'col-md-6',
             defstate: {
-                tabindex: 0
+                tabindex: 0,
+                initialquery : {
+                    type: 'Simple',
+                    url: '/mock_data1.json',
+                    method: 'post',
+                    data: {"selectors1":[{"textFilters":[{"key":"eId","value":"5d67ce7e48322f000b931026","regex":"false"}],"numericalFilters":[]}],"serviceParams":{"measurementService.nextFactor":"0","aggregateService.sessionId":"defaultSid","aggregateService.granularity":"auto","aggregateService.groupby":"name","aggregateService.cpu":"1","aggregateService.partition":"8","aggregateService.timeout":"600"}}
+                }
             },
             options: new DefaultOptions($scope.chartHeightSmall, $scope.chartWidthSmall, $scope.innerContainerHeightSmall, $scope.innerContainerWidthSmall),
             title: {
