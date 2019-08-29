@@ -18,6 +18,7 @@ svg.nvd3-svg{
     overflow-y: auto;
     overflow-wrap: break-word;
 }
+
 .innerwell {
     margin-left: 0;
 }
@@ -79,4 +80,29 @@ li.active > a > uib-tab-heading > span{
 
 .form-wrapper {
     margin-top: 10px;
+}
+
+.form-group{
+    text-align: center !important;
+    justify-content: center !important;
+}
+
+.center-block{
+    display: inline-block !important;
+}
+
+.colcontain{
+    display: grid;
+}
+
+.innerformcontainer {
+    margin: 10px;
+    text-align: center;
+    justify-content: center;
+}
+
+.innerformcontainer > .row {
+    margin: 10px;
+    text-align: left;
+    justify-content: left;
 }

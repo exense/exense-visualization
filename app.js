@@ -11,6 +11,8 @@ myApp.controller('myCtrl', function ($scope) {
     $scope.chartWidthBig = 990;
     $scope.innerContainerHeightSmall = 240;
     $scope.innerContainerHeightBig = 490;
+    $scope.innerContainerWidthSmall = 495;
+    $scope.innerContainerWidthBig = 995;
 
     $scope.clearWidgets = function () {
         $scope.widgets = [];
@@ -31,14 +33,16 @@ myApp.controller('myCtrl', function ($scope) {
         widget.options.chart.height = $scope.chartHeightBig;
         widget.options.chart.width = $scope.chartWidthBig;
         widget.options.innercontainer.height = $scope.innerContainerHeightBig;
+        widget.options.innercontainer.width = $scope.innerContainerWidthBig;
     };
 
     $scope.reduceWidget = function (wId) {
         var widget = $scope.getWidget(wId);
         widget.widgetWidth = 'col-md-6';
-        widget.options.chart.height = 235;
-        widget.options.chart.width = 490;
-        widget.options.innercontainer.height = 240;
+        widget.options.chart.height = $scope.chartHeightSmall;
+        widget.options.chart.width = $scope.chartWidthSmall;
+        widget.options.innercontainer.height = $scope.innerContainerHeightSmall;
+        widget.options.innercontainer.width = $scope.innerContainerWidthSmall;
     };
 
     $scope.addWidget = function () {
@@ -50,7 +54,7 @@ myApp.controller('myCtrl', function ($scope) {
             defstate: {
                 tabindex: 0
             },
-            options: new DefaultOptions($scope.chartHeightSmall, $scope.chartWidthSmall, $scope.innerContainerHeightSmall),
+            options: new DefaultOptions($scope.chartHeightSmall, $scope.chartWidthSmall, $scope.innerContainerHeightSmall, $scope.innerContainerWidthSmall),
             title: {
                 enable: true,
                 text: 'Title for Line Chart'

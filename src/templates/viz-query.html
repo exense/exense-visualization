@@ -1,14 +1,47 @@
-<h4>Datasource</h4>
+<h5>Datasource</h5>
 <div class="form-wrapper">
-    <p class="form-group">
-        <label>JSON query</label>
-        <input type="text" ng-model="queryinput" class="form-control" />
-        <label>Service URL</label>
-        <input type="text" ng-model="serviceurl" class="form-control" />
-        <div class="btn-container">
-            <button class="btn btn-primary btn-dashlet" ng-click="fireQuery()"><span class="glyphicon glyphicon-ok"></span></button>
+    <div class="form-group center-block">
+        <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
+
+            <div class="row">
+
+                <div class="col-md-12 colcontain">
+                    <label>JSON query</label>
+                    <div class="btn-group">
+                        <input type="text" ng-model="queryinput" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-6 colcontain">
+
+                    <label>Query type</label>
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-model="queryType" uib-btn-radio="'Simple'">Simple</label>
+                        <label class="btn btn-primary" ng-model="queryType" uib-btn-radio="'Async'">Async</label>
+                    </div>
+                </div>
+                <div class="col-md-12 colcontain">
+
+                    <label>Query Service URL</label>
+                    <div class="btn-group">
+                        <input type="text" ng-model="serviceurl" class="form-control" />
+                        <div ng-if="queryType == 'Async'">
+                            <label>Results Service URL</label>
+                            <input type="text" ng-model="resserviceurl" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="btn-container">
+                    <button class="btn btn-primary btn-dashlet" ng-click="fireQuery()"><span class="glyphicon glyphicon-ok"></span></button>
+                </div>
+            </div>
+
+            
         </div>
-    </p>
+    </div>
 </div>
 <div class="form-wrapper">
     <p class="form-group">

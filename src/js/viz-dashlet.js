@@ -35,8 +35,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
         return {
             restric: 'E',
             scope: {
-                data: '=',
-                options: '=',
+                formwidth: '=',
             },
             templateUrl: 'src/templates/viz-query.html',
             controller: function ($scope, $http) {
@@ -64,15 +63,16 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
         };
     })
 
-function DefaultOptions(chartHeightSmall, chartWidthSmall, innerContainerHeightSmall) {
+function DefaultOptions(chartHeight, chartWidth, innerContainerHeight, innerContainerWidth) {
     return {
         innercontainer : {
-            height : innerContainerHeightSmall,
+            height : innerContainerHeight,
+            width : innerContainerWidth,
         },
         chart: {
             type: 'lineChart',
-            height: chartHeightSmall,
-            width: chartWidthSmall,
+            height: chartHeight,
+            width: chartWidth,
             margin: {
                 top: 20,
                 right: 20,
