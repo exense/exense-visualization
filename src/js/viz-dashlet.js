@@ -41,6 +41,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
             controller: function ($scope, $http) {
 
                 $scope.queryinput = '';
+                $scope.queryType = 'Simple';
                 $scope.serviceurl = '';
 
                 $scope.rawresponse = '';
