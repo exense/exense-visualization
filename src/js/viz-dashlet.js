@@ -41,6 +41,12 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
             controller: function ($scope, $http) {
                 $scope.currentquery = JSON.parse(JSON.stringify($scope.state.initialquery));
                 $scope.counter = 0;
+                $scope.inputtype = 'Raw';
+
+                $scope.loadPreset = function (preset) {
+                    $scope.currentquery = preset.query;
+                    $scope.inputtype = preset.inputtype;
+                }
 
                 $scope.fireQuery = function () {
                     $scope.counter++;
@@ -49,8 +55,6 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
                             $scope.response = response;
                             $scope.rawresponse = JSON.stringify(response);
                             $scope.state.data = $scope.postProcess();
-                            console.log('$scope.state.data');console.log($scope.state.data)
-                            
                         }, function (response) {
                             console.log('error:' + JSON.stringify(response));
                             //could handle errors/warnings like this
@@ -63,10 +67,9 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
                     var retData = [];
 
                     var accessor = $scope.resolve($scope.response,$scope.currentquery.dataaccess);
-                    console.log('accessor');console.log(accessor)
+
                     //Data is represented as an array of {x,y} pairs.
                     for (var i = 0; i < accessor.length; i++) {
-                        console.log('x');console.log($scope.currentquery.keyaccess);
                         retData.push({ x: $scope.resolve(accessor[i],$scope.currentquery.keyaccess), y: $scope.resolve(accessor[i],$scope.currentquery.valueaccess) });
                     }
 
