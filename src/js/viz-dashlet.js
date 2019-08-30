@@ -1,4 +1,4 @@
-angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap'])
+angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
     .directive('vizDashlet', function () {
         return {
