@@ -118,3 +118,12 @@ li.active > a > uib-tab-heading > span{
     text-align: left;
     justify-content: left;
 }
+
+div.form-radio > label.btn{
+    padding: 3px 6px;
+    font-size: 12px;
+}
+
+.btn-group{
+    margin-top: 5px;
+}

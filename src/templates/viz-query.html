@@ -28,35 +28,42 @@
 
             <div class="row">
 
-                <div class="col-md-12 colcontain">
+                <div class="col-md-6 colcontain">
                     <label>Input type</label>
-                    <div class="btn-group">
+                    <div class="btn-group form-radio">
                         <label class="btn btn-primary" ng-model="inputtype" uib-btn-radio="'Raw'">Raw</label>
                         <label class="btn btn-primary" ng-model="inputtype" uib-btn-radio="'Controls'">Controls</label>
                         <label class="btn btn-primary" ng-model="inputtype" uib-btn-radio="'Template'">Template</label>
                     </div>
-                    <div ng-if="inputtype == 'Raw'">
+                </div>
+                <div class="col-md-6 colcontain">
+                    <label>Query type</label>
+                    <div class="btn-group form-radio">
+                        <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Simple'">Simple</label>
+                        <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Async'">Async</label>
+                    </div>
+                </div>
+                <div ng-if="inputtype == 'Raw'">
+                    <div class="col-md-12 colcontain">
                         <label>Query payload</label>
                         <div class="btn-group">
                             <input json-text type="text" ng-model="currentquery.data" class="form-control" />
                         </div>
                     </div>
-                    <div ng-if="inputtype == 'Controls'">
+                </div>
+                <div ng-if="inputtype == 'Controls'">
+                    <div class="col-md-12 colcontain">
                         <button class="btn btn-primary"> RTM button presets...</button>
                     </div>
-                    
-                    <div ng-if="inputtype == 'Template'">
-                        <label>Replace 1</label>
-                        <input type="text" ng-model="currentquery.replace1" class="form-control" />
-                        <label>Value 1</label>
-                        <input type="text" ng-model="currentquery.value1" class="form-control" />
-                        </div>
                 </div>
-                <div class="col-md-6 colcontain">
-                    <label>Query type</label>
-                    <div class="btn-group">
-                        <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Simple'">Simple</label>
-                        <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Async'">Async</label>
+                <div ng-if="inputtype == 'Template'">
+                    <label>Replace 1</label>
+                    <div class="col-md-12 colcontain">
+                        <input type="text" ng-model="currentquery.replace1" class="form-control" />
+                        <div class="col-md-12 colcontain">
+                            <label>Value 1</label>
+                            <input type="text" ng-model="currentquery.value1" class="form-control" />
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-12 colcontain">
