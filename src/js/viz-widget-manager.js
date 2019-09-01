@@ -1,3 +1,6 @@
+var vizWidgetManagerscripts = document.getElementsByTagName("script")
+var vizWidgetManagercurrentScriptPath = vizWidgetManagerscripts[vizWidgetManagerscripts.length-1].src;
+
 angular.module('viz-widget-manager', ['viz-mgd-widget'])
 
     .directive('vizWidgetManager', function () {
@@ -9,7 +12,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget'])
                 widgetid: '=',
                 state: '='
             },
-            templateUrl: 'src/templates/viz-widget-manager.html',
+            templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-widget-manager.html'),
             controller: function ($scope) {
                 console.log('vizWidgetManager controller fired.')
 

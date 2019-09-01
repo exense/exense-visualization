@@ -1,3 +1,6 @@
+var vizDashletscripts = document.getElementsByTagName("script")
+var vizDashletcurrentScriptPath = vizDashletscripts[vizDashletscripts.length-1].src;
+
 angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
     .directive('vizDashlet', function () {
@@ -7,7 +10,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 options: '=',
                 state: '='
             },
-            templateUrl: 'src/templates/viz-dashlet.html',
+            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-dashlet.html'),
             controller: function ($scope) {
 
                 $scope.broadcasts = [];
@@ -37,7 +40,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 formwidth: '=',
                 state: '='
             },
-            templateUrl: 'src/templates/viz-query.html',
+            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-query.html'),
             controller: function ($scope, $http) {
                 $scope.currentquery = JSON.parse(JSON.stringify($scope.state.initialquery));
                 $scope.counter = 0;
