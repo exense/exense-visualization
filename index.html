@@ -53,8 +53,7 @@
 			<div class="well mainwell" style="justify-content: center; text-align: center;">
 				
 					<div class="row">
-						<div ng-repeat="o in widgets">
-							<!--<span> wId={{o.widgetId}};</span><span>width={{o.widgetWidth}};</span><span>cWidth={{o.options.chart.width}};</span>-->
+						<div ng-repeat="o in widgets track by o.widgetId">
 							<viz-mgd-widget options="o.options" state="o.defstate" widgetwidth="o.widgetWidth" widgetid="o.widgetId"></viz-mgd-widget>
 						</div>
 					</div>

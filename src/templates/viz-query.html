@@ -1,158 +1,168 @@
-<pre>Presets</pre>
-<div class="form-wrapper">
-    <div class="form-group center-block">
-        <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
+<uib-accordion>
+    <div uib-accordion-group class="panel-default" heading="Presets" is-open="presets.status.isFirstOpen" is-disabled="status.isFirstDisabled">
+        <div class="form-wrapper">
+            <div class="form-group center-block">
+                <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
 
-            <div class="row">
+                    <div class="row">
 
-                <div class="col-md-12 colcontain-contents">
-                    <div class="btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
-                        <button id="load-query" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-                            Load query... <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
-                            <h5 ng-repeat="p in state.presets" ng-click="loadPreset(p)">{{p.name}}</h5>
-                        </ul>
-                    </div>
-                    <div class="btn-group form-radio" uib-dropdown is-open="lc.status.isopen">
-                        <button id="load-controls" type="button" class="btn btn-primary" uib-dropdown-toggle
-                            ng-disabled="disabled">
-                            Load controls... <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-controls">
-                            <h5 ng-repeat="p in state.presets" ng-click="loadPreset(p)">{{p.name}}</h5>
-                        </ul>
-                    </div>
-                    <div class="btn-group form-radio" uib-dropdown is-open="lt.status.isopen">
-                        <button id="load-template" type="button" class="btn btn-primary" uib-dropdown-toggle
-                            ng-disabled="disabled">
-                            Load template...<span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-template">
-                            <h5 ng-repeat="p in state.presets" ng-click="loadPreset(p)">{{p.name}}</h5>
-                        </ul>
-                    </div>
-                    <div class="btn-group form-radio" uib-dropdown is-open="ls.status.isopen">
-                        <button id="load-service" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
-                            Load service info... <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-service">
-                            <h5 ng-repeat="p in state.presets" ng-click="loadPreset(p)">{{p.name}}</h5>
-                        </ul>
+                        <div class="col-md-12 colcontain-contents">
+                            <div class="btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
+                                <button id="load-query" type="button" class="btn btn-primary" uib-dropdown-toggle
+                                    ng-disabled="disabled">
+                                    Load query... <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
+                                    <h5 ng-repeat="p in state.presets" ng-click="loadPreset(p)">{{p.name}}</h5>
+                                </ul>
+                            </div>
+                            <div class="btn-group form-radio" uib-dropdown is-open="lc.status.isopen">
+                                <button id="load-controls" type="button" class="btn btn-primary" uib-dropdown-toggle
+                                    ng-disabled="disabled">
+                                    Load controls... <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-controls">
+                                    <h5 ng-repeat="p in state.presets" ng-click="loadPreset(p)">{{p.name}}</h5>
+                                </ul>
+                            </div>
+                            <div class="btn-group form-radio" uib-dropdown is-open="lt.status.isopen">
+                                <button id="load-template" type="button" class="btn btn-primary" uib-dropdown-toggle
+                                    ng-disabled="disabled">
+                                    Load template...<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-template">
+                                    <h5 ng-repeat="p in state.presets" ng-click="loadPreset(p)">{{p.name}}</h5>
+                                </ul>
+                            </div>
+                            <div class="btn-group form-radio" uib-dropdown is-open="ls.status.isopen">
+                                <button id="load-service" type="button" class="btn btn-primary" uib-dropdown-toggle
+                                    ng-disabled="disabled">
+                                    Load service info... <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-service">
+                                    <h5 ng-repeat="p in state.presets" ng-click="loadPreset(p)">{{p.name}}</h5>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</uib-accordion>
+<uib-accordion>
+    <div uib-accordion-group class="panel-default" heading="Datasource" is-open="datasource.status.isFirstOpen"
+        is-disabled="status.isFirstDisabled">
+        <div class="form-wrapper">
+            <div class="form-group center-block">
+                <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
 
-<pre>Datasource</pre>
-<div class="form-wrapper">
-    <div class="form-group center-block">
-        <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
+                    <div class="row">
 
-            <div class="row">
-
-                <div class="col-md-6 colcontain-grid">
-                    <label>Input type</label>
-                    <div class="btn-group form-radio">
-                        <label class="btn btn-primary" ng-model="inputtype" uib-btn-radio="'Raw'">Raw</label>
-                        <label class="btn btn-primary" ng-model="inputtype" uib-btn-radio="'Controls'">Controls</label>
-                        <label class="btn btn-primary" ng-model="inputtype" uib-btn-radio="'Template'">Template</label>
-                    </div>
-                </div>
-                <div class="col-md-6 colcontain-grid">
-                    <label>Query type</label>
-                    <div class="btn-group form-radio">
-                        <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Simple'">Simple</label>
-                        <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Async'">Async</label>
-                    </div>
-                </div>
-                <div ng-if="inputtype == 'Raw'">
-                    <div class="col-md-12 colcontain-grid">
-                        <label>Query payload</label>
-                        <div class="btn-group">
-                            <input json-text type="text" ng-model="currentquery.data" class="form-control" />
+                        <div class="col-md-6 colcontain-grid">
+                            <label>Input type</label>
+                            <div class="btn-group form-radio">
+                                <label class="btn btn-primary" ng-model="inputtype" uib-btn-radio="'Raw'">Raw</label>
+                                <label class="btn btn-primary" ng-model="inputtype" uib-btn-radio="'Controls'">Controls</label>
+                                <label class="btn btn-primary" ng-model="inputtype" uib-btn-radio="'Template'">Template</label>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div ng-if="inputtype == 'Controls'">
-                    <div class="col-md-12 colcontain-grid">
-                        <div ng-if="'rtm-controls' == 'rtm-controls'">
-                            <rtm-controls></rtm-controls>
+                        <div class="col-md-6 colcontain-grid">
+                            <label>Query type</label>
+                            <div class="btn-group form-radio">
+                                <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Simple'">Simple</label>
+                                <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Async'">Async</label>
+                            </div>
                         </div>
-                    </div>
-                    <div ng-if="inputtype == 'Template'">
-                        <label>Replace 1</label>
+                        <div ng-if="inputtype == 'Raw'">
+                            <div class="col-md-12 colcontain-grid">
+                                <label>Query payload</label>
+                                <div class="btn-group">
+                                    <input json-text type="text" ng-model="currentquery.data" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="inputtype == 'Controls'">
+                            <div class="col-md-12 colcontain-grid">
+                                <div ng-if="'rtm-controls' == 'rtm-controls'">
+                                    <rtm-controls></rtm-controls>
+                                </div>
+                            </div>
+                            <div ng-if="inputtype == 'Template'">
+                                <label>Replace 1</label>
+                                <div class="col-md-12 colcontain-grid">
+                                    <input type="text" ng-model="currentquery.replace1" class="form-control" />
+                                </div>
+                                <label>Value 1</label>
+                                <div class="col-md-12 colcontain-grid">
+                                    <input type="text" ng-model="currentquery.value1" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-12 colcontain-grid">
-                            <input type="text" ng-model="currentquery.replace1" class="form-control" />
-                        </div>
-                        <label>Value 1</label>
-                        <div class="col-md-12 colcontain-grid">
-                            <input type="text" ng-model="currentquery.value1" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12 colcontain-grid">
 
-                    <label>Query Service URL</label>
-                    <div class="btn-group">
-                        <input type="text" ng-model="currentquery.url" class="form-control" />
-                        <div ng-if="queryType == 'Async'">
-                            <label>Results Service URL</label>
-                            <input type="text" ng-model="resserviceurl" class="form-control" />
+                            <label>Query Service URL</label>
+                            <div class="btn-group">
+                                <input type="text" ng-model="currentquery.url" class="form-control" />
+                                <div ng-if="queryType == 'Async'">
+                                    <label>Results Service URL</label>
+                                    <input type="text" ng-model="resserviceurl" class="form-control" />
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+
+                    <div class="row">
+                        <div class="btn-container">
+                            <button class="btn btn-primary btn-dashlet" ng-click="fireQuery()"><span class="glyphicon glyphicon-ok"></span></button>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
-
-
-            <div class="row">
-                <div class="btn-container">
-                    <button class="btn btn-primary btn-dashlet" ng-click="fireQuery()"><span class="glyphicon glyphicon-ok"></span></button>
-                </div>
-            </div>
-
-
         </div>
     </div>
-</div>
-
-
-
-<pre>Processing</pre>
-<div class="form-wrapper">
-    <div class="form-group center-block">
-        <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
-            <div class="row">
-                <div class="col-md-4 colcontain-grid">
-                    <div class="btn-group">
-                        <label>Data accessor</label>
-                        <input type="text" ng-model="currentquery.dataaccess" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-md-4 colcontain-grid">
-                    <div class="btn-group">
-                        <label>Series accessor</label>
-                        <input type="text" ng-model="currentquery.keyaccess" class="form-control" />
-                    </div>
-                </div>
-                <div class="col-md-4 colcontain-grid">
-                    <div class="btn-group">
-                        <label>Value accessor</label>
-                        <input type="text" ng-model="currentquery.valueaccess" class="form-control" />
+</uib-accordion>
+<uib-accordion>
+    <div uib-accordion-group class="panel-default" heading="Post-processing" is-open="postproc.status.isFirstOpen"
+        is-disabled="status.isFirstDisabled">
+        <div class="form-wrapper">
+            <div class="form-group center-block">
+                <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
+                    <div class="row">
+                        <div class="col-md-4 colcontain-grid">
+                            <div class="btn-group">
+                                <label>Data accessor</label>
+                                <input type="text" ng-model="currentquery.dataaccess" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 colcontain-grid">
+                            <div class="btn-group">
+                                <label>Series accessor</label>
+                                <input type="text" ng-model="currentquery.keyaccess" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 colcontain-grid">
+                            <div class="btn-group">
+                                <label>Value accessor</label>
+                                <input type="text" ng-model="currentquery.valueaccess" class="form-control" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
-<pre>Response</pre>
-<div class="form-wrapper">
-    <p class="form-group">
-        <label>Raw</label> {{counter}}
-        <div class="well well-lg innerwell">{{rawresponse}}</div>
-    </p>
-</div>
+</uib-accordion>
+<uib-accordion>
+    <div uib-accordion-group class="panel-default" heading="Response" is-open="response.status.isFirstOpen" is-disabled="status.isFirstDisabled">
+        <div class="form-wrapper">
+            <p class="form-group">
+                <label>Raw</label> {{counter}}
+                <div class="well well-lg innerwell">{{rawresponse}}</div>
+            </p>
+        </div>
+    </div>
+</uib-accordion>

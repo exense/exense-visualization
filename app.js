@@ -45,8 +45,12 @@ myApp.controller('myCtrl', function ($scope) {
         widget.options.innercontainer.width = $scope.innerContainerWidthSmall;
     };
 
+    $scope.getNewWidgetId = function(){
+        return Math.random().toString(36).substr(2, 9);
+    };
+
     $scope.addWidget = function () {
-        wId = Math.random().toString(36).substr(2, 9);
+        wId = $scope.getNewWidgetId();
 
         widget = {
             widgetId: wId,
@@ -93,7 +97,48 @@ myApp.controller('myCtrl', function ($scope) {
             if ($scope.widgets[i].widgetId === wId)
                 $scope.widgets.splice(i, i + 1);
         }
+    };
 
+    $scope.getWidgetIndex = function(wId){
+        for (i = 0; i < $scope.widgets.length; i++) {
+            if ($scope.widgets[i].widgetId === wId)
+                return i;
+        }
+    }
+
+    $scope.moveWidget = function (old_index, new_index) {
+        if (new_index >= $scope.widgets.length) {
+            var k = new_index - $scope.widgets.length + 1;
+            while (k--) {
+                arr.push(undefined);
+            }
+        }
+        $scope.widgets.splice(new_index, 0, $scope.widgets.splice(old_index, 1)[0]);
+    };
+
+    $scope.moveWidgetLeft = function (wId) {
+        var widgetIndex = $scope.getWidgetIndex(wId);
+
+        if(widgetIndex > 0){
+            $scope.moveWidget(widgetIndex, widgetIndex - 1);
+        }
+    };
+
+    $scope.moveWidgetRight = function (wId) {
+        var widgetIndex = $scope.getWidgetIndex(wId);
+        $scope.moveWidget(widgetIndex, widgetIndex + 1);
+    };
+
+    $scope.duplicateWidget = function (wId) {
+        var copy = $scope.getWidgetCopy(wId);
+        $scope.widgets.push(copy);
+        $scope.moveWidget($scope.getWidgetIndex(copy.widgetId), $scope.getWidgetIndex(wId + 1));
+    };
+
+    $scope.getWidgetCopy = function (wId) {
+        var copy = JSON.parse(JSON.stringify($scope.getWidget(wId)));
+        copy.widgetId = $scope.getNewWidgetId();
+        return copy;
     };
 
     $scope.addWidget();

@@ -26,6 +26,18 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $scope.removeWidget = function (wId) {
                     $scope.$parent.$parent.removeWidget(wId);
                 };
+
+                $scope.moveWidgetLeft = function (wId) {
+                    $scope.$parent.$parent.moveWidgetLeft(wId);
+                };
+
+                $scope.moveWidgetRight = function (wId) {
+                    $scope.$parent.$parent.moveWidgetRight(wId);
+                };
+
+                $scope.duplicateWidget = function (wId) {
+                    $scope.$parent.$parent.duplicateWidget(wId);
+                };
             }
         };
     });
