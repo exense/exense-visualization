@@ -1,0 +1,27 @@
+<nav class="navbar navbar-inverse navbar-fixed-left" role="navigation" style="justify-content: center; text-align: center;">
+    <ul class="nav navbar-nav nav-pills nav-stacked">
+        <li><img src="src/img/brandlogo.png" height="40px"></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="addWidget()"><span class="glyphicon glyphicon-plus glyphicon-app"></span></button></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="clearWidgets()"><span class="glyphicon glyphicon-trash glyphicon-app"></span></button></li>
+        <li>&nbsp;</li>
+        <li><button class="btn btn-primary btn-nav" ng-click="saveDashboard()"><span class="glyphicon glyphicon-floppy-save glyphicon-app"></span></button></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="loadDashboard()"><span class="glyphicon glyphicon-floppy-open glyphicon-app"></span></button></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="configureDashboard()"><span class="glyphicon glyphicon-cog glyphicon-app"></span></button></li>
+        <li>&nbsp;</li>
+        <li><button class="btn btn-primary btn-nav" ng-click="sendToDocs()"><span class="glyphicon glyphicon-question-sign glyphicon-app"></span></button></li>
+    </ul>
+</nav>
+
+
+
+
+
+<div class="well mainwell" style="justify-content: center; text-align: center;">
+				
+    <div class="row">
+        <div ng-repeat="o in widgets track by o.widgetId">
+            <viz-mgd-widget options="o.options" state="o.defstate" widgetwidth="o.widgetWidth" widgetid="o.widgetId"></viz-mgd-widget>
+        </div>
+    </div>
+
+</div>
