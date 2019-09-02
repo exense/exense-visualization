@@ -14,15 +14,14 @@
         <li><button class="btn btn-primary btn-nav" ng-click="$emit('docs')"><span class="glyphicon glyphicon-question-sign glyphicon-app"></span></button></li>
     </ul>
 </nav>
-<div class="well mainwell" style="justify-content: center; text-align: center;">
-    <div ng-repeat="d in dashboards track by d.dashboardid">
-        <uib-accordion>
-            <div uib-accordion-group class="panel-default" heading="Dash #{{d.dashboardid}}" is-open="d.status.isFirstOpen"
-                is-disabled="d.status.isFirstDisabled">
+<div class="well mainwell">
 
+    <uib-tabset active="active" ng-click="saveState()" vertical="false" justified="false" class="dashboardtab">
+        <div ng-repeat="d in dashboards track by d.dashboardid">
+            <uib-tab heading="{{d.dashboardid}}">
                 <viz-widget-manager dashboard="d"></viz-widget-manager>
+            </uib-tab>
+        </div>
+    </uib-tabset>
 
-            </div>
-        </uib-accordion>
-    </div>
 </div>

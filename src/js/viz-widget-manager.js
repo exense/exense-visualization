@@ -1,7 +1,7 @@
 var vizWidgetManagerscripts = document.getElementsByTagName("script")
 var vizWidgetManagercurrentScriptPath = vizWidgetManagerscripts[vizWidgetManagerscripts.length - 1].src;
 
-angular.module('viz-widget-manager', ['viz-mgd-widget'])
+angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
     .factory('wmservice', function () {
 
         var wmservice = {};
@@ -189,6 +189,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget'])
             controller: function ($scope, wmservice) {
                 $scope.dashboards = wmservice.dashboards;
                 $scope.current = wmservice.addDashboard();
+                $scope.state = {};
+                $scope.saveState = function () {
+                    $scope.state.tabindex = $scope.active;
+                };
 
                 $scope.$on('dashboard-new', function (event, arg) {
                     wmservice.addDashboard();
@@ -197,10 +201,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget'])
                     wmservice.clearDashboards();
                 });
                 $scope.$on('dashboard-current-addWidget', function (event, arg) {
-                    wmservice.getDashboardById($scope.current).addWidget($scope.current);
+                    wmservice.addWidget($scope.current);
                 });
                 $scope.$on('dashboard-current-clearWidgets', function (event, arg) {
-                    wmservice.getDashboardById($scope.current).clearWidgets();
+                    wmservice.clearWidgets($scope.current);
                 });
                 $scope.$on('dashboard-save', function (event, arg) {
                     //not yet implemented

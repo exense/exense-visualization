@@ -29,7 +29,7 @@ svg.nvd3-svg{
     padding: 10px;
 }
 
-.nav-link {
+div.dashlet > * > .nav-link {
     border: 1px solid #333333;
     padding: 5px !important;
 }
@@ -44,23 +44,14 @@ ul.ul-control {
     margin-top: -1px;
 }
 
-.nav-tabs > li > a{
-    border: none !important;
-}
 
-li.uib-tab {
-    border: 1px solid #333333 !important;
-    margin-left: -1px;
-}
-
-li.active > a, li.active {
+div.dashlet > ul > li.active > a, div.dashlet > ul > li.active > a > uib-tab-heading > span{
     background-color: rgb(60, 240, 60) !important;
     color: white;
-    border: none;
 }
-
-li.active > a > uib-tab-heading > span{
-    color: white !important;
+div.dashlet > ul > li > a, div.dashlet > ul > li.active > a, div.dashlet > ul > li > a:hover{
+    border: 1px solid #333333 !important;
+    padding: 2px 6px;
 }
 
 .panel-title{
