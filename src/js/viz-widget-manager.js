@@ -3,10 +3,10 @@ var vizWidgetManagercurrentScriptPath = vizWidgetManagerscripts[vizWidgetManager
 
 angular.module('viz-widget-manager', ['viz-mgd-widget'])
     .factory('wmservice', function () {
-        
-        var wmservice = {};
-        wmservice.widgets = [];
 
+        var wmservice = {};
+        wmservice.dashboards = [];
+        
         // parameterize via arguments or server-originating conf & promise?
         wmservice.chartHeightSmall = 235;
         wmservice.chartHeightBig = 485;
@@ -16,6 +16,14 @@ angular.module('viz-widget-manager', ['viz-mgd-widget'])
         wmservice.innerContainerHeightBig = 490;
         wmservice.innerContainerWidthSmall = 495;
         wmservice.innerContainerWidthBig = 995;
+
+        wmservice.addDashboard = function(){
+            wmservice.dashboards.push({
+                title: 'New dashboard',
+                widgets: [],
+                dashboardid: wmservice.getNewId()
+            });
+        };
 
         wmservice.clearWidgets = function () {
             wmservice.widgets = [];
@@ -48,12 +56,12 @@ angular.module('viz-widget-manager', ['viz-mgd-widget'])
             widget.options.innercontainer.width = wmservice.innerContainerWidthSmall;
         };
 
-        wmservice.getNewWidgetId = function () {
+        wmservice.getNewId = function () {
             return Math.random().toString(36).substr(2, 9);
         };
 
-        wmservice.addWidget = function () {
-            wId = wmservice.getNewWidgetId();
+        wmservice.addWidget = function (did) {
+            wId = wmservice.getNewId();
 
             widget = {
                 widgetId: wId,
@@ -91,8 +99,8 @@ angular.module('viz-widget-manager', ['viz-mgd-widget'])
                     text: 'Title for Line Chart'
                 },
             };
-
-            wmservice.widgets.push(widget);
+            
+            wmservice.dashboards[0].widgets.push(widget);
         };
 
         wmservice.removeWidget = function (wId) {
@@ -102,9 +110,21 @@ angular.module('viz-widget-manager', ['viz-mgd-widget'])
             }
         };
 
-        wmservice.getWidgetIndex = function (wId) {
-            for (i = 0; i < wmservice.widgets.length; i++) {
-                if (wmservice.widgets[i].widgetId === wId)
+        wmservice.getWidgetIndex = function (dId, wId) {
+            return wmservice.getObjectIndexFromArray(wmservice.getDashboardById(dId), 'widgetId', wId);
+        }
+
+        wmservice.getDashboardIndex = function (dId) {
+            return wmservice.getObjectIndexFromArray(wmservice.dashboards, 'dashboardid', dId);
+        }
+
+        wmservice.getDashboardById = function (dId) {
+            return wmservice.dashboards[wmservice.getDashboardIndex(dId)];
+        }
+
+        wmservice.getObjectIndexFromArray = function (array, oIdKey, oId) {
+            for (i = 0; i < array.length; i++) {
+                if (array[i][oIdKey] === oId)
                     return i;
             }
         }
@@ -140,26 +160,37 @@ angular.module('viz-widget-manager', ['viz-mgd-widget'])
 
         wmservice.getWidgetCopy = function (wId) {
             var copy = JSON.parse(JSON.stringify(wmservice.getWidget(wId)));
-            copy.widgetId = wmservice.getNewWidgetId();
+            copy.widgetId = wmservice.getNewId();
             return copy;
         };
 
         return wmservice;
     })
+    .directive('vizDashboardManager', function () {
+        return {
+            restric: 'E',
+            scope: {
+            },
+            templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-dashboard-manager.html'),
+            controller: function ($scope, wmservice) {
+                $scope.dashboards = wmservice.dashboards;
+                console.log($scope.dashboards);
+
+                wmservice.addDashboard();
+            }
+        };
+    })
     .directive('vizWidgetManager', function () {
         return {
             restric: 'E',
             scope: {
-                options: '=',
-                widgetwidth: '=',
-                widgetid: '=',
-                state: '='
-            },  
+                dashboard: '='
+            },
             templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-widget-manager.html'),
             controller: function ($scope, wmservice) {
 
-                $scope.widgets = wmservice.widgets;
-                
+                $scope.widgets = $scope.dashboard.widgets;
+
                 $scope.$on('mgdwidget-reduce', function (event, arg) {
                     wmservice.reduceWidget(arg.wid);
                 });
@@ -182,7 +213,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget'])
                     //not implemented yet
                 });
 
-                wmservice.addWidget();
+                wmservice.addWidget($scope.dashboard.dashboardid);
                 console.log(wmservice);
             }
         };
