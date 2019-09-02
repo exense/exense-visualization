@@ -1,17 +1,28 @@
 <nav class="navbar navbar-inverse navbar-fixed-left" role="navigation" style="justify-content: center; text-align: center;">
     <ul class="nav navbar-nav nav-pills nav-stacked">
         <li><img src="src/img/brandlogo.png" height="40px"></li>
-        <li><button class="btn btn-primary btn-nav" ng-click="addWidget()"><span class="glyphicon glyphicon-plus glyphicon-app"></span></button></li>
-        <li><button class="btn btn-primary btn-nav" ng-click="clearWidgets()"><span class="glyphicon glyphicon-trash glyphicon-app"></span></button></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-new')"><span class="glyphicon glyphicon-file glyphicon-app"></span></button></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-clear')"><span class="glyphicon glyphicon-trash glyphicon-app"></span></button></li>
         <li>&nbsp;</li>
-        <li><button class="btn btn-primary btn-nav" ng-click="saveDashboard()"><span class="glyphicon glyphicon-floppy-save glyphicon-app"></span></button></li>
-        <li><button class="btn btn-primary btn-nav" ng-click="loadDashboard()"><span class="glyphicon glyphicon-floppy-open glyphicon-app"></span></button></li>
-        <li><button class="btn btn-primary btn-nav" ng-click="configureDashboard()"><span class="glyphicon glyphicon-cog glyphicon-app"></span></button></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-current-addWidget')"><span class="glyphicon glyphicon-plus glyphicon-app"></span></button></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-current-clearWidgets')"><span class="glyphicon glyphicon-minus glyphicon-app"></span></button></li>
         <li>&nbsp;</li>
-        <li><button class="btn btn-primary btn-nav" ng-click="sendToDocs()"><span class="glyphicon glyphicon-question-sign glyphicon-app"></span></button></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-save')"><span class="glyphicon glyphicon-floppy-save glyphicon-app"></span></button></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-load')"><span class="glyphicon glyphicon-floppy-open glyphicon-app"></span></button></li>
+        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-configure')"><span class="glyphicon glyphicon-cog glyphicon-app"></span></button></li>
+        <li>&nbsp;</li>
+        <li><button class="btn btn-primary btn-nav" ng-click="$emit('docs')"><span class="glyphicon glyphicon-question-sign glyphicon-app"></span></button></li>
     </ul>
 </nav>
+<div class="well mainwell" style="justify-content: center; text-align: center;">
+    <div ng-repeat="d in dashboards track by d.dashboardid">
+        <uib-accordion>
+            <div uib-accordion-group class="panel-default" heading="Dash #{{d.dashboardid}}" is-open="d.status.isFirstOpen"
+                is-disabled="d.status.isFirstDisabled">
 
-<div ng-repeat="d in dashboards">
-    <viz-widget-manager dashboard="d"><viz-widget-manager>
+                <viz-widget-manager dashboard="d"></viz-widget-manager>
+
+            </div>
+        </uib-accordion>
+    </div>
 </div>
