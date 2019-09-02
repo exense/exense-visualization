@@ -1,7 +1,6 @@
 var rtmControlsscripts = document.getElementsByTagName("script")
 var rtmControlscurrentScriptPath = rtmControlsscripts[rtmControlsscripts.length-1].src;
 
-
 angular.module('rtm-controls', [])
 
     .directive('rtmControls', function () {
