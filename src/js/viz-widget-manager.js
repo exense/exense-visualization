@@ -218,7 +218,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     wmservice.addWidget($scope.mgrtabstate);
                 });
                 $scope.$on('dashboard-current-clearWidgets', function (event, arg) {
-                    wmservice.clearWidgets($scope.current);
+                    wmservice.clearWidgets($scope.mgrtabstate);
                 });
                 $scope.$on('dashboard-save', function (event, arg) {
                     //not yet implemented
