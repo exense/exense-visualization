@@ -13,22 +13,12 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-dashlet.html'),
             controller: function ($scope) {
 
-                $scope.broadcasts = [];
+                $scope.dashlettabstate = $scope.state.tabindex;
 
                 $scope.saveState = function () {
-                    $scope.state.tabindex = $scope.active;
+                    $scope.state.tabindex = $scope.dashlettabstate;
                 };
 
-                $scope.setActiveTab = function (index) {
-                    $scope.active = index;
-                };
-
-                $scope.pushBroadcast = function (msg) {
-                    $scope.broadcasts.push(msg);
-                }
-
-                console.log('vizDashlet controller fired.')
-                $scope.setActiveTab($scope.state.tabindex);
             }
         };
     })

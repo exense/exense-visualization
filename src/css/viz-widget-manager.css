@@ -62,28 +62,30 @@ div.dashboardtab > ul{
   border-bottom: none !important;
 }
 
-div.dashboardtab > ul > div > li{
+div.dashboardtab > ul > li{
   margin-right: 5px;
+  margin-left: 0px;
   padding: 3px;
   background-color: white;
   color: rgb(0, 240, 0);
-  border: 1px solid #333333;
+  border: 1px solid #333333 !important;
 }
 
-div.dashboardtab > ul > div > li > a{
-  color: rgb(0, 240, 0);
+div.dashboardtab > ul > li > a{
+  color: rgb(0, 240, 0) !important;
+  border: none !important;
 }
 
-div.dashboardtab > ul > div > li:hover, div.dashboardtab > ul > div > li > a:hover{
-  color: white;
-  background-color: rgb(0, 255, 106);
+div.dashboardtab > ul > li > a:hover{
+  color: white !important;
+  background-color: rgb(0, 255, 106) !important;
 }
 
-div.dashboardtab > ul > div > li.active, div.dashboardtab > ul > div > li.active > a{
-  color: white;
-  background-color: rgb(0, 240, 0);
+div.dashboardtab > ul > li.active, div.dashboardtab > ul > li.active > a{
+  color: white !important;
+  background-color: rgb(0, 240, 0) !important;
 }
 
-div.dashboardtab > ul > div > li > a {
+div.dashboardtab > ul > li > a {
   text-decoration: none !important;
 }

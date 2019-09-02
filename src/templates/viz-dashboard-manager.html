@@ -16,12 +16,11 @@
 </nav>
 <div class="well mainwell">
 
-    <uib-tabset active="active" ng-click="saveState()" vertical="false" justified="false" class="dashboardtab">
-        <div ng-repeat="d in dashboards track by d.dashboardid">
-            <uib-tab heading="{{d.dashboardid}}">
-                <viz-widget-manager dashboard="d"></viz-widget-manager>
-            </uib-tab>
-        </div>
+    <uib-tabset active="mgrtabstate" ng-click="saveState()" vertical="false" justified="false" class="dashboardtab">
+        <uib-tab index="d.dashboardid" ng-repeat="d in dashboards track by d.dashboardid">
+            <uib-tab-heading>{{d.dashboardid}}</uib-tab-heading>
+            <viz-widget-manager dashboard="d"></viz-widget-manager>
+        </uib-tab>
     </uib-tabset>
 
 </div>

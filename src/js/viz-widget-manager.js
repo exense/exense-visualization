@@ -17,6 +17,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
         wmservice.innerContainerWidthSmall = 495;
         wmservice.innerContainerWidthBig = 995;
 
+        wmservice.getNewId = function () {
+            return Math.random().toString(36).substr(2, 9);
+        };
+
         wmservice.addDashboard = function () {
             var dId = wmservice.getNewId();
             wmservice.dashboards.push({
@@ -28,17 +32,16 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
         };
 
         wmservice.clearDashboards = function () {
-            wmservice.dashboards = [];
+            wmservice.dashboards.length = 0;
         };
 
         wmservice.clearWidgets = function (dId) {
-            wmservice.getDashboardById(dId).widgets = [];
+            wmservice.getDashboardById(dId).widgets.length = 0;
         };
 
         wmservice.getWidget = function (dId, wId) {
             var dWidgets = wmservice.getDashboardById(dId).widgets;
-            console.log(dId)
-            console.log(dWidgets)
+
             for (i = 0; i < dWidgets.length; i++) {
                 if (dWidgets[i].widgetId === wId) {
                     return dWidgets[i];
@@ -56,17 +59,13 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             widget.options.innercontainer.width = wmservice.innerContainerWidthBig;
         };
 
-        wmservice.reduceWidget = function (wId) {
+        wmservice.reduceWidget = function (dId, wId) {
             var widget = wmservice.getWidget(dId, wId);
             widget.widgetWidth = 'col-md-6';
             widget.options.chart.height = wmservice.chartHeightSmall;
             widget.options.chart.width = wmservice.chartWidthSmall;
             widget.options.innercontainer.height = wmservice.innerContainerHeightSmall;
             widget.options.innercontainer.width = wmservice.innerContainerWidthSmall;
-        };
-
-        wmservice.getNewId = function () {
-            return Math.random().toString(36).substr(2, 9);
         };
 
         wmservice.addWidget = function (dId) {
@@ -110,6 +109,9 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             };
 
             // initialize every new dashboard with a first basic widget
+            console.log(dId);
+            console.log(wmservice.getDashboardById(dId));
+            console.log(wmservice.getDashboardById(dId).widgets);
             wmservice.getDashboardById(dId).widgets.push(widget);
         };
 
@@ -117,13 +119,14 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             var dWidgets = wmservice.getDashboardById(dId).widgets;
 
             for (i = 0; i < dWidgets.length; i++) {
-                if (dWidgets[i].widgetId === wId)
-                    dWidgets.splice(i, i + 1);
+                if (dWidgets[i].widgetId === wId) {
+                    dWidgets.splice(i, 1);
+                }
             }
         };
 
         wmservice.getWidgetIndex = function (dId, wId) {
-            return wmservice.getObjectIndexFromArray(wmservice.getDashboardById(dId), 'widgetId', wId);
+            return wmservice.getObjectIndexFromArray(wmservice.getDashboardById(dId).widgets, 'widgetId', wId);
         }
 
         wmservice.getDashboardIndex = function (dId) {
@@ -136,8 +139,9 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
 
         wmservice.getObjectIndexFromArray = function (array, oIdKey, oId) {
             for (i = 0; i < array.length; i++) {
-                if (array[i][oIdKey] === oId)
+                if (array[i][oIdKey] === oId) {
                     return i;
+                }
             }
         }
 
@@ -150,7 +154,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     arr.push(undefined);
                 }
             }
-            dWidgets.splice(new_index, 0, wmservice.widgets.splice(old_index, 1)[0]);
+            dWidgets.splice(new_index, 0, dWidgets.splice(old_index, 1)[0]);
         };
 
         wmservice.moveWidgetLeft = function (dId, wId) {
@@ -161,15 +165,16 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             }
         };
 
-        wmservice.moveWidgetRight = function (wId) {
+        wmservice.moveWidgetRight = function (dId, wId) {
             var widgetIndex = wmservice.getWidgetIndex(dId, wId);
             wmservice.moveWidget(dId, widgetIndex, widgetIndex + 1);
+
         };
 
         wmservice.duplicateWidget = function (dId, wId) {
             var copy = wmservice.getWidgetCopy(dId, wId);
             wmservice.getDashboardById(dId).widgets.push(copy);
-            wmservice.moveWidget(wmservice.getWidgetIndex(dId, copy.widgetId), wmservice.getWidgetIndex(dId, wId + 1));
+            wmservice.moveWidget(dId, wmservice.getWidgetIndex(dId, copy.widgetId), wmservice.getWidgetIndex(dId, wId) + 1);
         };
 
         wmservice.getWidgetCopy = function (dId, wId) {
@@ -177,6 +182,9 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             copy.widgetId = wmservice.getNewId();
             return copy;
         };
+
+        // initializing with one dashboard
+        wmservice.addDashboard();
 
         return wmservice;
     })
@@ -187,21 +195,27 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             },
             templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-dashboard-manager.html'),
             controller: function ($scope, wmservice) {
+
                 $scope.dashboards = wmservice.dashboards;
-                $scope.current = wmservice.addDashboard();
-                $scope.state = {};
+
+                // todo: bind to config
                 $scope.saveState = function () {
-                    $scope.state.tabindex = $scope.active;
+                    $scope.savedState = $scope.mgrtabstate;
+                    console.log($scope.mgrtabstate)
                 };
 
                 $scope.$on('dashboard-new', function (event, arg) {
                     wmservice.addDashboard();
+                    $(document).ready(function(){
+                        $scope.mgrtabstate = $scope.dashboards[$scope.dashboards.length - 1].dashboardid;
+                    });
                 });
+
                 $scope.$on('dashboard-clear', function (event, arg) {
                     wmservice.clearDashboards();
                 });
                 $scope.$on('dashboard-current-addWidget', function (event, arg) {
-                    wmservice.addWidget($scope.current);
+                    wmservice.addWidget($scope.mgrtabstate);
                 });
                 $scope.$on('dashboard-current-clearWidgets', function (event, arg) {
                     wmservice.clearWidgets($scope.current);
@@ -214,10 +228,13 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                 });
                 $scope.$on('dashboard-configure', function (event, arg) {
                     //not yet implemented
+                    console.log($scope.mgrtabstate)
                 });
                 $scope.$on('docs', function (event, arg) {
-                    //not yet implemented
+                    $scope.mgrtabstate = $scope.dashboards[$scope.dashboards.length - 1].dashboardid;
                 });
+
+                console.log('initial state:' + $scope.mgrtabstate);
             }
         };
     })
@@ -236,19 +253,19 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     wmservice.reduceWidget($scope.dashboard.dashboardid, arg.wid);
                 });
                 $scope.$on('mgdwidget-extend', function (event, arg) {
-                    wmservice.extendWidget($scope.dashboard.dashboardid,arg.wid);
+                    wmservice.extendWidget($scope.dashboard.dashboardid, arg.wid);
                 });
                 $scope.$on('mgdwidget-remove', function (event, arg) {
-                    wmservice.removeWidget($scope.dashboard.dashboardid,arg.wid);
+                    wmservice.removeWidget($scope.dashboard.dashboardid, arg.wid);
                 });
                 $scope.$on('mgdwidget-moveLeft', function (event, arg) {
-                    wmservice.moveWidgetLeft($scope.dashboard.dashboardid,arg.wid);
+                    wmservice.moveWidgetLeft($scope.dashboard.dashboardid, arg.wid);
                 });
                 $scope.$on('mgdwidget-moveRight', function (event, arg) {
-                    wmservice.moveWidgetRight($scope.dashboard.dashboardid,arg.wid);
+                    wmservice.moveWidgetRight($scope.dashboard.dashboardid, arg.wid);
                 });
                 $scope.$on('mgdwidget-duplicate', function (event, arg) {
-                    wmservice.duplicateWidget($scope.dashboard.dashboardid,arg.wid);
+                    wmservice.duplicateWidget($scope.dashboard.dashboardid, arg.wid);
                 });
                 $scope.$on('mgdwidget-refresh', function (event, arg) {
                     //not implemented yet
