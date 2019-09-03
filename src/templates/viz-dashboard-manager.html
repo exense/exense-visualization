@@ -16,7 +16,7 @@
 </nav>
 <div class="well mainwell">
 
-    <uib-tabset active="mgrtabstate" ng-click="saveState()" vertical="false" justified="false" class="dashboardtab">
+    <uib-tabset active="mgrtabstate" ng-click="saveState()" vertical="false" justified="true" class="dashboardtab">
         <uib-tab index="d.dashboardid" ng-repeat="d in dashboards track by d.dashboardid">
             <uib-tab-heading>{{d.dashboardid}}</uib-tab-heading>
             <viz-widget-manager dashboard="d"></viz-widget-manager>
