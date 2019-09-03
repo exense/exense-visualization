@@ -2,14 +2,14 @@ var vizWidgetManagerscripts = document.getElementsByTagName("script")
 var vizWidgetManagercurrentScriptPath = vizWidgetManagerscripts[vizWidgetManagerscripts.length - 1].src;
 
 angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
-    .factory('wmservice', function () {
+    .factory('wmservice', function ($rootScope) {
 
         var wmservice = {};
         wmservice.dashboards = [];
 
         // parameterize via arguments or server-originating conf & promise?
-        wmservice.chartHeightSmall = 235;
-        wmservice.chartHeightBig = 485;
+        wmservice.chartHeightSmall = 210;
+        wmservice.chartHeightBig = 460;
         wmservice.chartWidthSmall = 490;
         wmservice.chartWidthBig = 990;
         wmservice.innerContainerHeightSmall = 240;
@@ -48,6 +48,23 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                 }
             }
             return null;
+        };
+
+        wmservice.updateCharts = function (newWidth) {
+            for (i = 0; i < wmservice.dashboards.length; i++) {
+                var curDashboard = wmservice.dashboards[i]; 
+                for (j = 0; j < curDashboard.widgets.length; j++) {
+                    var curWidget = curDashboard.widgets[j];
+                    var old = curWidget.options.chart.width; 
+                    curWidget.options.chart.width = newWidth;
+                    //console.log('['+curDashboard.dashboardid+':'+curWidget.widgetId +'] : changed from ' + old + ' to '+curWidget.options.chart.width);
+                }
+            }
+
+            //force new angular digest
+            $rootScope.$apply(function(){
+               self.value = 0;         
+            });
         };
 
         wmservice.extendWidget = function (dId, wId) {
@@ -109,9 +126,6 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             };
 
             // initialize every new dashboard with a first basic widget
-            console.log(dId);
-            console.log(wmservice.getDashboardById(dId));
-            console.log(wmservice.getDashboardById(dId).widgets);
             wmservice.getDashboardById(dId).widgets.push(widget);
         };
 
@@ -201,12 +215,19 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                 // todo: bind to config
                 $scope.saveState = function () {
                     $scope.savedState = $scope.mgrtabstate;
-                    console.log($scope.mgrtabstate)
                 };
+
+                $scope.$on('new-dashlet-size', function(event, arg){
+                    console.log('changing chart sizes to ' + arg.newsize);
+                    $(document).ready(function () {
+                        wmservice.updateCharts(arg.newsize);
+                    });
+                    
+                });
 
                 $scope.$on('dashboard-new', function (event, arg) {
                     wmservice.addDashboard();
-                    $(document).ready(function(){
+                    $(document).ready(function () {
                         $scope.mgrtabstate = $scope.dashboards[$scope.dashboards.length - 1].dashboardid;
                     });
                 });
@@ -228,13 +249,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                 });
                 $scope.$on('dashboard-configure', function (event, arg) {
                     //not yet implemented
-                    console.log($scope.mgrtabstate)
                 });
                 $scope.$on('docs', function (event, arg) {
-                    $scope.mgrtabstate = $scope.dashboards[$scope.dashboards.length - 1].dashboardid;
+                    //not yet implemented
                 });
-
-                console.log('initial state:' + $scope.mgrtabstate);
             }
         };
     })

@@ -1,5 +1,5 @@
 var vizDashletscripts = document.getElementsByTagName("script")
-var vizDashletcurrentScriptPath = vizDashletscripts[vizDashletscripts.length-1].src;
+var vizDashletcurrentScriptPath = vizDashletscripts[vizDashletscripts.length - 1].src;
 
 angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
@@ -13,14 +13,18 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-dashlet.html'),
             controller: function ($scope, $element) {
 
+                $scope.redraw = 'drawn';
+
                 $scope.dashlettabstate = $scope.state.tabindex;
 
                 $scope.saveState = function () {
                     $scope.state.tabindex = $scope.dashlettabstate;
                 };
-                $(window).on('resize', function(){
-                    $scope.$broadcast('window-resize', { newdashletwidth: $element[0].offsetWidth});
-              });
+
+                $(window).on('resize', function () {
+                    console.log('[resize] new dashlet size:' + $element[0].offsetWidth);
+                    $scope.$emit('new-dashlet-size', { newsize: 0.8 * $element[0].offsetWidth });
+                });
             }
         };
     })
@@ -37,10 +41,6 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.currentquery = JSON.parse(JSON.stringify($scope.state.initialquery));
                 $scope.counter = 0;
                 $scope.inputtype = 'Raw';
-
-                $scope.$on('window-resize', function(event, arg){
-                    console.log('got it: ' + arg.newdashletwidth)
-                });
 
                 $scope.loadPreset = function (preset) {
                     $scope.currentquery = preset.query;
@@ -65,11 +65,11 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.postProcess = function () {
                     var retData = [];
 
-                    var accessor = $scope.resolve($scope.response,$scope.currentquery.dataaccess);
+                    var accessor = $scope.resolve($scope.response, $scope.currentquery.dataaccess);
 
                     //Data is represented as an array of {x,y} pairs.
                     for (var i = 0; i < accessor.length; i++) {
-                        retData.push({ x: $scope.resolve(accessor[i],$scope.currentquery.keyaccess), y: $scope.resolve(accessor[i],$scope.currentquery.valueaccess) });
+                        retData.push({ x: $scope.resolve(accessor[i], $scope.currentquery.keyaccess), y: $scope.resolve(accessor[i], $scope.currentquery.valueaccess) });
                     }
 
                     //Line chart data should be sent as an array of series objects.
@@ -84,11 +84,11 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     ];
                 };
 
-                $scope.resolve = function (obj, path){
+                $scope.resolve = function (obj, path) {
                     path = path.split('.');
                     var current = obj;
-                    while(path.length) {
-                        if(typeof current !== 'object') return undefined;
+                    while (path.length) {
+                        if (typeof current !== 'object') return undefined;
                         current = current[path.shift()];
                     }
                     return current;
