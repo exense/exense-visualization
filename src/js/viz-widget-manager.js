@@ -230,7 +230,6 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                 };
 
                 $scope.$on('global-resize', function (event, arg) {
-                    //console.log('changing chart sizes to ' + arg.newsize);
                     $(document).ready(function () {
                         wmservice.updateChartsSize(arg.newsize);
                     });
@@ -238,7 +237,6 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                 });
 
                 $scope.$on('single-resize', function (event, arg) {
-                    //console.log('changing chart sizes to ' + arg.newsize);
                     $(document).ready(function () {
                         wmservice.updateSingleChartSize(arg.did, arg.wid, arg.newsize);
                     });

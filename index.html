@@ -9,7 +9,7 @@
 	<meta name="author" content="">
 	<link rel="shortcut icon" href="img/favicon.png">
 
-	<title>RTM</title>
+	<title>exense-visualization</title>
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/d3/d3.js"></script>
@@ -34,12 +34,14 @@
 	<link rel="stylesheet" href="src/css/viz-mgd-widget.css">
 	<link rel="stylesheet" href="src/css/viz-widget-manager.css">
 
+	<script>
+		var demoApp = angular.module('demoApp', [ 'viz-widget-manager' ]);
+	</script>
 </head>
 
 <body>
-
-	<div ng-app='myApp'>
-		<viz-dashboard-manager></viz-dashboard-manager>
+	<div ng-app='demoApp'>
+		<viz-dashboard-manager marginleft="50" marginright="50" margintop="50" marginbottom="50" ></viz-dashboard-manager>
 	</div>
 </body>
 

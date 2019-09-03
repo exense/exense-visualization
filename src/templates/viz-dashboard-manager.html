@@ -1,4 +1,4 @@
-<div class="well mainwell">
+<div class="well mainwell" ng-style="{ margin-left: marginleft+'px', margin-right: marginright+'px',margin-top: margintop+'px',margin-bottom: marginbottom+'px',}">
     <uib-tabset active="mgrtabstate" ng-click="saveState()" vertical="false" justified="true" class="dashboardtab">
         <uib-tab index="d.dashboardid" ng-repeat="d in dashboards track by d.dashboardid">
             <uib-tab-heading>{{d.dashboardid}}</uib-tab-heading>

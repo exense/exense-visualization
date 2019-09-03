@@ -18,8 +18,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $scope.currentstate = JSON.parse(JSON.stringify($scope.state));
 
                 $scope.getActualDashletWidth = function () {
-                    console.log($element[0].children[0].children[0]);
-                    console.log($element[0].children[0].children[0].offsetWidth);
                     return $element[0].children[0].children[0].offsetWidth;
                 }
 

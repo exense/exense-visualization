@@ -50,9 +50,8 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                             $scope.rawresponse = JSON.stringify(response);
                             $scope.state.data = $scope.postProcess();
                         }, function (response) {
+                            // send to info pane using factory / service
                             console.log('error:' + JSON.stringify(response));
-                            //could handle errors/warnings like this
-                            $scope.$parent.$parent.$parent.pushBroadcast('sup');
                         }
                         );
                 };
