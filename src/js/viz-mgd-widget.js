@@ -1,5 +1,5 @@
 var vizMgdWidgetscripts = document.getElementsByTagName("script")
-var vizMgdWidgetcurrentScriptPath = vizMgdWidgetscripts[vizMgdWidgetscripts.length-1].src;
+var vizMgdWidgetcurrentScriptPath = vizMgdWidgetscripts[vizMgdWidgetscripts.length - 1].src;
 
 angular.module('viz-mgd-widget', ['viz-dashlet'])
 
@@ -9,14 +9,15 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
             scope: {
                 options: '=',
                 widgetwidth: '=',
+                dashboardid: '=',
                 widgetid: '=',
                 state: '='
             },
             templateUrl: vizMgdWidgetcurrentScriptPath.replace('/js/', '/templates/').replace('viz-mgd-widget.js', 'viz-mgd-widget.html'),
             controller: function ($scope, $element) {
                 $scope.currentstate = JSON.parse(JSON.stringify($scope.state));
-                
-                $scope.getActualDashletWidth = function(){
+
+                $scope.getActualDashletWidth = function () {
                     return $element[0].offsetWidth;
                 }
 
@@ -27,6 +28,26 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     //console.log('[resize] new dashlet size:' + $element[0].offsetWidth);
                     $scope.$emit('global-resize', { newsize: 0.8 * $scope.getActualDashletWidth() });
                 });
+
+                $scope.resizeSingle = function(){
+                    $scope.$emit('single-resize', { did: $scope.dashboardid, wid: $scope.widgetid, newsize: 0.8 * $scope.getActualDashletWidth() });
+                };
+
+                $scope.emitExtend = function () {
+                    $scope.$emit('mgdwidget-extend', { wid: $scope.widgetid });
+                    $(document).ready(function () {
+                        $scope.resizeSingle();
+                    });
+                };
+
+                $scope.emitReduce = function () {
+                    $scope.$emit('mgdwidget-reduce', { wid: $scope.widgetid });
+                    $(document).ready(function () {
+                        $scope.resizeSingle();
+                    });
+                };
+
+                $scope.resizeSingle();
             }
         };
     });

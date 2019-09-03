@@ -10,13 +10,13 @@
                         </li>
                         <div ng-if="widgetwidth == 'col-md-6'">
                                 <li class="li-control">
-                                        <span class="glyphicon glyphicon-resize-full glyphicon-control" ng-click="$emit('mgdwidget-extend', {wid: widgetid})"
+                                        <span class="glyphicon glyphicon-resize-full glyphicon-control" ng-click="emitExtend()"
                                                 href="#"></span>
                                 </li>
                         </div>
                         <div ng-if="widgetwidth == 'col-md-12'">
                                 <li class="li-control">
-                                        <span class="glyphicon glyphicon-resize-small glyphicon-control" ng-click="$emit('mgdwidget-reduce', {wid: widgetid})"
+                                        <span class="glyphicon glyphicon-resize-small glyphicon-control" ng-click="emitReduce()"
                                                 href="#"></span>
                                 </li>
                         </div>

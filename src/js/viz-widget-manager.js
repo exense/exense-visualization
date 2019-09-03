@@ -17,6 +17,13 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
         wmservice.innerContainerWidthSmall = 495;
         wmservice.innerContainerWidthBig = 995;
 
+        wmservice.forceRedraw = function () {
+            //force new angular digest
+            $rootScope.$apply(function () {
+                self.value = 0;
+            });
+        };
+
         wmservice.getNewId = function () {
             return Math.random().toString(36).substr(2, 9);
         };
@@ -50,21 +57,26 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             return null;
         };
 
-        wmservice.updateCharts = function (newWidth) {
+        wmservice.updateChartsSize = function (newWidth) {
             for (i = 0; i < wmservice.dashboards.length; i++) {
-                var curDashboard = wmservice.dashboards[i]; 
+                var curDashboard = wmservice.dashboards[i];
                 for (j = 0; j < curDashboard.widgets.length; j++) {
                     var curWidget = curDashboard.widgets[j];
-                    var old = curWidget.options.chart.width; 
+                    var old = curWidget.options.chart.width;
                     curWidget.options.chart.width = newWidth;
                     //console.log('['+curDashboard.dashboardid+':'+curWidget.widgetId +'] : changed from ' + old + ' to '+curWidget.options.chart.width);
                 }
             }
 
-            //force new angular digest
-            $rootScope.$apply(function(){
-               self.value = 0;         
-            });
+            wmservice.forceRedraw();
+        };
+
+
+        wmservice.updateSingleChartSize = function (dId, wId, newWidth) {
+            var widget = wmservice.getWidget(dId, wId);
+            widget.options.chart.width = newWidth;
+
+            wmservice.forceRedraw();
         };
 
         wmservice.extendWidget = function (dId, wId) {
@@ -217,12 +229,20 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     $scope.savedState = $scope.mgrtabstate;
                 };
 
-                $scope.$on('global-resize', function(event, arg){
+                $scope.$on('global-resize', function (event, arg) {
                     //console.log('changing chart sizes to ' + arg.newsize);
                     $(document).ready(function () {
-                        wmservice.updateCharts(arg.newsize);
+                        wmservice.updateChartsSize(arg.newsize);
                     });
-                    
+
+                });
+
+                $scope.$on('single-resize', function (event, arg) {
+                    //console.log('changing chart sizes to ' + arg.newsize);
+                    $(document).ready(function () {
+                        wmservice.updateSingleChartSize(arg.did, arg.wid, arg.newsize);
+                    });
+
                 });
 
                 $scope.$on('dashboard-new', function (event, arg) {
