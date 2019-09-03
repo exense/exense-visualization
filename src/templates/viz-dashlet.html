@@ -12,7 +12,6 @@
             <span class="glyphicon glyphicon-eye-open glyphicon-viz"></span><span style="margin-left: 5px;">View</span>
         </uib-tab-heading>
         <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
-            <div style="float: left;">height={{options.innercontainer.height}}; width={{options.chart.width}}</div>
             <nvd3 options='options' data='state.data' style="text-align: center; justify-content: center;"></nvd3>
         </div>
     </uib-tab>

@@ -48,7 +48,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     });
                 };
 
-                $scope.resizeSingle();
+                //$scope.resizeSingle();
                 $(document).ready(function () {
                     $scope.resizeSingle();
                 });
