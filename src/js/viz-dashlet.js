@@ -11,14 +11,16 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 state: '='
             },
             templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-dashlet.html'),
-            controller: function ($scope) {
+            controller: function ($scope, $element) {
 
                 $scope.dashlettabstate = $scope.state.tabindex;
 
                 $scope.saveState = function () {
                     $scope.state.tabindex = $scope.dashlettabstate;
                 };
-
+                $(window).on('resize', function(){
+                    $scope.$broadcast('window-resize', { newdashletwidth: $element[0].offsetWidth});
+              });
             }
         };
     })
@@ -35,6 +37,10 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.currentquery = JSON.parse(JSON.stringify($scope.state.initialquery));
                 $scope.counter = 0;
                 $scope.inputtype = 'Raw';
+
+                $scope.$on('window-resize', function(event, arg){
+                    console.log('got it: ' + arg.newdashletwidth)
+                });
 
                 $scope.loadPreset = function (preset) {
                     $scope.currentquery = preset.query;
