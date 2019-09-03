@@ -18,14 +18,15 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $scope.currentstate = JSON.parse(JSON.stringify($scope.state));
 
                 $scope.getActualDashletWidth = function () {
-                    return $element[0].offsetWidth;
+                    console.log($element[0].children[0].children[0]);
+                    console.log($element[0].children[0].children[0].offsetWidth);
+                    return $element[0].children[0].children[0].offsetWidth;
                 }
 
                 //TODO: this will be done once per dashlet in every dashboard
                 // we must find a way to run this only once
                 // from whichever dashlet exists in the dashboard 
                 $(window).on('resize', function () {
-                    //console.log('[resize] new dashlet size:' + $element[0].offsetWidth);
                     $scope.$emit('global-resize', { newsize: 0.8 * $scope.getActualDashletWidth() });
                 });
 
@@ -48,6 +49,9 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 };
 
                 $scope.resizeSingle();
+                $(document).ready(function () {
+                    $scope.resizeSingle();
+                });
             }
         };
     });
