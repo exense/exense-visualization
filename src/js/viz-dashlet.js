@@ -20,11 +20,6 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.saveState = function () {
                     $scope.state.tabindex = $scope.dashlettabstate;
                 };
-
-                $(window).on('resize', function () {
-                    console.log('[resize] new dashlet size:' + $element[0].offsetWidth);
-                    $scope.$emit('new-dashlet-size', { newsize: 0.8 * $element[0].offsetWidth });
-                });
             }
         };
     })

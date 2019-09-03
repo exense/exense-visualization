@@ -217,8 +217,8 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     $scope.savedState = $scope.mgrtabstate;
                 };
 
-                $scope.$on('new-dashlet-size', function(event, arg){
-                    console.log('changing chart sizes to ' + arg.newsize);
+                $scope.$on('global-resize', function(event, arg){
+                    //console.log('changing chart sizes to ' + arg.newsize);
                     $(document).ready(function () {
                         wmservice.updateCharts(arg.newsize);
                     });
