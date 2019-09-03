@@ -14,6 +14,10 @@ svg.nvd3-svg{
     display: inline !important;
 }
 
+.panel-body {
+    padding: 0 !important;
+}
+
 .innercontainer {
     overflow-y: auto;
     overflow-wrap: break-word;
@@ -111,11 +115,14 @@ div.dashlet > ul > li > a, div.dashlet > ul > li.active > a, div.dashlet > ul > 
 }
 
 .center-block{
-    display: inline-block !important;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+    display: inline-flex !important;;
 }
 
 .colcontain-grid{
-    display: grid;
+    display: inline-grid;
 }
 
 .colcontain-contents{
@@ -123,13 +130,15 @@ div.dashlet > ul > li > a, div.dashlet > ul > li.active > a, div.dashlet > ul > 
 }
 
 .innerformcontainer {
-    margin: 10px;
+    margin: 0;
+    padding: 0;
     text-align: center;
     justify-content: center;
 }
 
 .innerformcontainer > .row {
-    margin: 10px;
+    margin: 0;
+    padding: 2;
     text-align: left;
     justify-content: left;
 }
