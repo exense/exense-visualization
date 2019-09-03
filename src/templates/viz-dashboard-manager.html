@@ -1,21 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-left" role="navigation" style="justify-content: center; text-align: center;">
-    <ul class="nav navbar-nav nav-pills nav-stacked">
-        <li><img src="src/img/brandlogo.png" height="40px"></li>
-        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-new')"><span class="glyphicon glyphicon-file glyphicon-app"></span></button></li>
-        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-clear')"><span class="glyphicon glyphicon-trash glyphicon-app"></span></button></li>
-        <li>&nbsp;</li>
-        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-current-addWidget')"><span class="glyphicon glyphicon-plus glyphicon-app"></span></button></li>
-        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-current-clearWidgets')"><span class="glyphicon glyphicon-minus glyphicon-app"></span></button></li>
-        <li>&nbsp;</li>
-        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-save')"><span class="glyphicon glyphicon-floppy-save glyphicon-app"></span></button></li>
-        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-load')"><span class="glyphicon glyphicon-floppy-open glyphicon-app"></span></button></li>
-        <li><button class="btn btn-primary btn-nav" ng-click="$emit('dashboard-configure')"><span class="glyphicon glyphicon-cog glyphicon-app"></span></button></li>
-        <li>&nbsp;</li>
-        <li><button class="btn btn-primary btn-nav" ng-click="$emit('docs')"><span class="glyphicon glyphicon-question-sign glyphicon-app"></span></button></li>
-    </ul>
-</nav>
 <div class="well mainwell">
-
     <uib-tabset active="mgrtabstate" ng-click="saveState()" vertical="false" justified="true" class="dashboardtab">
         <uib-tab index="d.dashboardid" ng-repeat="d in dashboards track by d.dashboardid">
             <uib-tab-heading>{{d.dashboardid}}</uib-tab-heading>
