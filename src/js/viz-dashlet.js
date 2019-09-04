@@ -23,7 +23,6 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             }
         };
     })
-
     .directive('vizQuery', function () {
         return {
             restric: 'E',
@@ -33,13 +32,27 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             },
             templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-query.html'),
             controller: function ($scope, $http) {
-                $scope.currentquery = JSON.parse(JSON.stringify($scope.state.initialquery));
-                $scope.counter = 0;
-                $scope.inputtype = 'Raw';
 
-                $scope.loadPreset = function (preset) {
-                    $scope.currentquery = preset.query;
-                    $scope.inputtype = preset.inputtype;
+                // Default state, before loading and presets
+                $scope.currentquery = {
+                    datasource: {
+                        inputtype: 'Raw',
+                        type: 'Simple',
+                        url: 'please enter URL',
+                        method: 'Get',
+                        data: 'data to post'
+                    },
+                    postproc:{
+                        dataaccess: 'path to array',
+                        keyaccess: 'path to keys',
+                        valueaccess: 'path to values'
+                    }
+                };
+
+                $scope.counter = 0;
+
+                $scope.loadQueryPreset = function (querypreset) {
+                    $scope.currentquery = querypreset;
                 }
 
                 $scope.fireQuery = function () {
@@ -87,8 +100,6 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     }
                     return current;
                 };
-
-                $scope.fireQuery();
             }
         }
     })

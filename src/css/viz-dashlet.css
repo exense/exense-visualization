@@ -144,10 +144,11 @@ div.dashlet > ul > li > a, div.dashlet > ul > li.active > a, div.dashlet > ul > 
 }
 
 div.form-radio > label.btn, div.form-radio > button{
-    padding: 3px 6px;
-    font-size: 12px;
+    padding: 2px 4px;
+    font-size: 10px;
 }
 
 .btn-group{
     margin-top: 5px;
+    display: block !important;
 }

@@ -105,31 +105,34 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                 widgetWidth: 'col-md-6',
                 defstate: {
                     tabindex: 0,
-                    initialquery: {
-                        type: 'Simple',
-                        url: '/mock_data1.json',
-                        method: 'post',
-                        data: 'nothing'
-                        ,
-                        dataaccess: 'data.payload',
-                        keyaccess: 'begin',
-                        valueaccess: 'value'
-                    },
                     data: [],
-                    presets: [
-                        {
-                            name: 'RTM Measurements',
-                            inputtype: 'Raw',
-                            query: {
-                                type: 'Simple',
-                                data: '{"selectors1":[{"textFilters":[{"key":"eId","value":"5d67ce7e48322f000b931026","regex":"false"}],"numericalFilters":[]}],"serviceParams":{"measurementService.nextFactor":"0","aggregateService.sessionId":"defaultSid","aggregateService.granularity":"auto","aggregateService.groupby":"name","aggregateService.cpu":"1","aggregateService.partition":"8","aggregateService.timeout":"600"}}}'
+                    presets: {
+                        queries: [
+                            {
+                                name: 'RTM Measurements',
+                                datasource: {
+                                    inputtype: 'Raw',
+                                    type: 'Simple',
+                                    url: '/rtm/rest/measurement/find',
+                                    method: 'Post',
+                                    data: {
+                                        selectors1: [
+                                            { textFilters: [], numericalFilters: [] }],
+                                        serviceParams: {
+                                            'measurementService.nextFactor': 0, 'aggregateService.sessionId': 'defaultSid', 'aggregateService.granularity': 'auto', 'aggregateService.groupby': 'name', 'aggregateService.cpu': '1', 'aggregateService.partition': '8', 'aggregateService.timeout': '600' 
+                                        }
+                                    }
+                                },
+                                postproc: {
+                                    dataaccess: 'data.payload',
+                                    keyaccess: 'begin',
+                                    valueaccess: 'value'
+                                }
                             }
-                        },
-                        {
-                            name: 'empty preset'
-                        }
-                    ]
-                },
+                        ]
+                    }
+                }
+                ,
                 options: new DefaultOptions(wmservice.chartHeightSmall, wmservice.chartWidthSmall, wmservice.innerContainerHeightSmall, wmservice.innerContainerWidthSmall),
                 title: {
                     enable: true,
