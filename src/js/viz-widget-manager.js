@@ -10,12 +10,12 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
         // parameterize via arguments or server-originating conf & promise?
         wmservice.chartHeightSmall = 210;
         wmservice.chartHeightBig = 460;
-        wmservice.chartWidthSmall = 490;
-        wmservice.chartWidthBig = 990;
+        wmservice.chartWidthSmall = 0;
+        wmservice.chartWidthBig = 0;
         wmservice.innerContainerHeightSmall = 240;
         wmservice.innerContainerHeightBig = 490;
-        wmservice.innerContainerWidthSmall = 495;
-        wmservice.innerContainerWidthBig = 995;
+        wmservice.innerContainerWidthSmall = 0;
+        wmservice.innerContainerWidthBig = 0;
 
         wmservice.forceRedraw = function () {
             //force new angular digest
@@ -64,6 +64,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     var curWidget = curDashboard.widgets[j];
                     var old = curWidget.options.chart.width;
                     curWidget.options.chart.width = newWidth;
+                    curWidget.options.innercontainer.width = newWidth - 50;
                     //console.log('['+curDashboard.dashboardid+':'+curWidget.widgetId +'] : changed from ' + old + ' to '+curWidget.options.chart.width);
                 }
             }
@@ -71,11 +72,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             wmservice.forceRedraw();
         };
 
-
         wmservice.updateSingleChartSize = function (dId, wId, newWidth) {
             var widget = wmservice.getWidget(dId, wId);
             widget.options.chart.width = newWidth;
-
+            widget.options.innercontainer.width = newWidth - 50;
             wmservice.forceRedraw();
         };
 
@@ -119,7 +119,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                                         selectors1: [
                                             { textFilters: [], numericalFilters: [] }],
                                         serviceParams: {
-                                            'measurementService.nextFactor': 0, 'aggregateService.sessionId': 'defaultSid', 'aggregateService.granularity': 'auto', 'aggregateService.groupby': 'name', 'aggregateService.cpu': '1', 'aggregateService.partition': '8', 'aggregateService.timeout': '600' 
+                                            'measurementService.nextFactor': '0', 'aggregateService.sessionId': 'defaultSid', 'aggregateService.granularity': 'auto', 'aggregateService.groupby': 'name', 'aggregateService.cpu': '1', 'aggregateService.partition': '8', 'aggregateService.timeout': '600' 
                                         }
                                     }
                                 },

@@ -42,7 +42,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                         method: 'Get',
                         data: 'data to post'
                     },
-                    postproc: {
+                    postproc:{
                         dataaccess: 'path to array',
                         keyaccess: 'path to keys',
                         valueaccess: 'path to values'
@@ -85,18 +85,18 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.postProcess = function () {
                     var retData = [];
 
-                    var accessor = $scope.resolve($scope.response, $scope.currentquery.dataaccess);
+                    var accessor = $scope.resolve($scope.response, $scope.currentquery.postproc.dataaccess);
 
                     //Data is represented as an array of {x,y} pairs.
                     for (var i = 0; i < accessor.length; i++) {
-                        retData.push({ x: $scope.resolve(accessor[i], $scope.currentquery.keyaccess), y: $scope.resolve(accessor[i], $scope.currentquery.valueaccess) });
+                        retData.push({ x: $scope.resolve(accessor[i], $scope.currentquery.postproc.keyaccess), y: $scope.resolve(accessor[i], $scope.currentquery.postproc.valueaccess) });
                     }
 
                     //Line chart data should be sent as an array of series objects.
                     return [
                         {
                             values: retData,      //values - represents the array of {x,y} data points
-                            key: $scope.currentquery.valueaccess, //key  - the name of the series.
+                            key: $scope.currentquery.postproc.valueaccess, //key  - the name of the series.
                             color: '#ff7f0e',  //color - optional: choose your own line color.
                             strokeWidth: 2,
                             classed: 'dashed'
