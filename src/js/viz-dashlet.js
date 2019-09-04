@@ -1,6 +1,16 @@
 var vizDashletscripts = document.getElementsByTagName("script")
 var vizDashletcurrentScriptPath = vizDashletscripts[vizDashletscripts.length - 1].src;
 
+var resolve = function (obj, path) {
+    path = path.split('.');
+    var current = obj;
+    while (path.length) {
+        if (typeof current !== 'object') return undefined;
+        current = current[path.shift()];
+    }
+    return current;
+};
+
 angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
     .directive('vizDashlet', function () {
@@ -16,6 +26,10 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.redraw = 'drawn';
 
                 $scope.dashlettabstate = $scope.state.tabindex;
+
+                $scope.$on('childevent', function (event, arg) {
+                    $scope.$broadcast(arg.target + 'event', arg);
+                });
 
                 $scope.saveState = function () {
                     $scope.state.tabindex = $scope.dashlettabstate;
@@ -38,29 +52,19 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     datasource: {
                         inputtype: 'Raw',
                         type: 'Simple',
-                        url: 'please enter URL',
+                        url: '/mock_data2.json',
                         method: 'Get',
-                        data: 'data to post'
+                        data: ''
                     },
-                    postproc:{
-                        dataaccess: 'path to array',
-                        seriesaccess: 'grouping attribute',
-                        keyaccess: 'path to keys',
-                        valueaccess: 'path to values'
+                    postproc: {
+                        dataaccess: 'data.data.payload',
+                        seriesaccess: 'name',
+                        keyaccess: 'begin',
+                        valueaccess: 'value'
                     }
                 };
 
                 $scope.counter = 0;
-
-                // option 1
-                $scope.$on('queryevent', function(event, arg) {
-                    if(arg.target === 'query' || arg.target === 'all'){
-                        //$scope[arg.modelname] = arg[modelname];
-                    }
-                });
-
-                // option2 
-                // listen directly on config control?
 
                 $scope.loadQueryPreset = function (querypreset) {
                     $scope.currentquery = querypreset;
@@ -75,8 +79,6 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                                 $scope.response = response;
                                 $scope.rawresponse = JSON.stringify(response);
                                 $scope.state.data = $scope.postProcess();
-                                
-                    console.log($scope.state.data);
                             }, function (response) {
                                 // send to info pane using factory / service
                                 console.log('error:' + JSON.stringify(response));
@@ -88,8 +90,6 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                                 $scope.response = response;
                                 $scope.rawresponse = JSON.stringify(response);
                                 $scope.state.data = $scope.postProcess();
-                                
-                    console.log($scope.state.data);
                             }, function (response) {
                                 // send to info pane using factory / service
                                 console.log('error:' + JSON.stringify(response));
@@ -101,38 +101,53 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.postProcess = function () {
                     var retData = [];
                     var index = {};
-                    var accessor = $scope.resolve($scope.response, $scope.currentquery.postproc.dataaccess);
+                    var accessor = resolve($scope.response, $scope.currentquery.postproc.dataaccess);
 
                     //Data is represented as an array of {x,y} pairs.
                     for (var i = 0; i < accessor.length; i++) {
-                        var curSeries = $scope.resolve(accessor[i], $scope.currentquery.postproc.seriesaccess);
-                        if(!index[curSeries]){
+                        var curSeries = resolve(accessor[i], $scope.currentquery.postproc.seriesaccess);
+                        if (!index[curSeries]) {
                             retData.push({
                                 values: [],
                                 key: curSeries,
                                 color: '#ff7f0e',
                                 strokeWidth: 2,
-                                classed: 'dashed'});
+                                classed: 'dashed'
+                            });
                             index[curSeries] = retData.length - 1;
                         }
-                        retData[index[curSeries]].values.push({ x: $scope.resolve(accessor[i], $scope.currentquery.postproc.keyaccess), y: $scope.resolve(accessor[i], $scope.currentquery.postproc.valueaccess) });
+                        retData[index[curSeries]].values.push({ x: resolve(accessor[i], $scope.currentquery.postproc.keyaccess), y: resolve(accessor[i], $scope.currentquery.postproc.valueaccess) });
                     }
 
                     //Line chart data should be sent as an array of series objects.
                     return retData;
                 };
-
-                $scope.resolve = function (obj, path) {
-                    path = path.split('.');
-                    var current = obj;
-                    while (path.length) {
-                        if (typeof current !== 'object') return undefined;
-                        current = current[path.shift()];
-                    }
-                    return current;
-                };
             }
         }
+    })
+    .directive('vizView', function () {
+        return {
+            restric: 'E',
+            scope: {
+                options: '=',
+                state: '='
+            },
+            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-view.html'),
+            controller: function ($scope) {
+
+                // Default
+                $scope.configdisplaytype = 'LineChart';
+                
+                // option 1
+                $scope.$on('viewevent', function (event, arg) {
+                    $scope[arg.modelname] = arg[arg.modelname];
+                });
+
+                // option2 
+                // listen directly on config control?
+
+            }
+        };
     })
     .directive('vizConfig', function () {
         return {
@@ -147,19 +162,14 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 // Default state, before loading any presets
                 $scope.currentconfig = {
                     display: {
-                        type: 'Table',
+                        type: 'LineChart',
                         autorefresh: 'Off'
                     }
                 };
 
-                $scope.loadConfigPreset = function(preset) {
+                $scope.loadConfigPreset = function (preset) {
                     $scope.currentconfig = preset;
                 };
-
-                $scope.$on('childevent', function(event, arg) {
-                        console.log(arg);
-                        //$scope.$broadcast('childevent', arg);
-                });
             }
         }
     })
