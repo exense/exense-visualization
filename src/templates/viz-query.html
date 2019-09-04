@@ -1,11 +1,10 @@
 <uib-accordion>
-    <div uib-accordion-group class="panel-default" heading="Presets" is-open="presets.status.isFirstOpen" is-disabled="status.isFirstDisabled">
+    <div uib-accordion-group class="panel-default" heading="Presets" is-open="presets.status.isFirstOpen" is-disabled="presets.status.isFirstDisabled">
         <div class="form-wrapper">
             <div class="form-group center-block">
                 <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
 
                     <div class="row">
-
                         <div class="col-md-12 colcontain-contents">
                             <div class="btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
                                 <button id="load-query" type="button" class="btn btn-primary" uib-dropdown-toggle
@@ -16,6 +15,8 @@
                                     <h5 ng-repeat="qp in state.presets.queries" ng-click="loadQueryPreset(qp)">{{qp.name}}</h5>
                                 </ul>
                             </div>
+
+                            <!-- Allow the addition of controls as "plugin"?
                             <div class="btn-group form-radio" uib-dropdown is-open="lc.status.isopen">
                                 <button id="load-controls" type="button" class="btn btn-primary" uib-dropdown-toggle
                                     ng-disabled="disabled">
@@ -25,6 +26,8 @@
                                     <h5 ng-repeat="p in state.presets.controls" ng-click="loadControlsPreset(p)">{{p.name}}</h5>
                                 </ul>
                             </div>
+                            -->
+                            <!-- allow loading templates without changing / removing entire query?
                             <div class="btn-group form-radio" uib-dropdown is-open="lt.status.isopen">
                                 <button id="load-template" type="button" class="btn btn-primary" uib-dropdown-toggle
                                     ng-disabled="disabled">
@@ -34,6 +37,7 @@
                                     <h5 ng-repeat="p in state.presets.templates" ng-click="loadTemplatePreset(p)">{{p.name}}</h5>
                                 </ul>
                             </div>
+                            -->
                         </div>
                     </div>
                 </div>
@@ -43,7 +47,7 @@
 </uib-accordion>
 <uib-accordion>
     <div uib-accordion-group class="panel-default" heading="Datasource" is-open="datasource.status.isFirstOpen"
-        is-disabled="status.isFirstDisabled">
+        is-disabled="datasource.status.isFirstDisabled">
         <div class="form-wrapper">
             <div class="form-group center-block">
                 <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
@@ -53,9 +57,12 @@
                         <div class="col-md-4 colcontain-grid">
                             <label>Input type</label>
                             <div class="btn-group form-radio">
-                                <label class="btn btn-primary" ng-model="currentquery.datasource.inputtype" uib-btn-radio="'Raw'">Raw</label>
-                                <label class="btn btn-primary" ng-model="currentquery.datasource.inputtype" uib-btn-radio="'Controls'">Controls</label>
-                                <label class="btn btn-primary" ng-model="currentquery.datasource.inputtype" uib-btn-radio="'Template'">Template</label>
+                                <label class="btn btn-primary" ng-model="currentquery.datasource.inputtype"
+                                    uib-btn-radio="'Raw'">Raw</label>
+                                <label class="btn btn-primary" ng-model="currentquery.datasource.inputtype"
+                                    uib-btn-radio="'Controls'">Controls</label>
+                                <label class="btn btn-primary" ng-model="currentquery.datasource.inputtype"
+                                    uib-btn-radio="'Template'">Template</label>
                             </div>
                         </div>
                         <div class="col-md-3 colcontain-grid">
@@ -125,24 +132,30 @@
 </uib-accordion>
 <uib-accordion>
     <div uib-accordion-group class="panel-default" heading="Post-processing" is-open="postproc.status.isFirstOpen"
-        is-disabled="status.isFirstDisabled">
+        is-disabled="postproc.status.isFirstDisabled">
         <div class="form-wrapper">
             <div class="form-group center-block">
                 <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
                     <div class="row">
-                        <div class="col-md-4 colcontain-grid">
+                        <div class="col-md-3 colcontain-grid">
                             <div class="btn-group">
                                 <label>Data accessor</label>
                                 <input type="text" ng-model="currentquery.postproc.dataaccess" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-4 colcontain-grid">
+                                <div class="btn-group">
+                                    <label>Series accessor</label>
+                                    <input type="text" ng-model="currentquery.postproc.seriesaccess" class="form-control" />
+                                </div>
+                            </div>
+                        <div class="col-md-3 colcontain-grid">
                             <div class="btn-group">
-                                <label>Series accessor</label>
+                                <label>Keys accessor</label>
                                 <input type="text" ng-model="currentquery.postproc.keyaccess" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-md-4 colcontain-grid">
+                        <div class="col-md-3 colcontain-grid">
                             <div class="btn-group">
                                 <label>Value accessor</label>
                                 <input type="text" ng-model="currentquery.postproc.valueaccess" class="form-control" />
@@ -155,7 +168,7 @@
     </div>
 </uib-accordion>
 <uib-accordion>
-    <div uib-accordion-group class="panel-default" heading="Response" is-open="response.status.isFirstOpen" is-disabled="status.isFirstDisabled">
+    <div uib-accordion-group class="panel-default" heading="Response" is-open="respaccord.status.isFirstOpen" is-disabled="respaccord.status.isFirstDisabled">
         <div class="form-wrapper">
             <p class="form-group">
                 <label>Raw</label> {{counter}}

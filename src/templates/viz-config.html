@@ -1,0 +1,59 @@
+<uib-accordion>
+    <div uib-accordion-group class="panel-default" heading="Presets" is-open="presets.status.isFirstOpen" is-disabled="status.isFirstDisabled">
+        <div class="form-wrapper">
+            <div class="form-group center-block">
+                <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
+
+                    <div class="row">
+
+                        <div class="col-md-12 colcontain-contents">
+                            <div class="btn-group form-radio" uib-dropdown is-open="display.status.isopen">
+                                <button id="load-config" type="button" class="btn btn-primary" uib-dropdown-toggle
+                                    ng-disabled="disabled">
+                                    Load config... <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-config">
+                                    <h5 ng-repeat="c in state.presets.configs" ng-click="loadConfigPreset(c)">{{c.name}}</h5>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</uib-accordion>
+<uib-accordion>
+    <div uib-accordion-group class="panel-default" heading="Display" is-open="config.status.isFirstOpen" is-disabled="config.status.isFirstDisabled">
+        <div class="form-wrapper">
+            <div class="form-group center-block">
+                <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
+
+                    <div class="row">
+
+                        <div class="col-md-4 colcontain-grid">
+                            <label>Type</label>
+                            <div class="btn-group form-radio" ng-click="$emit('childevent', { 'target' : 'query', 'modelname' : 'config-display-type', 'config-display-type' : currentconfig.display.type})">
+                                <label class="btn btn-primary" ng-model="currentconfig.display.type" uib-btn-radio="'Table'"
+                                    ng-click="emit('childevent', { 'config.display.type' : currentconfig.display.type})">Table</label>
+                                <label class="btn btn-primary" ng-model="currentconfig.display.type" uib-btn-radio="'LineChart'"
+                                    ng-click="emit('childevent', { 'config.display.type' : currentconfig.display.type})">LineChart</label>
+                                <label class="btn btn-primary" ng-model="currentconfig.display.type" uib-btn-radio="'BarChart'"
+                                    ng-click="emit('childevent', { 'config.display.type' : currentconfig.display.type})">BarChart</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 colcontain-grid">
+                            <label>Autorefresh</label>
+                            <div class="btn-group form-radio">
+                                <label class="btn btn-primary" ng-model="currentconfig.display.autorefresh"
+                                    uib-btn-radio="'On'">On</label>
+                                <label class="btn btn-primary" ng-model="currentconfig.display.autorefresh"
+                                    uib-btn-radio="'Off'">Off</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</uib-accordion>

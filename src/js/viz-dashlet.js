@@ -44,12 +44,23 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     },
                     postproc:{
                         dataaccess: 'path to array',
+                        seriesaccess: 'grouping attribute',
                         keyaccess: 'path to keys',
                         valueaccess: 'path to values'
                     }
                 };
 
                 $scope.counter = 0;
+
+                // option 1
+                $scope.$on('queryevent', function(event, arg) {
+                    if(arg.target === 'query' || arg.target === 'all'){
+                        //$scope[arg.modelname] = arg[modelname];
+                    }
+                });
+
+                // option2 
+                // listen directly on config control?
 
                 $scope.loadQueryPreset = function (querypreset) {
                     $scope.currentquery = querypreset;
@@ -64,6 +75,8 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                                 $scope.response = response;
                                 $scope.rawresponse = JSON.stringify(response);
                                 $scope.state.data = $scope.postProcess();
+                                
+                    console.log($scope.state.data);
                             }, function (response) {
                                 // send to info pane using factory / service
                                 console.log('error:' + JSON.stringify(response));
@@ -75,6 +88,8 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                                 $scope.response = response;
                                 $scope.rawresponse = JSON.stringify(response);
                                 $scope.state.data = $scope.postProcess();
+                                
+                    console.log($scope.state.data);
                             }, function (response) {
                                 // send to info pane using factory / service
                                 console.log('error:' + JSON.stringify(response));
@@ -82,26 +97,29 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     }
                 };
 
+                // add switch: array of series or array of elements with series as attribute
                 $scope.postProcess = function () {
                     var retData = [];
-
+                    var index = {};
                     var accessor = $scope.resolve($scope.response, $scope.currentquery.postproc.dataaccess);
 
                     //Data is represented as an array of {x,y} pairs.
                     for (var i = 0; i < accessor.length; i++) {
-                        retData.push({ x: $scope.resolve(accessor[i], $scope.currentquery.postproc.keyaccess), y: $scope.resolve(accessor[i], $scope.currentquery.postproc.valueaccess) });
+                        var curSeries = $scope.resolve(accessor[i], $scope.currentquery.postproc.seriesaccess);
+                        if(!index[curSeries]){
+                            retData.push({
+                                values: [],
+                                key: curSeries,
+                                color: '#ff7f0e',
+                                strokeWidth: 2,
+                                classed: 'dashed'});
+                            index[curSeries] = retData.length - 1;
+                        }
+                        retData[index[curSeries]].values.push({ x: $scope.resolve(accessor[i], $scope.currentquery.postproc.keyaccess), y: $scope.resolve(accessor[i], $scope.currentquery.postproc.valueaccess) });
                     }
 
                     //Line chart data should be sent as an array of series objects.
-                    return [
-                        {
-                            values: retData,      //values - represents the array of {x,y} data points
-                            key: $scope.currentquery.postproc.valueaccess, //key  - the name of the series.
-                            color: '#ff7f0e',  //color - optional: choose your own line color.
-                            strokeWidth: 2,
-                            classed: 'dashed'
-                        }
-                    ];
+                    return retData;
                 };
 
                 $scope.resolve = function (obj, path) {
@@ -113,6 +131,35 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     }
                     return current;
                 };
+            }
+        }
+    })
+    .directive('vizConfig', function () {
+        return {
+            restric: 'E',
+            scope: {
+                formwidth: '=',
+                state: '='
+            },
+            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-config.html'),
+            controller: function ($scope, $http) {
+
+                // Default state, before loading any presets
+                $scope.currentconfig = {
+                    display: {
+                        type: 'Table',
+                        autorefresh: 'Off'
+                    }
+                };
+
+                $scope.loadConfigPreset = function(preset) {
+                    $scope.currentconfig = preset;
+                };
+
+                $scope.$on('childevent', function(event, arg) {
+                        console.log(arg);
+                        //$scope.$broadcast('childevent', arg);
+                });
             }
         }
     })

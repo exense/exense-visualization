@@ -117,22 +117,33 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                                     method: 'Post',
                                     data: {
                                         selectors1: [
-                                            { textFilters: [], numericalFilters: [] }],
+                                            { textFilters: [
+                                                {'key':'eId','value':'JUnit_Dynamic','regex':'false'}, {'key':'name','value':'Transaction_1','regex':'false'}
+                                            ], numericalFilters: [] }],
                                         serviceParams: {
-                                            'measurementService.nextFactor': '0', 'aggregateService.sessionId': 'defaultSid', 'aggregateService.granularity': 'auto', 'aggregateService.groupby': 'name', 'aggregateService.cpu': '1', 'aggregateService.partition': '8', 'aggregateService.timeout': '600' 
+                                            'measurementService.nextFactor': '0', 'aggregateService.sessionId': 'defaultSid', 'aggregateService.granularity': 'auto', 'aggregateService.groupby': 'name', 'aggregateService.cpu': '1', 'aggregateService.partition': '8', 'aggregateService.timeout': '600'
                                         }
                                     }
                                 },
                                 postproc: {
                                     dataaccess: 'data.payload',
+                                    seriesaccess: 'name',
                                     keyaccess: 'begin',
                                     valueaccess: 'value'
                                 }
                             }
+                        ],
+                        configs: [
+                            {
+                                name: 'defaultConfig',
+                                display: {
+                                    type: 'LineChart',
+                                    autorefresh: 'Off'
+                                }
+                            }
                         ]
                     }
-                }
-                ,
+                },
                 options: new DefaultOptions(wmservice.chartHeightSmall, wmservice.chartWidthSmall, wmservice.innerContainerHeightSmall, wmservice.innerContainerWidthSmall),
                 title: {
                     enable: true,

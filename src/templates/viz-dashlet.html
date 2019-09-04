@@ -20,13 +20,7 @@
             <span class="glyphicon glyphicon-cog glyphicon-viz"></span><span style="margin-left: 5px;">Config</span>
         </uib-tab-heading>
         <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
-            <h4>Visualization</h4>
-            <pre>Type</pre>
-            <div class="btn-group">
-                <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Left'">Table</label>
-                <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Middle'">LineChart</label>
-                <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Right'">BarChart</label>
-            </div>
+            <viz-config formwidth="options.innercontainer.width" state="state"></viz-config>
         </div>
     </uib-tab>
     <uib-tab index="3">
