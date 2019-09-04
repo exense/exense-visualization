@@ -42,7 +42,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                         method: 'Get',
                         data: 'data to post'
                     },
-                    postproc:{
+                    postproc: {
                         dataaccess: 'path to array',
                         keyaccess: 'path to keys',
                         valueaccess: 'path to values'
@@ -57,16 +57,29 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
                 $scope.fireQuery = function () {
                     $scope.counter++;
-                    $http.get($scope.currentquery.url)
-                        .then(function (response) {
-                            $scope.response = response;
-                            $scope.rawresponse = JSON.stringify(response);
-                            $scope.state.data = $scope.postProcess();
-                        }, function (response) {
-                            // send to info pane using factory / service
-                            console.log('error:' + JSON.stringify(response));
-                        }
-                        );
+
+                    if ($scope.currentquery.datasource.method === 'Get') {
+                        $http.get($scope.currentquery.datasource.url)
+                            .then(function (response) {
+                                $scope.response = response;
+                                $scope.rawresponse = JSON.stringify(response);
+                                $scope.state.data = $scope.postProcess();
+                            }, function (response) {
+                                // send to info pane using factory / service
+                                console.log('error:' + JSON.stringify(response));
+                            });
+                    }
+                    if ($scope.currentquery.datasource.method === 'Post') {
+                        $http.post($scope.currentquery.datasource.url, $scope.currentquery.datasource.data)
+                            .then(function (response) {
+                                $scope.response = response;
+                                $scope.rawresponse = JSON.stringify(response);
+                                $scope.state.data = $scope.postProcess();
+                            }, function (response) {
+                                // send to info pane using factory / service
+                                console.log('error:' + JSON.stringify(response));
+                            });
+                    }
                 };
 
                 $scope.postProcess = function () {
