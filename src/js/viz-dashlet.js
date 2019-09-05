@@ -22,39 +22,13 @@ var getMockQuery = function () {
             "inputtype": "Raw",
             "type": "Simple",
             "datasource": {
-                "url": "/rtm/rest/measurement/find",
-                "method": "Post",
+                "url": "/mocks/001_QUERY_Simple_RTM_Measurements.json",
+                "method": "Get",
                 "data": {
-                    "selectors1": [
-                        {
-                            "textFilters": [
-                                {
-                                    "key": "eId",
-                                    "value": "JUnit_Dynamic",
-                                    "regex": "false"
-                                },
-                                {
-                                    "key": "name",
-                                    "value": "Transaction_1",
-                                    "regex": "false"
-                                }
-                            ],
-                            "numericalFilters": []
-                        }
-                    ],
-                    "serviceParams": {
-                        "measurementService.nextFactor": "0",
-                        "aggregateService.sessionId": "defaultSid",
-                        "aggregateService.granularity": "auto",
-                        "aggregateService.groupby": "name",
-                        "aggregateService.cpu": "1",
-                        "aggregateService.partition": "8",
-                        "aggregateService.timeout": "600"
-                    }
                 },
                 "postproc": {
                     "lineChart": {
-                        "function": "function test() {alert('chart');}",
+                        "function": "function(input){return input + \"awesome\"}",
                         "abs": {
                             "title": "time",
                             "unit": "seconds"
@@ -66,12 +40,12 @@ var getMockQuery = function () {
                         "transformations": [
                             {
                                 "path": "timestamp",
-                                "function": "function test() {Math.random().toString(36).substr(2, 9);}"
+                                "function": "function () {Math.random().toString(36).substr(2, 9);}"
                             }
                         ]
                     },
                     "table": {
-                        "function": "function test() {alert('chart');}",
+                        "function": "function() {console.log('chart');}",
                         "defaults": [
                             {
                                 "sortBy": "name"
@@ -80,7 +54,7 @@ var getMockQuery = function () {
                         "transformations": [
                             {
                                 "path": "timestamp",
-                                "function": "function test() {Math.random().toString(36).substr(2, 9);}"
+                                "function": "function() {Math.random().toString(36).substr(2, 9);}"
                             }
                         ]
                     }
@@ -143,7 +117,8 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                             .then(function (response) {
                                 $scope.response = response;
                                 $scope.rawresponse = JSON.stringify(response);
-                                $scope.postProcess();
+                                //$scope.state.data = $scope.postProcess();
+                                $scope.runPostProcs(response);
                             }, function (response) {
                                 // send to info pane using factory / service
                                 console.log('error:' + JSON.stringify(response));
@@ -154,12 +129,25 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                             .then(function (response) {
                                 $scope.response = response;
                                 $scope.rawresponse = JSON.stringify(response);
-                                $scope.state.data = $scope.postProcess();
+                                //$scope.state.data = $scope.postProcess();
+                                $scope.runPostProcs(response);
                             }, function (response) {
                                 // send to info pane using factory / service
                                 console.log('error:' + JSON.stringify(response));
                             });
                     }
+                };
+
+                $scope.runPostProcs = function(response){
+                    console.log($scope.currentquery.datasource.postproc.lineChart.function);
+                    var evaluated = eval('('+$scope.currentquery.datasource.postproc.lineChart.function+')(response)');
+                    
+                    console.log(evaluated)
+
+                    //var abcd = 'toto';
+                    //var res = eval('(function(input){return input + "awesome"})(abcd)');
+                    //console.log(res)
+
                 };
 
                 // add switch: array of series or array of elements with series as attribute
