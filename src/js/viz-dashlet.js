@@ -22,7 +22,7 @@ var getMockQuery = function () {
             "inputtype": "Raw",
             "type": "Simple",
             "datasource": {
-                "url": "/mocks/001_QUERY_Simple_RTM_Measurements.json",
+                "url": "/mocks/001_RESPONSE_Simple_RTM_Measurements.json",
                 "method": "Get",
                 "data": {
                 },
@@ -159,7 +159,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 };
 
                 $scope.runPostProcs = function (response) {
-                    console.log($scope.currentquery.datasource.postproc.lineChart.function);
+                    //if($scope.state.chartData)
                     $scope.state.data = eval('(' + $scope.currentquery.datasource.postproc.lineChart.function + ')(response)');
 
                     //var abcd = 'toto';
@@ -236,7 +236,6 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 }
                 ngModel.$parsers.push(into);
                 ngModel.$formatters.push(out);
-
             }
         };
     });
