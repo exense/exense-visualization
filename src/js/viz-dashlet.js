@@ -11,12 +11,12 @@ var resolve = function (obj, path) {
     return current;
 };
 
-var getUniqueId = function(){
+var getUniqueId = function () {
     return Math.random().toString(36).substr(2, 9);
 }
 
 var getMockQuery = function () {
-    return{
+    return {
         "name": "RTM Measurements",
         "query": {
             "inputtype": "Raw",
@@ -28,7 +28,27 @@ var getMockQuery = function () {
                 },
                 "postproc": {
                     "lineChart": {
-                        "function": "function(input){return input + \"awesome\"}",
+                        "function": "function(response){\
+                            console.log(response.data.payload);\
+                            var retData = [];\
+                            var index = {};\
+                            var payload = response.data.payload;\
+                            for (var i = 0; i < payload.length; i++) {\
+                                var curSeries = payload[i].name;\
+                                if (!index[curSeries]) {\
+                                    retData.push({\
+                                        values: [],\
+                                        key: curSeries,\
+                                        color: '#ff7f0e',\
+                                        strokeWidth: 2,\
+                                        classed: 'dashed'\
+                                    });\
+                                    index[curSeries] = retData.length - 1;\
+                                }\
+                                retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });\
+                            }\
+                        return retData;\
+                        }",
                         "abs": {
                             "title": "time",
                             "unit": "seconds"
@@ -138,11 +158,9 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     }
                 };
 
-                $scope.runPostProcs = function(response){
+                $scope.runPostProcs = function (response) {
                     console.log($scope.currentquery.datasource.postproc.lineChart.function);
-                    var evaluated = eval('('+$scope.currentquery.datasource.postproc.lineChart.function+')(response)');
-                    
-                    console.log(evaluated)
+                    $scope.state.data = eval('(' + $scope.currentquery.datasource.postproc.lineChart.function + ')(response)');
 
                     //var abcd = 'toto';
                     //var res = eval('(function(input){return input + "awesome"})(abcd)');
@@ -152,28 +170,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
                 // add switch: array of series or array of elements with series as attribute
                 $scope.postProcess = function () {
-                    var retData = [];
-                    var index = {};
-                    var accessor = resolve($scope.response, $scope.currentquery.postproc.dataaccess);
 
-                    //Data is represented as an array of {x,y} pairs.
-                    for (var i = 0; i < accessor.length; i++) {
-                        var curSeries = resolve(accessor[i], $scope.currentquery.postproc.seriesaccess);
-                        if (!index[curSeries]) {
-                            retData.push({
-                                values: [],
-                                key: curSeries,
-                                color: '#ff7f0e',
-                                strokeWidth: 2,
-                                classed: 'dashed'
-                            });
-                            index[curSeries] = retData.length - 1;
-                        }
-                        retData[index[curSeries]].values.push({ x: resolve(accessor[i], $scope.currentquery.postproc.keyaccess), y: resolve(accessor[i], $scope.currentquery.postproc.valueaccess) });
-                    }
-
-                    //Line chart data should be sent as an array of series objects.
-                    $scope.state.data = retData;
                 };
             }
         }
