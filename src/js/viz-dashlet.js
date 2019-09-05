@@ -11,6 +11,85 @@ var resolve = function (obj, path) {
     return current;
 };
 
+var getUniqueId = function(){
+    return Math.random().toString(36).substr(2, 9);
+}
+
+var getMockQuery = function () {
+    return{
+        "name": "RTM Measurements",
+        "query": {
+            "inputtype": "Raw",
+            "type": "Simple",
+            "datasource": {
+                "url": "/rtm/rest/measurement/find",
+                "method": "Post",
+                "data": {
+                    "selectors1": [
+                        {
+                            "textFilters": [
+                                {
+                                    "key": "eId",
+                                    "value": "JUnit_Dynamic",
+                                    "regex": "false"
+                                },
+                                {
+                                    "key": "name",
+                                    "value": "Transaction_1",
+                                    "regex": "false"
+                                }
+                            ],
+                            "numericalFilters": []
+                        }
+                    ],
+                    "serviceParams": {
+                        "measurementService.nextFactor": "0",
+                        "aggregateService.sessionId": "defaultSid",
+                        "aggregateService.granularity": "auto",
+                        "aggregateService.groupby": "name",
+                        "aggregateService.cpu": "1",
+                        "aggregateService.partition": "8",
+                        "aggregateService.timeout": "600"
+                    }
+                },
+                "postproc": {
+                    "lineChart": {
+                        "function": "function test() {alert('chart');}",
+                        "abs": {
+                            "title": "time",
+                            "unit": "seconds"
+                        },
+                        "ord": {
+                            "title": "duration",
+                            "unit": "ms"
+                        },
+                        "transformations": [
+                            {
+                                "path": "timestamp",
+                                "function": "function test() {Math.random().toString(36).substr(2, 9);}"
+                            }
+                        ]
+                    },
+                    "table": {
+                        "function": "function test() {alert('chart');}",
+                        "defaults": [
+                            {
+                                "sortBy": "name"
+                            }
+                        ],
+                        "transformations": [
+                            {
+                                "path": "timestamp",
+                                "function": "function test() {Math.random().toString(36).substr(2, 9);}"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    };
+}
+
 angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
     .directive('vizDashlet', function () {
@@ -44,25 +123,11 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 formwidth: '=',
                 state: '='
             },
-            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-query.html'),
+            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-query.html') + '?anticache=' + getUniqueId(),
             controller: function ($scope, $http) {
 
-                // Default state, before loading and presets
-                $scope.currentquery = {
-                    datasource: {
-                        inputtype: 'Raw',
-                        type: 'Simple',
-                        url: '/mock_data2.json',
-                        method: 'Get',
-                        data: ''
-                    },
-                    postproc: {
-                        dataaccess: 'data.data.payload',
-                        seriesaccess: 'name',
-                        keyaccess: 'begin',
-                        valueaccess: 'value'
-                    }
-                };
+                // Init
+                $scope.currentquery = getMockQuery().query;
 
                 $scope.counter = 0;
 
@@ -78,7 +143,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                             .then(function (response) {
                                 $scope.response = response;
                                 $scope.rawresponse = JSON.stringify(response);
-                                $scope.state.data = $scope.postProcess();
+                                $scope.postProcess();
                             }, function (response) {
                                 // send to info pane using factory / service
                                 console.log('error:' + JSON.stringify(response));
@@ -120,7 +185,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     }
 
                     //Line chart data should be sent as an array of series objects.
-                    return retData;
+                    $scope.state.data = retData;
                 };
             }
         }
@@ -137,7 +202,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
                 // Default
                 $scope.configdisplaytype = 'LineChart';
-                
+
                 // option 1
                 $scope.$on('viewevent', function (event, arg) {
                     $scope[arg.modelname] = arg[arg.modelname];

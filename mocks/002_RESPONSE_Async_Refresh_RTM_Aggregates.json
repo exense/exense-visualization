@@ -1,0 +1,1260 @@
+{
+    "status": "SUCCESS",
+    "metaMessage": "Found stream with id=025bc36b-7586-4b48-8d4c-3cca5daef37c. Delivering payload at time=1567669857191",
+    "payload": {
+        "stream": {
+            "streamData": {
+                "1567669833837": {
+                    "Echo": {
+                        "tpm": 1318.6814,
+                        "avg": 5,
+                        "min": 4,
+                        "max": 7,
+                        "tps": 21.978022,
+                        "cnt": 2,
+                        "sum": 11,
+                        "80th pcl": 4,
+                        "50th pcl": 4,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Get": {
+                        "tpm": 1318.6814,
+                        "avg": 5,
+                        "min": 5,
+                        "max": 6,
+                        "tps": 21.978022,
+                        "cnt": 2,
+                        "sum": 11,
+                        "80th pcl": 5,
+                        "50th pcl": 5,
+                        "90th pcl": 5,
+                        "99th pcl": 5
+                    },
+                    "EBC_Put": {
+                        "tpm": 1318.6814,
+                        "avg": 18,
+                        "min": 4,
+                        "max": 33,
+                        "tps": 21.978022,
+                        "cnt": 2,
+                        "sum": 37,
+                        "80th pcl": 4,
+                        "50th pcl": 4,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    }
+                },
+                "1567669833928": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 12,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 11,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 4,
+                        "min": 4,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 13,
+                        "80th pcl": 4,
+                        "50th pcl": 4,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    }
+                },
+                "1567669834019": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 11,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 4,
+                        "min": 3,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 13,
+                        "80th pcl": 5,
+                        "50th pcl": 3,
+                        "90th pcl": 5,
+                        "99th pcl": 5
+                    }
+                },
+                "1567669834110": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 11,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 4,
+                        "min": 3,
+                        "max": 5,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 16,
+                        "80th pcl": 4,
+                        "50th pcl": 4,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    }
+                },
+                "1567669834201": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 11,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 13,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 11,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    }
+                },
+                "1567669834292": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 8,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 4,
+                        "min": 3,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 12,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 6,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 11,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669834383": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 11,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 4,
+                        "min": 4,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 14,
+                        "80th pcl": 5,
+                        "50th pcl": 4,
+                        "90th pcl": 5,
+                        "99th pcl": 5
+                    }
+                },
+                "1567669834474": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 5,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 14,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 11,
+                        "80th pcl": 4,
+                        "50th pcl": 2,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 4,
+                        "min": 3,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 12,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    }
+                },
+                "1567669834565": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 8,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 13,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 13,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669834656": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 11,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 5,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 14,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    }
+                },
+                "1567669834747": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 13,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669834838": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 11,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 4,
+                        "min": 3,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 12,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    }
+                },
+                "1567669834929": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 4,
+                        "min": 3,
+                        "max": 5,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 12,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 11,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    }
+                },
+                "1567669835020": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 13,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 8,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 5,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 14,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669835111": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 11,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669835202": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 13,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669835293": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 10,
+                        "80th pcl": 4,
+                        "50th pcl": 2,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 12,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 13,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669835384": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 12,
+                        "min": 3,
+                        "max": 31,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 37,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669835475": {
+                    "Echo": {
+                        "tpm": 1318.6814,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 21.978022,
+                        "cnt": 2,
+                        "sum": 6,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1318.6814,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 21.978022,
+                        "cnt": 2,
+                        "sum": 7,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1318.6814,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 21.978022,
+                        "cnt": 2,
+                        "sum": 6,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669835566": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 11,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 11,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669835657": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 9,
+                        "80th pcl": 2,
+                        "50th pcl": 2,
+                        "90th pcl": 2,
+                        "99th pcl": 2
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 12,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 12,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669835748": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 12,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669835839": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 4,
+                        "min": 4,
+                        "max": 4,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 12,
+                        "80th pcl": 4,
+                        "50th pcl": 4,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 13,
+                        "80th pcl": 4,
+                        "50th pcl": 3,
+                        "90th pcl": 4,
+                        "99th pcl": 4
+                    }
+                },
+                "1567669835930": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 8,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669836021": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 12,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 12,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669836112": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 9,
+                        "80th pcl": 2,
+                        "50th pcl": 2,
+                        "90th pcl": 2,
+                        "99th pcl": 2
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 12,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 12,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669836203": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 10,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 7,
+                        "80th pcl": 2,
+                        "50th pcl": 2,
+                        "90th pcl": 2,
+                        "99th pcl": 2
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 13,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669836294": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 11,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 8,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669836385": {
+                    "Echo": {
+                        "tpm": 2637.3628,
+                        "avg": 3,
+                        "min": 2,
+                        "max": 4,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 12,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 9,
+                        "80th pcl": 2,
+                        "50th pcl": 2,
+                        "90th pcl": 2,
+                        "99th pcl": 2
+                    },
+                    "EBC_Put": {
+                        "tpm": 2637.3628,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 43.956043,
+                        "cnt": 4,
+                        "sum": 11,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                },
+                "1567669836476": {
+                    "Echo": {
+                        "tpm": 1978.0221,
+                        "avg": 3,
+                        "min": 3,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 9,
+                        "80th pcl": 3,
+                        "50th pcl": 3,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    },
+                    "EBC_Get": {
+                        "tpm": 1978.0221,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 2,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 6,
+                        "80th pcl": 2,
+                        "50th pcl": 2,
+                        "90th pcl": 2,
+                        "99th pcl": 2
+                    },
+                    "EBC_Put": {
+                        "tpm": 1978.0221,
+                        "avg": 2,
+                        "min": 2,
+                        "max": 3,
+                        "tps": 32.967033,
+                        "cnt": 3,
+                        "sum": 8,
+                        "80th pcl": 3,
+                        "50th pcl": 2,
+                        "90th pcl": 3,
+                        "99th pcl": 3
+                    }
+                }
+            },
+            "id": {
+                "streamedSessionId": "84b027a2-8a32-4ec3-afe2-6432b1a64be6"
+            },
+            "complete": true,
+            "durationMs": 9,
+            "clone": false,
+            "compositeStream": false
+        },
+        "metricList": [
+            "90th pcl",
+            "80th pcl",
+            "max",
+            "50th pcl",
+            "avg",
+            "sum",
+            "99th pcl",
+            "tps",
+            "cnt",
+            "min",
+            "tpm"
+        ]
+    }
+}

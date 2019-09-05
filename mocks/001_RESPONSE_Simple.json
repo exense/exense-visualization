@@ -1,0 +1,1549 @@
+{
+    "data": {
+        "status": "SUCCESS",
+        "metaMessage": "ok",
+        "payload": [
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402743,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595151,
+                "value": 3498
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402751,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_3",
+                "begin": 1567610595151,
+                "value": 4202
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402742,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_1",
+                "begin": 1567610595151,
+                "value": 2789
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402746,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610595151,
+                "value": 198
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402749,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595151,
+                "value": 1506
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402747,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610595151,
+                "value": 3856
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402745,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610595151,
+                "value": 597
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402750,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610595155,
+                "value": 4552
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402744,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595151,
+                "value": 3687
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402748,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595151,
+                "value": 1477
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402756,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595300,
+                "value": 3245
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402757,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610595300,
+                "value": 1634
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402755,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595300,
+                "value": 4716
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402759,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_3",
+                "begin": 1567610595300,
+                "value": 3874
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402754,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_3",
+                "begin": 1567610595300,
+                "value": 1053
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402760,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_3",
+                "begin": 1567610595300,
+                "value": 2041
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402753,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595300,
+                "value": 1219
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402758,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_8",
+                "begin": 1567610595300,
+                "value": 3988
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402752,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610595300,
+                "value": 4465
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402761,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610595301,
+                "value": 4891
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402767,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595402,
+                "value": 4029
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402764,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595402,
+                "value": 340
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402765,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595402,
+                "value": 1202
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402766,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610595402,
+                "value": 3240
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402768,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595402,
+                "value": 2363
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402769,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595403,
+                "value": 3352
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402762,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610595401,
+                "value": 4569
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402763,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595402,
+                "value": 1708
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402771,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610595404,
+                "value": 1002
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402770,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610595403,
+                "value": 201
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402773,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595505,
+                "value": 4923
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402772,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610595505,
+                "value": 4231
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402776,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595506,
+                "value": 1681
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402778,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595506,
+                "value": 3198
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402775,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_8",
+                "begin": 1567610595505,
+                "value": 519
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402777,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_1",
+                "begin": 1567610595506,
+                "value": 683
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402774,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_3",
+                "begin": 1567610595505,
+                "value": 170
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402779,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_1",
+                "begin": 1567610595507,
+                "value": 4540
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402780,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610595509,
+                "value": 1910
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402781,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595509,
+                "value": 3352
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402783,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_1",
+                "begin": 1567610595609,
+                "value": 889
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402782,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595609,
+                "value": 4388
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402786,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610595609,
+                "value": 4949
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402785,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595609,
+                "value": 3569
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402784,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610595609,
+                "value": 4926
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402787,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_6",
+                "begin": 1567610595610,
+                "value": 3604
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402788,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_8",
+                "begin": 1567610595610,
+                "value": 503
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402789,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610595611,
+                "value": 2728
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402790,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595612,
+                "value": 115
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402791,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595612,
+                "value": 2307
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402793,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595711,
+                "value": 1679
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402796,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610595711,
+                "value": 3224
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402797,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_3",
+                "begin": 1567610595712,
+                "value": 4772
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402792,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595711,
+                "value": 2498
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402798,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610595712,
+                "value": 1398
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402799,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610595713,
+                "value": 4070
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402795,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610595711,
+                "value": 96
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402794,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_6",
+                "begin": 1567610595711,
+                "value": 999
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402800,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610595716,
+                "value": 2959
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402801,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_8",
+                "begin": 1567610595716,
+                "value": 4368
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402802,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610595815,
+                "value": 1734
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402804,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595816,
+                "value": 2129
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402805,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610595816,
+                "value": 1091
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402807,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595817,
+                "value": 833
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402806,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_3",
+                "begin": 1567610595816,
+                "value": 1361
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402809,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_6",
+                "begin": 1567610595818,
+                "value": 2809
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402808,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610595818,
+                "value": 2436
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402803,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595816,
+                "value": 4489
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402810,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_1",
+                "begin": 1567610595819,
+                "value": 1959
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402811,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595820,
+                "value": 1740
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402812,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610595918,
+                "value": 3037
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402813,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_8",
+                "begin": 1567610595919,
+                "value": 758
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402814,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595919,
+                "value": 504
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402815,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610595919,
+                "value": 1858
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402816,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_3",
+                "begin": 1567610595920,
+                "value": 2638
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402817,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595920,
+                "value": 3214
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402818,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610595921,
+                "value": 3197
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402819,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_8",
+                "begin": 1567610595922,
+                "value": 3043
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402820,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610595922,
+                "value": 3794
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610595,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402821,
+                    "date": 1567610595000,
+                    "time": 1567610595000,
+                    "timeSecond": 1567610595
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_2",
+                "begin": 1567610595922,
+                "value": 4121
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402823,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610596022,
+                "value": 3410
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402822,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_1",
+                "begin": 1567610596022,
+                "value": 311
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402826,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_1",
+                "begin": 1567610596023,
+                "value": 4000
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402825,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610596023,
+                "value": 4801
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402827,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610596024,
+                "value": 2134
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402824,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610596023,
+                "value": 4103
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402828,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610596024,
+                "value": 4006
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402829,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610596025,
+                "value": 715
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402831,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_3",
+                "begin": 1567610596026,
+                "value": 850
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402830,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_3",
+                "begin": 1567610596026,
+                "value": 1942
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402835,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_5",
+                "begin": 1567610596125,
+                "value": 2742
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402832,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_1",
+                "begin": 1567610596125,
+                "value": 4701
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402834,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_6",
+                "begin": 1567610596125,
+                "value": 736
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402836,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_8",
+                "begin": 1567610596126,
+                "value": 3029
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402833,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610596125,
+                "value": 512
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402837,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_4",
+                "begin": 1567610596128,
+                "value": 3806
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402838,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_8",
+                "begin": 1567610596128,
+                "value": 4671
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402839,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_9",
+                "begin": 1567610596128,
+                "value": 1990
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402840,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_7",
+                "begin": 1567610596128,
+                "value": 991
+            },
+            {
+                "_id": {
+                    "timestamp": 1567610596,
+                    "machineIdentifier": 13078485,
+                    "processIdentifier": 16224,
+                    "counter": 8402841,
+                    "date": 1567610596000,
+                    "time": 1567610596000,
+                    "timeSecond": 1567610596
+                },
+                "eId": "JUnit_Dynamic",
+                "name": "Transaction_6",
+                "begin": 1567610596129,
+                "value": 1237
+            }
+        ]
+    },
+    "status": 200,
+    "config": {
+        "method": "POST",
+        "transformRequest": [
+            null
+        ],
+        "transformResponse": [
+            null
+        ],
+        "jsonpCallbackParam": "callback",
+        "url": "/rtm/rest/measurement/find",
+        "data": {
+            "selectors1": [
+                {
+                    "textFilters": [
+                        {
+                            "key": "eId",
+                            "value": "JUnit_Dynamic",
+                            "regex": "false"
+                        }
+                    ],
+                    "numericalFilters": []
+                }
+            ],
+            "serviceParams": {
+                "measurementService.nextFactor": "0",
+                "aggregateService.sessionId": "defaultSid",
+                "aggregateService.granularity": "auto",
+                "aggregateService.groupby": "name",
+                "aggregateService.cpu": "1",
+                "aggregateService.partition": "8",
+                "aggregateService.timeout": "600"
+            }
+        },
+        "headers": {
+            "Accept": "application/json, text/plain, */*",
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    },
+    "statusText": "OK",
+    "xhrStatus": "complete"
+}

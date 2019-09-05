@@ -1,0 +1,7 @@
+{
+    "status": "SUCCESS",
+    "metaMessage": "Stream initialized. Call the streaming service next to start retrieving data.",
+    "payload": {
+        "streamedSessionId": "83f42419-b6fe-4ae2-99a1-7d51a43c358a"
+    }
+}

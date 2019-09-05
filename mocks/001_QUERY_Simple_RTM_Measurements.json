@@ -1,0 +1,72 @@
+{
+    "name": "RTM Measurements",
+    "query": {
+        "inputtype": "Raw",
+        "type": "Simple",
+        "datasource": {
+            "url": "/rtm/rest/measurement/find",
+            "method": "Post",
+            "data": {
+                "selectors1": [
+                    {
+                        "textFilters": [
+                            {
+                                "key": "eId",
+                                "value": "JUnit_Dynamic",
+                                "regex": "false"
+                            },
+                            {
+                                "key": "name",
+                                "value": "Transaction_1",
+                                "regex": "false"
+                            }
+                        ],
+                        "numericalFilters": []
+                    }
+                ],
+                "serviceParams": {
+                    "measurementService.nextFactor": "0",
+                    "aggregateService.sessionId": "defaultSid",
+                    "aggregateService.granularity": "auto",
+                    "aggregateService.groupby": "name",
+                    "aggregateService.cpu": "1",
+                    "aggregateService.partition": "8",
+                    "aggregateService.timeout": "600"
+                }
+            },
+            "postproc": {
+                "lineChart": {
+                    "function": "function test() {alert('chart');}",
+                    "abs": {
+                        "title": "time",
+                        "unit": "seconds"
+                    },
+                    "ord": {
+                        "title": "duration",
+                        "unit": "ms"
+                    },
+                    "transformations": [
+                        {
+                            "path": "timestamp",
+                            "function": "function test() {Math.random().toString(36).substr(2, 9);}"
+                        }
+                    ]
+                },
+                "table": {
+                    "function": "function test() {alert('chart');}",
+                    "defaults": [
+                        {
+                            "sortBy": "name"
+                        }
+                    ],
+                    "transformations": [
+                        {
+                            "path": "timestamp",
+                            "function": "function test() {Math.random().toString(36).substr(2, 9);}"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
