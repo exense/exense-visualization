@@ -56,16 +56,14 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
                 $scope.fireQuery = function () {
                     $scope.counter++;
-
+                    var service = $scope.currentquery.datasource.service;
                     if ($scope.currentquery.type === 'Simple') {
-                        $scope.executeHttp($scope.currentquery.datasource.service.method, $scope.currentquery.datasource.service.url, $scope.currentquery.datasource.service.data, $scope.dispatchSuccessResponse, $scope.dispatchErrorResponse);
+                        $scope.executeHttp(service.method, service.url, service.data, $scope.dispatchSuccessResponse, $scope.dispatchErrorResponse);
                     }
                     if ($scope.currentquery.type === 'Async') {
-                        $scope.executeHttp($scope.currentquery.datasource.service.method, $scope.currentquery.datasource.service.url, $scope.currentquery.datasource.service.data,
+                        $scope.executeHttp(service.method, service.url, service.data,
                             $scope.dispatchAsync,
                             $scope.dispatchErrorResponse);
-
-
                     }
                 };
 
@@ -90,12 +88,13 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 }
 
                 $scope.runPostProcs = function (response) {
-                    if ($scope.currentquery.datasource.postproc.lineChart && $scope.currentquery.datasource.postproc.lineChart.function)
-                        $scope.state.data.lineChartData = eval('(' + $scope.currentquery.datasource.postproc.lineChart.function + ')(response)');
-                    if ($scope.currentquery.datasource.postproc.table && $scope.currentquery.datasource.postproc.table.function)
-                        $scope.state.data.tableData = eval('(' + $scope.currentquery.datasource.postproc.table.function + ')(response)');
-                    if ($scope.currentquery.datasource.postproc.saved && $scope.currentquery.datasource.postproc.saved.function)
-                        $scope.state.data.saved = eval('(' + $scope.currentquery.datasource.postproc.saved.function + ')(response)');
+                    var service = $scope.currentquery.datasource.service;
+                    if (service.postproc.lineChart && service.postproc.lineChart.function)
+                        $scope.state.data.lineChartData = eval('(' + service.postproc.lineChart.function + ')(response)');
+                    if (service.postproc.table && service.postproc.table.function)
+                        $scope.state.data.tableData = eval('(' + service.postproc.table.function + ')(response)');
+                    if (service.postproc.saved && service.postproc.saved.function)
+                        $scope.state.data.saved = eval('(' + service.postproc.saved.function + ')(response)');
                 };
             }
         }

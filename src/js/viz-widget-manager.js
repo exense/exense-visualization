@@ -145,59 +145,40 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                                         "service": {
                                             "url": "/mocks/001_RESPONSE_Simple_RTM_Measurements.json",
                                             "method": "Get",
-                                        },
-                                        "postproc": {
-                                            "lineChart": {
-                                                "function": "function(response){\
-                                                    var retData = [];\
-                                                    var index = {};\
-                                                    var payload = response.data.payload;\
-                                                    for (var i = 0; i < payload.length; i++) {\
-                                                        var curSeries = payload[i].name;\
-                                                        if (!index[curSeries]) {\
-                                                            retData.push({\
-                                                                values: [],\
-                                                                key: curSeries,\
-                                                                color: '#ff7f0e',\
-                                                                strokeWidth: 2,\
-                                                                classed: 'dashed'\
-                                                            });\
-                                                            index[curSeries] = retData.length - 1;\
-                                                        }\
-                                                        retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });\
-                                                    }\
-                                                return retData;\
-                                                }",
-                                                "abs": {
-                                                    "title": "time",
-                                                    "unit": "seconds"
+                                            "postproc": {
+                                                "lineChart": {
+                                                    "function": "function(response){var retData = [];var index = {};var payload = response.data.payload;for (var i = 0; i < payload.length; i++) {var curSeries = payload[i].name;if (!index[curSeries]) {retData.push({values: [],key: curSeries,color: '#ff7f0e',strokeWidth: 2,classed: 'dashed'});index[curSeries] = retData.length - 1;}retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });}return retData;}",
+                                                    "abs": {
+                                                        "title": "time",
+                                                        "unit": "seconds"
+                                                    },
+                                                    "ord": {
+                                                        "title": "duration",
+                                                        "unit": "ms"
+                                                    },
+                                                    "transformations": [
+                                                        {
+                                                            "path": "timestamp",
+                                                            "function": "function () {Math.random().toString(36).substr(2, 9);}"
+                                                        }
+                                                    ]
                                                 },
-                                                "ord": {
-                                                    "title": "duration",
-                                                    "unit": "ms"
-                                                },
-                                                "transformations": [
-                                                    {
-                                                        "path": "timestamp",
-                                                        "function": "function () {Math.random().toString(36).substr(2, 9);}"
-                                                    }
-                                                ]
-                                            },
-                                            "table": {
-                                                "function": "function(response) {\
-                                                    return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};\
-                                                }",
-                                                "defaults": [
-                                                    {
-                                                        "sortBy": "name"
-                                                    }
-                                                ],
-                                                "transformations": [
-                                                    {
-                                                        "path": "timestamp",
-                                                        "function": "function() {Math.random().toString(36).substr(2, 9);}"
-                                                    }
-                                                ]
+                                                "table": {
+                                                    "function": "function(response) {\
+                                                        return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};\
+                                                    }",
+                                                    "defaults": [
+                                                        {
+                                                            "sortBy": "name"
+                                                        }
+                                                    ],
+                                                    "transformations": [
+                                                        {
+                                                            "path": "timestamp",
+                                                            "function": "function() {Math.random().toString(36).substr(2, 9);}"
+                                                        }
+                                                    ]
+                                                }
                                             }
                                         }
                                     }
@@ -278,6 +259,77 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                                             },
                                             "table": {
                                                 "function": "return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};",
+                                                "defaults": [
+                                                    {
+                                                        "sortBy": "name"
+                                                    }
+                                                ],
+                                                "transformations": [
+                                                    {
+                                                        "path": "timestamp",
+                                                        "function": "function() {Math.random().toString(36).substr(2, 9);}"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "RTM Aggregates - File",
+                                "query": {
+                                    "inputtype": "Raw",
+                                    "type": "Async",
+                                    "datasource": {
+                                        "service": {
+                                            "url": "/mocks/002_RESPONSE_Async_Get_RTM_Aggregates.json",
+                                            "method": "Get",
+                                        },
+                                        "callback": {
+                                            "url": "/mocks/002_RESPONSE_Async_Refresh_RTM_Aggregates.json",
+                                            "method": "Get",
+                                        },
+                                        "postproc": {
+                                            "lineChart": {
+                                                "function": "function(response){\
+                                                    var retData = [];\
+                                                    var index = {};\
+                                                    var payload = response.data.payload;\
+                                                    for (var i = 0; i < payload.length; i++) {\
+                                                        var curSeries = payload[i].name;\
+                                                        if (!index[curSeries]) {\
+                                                            retData.push({\
+                                                                values: [],\
+                                                                key: curSeries,\
+                                                                color: '#ff7f0e',\
+                                                                strokeWidth: 2,\
+                                                                classed: 'dashed'\
+                                                            });\
+                                                            index[curSeries] = retData.length - 1;\
+                                                        }\
+                                                        retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });\
+                                                    }\
+                                                return retData;\
+                                                }",
+                                                "abs": {
+                                                    "title": "time",
+                                                    "unit": "seconds"
+                                                },
+                                                "ord": {
+                                                    "title": "duration",
+                                                    "unit": "ms"
+                                                },
+                                                "transformations": [
+                                                    {
+                                                        "path": "timestamp",
+                                                        "function": "function () {Math.random().toString(36).substr(2, 9);}"
+                                                    }
+                                                ]
+                                            },
+                                            "table": {
+                                                "function": "function(response) {\
+                                                    return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};\
+                                                }",
                                                 "defaults": [
                                                     {
                                                         "sortBy": "name"
