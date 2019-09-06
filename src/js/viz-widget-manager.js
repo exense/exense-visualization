@@ -112,12 +112,11 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     tabindex: 0,
                     data: {
                         raw: [],
-                        lineChartData: [],
-                        tableData: [],
-                        barChartData: []
+                        chartData: [],
+                        tableData: []
                     },
                     shared: {
-                        display: 'LineChart'
+                        display: 'Table'
                     },
                     init: {
                         config: {
@@ -182,7 +181,9 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                                                 ]
                                             },
                                             "table": {
-                                                "function": "function() {console.log('chart');}",
+                                                "function": "function(response) {\
+                                                    return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};\
+                                                }",
                                                 "defaults": [
                                                     {
                                                         "sortBy": "name"
@@ -273,7 +274,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                                                 ]
                                             },
                                             "table": {
-                                                "function": "function() {console.log('chart');}",
+                                                "function": "function(response) {console.log(response.data.payload); return response.data.payload;}",
                                                 "defaults": [
                                                     {
                                                         "sortBy": "name"

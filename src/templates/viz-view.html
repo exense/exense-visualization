@@ -1,5 +1,18 @@
-<div ng-if="state.shared.display === 'Table'">
-    {{state.data.tableData}}
+<div ng-if="state.shared.display === 'Table'" style="text-align: left; justify-content: left;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th ng-repeat="k in state.data.tableData.selectedKeys">{{k}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in state.data.tableData.array">
+                <td ng-repeat="v in state.data.tableData.selectedKeys">
+                    {{row[v]}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <div ng-if="state.shared.display === 'LineChart'">
     <nvd3 options='options' data='state.data.lineChartData' style="text-align: center; justify-content: center;"></nvd3>

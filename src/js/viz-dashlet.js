@@ -84,8 +84,8 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 }
 
                 $scope.runPostProcs = function (response) {
-                    //if($scope.state.chartData)
                     $scope.state.data.lineChartData = eval('(' + $scope.currentquery.datasource.postproc.lineChart.function + ')(response)');
+                    $scope.state.data.tableData = eval('(' + $scope.currentquery.datasource.postproc.table.function + ')(response)');
                 };
 
                 // add switch: array of series or array of elements with series as attribute
