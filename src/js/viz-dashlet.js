@@ -57,7 +57,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.fireQuery = function () {
                     $scope.counter++;
                     var datasource = $scope.currentquery.datasource.service;
-                    $scope.servicesent = JSON.stringify(datasource.data);
+                    $scope.servicesent = 'url :' + JSON.stringify(datasource.url) + '; payload:' + JSON.stringify(datasource.data);
                     $scope.executeHttp(datasource.method, datasource.url, datasource.data, $scope.dispatchSuccessResponse, datasource, $scope.dispatchErrorResponse);
                 };
 
@@ -67,6 +67,9 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
                 $scope.dispatchErrorResponse = function (response) {
                     console.log('error:' + JSON.stringify(response));
+                    if ($scope.asyncInterval) {
+                        clearInterval($scope.asyncInterval)
+                    }
                 };
 
                 $scope.executeHttp = function (method, url, payload, successcallback, successTarget, errorcallback) {
@@ -96,8 +99,12 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                                 }
                             }
                         }
-                        $scope.callbacksent = 'url :' + JSON.stringify(urltosend) +'; payload:'+ JSON.stringify(datatosend);
-                        $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse);
+
+                        $scope.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
+                        $scope.asyncInterval = setInterval(function () {
+                            $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
+                        },
+                            1000);
                     }
                 }
 
@@ -107,6 +114,15 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                         $scope.rawserviceresponse = JSON.stringify(response);
                     }
                     if ($scope.currentquery.type === 'Async') {
+                        if ($scope.asyncInterval) {
+                            try {
+                                if ($scope.runResponseProc($scope.currentquery.datasource.callback.postproc.asyncEnd.function, response)) {
+                                    clearInterval($scope.asyncInterval);
+                                }
+                            } catch{
+                                clearInterval($scope.asyncInterval);
+                            }
+                        }
                         $scope.state.data.asyncraw = response;
                         $scope.rawcallbackresponse = JSON.stringify(response);
                     }
