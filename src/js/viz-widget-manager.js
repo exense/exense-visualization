@@ -103,52 +103,205 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             widget = {
                 widgetId: wId,
                 widgetWidth: 'col-md-6',
-                defstate: {
-                    tabindex: 0,
-                    data: [],
-                    presets: {
-                        queries: [
-                            {
-                                name: 'RTM Measurements',
-                                datasource: {
-                                    inputtype: 'Raw',
-                                    type: 'Simple',
-                                    url: '/rtm/rest/measurement/find',
-                                    method: 'Post',
-                                    data: {
-                                        selectors1: [
-                                            { textFilters: [
-                                                {'key':'eId','value':'JUnit_Dynamic','regex':'false'}, {'key':'name','value':'Transaction_1','regex':'false'}
-                                            ], numericalFilters: [] }],
-                                        serviceParams: {
-                                            'measurementService.nextFactor': '0', 'aggregateService.sessionId': 'defaultSid', 'aggregateService.granularity': 'auto', 'aggregateService.groupby': 'name', 'aggregateService.cpu': '1', 'aggregateService.partition': '8', 'aggregateService.timeout': '600'
-                                        }
-                                    }
-                                },
-                                postproc: {
-                                    dataaccess: 'data.payload',
-                                    seriesaccess: 'name',
-                                    keyaccess: 'begin',
-                                    valueaccess: 'value'
-                                }
-                            }
-                        ],
-                        configs: [
-                            {
-                                name: 'defaultConfig',
-                                display: {
-                                    type: 'LineChart',
-                                    autorefresh: 'Off'
-                                }
-                            }
-                        ]
-                    }
-                },
                 options: new DefaultOptions(wmservice.chartHeightSmall, wmservice.chartWidthSmall, wmservice.innerContainerHeightSmall, wmservice.innerContainerWidthSmall),
                 title: {
                     enable: true,
                     text: 'Title for Line Chart'
                 },
+                defstate: {
+                    tabindex: 0,
+                    data: {
+                        raw: [],
+                        lineChartData: [],
+                        tableData: [],
+                        barChartData: []
+                    },
+                    shared: {
+                        display: 'LineChart'
+                    },
+                    init: {
+                        config: {
+                            autorefresh: 'Off'
+                        },
+                        query: {
+                            inputtype: "Raw",
+                            type: "Simple",
+                            datasource: {
+                               method: "Get"
+                            }
+                        },
+                        view: {}
+                    },
+                    presets: {
+                        queries: [
+                            {
+                                "name": "RTM Measurements - File",
+                                "query": {
+                                    "inputtype": "Raw",
+                                    "type": "Simple",
+                                    "datasource": {
+                                        "url": "/mocks/001_RESPONSE_Simple_RTM_Measurements.json",
+                                        "method": "Get",
+                                        "data": {
+                                        },
+                                        "postproc": {
+                                            "lineChart": {
+                                                "function": "function(response){\
+                                                    var retData = [];\
+                                                    var index = {};\
+                                                    var payload = response.data.payload;\
+                                                    for (var i = 0; i < payload.length; i++) {\
+                                                        var curSeries = payload[i].name;\
+                                                        if (!index[curSeries]) {\
+                                                            retData.push({\
+                                                                values: [],\
+                                                                key: curSeries,\
+                                                                color: '#ff7f0e',\
+                                                                strokeWidth: 2,\
+                                                                classed: 'dashed'\
+                                                            });\
+                                                            index[curSeries] = retData.length - 1;\
+                                                        }\
+                                                        retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });\
+                                                    }\
+                                                return retData;\
+                                                }",
+                                                "abs": {
+                                                    "title": "time",
+                                                    "unit": "seconds"
+                                                },
+                                                "ord": {
+                                                    "title": "duration",
+                                                    "unit": "ms"
+                                                },
+                                                "transformations": [
+                                                    {
+                                                        "path": "timestamp",
+                                                        "function": "function () {Math.random().toString(36).substr(2, 9);}"
+                                                    }
+                                                ]
+                                            },
+                                            "table": {
+                                                "function": "function() {console.log('chart');}",
+                                                "defaults": [
+                                                    {
+                                                        "sortBy": "name"
+                                                    }
+                                                ],
+                                                "transformations": [
+                                                    {
+                                                        "path": "timestamp",
+                                                        "function": "function() {Math.random().toString(36).substr(2, 9);}"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "RTM Measurements - Service",
+                                "query": {
+                                    "inputtype": "Raw",
+                                    "type": "Simple",
+                                    "datasource": {
+                                        "url": "/rtm/rest/measurement/find",
+                                        "method": "Post",
+                                        "data": {
+                                            "selectors1": [
+                                                {
+                                                    "textFilters": [
+                                                        {
+                                                            "key": "eId",
+                                                            "value": "JUnit_Dynamic",
+                                                            "regex": "false"
+                                                        },
+                                                        {
+                                                            "key": "name",
+                                                            "value": "Transaction_1",
+                                                            "regex": "false"
+                                                        }
+                                                    ],
+                                                    "numericalFilters": []
+                                                }
+                                            ],
+                                            "serviceParams": {
+                                                "measurementService.nextFactor": "0",
+                                                "aggregateService.sessionId": "defaultSid",
+                                                "aggregateService.granularity": "auto",
+                                                "aggregateService.groupby": "name",
+                                                "aggregateService.cpu": "1",
+                                                "aggregateService.partition": "8",
+                                                "aggregateService.timeout": "600"
+                                            }
+                                        },
+                                        "postproc": {
+                                            "lineChart": {
+                                                "function": "function(response){\
+                                                    var retData = [];\
+                                                    var index = {};\
+                                                    var payload = response.data.payload;\
+                                                    for (var i = 0; i < payload.length; i++) {\
+                                                        var curSeries = payload[i].name;\
+                                                        if (!index[curSeries]) {\
+                                                            retData.push({\
+                                                                values: [],\
+                                                                key: curSeries,\
+                                                                color: '#ff7f0e',\
+                                                                strokeWidth: 2,\
+                                                                classed: 'dashed'\
+                                                            });\
+                                                            index[curSeries] = retData.length - 1;\
+                                                        }\
+                                                        retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });\
+                                                    }\
+                                                return retData;\
+                                                }",
+                                                "abs": {
+                                                    "title": "time",
+                                                    "unit": "seconds"
+                                                },
+                                                "ord": {
+                                                    "title": "duration",
+                                                    "unit": "ms"
+                                                },
+                                                "transformations": [
+                                                    {
+                                                        "path": "timestamp",
+                                                        "function": "function () {Math.random().toString(36).substr(2, 9);}"
+                                                    }
+                                                ]
+                                            },
+                                            "table": {
+                                                "function": "function() {console.log('chart');}",
+                                                "defaults": [
+                                                    {
+                                                        "sortBy": "name"
+                                                    }
+                                                ],
+                                                "transformations": [
+                                                    {
+                                                        "path": "timestamp",
+                                                        "function": "function() {Math.random().toString(36).substr(2, 9);}"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    configs: [
+                        {
+                            name: 'defaultConfig',
+                            display: {
+                                type: 'LineChart',
+                                autorefresh: 'Off'
+                            }
+                        }
+                    ]
+                }
             };
 
             // initialize every new dashboard with a first basic widget

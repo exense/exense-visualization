@@ -15,77 +15,7 @@ var getUniqueId = function () {
     return Math.random().toString(36).substr(2, 9);
 }
 
-var getMockQuery = function () {
-    return {
-        "name": "RTM Measurements",
-        "query": {
-            "inputtype": "Raw",
-            "type": "Simple",
-            "datasource": {
-                "url": "/mocks/001_RESPONSE_Simple_RTM_Measurements.json",
-                "method": "Get",
-                "data": {
-                },
-                "postproc": {
-                    "lineChart": {
-                        "function": "function(response){\
-                            console.log(response.data.payload);\
-                            var retData = [];\
-                            var index = {};\
-                            var payload = response.data.payload;\
-                            for (var i = 0; i < payload.length; i++) {\
-                                var curSeries = payload[i].name;\
-                                if (!index[curSeries]) {\
-                                    retData.push({\
-                                        values: [],\
-                                        key: curSeries,\
-                                        color: '#ff7f0e',\
-                                        strokeWidth: 2,\
-                                        classed: 'dashed'\
-                                    });\
-                                    index[curSeries] = retData.length - 1;\
-                                }\
-                                retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });\
-                            }\
-                        return retData;\
-                        }",
-                        "abs": {
-                            "title": "time",
-                            "unit": "seconds"
-                        },
-                        "ord": {
-                            "title": "duration",
-                            "unit": "ms"
-                        },
-                        "transformations": [
-                            {
-                                "path": "timestamp",
-                                "function": "function () {Math.random().toString(36).substr(2, 9);}"
-                            }
-                        ]
-                    },
-                    "table": {
-                        "function": "function() {console.log('chart');}",
-                        "defaults": [
-                            {
-                                "sortBy": "name"
-                            }
-                        ],
-                        "transformations": [
-                            {
-                                "path": "timestamp",
-                                "function": "function() {Math.random().toString(36).substr(2, 9);}"
-                            }
-                        ]
-                    }
-                }
-            }
-        }
-    };
-}
-
 angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
-
     .directive('vizDashlet', function () {
         return {
             restric: 'E',
@@ -93,16 +23,12 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 options: '=',
                 state: '='
             },
-            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-dashlet.html'),
+            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-dashlet.html') + '?anticache=' + getUniqueId(),
             controller: function ($scope, $element) {
 
                 $scope.redraw = 'drawn';
 
                 $scope.dashlettabstate = $scope.state.tabindex;
-
-                $scope.$on('childevent', function (event, arg) {
-                    $scope.$broadcast(arg.target + 'event', arg);
-                });
 
                 $scope.saveState = function () {
                     $scope.state.tabindex = $scope.dashlettabstate;
@@ -121,12 +47,11 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             controller: function ($scope, $http) {
 
                 // Init
-                $scope.currentquery = getMockQuery().query;
-
+                $scope.currentquery = $scope.state.init.query;
                 $scope.counter = 0;
 
                 $scope.loadQueryPreset = function (querypreset) {
-                    $scope.currentquery = querypreset;
+                    $scope.currentquery = querypreset.query;
                 }
 
                 $scope.fireQuery = function () {
@@ -135,10 +60,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     if ($scope.currentquery.datasource.method === 'Get') {
                         $http.get($scope.currentquery.datasource.url)
                             .then(function (response) {
-                                $scope.response = response;
-                                $scope.rawresponse = JSON.stringify(response);
-                                //$scope.state.data = $scope.postProcess();
-                                $scope.runPostProcs(response);
+                                $scope.dispatchSuccessResponse(response);
                             }, function (response) {
                                 // send to info pane using factory / service
                                 console.log('error:' + JSON.stringify(response));
@@ -147,10 +69,7 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     if ($scope.currentquery.datasource.method === 'Post') {
                         $http.post($scope.currentquery.datasource.url, $scope.currentquery.datasource.data)
                             .then(function (response) {
-                                $scope.response = response;
-                                $scope.rawresponse = JSON.stringify(response);
-                                //$scope.state.data = $scope.postProcess();
-                                $scope.runPostProcs(response);
+                                $scope.dispatchSuccessResponse(response);
                             }, function (response) {
                                 // send to info pane using factory / service
                                 console.log('error:' + JSON.stringify(response));
@@ -158,19 +77,19 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     }
                 };
 
+                $scope.dispatchSuccessResponse = function(response){
+                    $scope.state.data.raw = response;
+                    $scope.rawresponse = JSON.stringify(response);
+                    $scope.runPostProcs(response);
+                }
+
                 $scope.runPostProcs = function (response) {
                     //if($scope.state.chartData)
-                    $scope.state.data = eval('(' + $scope.currentquery.datasource.postproc.lineChart.function + ')(response)');
-
-                    //var abcd = 'toto';
-                    //var res = eval('(function(input){return input + "awesome"})(abcd)');
-                    //console.log(res)
-
+                    $scope.state.data.lineChartData = eval('(' + $scope.currentquery.datasource.postproc.lineChart.function + ')(response)');
                 };
 
                 // add switch: array of series or array of elements with series as attribute
                 $scope.postProcess = function () {
-
                 };
             }
         }
@@ -182,19 +101,8 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 options: '=',
                 state: '='
             },
-            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-view.html'),
+            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-view.html') + '?anticache=' + getUniqueId(),
             controller: function ($scope) {
-
-                // Default
-                $scope.configdisplaytype = 'LineChart';
-
-                // option 1
-                $scope.$on('viewevent', function (event, arg) {
-                    $scope[arg.modelname] = arg[arg.modelname];
-                });
-
-                // option2 
-                // listen directly on config control?
 
             }
         };
@@ -206,16 +114,11 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 formwidth: '=',
                 state: '='
             },
-            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-config.html'),
+            templateUrl: vizDashletcurrentScriptPath.replace('/js/', '/templates/').replace('viz-dashlet.js', 'viz-config.html') + '?anticache=' + getUniqueId(),
             controller: function ($scope, $http) {
 
                 // Default state, before loading any presets
-                $scope.currentconfig = {
-                    display: {
-                        type: 'LineChart',
-                        autorefresh: 'Off'
-                    }
-                };
+                $scope.currentconfig = $scope.state.init.config;
 
                 $scope.loadConfigPreset = function (preset) {
                     $scope.currentconfig = preset;

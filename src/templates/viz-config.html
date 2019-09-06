@@ -33,13 +33,10 @@
 
                         <div class="col-md-5 colcontain-grid">
                             <label>Type</label>
-                            <div class="btn-group form-radio" ng-click="$emit('childevent', { 'target' : 'view', 'modelname' : 'configdisplaytype', 'configdisplaytype' : currentconfig.display.type})">
-                                <label class="btn btn-primary" ng-model="currentconfig.display.type" uib-btn-radio="'Table'"
-                                    ng-click="emit('childevent', { 'config.display.type' : currentconfig.display.type})">Table</label>
-                                <label class="btn btn-primary" ng-model="currentconfig.display.type" uib-btn-radio="'LineChart'"
-                                    ng-click="emit('childevent', { 'config.display.type' : currentconfig.display.type})">LineChart</label>
-                                <label class="btn btn-primary" ng-model="currentconfig.display.type" uib-btn-radio="'BarChart'"
-                                    ng-click="emit('childevent', { 'config.display.type' : currentconfig.display.type})">BarChart</label>
+                            <div class="btn-group form-radio">
+                                <label class="btn btn-primary" ng-model="state.shared.display" uib-btn-radio="'Table'"">Table</label>
+                                <label class="btn btn-primary" ng-model="state.shared.display" uib-btn-radio="'LineChart'">LineChart</label>
+                                <label class="btn btn-primary" ng-model="state.shared.display" uib-btn-radio="'BarChart'">BarChart</label>
                             </div>
                         </div>
                         <div class="col-md-3 colcontain-grid">

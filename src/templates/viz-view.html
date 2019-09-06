@@ -1,6 +1,6 @@
-<div ng-if="configdisplaytype === 'Table'">
-    {{state.data}}
+<div ng-if="state.shared.display === 'Table'">
+    {{state.data.tableData}}
 </div>
-<div ng-if="configdisplaytype === 'LineChart'">
-    <nvd3 options='options' data='state.data' style="text-align: center; justify-content: center;"></nvd3>
+<div ng-if="state.shared.display === 'LineChart'">
+    <nvd3 options='options' data='state.data.lineChartData' style="text-align: center; justify-content: center;"></nvd3>
 </div>
