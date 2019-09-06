@@ -56,15 +56,9 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
                 $scope.fireQuery = function () {
                     $scope.counter++;
-                    var service = $scope.currentquery.datasource.service;
-                    if ($scope.currentquery.type === 'Simple') {
-                        $scope.executeHttp(service.method, service.url, service.data, $scope.dispatchSuccessResponse, $scope.dispatchErrorResponse);
-                    }
-                    if ($scope.currentquery.type === 'Async') {
-                        $scope.executeHttp(service.method, service.url, service.data,
-                            $scope.dispatchAsync,
-                            $scope.dispatchErrorResponse);
-                    }
+                    var datasource = $scope.currentquery.datasource.service;
+                    $scope.servicesent = JSON.stringify(datasource.data);
+                    $scope.executeHttp(datasource.method, datasource.url, datasource.data, $scope.dispatchSuccessResponse, datasource, $scope.dispatchErrorResponse);
                 };
 
                 $scope.dispatchAsync = function (response) {
@@ -75,26 +69,57 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     console.log('error:' + JSON.stringify(response));
                 };
 
-                $scope.executeHttp = function (method, url, payload, successcallback, errorcallback) {
-                    if (method === 'Get') { $http.get(url).then(function (response) { console.log('get'); successcallback(response); }, function (response) { errorcallback(response); }); }
-                    if (method === 'Post') { $http.post(url, payload).then(function (response) { successcallback(response); }, function (response) { errorcallback(response); }); }
+                $scope.executeHttp = function (method, url, payload, successcallback, successTarget, errorcallback) {
+                    if (method === 'Get') { $http.get(url).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
+                    if (method === 'Post') { $http.post(url, payload).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
                 };
 
-                $scope.dispatchSuccessResponse = function (response) {
-                    $scope.state.data.raw = response;
-                    console.log($scope.state.data.raw);
-                    $scope.rawserviceresponse = JSON.stringify(response);
-                    $scope.runPostProcs(response);
+                $scope.dispatchSuccessResponse = function (response, successTarget) {
+                    if ($scope.currentquery.type === 'Simple') {
+                        $scope.loadData(response, successTarget)
+                    }
+                    if ($scope.currentquery.type === 'Async') {
+                        var scallback = $scope.currentquery.datasource.callback;
+                        $scope.state.data.raw = response;
+                        $scope.rawserviceresponse = JSON.stringify(response);
+                        if ($scope.currentquery.datasource.service.postproc.save) {
+                            $scope.state.data.savedData = $scope.runResponseProc($scope.currentquery.datasource.service.postproc.save.function, response);
+                        }
+                        var datatosend = scallback.data;
+                        var urltosend = scallback.url;
+                        if (scallback.preproc.replace) {
+                            if (scallback.preproc.replace.target === 'data') {
+                                datatosend = JSON.parse($scope.runRequestProc(scallback.preproc.replace.function, JSON.stringify(datatosend), $scope.state.data.savedData));
+                            } else {
+                                if (scallback.preproc.replace.target === 'url') {
+                                    urltosend = JSON.parse($scope.runRequestProc(scallback.preproc.replace.function, JSON.stringify(urltosend), $scope.state.data.savedData));
+                                }
+                            }
+                        }
+                        $scope.callbacksent = 'url :' + JSON.stringify(urltosend) +'; payload:'+ JSON.stringify(datatosend);
+                        $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse);
+                    }
                 }
 
-                $scope.runPostProcs = function (response) {
-                    var service = $scope.currentquery.datasource.service;
-                    if (service.postproc.lineChart && service.postproc.lineChart.function)
-                        $scope.state.data.lineChartData = eval('(' + service.postproc.lineChart.function + ')(response)');
-                    if (service.postproc.table && service.postproc.table.function)
-                        $scope.state.data.tableData = eval('(' + service.postproc.table.function + ')(response)');
-                    if (service.postproc.saved && service.postproc.saved.function)
-                        $scope.state.data.saved = eval('(' + service.postproc.saved.function + ')(response)');
+                $scope.loadData = function (response, proctarget) {
+                    if ($scope.currentquery.type === 'Simple') {
+                        $scope.state.data.raw = response;
+                        $scope.rawserviceresponse = JSON.stringify(response);
+                    }
+                    if ($scope.currentquery.type === 'Async') {
+                        $scope.state.data.asyncraw = response;
+                        $scope.rawcallbackresponse = JSON.stringify(response);
+                    }
+                    $scope.state.data.chartData = $scope.runResponseProc(proctarget.postproc.lineChart.function, response);
+                    $scope.state.data.tableData = $scope.runResponseProc(proctarget.postproc.table.function, response);
+                };
+
+                $scope.runResponseProc = function (postProc, response) {
+                    return eval('(' + postProc + ')(response)');
+                };
+
+                $scope.runRequestProc = function (postProc, requestFragment, workData) {
+                    return eval('(' + postProc + ')(requestFragment, workData)');
                 };
             }
         }

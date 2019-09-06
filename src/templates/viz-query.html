@@ -141,9 +141,8 @@
                             <div ng-if="currentquery.type == 'Async'">
                                 <div class="col-md-12 colcontain-grid">
                                     <div class="btn-group">
-                                        <label>Async preproc function</label>
-                                        <textarea ng-model="currentquery.datasource.callback.preproc.function" class="form-control" />
-                                        </div>
+                                        <label>Replace preproc function</label>
+                                        <textarea ng-model="currentquery.datasource.callback.preproc.replace.function" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +151,8 @@
                 </div>
             </div>
         </div>
-    </uib-accordion>
+    </div>
+</uib-accordion>
 <uib-accordion>
     <div uib-accordion-group class="panel-default" heading="Post-processing" is-open="postproc.status.isFirstOpen"
         is-disabled="postproc.status.isFirstDisabled">
@@ -160,24 +160,45 @@
             <div class="form-group center-block">
                 <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
                     <div class="row">
+                            <div class="col-md-12 colcontain-grid">
+                                    <div class="btn-group">
+                                            <div ng-if="currentquery.type == 'Async'">
+                                                <label>Save Postproc</label>
+                                                    <textarea ng-model="currentquery.datasource.service.postproc.save.function" class="form-control" />
+                                             </div>
+                                    </div>
+                                </div>
                         <div class="col-md-12 colcontain-grid">
                             <div class="btn-group">
                                 <label>Chart Postproc</label>
-                                <textarea ng-model="currentquery.datasource.postproc.lineChart.function" class="form-control" />
+                                <div ng-if="currentquery.type == 'Simple'">
+                                    <textarea ng-model="currentquery.datasource.service.postproc.lineChart.function" class="form-control" />
+                                </div>
+                                <div ng-if="currentquery.type == 'Async'">
+                                    <textarea ng-model="currentquery.datasource.callback.postproc.lineChart.function" class="form-control" />
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-12 colcontain-grid">
                                 <div class="btn-group">
                                     <label>Table postproc</label>
-                                    <textarea ng-model="currentquery.datasource.postproc.table.function" class="form-control" />
+                                    <div ng-if="currentquery.type == 'Simple'">
+                                            <textarea ng-model="currentquery.datasource.service.postproc.table.function" class="form-control" />
+                                        </div>
+                                        <div ng-if="currentquery.type == 'Async'">
+                                                <textarea ng-model="currentquery.datasource.callback.postproc.table.function" class="form-control" />
+                                        </div>
+                                    
                                 </div>
                             </div>
+                            <div ng-if="currentquery.type == 'Async'">
                             <div class="col-md-12 colcontain-grid">
                                 <div class="btn-group">
                                     <label>Save postproc</label>
-                                     <textarea ng-model="currentquery.datasource.postproc.save.function" class="form-control" />
+                                     <textarea ng-model="currentquery.datasource.service.postproc.save.function" class="form-control" />
                                  </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -190,12 +211,22 @@
         is-disabled="respaccord.status.isFirstDisabled">
         <div class="form-wrapper">
             Call #{{counter}}
+
+            <p class="form-group">
+                    <label>Service request</label>
+                    <div class="well well-lg innerwell">{{servicesent}}</div>
+                </p>
+
             <p class="form-group">
                 <label>Service response</label>
                 <div class="well well-lg innerwell">{{rawserviceresponse}}</div>
             </p>
 
             <div ng-if="currentquery.type == 'Async'">
+                    <p class="form-group">
+                            <label>Callback request</label>
+                            <div class="well well-lg innerwell">{{callbacksent}}</div>
+                        </p>
                 <p class="form-group">
                             <label>Callback response</label>
                             <div class="well well-lg innerwell">{{rawcallbackresponse}}</div>
