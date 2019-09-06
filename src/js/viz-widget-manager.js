@@ -274,7 +274,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                                                 ]
                                             },
                                             "table": {
-                                                "function": "function(response) {console.log(response.data.payload); return response.data.payload;}",
+                                                "function": "return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};",
                                                 "defaults": [
                                                     {
                                                         "sortBy": "name"
