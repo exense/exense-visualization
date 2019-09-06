@@ -57,39 +57,45 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.fireQuery = function () {
                     $scope.counter++;
 
-                    if ($scope.currentquery.datasource.method === 'Get') {
-                        $http.get($scope.currentquery.datasource.url)
-                            .then(function (response) {
-                                $scope.dispatchSuccessResponse(response);
-                            }, function (response) {
-                                // send to info pane using factory / service
-                                console.log('error:' + JSON.stringify(response));
-                            });
+                    if ($scope.currentquery.type === 'Simple') {
+                        $scope.executeHttp($scope.currentquery.datasource.service.method, $scope.currentquery.datasource.service.url, $scope.currentquery.datasource.service.data, $scope.dispatchSuccessResponse, $scope.dispatchErrorResponse);
                     }
-                    if ($scope.currentquery.datasource.method === 'Post') {
-                        $http.post($scope.currentquery.datasource.url, $scope.currentquery.datasource.data)
-                            .then(function (response) {
-                                $scope.dispatchSuccessResponse(response);
-                            }, function (response) {
-                                // send to info pane using factory / service
-                                console.log('error:' + JSON.stringify(response));
-                            });
+                    if ($scope.currentquery.type === 'Async') {
+                        $scope.executeHttp($scope.currentquery.datasource.service.method, $scope.currentquery.datasource.service.url, $scope.currentquery.datasource.service.data,
+                            $scope.dispatchAsync,
+                            $scope.dispatchErrorResponse);
+
+
                     }
                 };
 
-                $scope.dispatchSuccessResponse = function(response){
+                $scope.dispatchAsync = function (response) {
+                    console.log('async:' + JSON.stringify(response));
+                };
+
+                $scope.dispatchErrorResponse = function (response) {
+                    console.log('error:' + JSON.stringify(response));
+                };
+
+                $scope.executeHttp = function (method, url, payload, successcallback, errorcallback) {
+                    if (method === 'Get') { $http.get(url).then(function (response) { console.log('get'); successcallback(response); }, function (response) { errorcallback(response); }); }
+                    if (method === 'Post') { $http.post(url, payload).then(function (response) { successcallback(response); }, function (response) { errorcallback(response); }); }
+                };
+
+                $scope.dispatchSuccessResponse = function (response) {
                     $scope.state.data.raw = response;
-                    $scope.rawresponse = JSON.stringify(response);
+                    console.log($scope.state.data.raw);
+                    $scope.rawserviceresponse = JSON.stringify(response);
                     $scope.runPostProcs(response);
                 }
 
                 $scope.runPostProcs = function (response) {
-                    $scope.state.data.lineChartData = eval('(' + $scope.currentquery.datasource.postproc.lineChart.function + ')(response)');
-                    $scope.state.data.tableData = eval('(' + $scope.currentquery.datasource.postproc.table.function + ')(response)');
-                };
-
-                // add switch: array of series or array of elements with series as attribute
-                $scope.postProcess = function () {
+                    if ($scope.currentquery.datasource.postproc.lineChart && $scope.currentquery.datasource.postproc.lineChart.function)
+                        $scope.state.data.lineChartData = eval('(' + $scope.currentquery.datasource.postproc.lineChart.function + ')(response)');
+                    if ($scope.currentquery.datasource.postproc.table && $scope.currentquery.datasource.postproc.table.function)
+                        $scope.state.data.tableData = eval('(' + $scope.currentquery.datasource.postproc.table.function + ')(response)');
+                    if ($scope.currentquery.datasource.postproc.saved && $scope.currentquery.datasource.postproc.saved.function)
+                        $scope.state.data.saved = eval('(' + $scope.currentquery.datasource.postproc.saved.function + ')(response)');
                 };
             }
         }

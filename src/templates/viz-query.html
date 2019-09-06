@@ -1,19 +1,58 @@
 <uib-accordion>
-    <div uib-accordion-group class="panel-default" heading="Presets" is-open="presets.status.isFirstOpen" is-disabled="presets.status.isFirstDisabled">
+    <div uib-accordion-group class="panel-default" heading="Service" is-open="presets.status.isFirstOpen" is-disabled="presets.status.isFirstDisabled">
         <div class="form-wrapper">
             <div class="form-group center-block">
                 <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
 
                     <div class="row">
-                        <div class="col-md-12 colcontain-contents">
-                            <div class="btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
-                                <button id="load-query" type="button" class="btn btn-primary" uib-dropdown-toggle
-                                    ng-disabled="disabled">
-                                    Load query... <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
-                                    <h5 ng-repeat="qp in state.presets.queries" ng-click="loadQueryPreset(qp)">{{qp.name}}</h5>
-                                </ul>
+                        <div class="col-md-12 colcontain-grid">
+                            <label>Service type</label>
+                            <div class="btn-group form-radio">
+                                <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Simple'">Simple</label>
+                                <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Async'">Async</label>
+                                <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Paged'">Paged</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 colcontain-grid">
+                            <label>Service Method</label>
+                            <div class="btn-group form-radio">
+                                <label class="btn btn-primary" ng-model="currentquery.datasource.service.method"
+                                    uib-btn-radio="'Get'">Get</label>
+                                <label class="btn btn-primary" ng-model="currentquery.datasource.service.method"
+                                    uib-btn-radio="'Post'">Post</label>
+                                <label class="btn btn-primary" ng-model="currentquery.datasource.service.method"
+                                    uib-btn-radio="'Put'">Put</label>
+                                <label class="btn btn-primary" ng-model="currentquery.datasource.service.method"
+                                    uib-btn-radio="'Delete'">Delete</label>
+                                <label class="btn btn-primary" ng-model="currentquery.datasource.service.method"
+                                    uib-btn-radio="'Patch'">Patch</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 colcontain-grid">
+                            <label>Service URL</label>
+                            <div class="btn-group">
+                                <input type="text" ng-model="currentquery.datasource.service.url" class="form-control" />
+                            </div>
+                        </div>
+                        <div ng-if="currentquery.type == 'Async'">
+                            <div class="col-md-6 colcontain-grid">
+                                <label>Callback Method</label>
+                                <div class="btn-group form-radio">
+                                    <label class="btn btn-primary" ng-model="currentquery.datasource.callback.method"
+                                        uib-btn-radio="'Get'">Get</label>
+                                    <label class="btn btn-primary" ng-model="currentquery.datasource.callback.method"
+                                        uib-btn-radio="'Post'">Post</label>
+                                    <label class="btn btn-primary" ng-model="currentquery.datasource.callback.method"
+                                        uib-btn-radio="'Put'">Put</label>
+                                    <label class="btn btn-primary" ng-model="currentquery.datasource.callback.method"
+                                        uib-btn-radio="'Delete'">Delete</label>
+                                    <label class="btn btn-primary" ng-model="currentquery.datasource.callback.method"
+                                        uib-btn-radio="'Patch'">Patch</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 colcontain-grid">
+                                <label>Callback URL</label>
+                                <input type="text" ng-model="currentquery.datasource.callback.url" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -23,60 +62,57 @@
     </div>
 </uib-accordion>
 <uib-accordion>
-    <div uib-accordion-group class="panel-default" heading="Datasource" is-open="datasource.status.isFirstOpen"
-        is-disabled="datasource.status.isFirstDisabled">
+    <div uib-accordion-group class="panel-default" heading="Input" is-open="datasource.status.isFirstOpen" is-disabled="datasource.status.isFirstDisabled">
         <div class="form-wrapper">
             <div class="form-group center-block">
                 <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
 
                     <div class="row">
 
-                        <div class="col-md-4 colcontain-grid">
+                        <div class="col-md-12 colcontain-grid">
                             <label>Input type</label>
                             <div class="btn-group form-radio">
                                 <label class="btn btn-primary" ng-model="currentquery.inputtype" uib-btn-radio="'Raw'">Raw</label>
                                 <label class="btn btn-primary" ng-model="currentquery.inputtype" uib-btn-radio="'Controls'">Controls</label>
                             </div>
                         </div>
-                        <div class="col-md-3 colcontain-grid">
-                            <label>Query type</label>
-                            <div class="btn-group form-radio">
-                                <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Simple'">Simple</label>
-                                <label class="btn btn-primary" ng-model="currentquery.type" uib-btn-radio="'Async'">Async</label>
-                            </div>
-                        </div>
-                        <div class="col-md-3 colcontain-grid">
-                            <label>HTTP Method</label>
-                            <div class="btn-group form-radio">
-                                <label class="btn btn-primary" ng-model="currentquery.datasource.method" uib-btn-radio="'Get'">Get</label>
-                                <label class="btn btn-primary" ng-model="currentquery.datasource.method" uib-btn-radio="'Post'">Post</label>
-                            </div>
-                        </div>
-                        <div ng-if="currentquery.inputtype == 'Raw'">
-                            <div class="col-md-12 colcontain-grid">
-                                <label>Payload</label>
-                                <div class="btn-group">
-                                    <input json-text type="text" ng-model="currentquery.datasource.data" class="form-control" />
+
+                        <div class="col-md-4 colcontain-grid">
+                            <div ng-if="currentquery.inputtype == 'Raw'">
+                                <div class="btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
+                                    <button id="load-query" type="button" class="btn btn-primary" uib-dropdown-toggle
+                                        ng-disabled="disabled">
+                                        Load query... <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
+                                        <h5 ng-repeat="qp in state.presets.queries" ng-click="loadQueryPreset(qp)">{{qp.name}}</h5>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
+
                         <div ng-if="currentquery.inputtype == 'Controls'">
                             <div class="col-md-12 colcontain-grid">
-                                <div ng-if="'rtm-controls' == 'rtm-controls'">
-                                    <rtm-controls></rtm-controls>
-                                </div>
+                                Display control type selector + control instance selector
                             </div>
                         </div>
+
                         <div class="col-md-12 colcontain-grid">
-                            <label>Query Service URL</label>
+                            <label>Payload</label>
                             <div class="btn-group">
-                                <input type="text" ng-model="currentquery.datasource.url" class="form-control" />
-                                <div ng-if="currentquery.datasource.type == 'Async'">
-                                    <label>Results Service URL</label>
-                                    <input type="text" ng-model="currentquery.datasource.pollQuery.url" class="form-control" />
+                                <input json-text type="text" ng-model="currentquery.datasource.service.data" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div ng-if="currentquery.type == 'Async'">
+                            <div class="col-md-12 colcontain-grid">
+                                <label>Callback Payload</label>
+                                <div class="btn-group">
+                                    <input json-text type="text" ng-model="currentquery.datasource.callback.data" class="form-control" />
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="row">
@@ -90,6 +126,34 @@
     </div>
 </uib-accordion>
 <uib-accordion>
+    <div uib-accordion-group class="panel-default" heading="Pre-processing" is-open="postproc.status.isFirstOpen"
+        is-disabled="postproc.status.isFirstDisabled">
+        <div class="form-wrapper">
+            <div class="form-group center-block">
+                <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
+                    <div class="row">
+                        <div class="col-md-12 colcontain-grid">
+                            <div class="btn-group">
+                                <label>Main preproc function</label>
+                                <textarea ng-model="currentquery.datasource.service.preproc.function" class="form-control" />
+                                </div>
+                            </div>
+                            <div ng-if="currentquery.type == 'Async'">
+                                <div class="col-md-12 colcontain-grid">
+                                    <div class="btn-group">
+                                        <label>Async preproc function</label>
+                                        <textarea ng-model="currentquery.datasource.callback.preproc.function" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-accordion>
+<uib-accordion>
     <div uib-accordion-group class="panel-default" heading="Post-processing" is-open="postproc.status.isFirstOpen"
         is-disabled="postproc.status.isFirstDisabled">
         <div class="form-wrapper">
@@ -100,12 +164,19 @@
                             <div class="btn-group">
                                 <label>Chart Postproc</label>
                                 <textarea ng-model="currentquery.datasource.postproc.lineChart.function" class="form-control" />
-                                </div>
+                            </div>
                         </div>
                         <div class="col-md-12 colcontain-grid">
-                            <div class="btn-group">
-                                <label>Table postproc</label>
-                                <textarea ng-model="currentquery.datasource.postproc.table.function" class="form-control" />
+                                <div class="btn-group">
+                                    <label>Table postproc</label>
+                                    <textarea ng-model="currentquery.datasource.postproc.table.function" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-md-12 colcontain-grid">
+                                <div class="btn-group">
+                                    <label>Save postproc</label>
+                                     <textarea ng-model="currentquery.datasource.postproc.save.function" class="form-control" />
+                                 </div>
                             </div>
                         </div>
                     </div>
@@ -115,13 +186,21 @@
     </div>
 </uib-accordion>
 <uib-accordion>
-    <div uib-accordion-group class="panel-default" heading="Response" is-open="respaccord.status.isFirstOpen"
+    <div uib-accordion-group class="panel-default" heading="Testing" is-open="respaccord.status.isFirstOpen"
         is-disabled="respaccord.status.isFirstDisabled">
         <div class="form-wrapper">
+            Call #{{counter}}
             <p class="form-group">
-                <label>Raw</label> {{counter}}
-                <div class="well well-lg innerwell">{{rawresponse}}</div>
+                <label>Service response</label>
+                <div class="well well-lg innerwell">{{rawserviceresponse}}</div>
             </p>
+
+            <div ng-if="currentquery.type == 'Async'">
+                <p class="form-group">
+                            <label>Callback response</label>
+                            <div class="well well-lg innerwell">{{rawcallbackresponse}}</div>
+                </p>
+            </div>
         </div>
     </div>
 </uib-accordion>

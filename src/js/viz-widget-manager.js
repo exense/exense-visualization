@@ -111,6 +111,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                 defstate: {
                     tabindex: 0,
                     data: {
+                        save: {},
                         raw: [],
                         chartData: [],
                         tableData: []
@@ -126,7 +127,9 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                             inputtype: "Raw",
                             type: "Simple",
                             datasource: {
-                               method: "Get"
+                                service: {
+                                    method: "Get"
+                                }
                             }
                         },
                         view: {}
@@ -139,9 +142,9 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                                     "inputtype": "Raw",
                                     "type": "Simple",
                                     "datasource": {
-                                        "url": "/mocks/001_RESPONSE_Simple_RTM_Measurements.json",
-                                        "method": "Get",
-                                        "data": {
+                                        "service": {
+                                            "url": "/mocks/001_RESPONSE_Simple_RTM_Measurements.json",
+                                            "method": "Get",
                                         },
                                         "postproc": {
                                             "lineChart": {
