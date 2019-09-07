@@ -73,7 +73,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.currentquery = $scope.state.init.query;
                 $scope.counter = 0;
 
-                $scope.$on('querychange', function(){
+                $scope.$on('querychange', function () {
                     $scope.currentquery = $scope.state.init.query;
                 });
 
@@ -234,13 +234,35 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             },
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-q-input.html') + '?who=viz-q-input&anticache=' + getUniqueId(),
             controller: function ($scope) {
+
+                $scope.initTemplateControls = function () {
+                    $scope.state.init.query.datasource.service.controls = { template: '', placeholders : {}};
+                    $scope.getNumber = function(num) {
+                      return new Array(num);
+                    }
+                };
+
+                $scope.addPlaceholder = function(){
+                    $scope.state.init.query.datasource.service.controls.placeholders.push('');
+                }
+
+                $scope.removePlaceholder = function($index){
+                    $scope.state.init.query.datasource.service.controls.placeholders.splice($index, 1 );
+                }
+
                 $scope.loadQueryPreset = function (querypreset) {
                     $scope.state.init.query = querypreset.query;
                     $scope.$emit('querychange');
                 }
+
+                $scope.loadTemplatePreset = function (template) {
+                    $scope.state.init.query.datasource.service.controls.template = template.queryTemplate;
+                    $scope.state.init.query.datasource.service.controls.placeholders = template.placeholders;
+                };
+
             }
         };
-    })    
+    })
     .directive('vizQPreproc', function () {
         return {
             restrict: 'E',

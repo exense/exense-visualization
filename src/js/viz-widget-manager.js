@@ -4,7 +4,7 @@ var vizWidgetManagercurrentScriptPath = vizWidgetManagerscripts[vizWidgetManager
 angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
     .factory('wmservice', function ($rootScope) {
 
-        var wmservice = { shared : {}};
+        var wmservice = { shared: {} };
         wmservice.dashboards = [];
 
         // parameterize via arguments or server-originating conf & promise?
@@ -129,7 +129,8 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                             type: "Simple",
                             datasource: {
                                 service: {
-                                    method: "Get"
+                                    method: "Get",
+                                    controls: {}
                                 }
                             }
                         },
@@ -462,17 +463,76 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                                     }
                                 }
                             }
-                        ]
-                    },
-                    configs: [
-                        {
-                            name: 'defaultConfig',
-                            display: {
-                                type: 'lineChart',
-                                autorefresh: 'Off'
+                        ],
+                        controls: {
+                            templates: [
+                                {
+                                    "name": 'RTM Measurements Template',
+                                    "placeholders": ["__eId__", "__name__"],
+                                    "queryTemplate": {
+                                        "type": "Simple",
+                                        "datasource": {
+                                            "service": {
+                                                "url": "/rtm/rest/measurement/find",
+                                                "method": "Post",
+                                                "data": {
+                                                    "selectors1": [
+                                                        {
+                                                            "textFilters": [
+                                                                {
+                                                                    "key": "eId",
+                                                                    "value": "__eId__",
+                                                                    "regex": "false"
+                                                                },
+                                                                {
+                                                                    "key": "name",
+                                                                    "value": "__name__",
+                                                                    "regex": "false"
+                                                                }
+                                                            ],
+                                                            "numericalFilters": []
+                                                        }
+                                                    ],
+                                                    "serviceParams": {
+                                                        "measurementService.nextFactor": "0",
+                                                        "aggregateService.sessionId": "defaultSid",
+                                                        "aggregateService.granularity": "auto",
+                                                        "aggregateService.groupby": "name",
+                                                        "aggregateService.cpu": "1",
+                                                        "aggregateService.partition": "8",
+                                                        "aggregateService.timeout": "600"
+                                                    }
+                                                },
+                                                "preproc": {
+                                                    "replace": {
+                                                        "target": "data",
+                                                        "function": "function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].placeholder, workData[i].value);}return newRequestFragment;}",
+                                                    }
+                                                },
+                                                "postproc": {
+                                                    "lineChart": {
+                                                        "function": "function(response){var retData = [];var index = {};var payload = response.data.payload;for (var i = 0; i < payload.length; i++) {var curSeries = payload[i].name;if (!index[curSeries]) {retData.push({values: [],key: curSeries,color: '#ff7f0e',strokeWidth: 2,classed: 'dashed'});index[curSeries] = retData.length - 1;}retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });}return retData;}",
+                                                    },
+                                                    "table": {
+                                                        "function": "function(response) {return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};}",
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        configs: [
+                            {
+                                name: 'defaultConfig',
+                                display: {
+                                    type: 'lineChart',
+                                    autorefresh: 'Off'
+                                }
                             }
-                        }
-                    ]
+                        ]
+                    }
                 }
             };
 
