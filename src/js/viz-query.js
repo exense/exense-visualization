@@ -77,6 +77,13 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     $scope.currentquery = $scope.state.init.query;
                 });
 
+                $scope.$on('templatePhChange', function () {
+                    $scope.state.init.query.datasource.service.data = JSON.parse($scope.runRequestProc(
+                        $scope.state.init.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
+                        JSON.stringify($scope.state.init.query.datasource.service.controls.template.datasource.service.data),
+                        $scope.state.init.query.datasource.service.controls.placeholders));
+                });
+                
                 $scope.fireQuery = function () {
                     $scope.counter++;
                     var datasource = $scope.currentquery.datasource.service;
@@ -243,7 +250,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 };
 
                 $scope.addPlaceholder = function(){
-                    $scope.state.init.query.datasource.service.controls.placeholders.push('');
+                    $scope.state.init.query.datasource.service.controls.placeholders.push({placeholder : '__?__', value : '?'});
                 }
 
                 $scope.removePlaceholder = function($index){

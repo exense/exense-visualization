@@ -468,7 +468,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                             templates: [
                                 {
                                     "name": 'RTM Measurements Template',
-                                    "placeholders": ["__eId__", "__name__"],
+                                    "placeholders": [{ "placeholder" : "__eId__", "value" : "?"}, { "placeholder" : "__name__", "value" : "?"}],
                                     "queryTemplate": {
                                         "type": "Simple",
                                         "datasource": {

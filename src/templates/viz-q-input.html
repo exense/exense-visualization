@@ -50,29 +50,36 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="passedquery.controltype == 'Template'">
-                    <div class="col-md-12 colcontain-grid">
-                        <label>Placeholders</label>
-                        <span style="display: inline-block !important;">Add:<span class="glyphicon glyphicon-plus"
-                                ng-click="addPlaceholder()" href="#"></span></span>
-                        <div class="btn-group">
-                            <div class="row" style="display: inline-block !important; width: 100%;">
-                                <div ng-repeat="item in getNumber(passedquery.datasource.service.controls.placeholders.length) track by $index">
-                                    <div class="col-lg-4 colcontain-grid">
-                                            <span style="display: inline-flex;"><input type="text" ng-model="passedquery.datasource.service.controls.placeholders[$index]"
-                                                    name="input_{{$index}}" class="form-control" />
-                                            <span class="glyphicon glyphicon-minus" ng-click="removePlaceholder($index)"
-                                                href="#" style="margin-top: 5px;"></span></span>
+
+                <div ng-if="passedquery.inputtype == 'Controls'">
+                    <div ng-if="passedquery.controltype == 'Template'">
+                        <div class="col-md-12 colcontain-grid">
+                            <label>Placeholders</label>
+                            <span style="display: inline-block !important;">Add:<span class="glyphicon glyphicon-plus"
+                                    ng-click="addPlaceholder()" href="#"></span></span>
+                            <div class="btn-group">
+                                <div class="row" style="display: inline-block !important; width: 100%;">
+                                    <div ng-repeat="item in getNumber(passedquery.datasource.service.controls.placeholders.length) track by $index">
+                                        <div class="col-lg-4 colcontain-grid">
+                                            <span style="display: inline-flex;">
+                                                <input type="text" ng-model="passedquery.datasource.service.controls.placeholders[$index].placeholder"
+                                                    ng-change="$emit('templatePhChange')" />
+                                                <span class="glyphicon glyphicon-minus" ng-click="removePlaceholder($index)"
+                                                    href="#" style="margin-top: 5px;"></span>
+                                            </span>
+                                            <input type="text" ng-model="passedquery.datasource.service.controls.placeholders[$index].value"
+                                                name="input_{{$index}}" class="form-control" ng-change="$emit('templatePhChange')" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-12 colcontain-grid">
-                        <label>Template</label>
-                        <div class="btn-group">
-                            <textarea json-text ng-model="passedquery.datasource.service.controls.template" class="form-control" />
-                            </div>
+                        <div class="col-md-12 colcontain-grid">
+                            <label>Template</label>
+                            <div class="btn-group">
+                                <textarea json-text ng-model="passedquery.datasource.service.controls.template.datasource.service.data" class="form-control"
+                                ng-change="$emit('templatePhChange')" />
+                                </div>
                 </div>
 
                     <div ng-if="passedquery.controltype == 'RTM'">
@@ -87,6 +94,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
                 <div class="col-md-12 colcontain-grid">
                     <label>Payload</label>
                     <div class="btn-group">
