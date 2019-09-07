@@ -31,21 +31,22 @@
 
                     <div class="row">
 
-                        <div class="col-md-5 colcontain-grid">
+                        <div class="col-md-12 colcontain-grid">
                             <label>Type</label>
                             <div class="btn-group form-radio">
-                                <label class="btn btn-primary" ng-model="state.shared.display" uib-btn-radio="'Table'">Table</label>
-                                <label class="
-                                    btn btn-primary" ng-model="state.shared.display" uib-btn-radio="'LineChart'">LineChart</label>
-                                <label class="btn btn-primary" ng-model="state.shared.display" uib-btn-radio="'BarChart'">BarChart</label>
+                                <label class="btn btn-primary" ng-model="state.shared.options.chart.type" uib-btn-radio="'table'">table</label>
+                                <label class="btn btn-primary" ng-model="state.shared.options.chart.type" uib-btn-radio="'lineChart'">lineChart</label>
+                                <label class="btn btn-primary" ng-model="state.shared.options.chart.type" uib-btn-radio="'multiBarChart'">multiBarChart</label>
+                                <label class="btn btn-primary" ng-model="state.shared.options.chart.type" uib-btn-radio="'scatterChart'">scatterChart</label>
+                                <label class="btn btn-primary" ng-model="state.shared.options.chart.type" uib-btn-radio="'discreteBarChart'">discreteBarChart</label>
                             </div>
                         </div>
                         <div class="col-md-3 colcontain-grid">
                             <label>Autorefresh</label>
                             <div class="btn-group form-radio">
-                                <label class="btn btn-primary" ng-model="currentconfig.display.autorefresh"
+                                <label class="btn btn-primary" ng-model="currentconfig.shared.display.autorefresh"
                                     uib-btn-radio="'On'">On</label>
-                                <label class="btn btn-primary" ng-model="currentconfig.display.autorefresh"
+                                <label class="btn btn-primary" ng-model="currentconfig.shared.display.autorefresh"
                                     uib-btn-radio="'Off'">Off</label>
                             </div>
                         </div>

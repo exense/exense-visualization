@@ -4,7 +4,7 @@ var vizWidgetManagercurrentScriptPath = vizWidgetManagerscripts[vizWidgetManager
 angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
     .factory('wmservice', function ($rootScope) {
 
-        var wmservice = {};
+        var wmservice = { shared : {}};
         wmservice.dashboards = [];
 
         // parameterize via arguments or server-originating conf & promise?
@@ -100,10 +100,12 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
         wmservice.addWidget = function (dId) {
             wId = wmservice.getNewId();
 
+            wmservice.shared.options = new DefaultOptions(wmservice.chartHeightSmall, wmservice.chartWidthSmall, wmservice.innerContainerHeightSmall, wmservice.innerContainerWidthSmall, 'lineChart');
+
             widget = {
                 widgetId: wId,
                 widgetWidth: 'col-md-6',
-                options: new DefaultOptions(wmservice.chartHeightSmall, wmservice.chartWidthSmall, wmservice.innerContainerHeightSmall, wmservice.innerContainerWidthSmall),
+                options: wmservice.shared.options,
                 title: {
                     enable: true,
                     text: 'Title for Line Chart'
@@ -117,9 +119,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                         tableData: [],
                         savedData: {}
                     },
-                    shared: {
-                        display: 'LineChart'
-                    },
+                    shared: wmservice.shared,
                     init: {
                         config: {
                             autorefresh: 'Off'
@@ -468,7 +468,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                         {
                             name: 'defaultConfig',
                             display: {
-                                type: 'LineChart',
+                                type: 'lineChart',
                                 autorefresh: 'Off'
                             }
                         }

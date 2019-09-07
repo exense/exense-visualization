@@ -189,14 +189,14 @@ angular.module('viz-dashlet', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
         };
     });
 
-function DefaultOptions(chartHeight, chartWidth, innerContainerHeight, innerContainerWidth) {
+function DefaultOptions(chartHeight, chartWidth, innerContainerHeight, innerContainerWidth, chartType) {
     return {
         innercontainer: {
             height: innerContainerHeight,
             width: innerContainerWidth,
         },
         chart: {
-            type: 'lineChart',
+            type: chartType,
             height: chartHeight,
             width: chartWidth,
             margin: {
