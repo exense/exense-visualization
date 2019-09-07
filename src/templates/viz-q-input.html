@@ -1,0 +1,54 @@
+<div class="form-wrapper">
+        <div class="form-group center-block">
+            <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
+
+                <div class="row">
+
+                    <div class="col-md-12 colcontain-grid">
+                        <label>Input type</label>
+                        <div class="btn-group form-radio">
+                            <label class="btn btn-primary" ng-model="passedquery.inputtype" uib-btn-radio="'Raw'">Raw</label>
+                            <label class="btn btn-primary" ng-model="passedquery.inputtype" uib-btn-radio="'Controls'">Controls</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 colcontain-grid">
+                        <div ng-if="passedquery.inputtype == 'Raw'">
+                            <div class="btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
+                                <button id="load-query" type="button" class="btn btn-primary" uib-dropdown-toggle
+                                    ng-disabled="disabled">
+                                    Load query... <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
+                                    <h5 ng-repeat="qp in state.presets.queries" ng-click="loadQueryPreset(qp)">{{qp.name}}</h5>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-if="passedquery.inputtype == 'Controls'">
+                        <div class="col-md-12 colcontain-grid">
+                            Display control type selector + control instance selector
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 colcontain-grid">
+                        <label>Payload</label>
+                        <div class="btn-group">
+                            <input json-text type="text" ng-model="passedquery.datasource.service.data" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div ng-if="passedquery.type == 'Async'">
+                        <div class="col-md-12 colcontain-grid">
+                            <label>Callback Payload</label>
+                            <div class="btn-group">
+                                <input json-text type="text" ng-model="passedquery.datasource.callback.data" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

@@ -555,7 +555,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
     })
     .directive('vizDashboardManager', function () {
         return {
-            restric: 'E',
+            restrict: 'E',
             scope: {
             },
             templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-dashboard-manager.html'),
@@ -615,7 +615,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
     })
     .directive('vizWidgetManager', function () {
         return {
-            restric: 'E',
+            restrict: 'E',
             scope: {
                 dashboard: '='
             },

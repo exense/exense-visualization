@@ -5,7 +5,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
     .directive('vizMgdWidget', function () {
         return {
-            restric: 'E',
+            restrict: 'E',
             scope: {
                 options: '=',
                 widgetwidth: '=',

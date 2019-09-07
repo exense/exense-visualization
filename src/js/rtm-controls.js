@@ -5,7 +5,7 @@ angular.module('rtm-controls', [])
 
     .directive('rtmControls', function () {
         return {
-            restric: 'E',
+            restrict: 'E',
             scope: {
                 state: '='
             },
