@@ -69,7 +69,7 @@ function StaticPresets() {
                             "data": { "selectors1": [{ "textFilters": [{ "key": "eId", "value": "JUnit_Dynamic", "regex": "false" }, { "key": "name", "value": "Transaction_1", "regex": "false" }], "numericalFilters": [] }], "serviceParams": { "measurementService.nextFactor": "0", "aggregateService.sessionId": "defaultSid", "aggregateService.granularity": "auto", "aggregateService.groupby": "name", "aggregateService.cpu": "1", "aggregateService.partition": "8", "aggregateService.timeout": "600" } },
                             "postproc": {
                                 "save": {
-                                    "function": "function(response){return [{ placeholder : '__streamedSessionId__', value : response.data.payload.streamedSessionId }];}",
+                                    "function": "function(response){return [{ placeholder : '__streamedSessionId__', value : response.data.payload.streamedSessionId, isDynamic : false }];}",
                                 }
                             }
                         },
@@ -162,7 +162,7 @@ function StaticPresets() {
                             },
                             "postproc": {
                                 "save": {
-                                    "function": "function(response){return [{ placeholder : '__streamedSessionId__', value : response.data.payload.streamedSessionId }];}",
+                                    "function": "function(response){return [{ placeholder : '__streamedSessionId__', value : response.data.payload.streamedSessionId, isDynamic : false }];}",
                                 }
                             }
                         },
@@ -242,14 +242,14 @@ function StaticPresets() {
             templates: [
                 {
                     "name": 'RTM Measurements Template',
-                    "placeholders": [{ "placeholder": "__eId__", "value": "?" }, { "placeholder": "__name__", "value": "?" }],
+                    "placeholders": [{ "placeholder": "__eId__", "value": "?", "isDynamic" : false }, { "placeholder": "__name__", "value": "?", "isDynamic" : false }, { "placeholder": "__minValue__", "value": "0", "isDynamic" : false }, { "placeholder": "__maxValue__", "value": "999999999", "isDynamic" : false }],
                     "queryTemplate": {
                         "type": "Simple",
                         "datasource": {
                             "service": {
                                 "url": "/rtm/rest/measurement/find",
                                 "method": "Post",
-                                "data": { "selectors1": [{ "textFilters": [{ "key": "eId", "value": "__eId__", "regex": "false" }, { "key": "name", "value": "__name__", "regex": "false" }], "numericalFilters": [] }], "serviceParams": { "measurementService.nextFactor": "0", "aggregateService.sessionId": "defaultSid", "aggregateService.granularity": "auto", "aggregateService.groupby": "name", "aggregateService.cpu": "1", "aggregateService.partition": "8", "aggregateService.timeout": "600" } },
+                                "data": { "selectors1": [{ "textFilters": [{ "key": "eId", "value": "__eId__", "regex": "false" }, { "key": "name", "value": "__name__", "regex": "false" }], "numericalFilters": [{"key":"begin","minValue":"__minValue__","maxValue":"__maxValue__"}] }], "serviceParams": { "measurementService.nextFactor": "0", "aggregateService.sessionId": "defaultSid", "aggregateService.granularity": "auto", "aggregateService.groupby": "name", "aggregateService.cpu": "1", "aggregateService.partition": "8", "aggregateService.timeout": "600" } },
                                 "preproc": {
                                     "replace": {
                                         "target": "data",

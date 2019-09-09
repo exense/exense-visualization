@@ -230,7 +230,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 };
 
                 $scope.addPlaceholder = function () {
-                    $scope.state.query.datasource.service.controls.placeholders.push({ placeholder: '__?__', value: '?' });
+                    $scope.state.query.datasource.service.controls.placeholders.push({ placeholder: '__?__', value: '?', isDynamic : false});
                 }
 
                 $scope.removePlaceholder = function ($index) {
