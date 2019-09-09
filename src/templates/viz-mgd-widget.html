@@ -1,8 +1,13 @@
 <div ng-attr-class="{{widgetwidth}}">
         <div class="dashletcontainer">
                 <ul class="ul-control">
+
                         <li class="li-title">
-                                <span class="title">Dashlet title</span>
+                                <span ng-if="chevron" class="title glyphicon glyphicon-chevron-down glyphicon-control"
+                                        ng-click="toggleChevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
+                                <span ng-if="!chevron" class="title glyphicon glyphicon-chevron-right glyphicon-control"
+                                        ng-click="toggleChevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
+                                <span class="title">{{dashlettitle}}</span>
                         </li>
                         <li class="li-control">
                                 <span class="glyphicon glyphicon-remove glyphicon-control" ng-click="$emit('mgdwidget-remove', {wid: widgetid})"
@@ -33,6 +38,6 @@
                                         href="#"></span>
                         </li>
                 </ul>
-                <viz-dashlet state='state'></viz-dashlet>
+                <viz-dashlet ng-if="chevron" state='state'></viz-dashlet>
         </div>
 </div>

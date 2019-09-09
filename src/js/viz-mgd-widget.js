@@ -16,6 +16,16 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
             templateUrl: vizMgdWidgetcurrentScriptPath.replace('/js/', '/templates/').replace('viz-mgd-widget.js', 'viz-mgd-widget.html') + '?who=viz-mgd-widget&anticache=' + getUniqueId(),
             controller: function ($scope, $element) {
                 $scope.currentstate = JSON.parse(JSON.stringify($scope.state));
+                $scope.chevron = true;
+                $scope.dashlettitle = 'Dashlet title';
+
+                $scope.toggleChevron = function(){
+                    $scope.chevron = !$scope.chevron;
+                };
+
+                $scope.$on('dashlet-title', function (event, arg) {
+                    $scope.dashlettitle = arg.newValue;
+                });
 
                 $scope.getActualDashletWidth = function () {
                     return $element[0].children[0].children[0].offsetWidth;
@@ -46,7 +56,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     });
                 };
 
-                //$scope.resizeSingle();
                 $(document).ready(function () {
                     $scope.resizeSingle();
                 });

@@ -32,7 +32,7 @@
                     <div class="row">
 
                         <div class="col-md-12 colcontain-grid">
-                            <label>Type</label>
+                            <label>Viz type</label>
                             <div class="btn-group form-radio">
                                 <label class="btn btn-primary" ng-model="state.shared.options.chart.type" uib-btn-radio="'table'">table</label>
                                 <label class="btn btn-primary" ng-model="state.shared.options.chart.type" uib-btn-radio="'lineChart'">lineChart</label>
@@ -50,6 +50,12 @@
                                     uib-btn-radio="'Off'" ng-click="$emit('autorefresh-toggle', {newValue : false})">Off</label>
                             </div>
                         </div>
+                        <div class="col-md-3 colcontain-grid">
+                                <label>Dashlet title</label>
+                                <div class="btn-group form-radio">
+                                    <input class="form-control" ng-model="currentconfig.dashlettitle" ng-change="$emit('dashlet-title', {newValue : currentconfig.dashlettitle})" />
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>

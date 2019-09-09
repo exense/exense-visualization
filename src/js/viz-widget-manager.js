@@ -105,10 +105,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             widget = {
                 widgetId: wId,
                 widgetWidth: 'col-md-6',
-                title: {
-                    enable: true,
-                    text: 'Title for Line Chart'
-                },
+                title: 'Dashlet title',
                 state: {
                     tabindex: 0,
                     data: {
