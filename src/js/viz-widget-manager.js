@@ -120,7 +120,8 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                         options: new DefaultChartOptions(wmservice.chartHeightSmall, wmservice.chartWidthSmall, wmservice.innerContainerHeightSmall, wmservice.innerContainerWidthSmall,
                             'lineChart'),
                         config: {
-                            autorefresh: 'Off'
+                            autorefresh: 'Off',
+                            barchevron: true
                         }
                     },
                     query: {
