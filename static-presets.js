@@ -1,4 +1,4 @@
-function StaticPresets(){
+function StaticPresets() {
     return {
         queries: [
             {
@@ -13,34 +13,14 @@ function StaticPresets(){
                             "postproc": {
                                 "lineChart": {
                                     "function": "function(response){var retData = [];var index = {};var payload = response.data.payload;for (var i = 0; i < payload.length; i++) {var curSeries = payload[i].name;if (!index[curSeries]) {retData.push({values: [],key: curSeries,color: '#ff7f0e',strokeWidth: 2,classed: 'dashed'});index[curSeries] = retData.length - 1;}retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });}return retData;}",
-                                    "abs": {
-                                        "title": "time",
-                                        "unit": "seconds"
-                                    },
-                                    "ord": {
-                                        "title": "duration",
-                                        "unit": "ms"
-                                    },
-                                    "transformations": [
-                                        {
-                                            "path": "timestamp",
-                                            "function": "function () {Math.random().toString(36).substr(2, 9);}"
-                                        }
-                                    ]
+                                    "abs": { "title": "time", "unit": "seconds" },
+                                    "ord": { "title": "duration", "unit": "ms" },
+                                    "transformations": [{ "path": "timestamp", "function": "function () {Math.random().toString(36).substr(2, 9);}" }]
                                 },
                                 "table": {
                                     "function": "function(response) {return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};}",
-                                    "defaults": [
-                                        {
-                                            "sortBy": "name"
-                                        }
-                                    ],
-                                    "transformations": [
-                                        {
-                                            "path": "timestamp",
-                                            "function": "function() {Math.random().toString(36).substr(2, 9);}"
-                                        }
-                                    ]
+                                    "defaults": [{ "sortBy": "name" }],
+                                    "transformations": [{ "path": "timestamp", "function": "function() {Math.random().toString(36).substr(2, 9);}" }]
                                 }
                             }
                         }
@@ -57,63 +37,19 @@ function StaticPresets(){
                             "url": "/rtm/rest/measurement/find",
                             "method": "Post",
                             "data": {
-                                "selectors1": [
-                                    {
-                                        "textFilters": [
-                                            {
-                                                "key": "eId",
-                                                "value": "JUnit_Dynamic",
-                                                "regex": "false"
-                                            },
-                                            {
-                                                "key": "name",
-                                                "value": "Transaction_1",
-                                                "regex": "false"
-                                            }
-                                        ],
-                                        "numericalFilters": []
-                                    }
-                                ],
-                                "serviceParams": {
-                                    "measurementService.nextFactor": "0",
-                                    "aggregateService.sessionId": "defaultSid",
-                                    "aggregateService.granularity": "auto",
-                                    "aggregateService.groupby": "name",
-                                    "aggregateService.cpu": "1",
-                                    "aggregateService.partition": "8",
-                                    "aggregateService.timeout": "600"
-                                }
+                                "selectors1": [{ "textFilters": [{ "key": "eId", "value": "JUnit_Dynamic", "regex": "false" }, { "key": "name", "value": "Transaction_1", "regex": "false" }], "numericalFilters": [] }],
+                                "serviceParams": { "measurementService.nextFactor": "0", "aggregateService.sessionId": "defaultSid", "aggregateService.granularity": "auto", "aggregateService.groupby": "name", "aggregateService.cpu": "1", "aggregateService.partition": "8", "aggregateService.timeout": "600" }
                             },
                             "postproc": {
                                 "lineChart": {
                                     "function": "function(response){var retData = [];var index = {};var payload = response.data.payload;for (var i = 0; i < payload.length; i++) {var curSeries = payload[i].name;if (!index[curSeries]) {retData.push({values: [],key: curSeries,color: '#ff7f0e',strokeWidth: 2,classed: 'dashed'});index[curSeries] = retData.length - 1;}retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });}return retData;}",
-                                    "abs": {
-                                        "title": "time",
-                                        "unit": "seconds"
-                                    },
-                                    "ord": {
-                                        "title": "duration",
-                                        "unit": "ms"
-                                    },
-                                    "transformations": [
-                                        {
-                                            "path": "timestamp",
-                                            "function": "function () {Math.random().toString(36).substr(2, 9);}"
-                                        }
-                                    ]
+                                    "abs": { "title": "time", "unit": "seconds" }, "ord": { "title": "duration", "unit": "ms" },
+                                    "transformations": [{ "path": "timestamp", "function": "function () {Math.random().toString(36).substr(2, 9);}" }]
                                 },
                                 "table": {
                                     "function": "function(response) {return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};}",
-                                    "defaults": [
-                                        {
-                                            "sortBy": "name"
-                                        }
-                                    ],
-                                    "transformations": [
-                                        {
-                                            "path": "timestamp",
-                                            "function": "function() {Math.random().toString(36).substr(2, 9);}"
-                                        }
+                                    "defaults": [{ "sortBy": "name" }],
+                                    "transformations": [{ "path": "timestamp", "function": "function() {Math.random().toString(36).substr(2, 9);}" }
                                     ]
                                 }
                             }
@@ -178,21 +114,7 @@ function StaticPresets(){
                                                             retData.push({ values: series[Object.keys(series)[i]], key: Object.keys(series)[i], color: '#ff7f0e', strokeWidth: 2, classed: 'dashed' });\
                                                         }\
                                                         return retData;\
-                                                    }",
-                                    "abs": {
-                                        "title": "time",
-                                        "unit": "seconds"
-                                    },
-                                    "ord": {
-                                        "title": "duration",
-                                        "unit": "ms"
-                                    },
-                                    "transformations": [
-                                        {
-                                            "path": "timestamp",
-                                            "function": "function () {Math.random().toString(36).substr(2, 9);}"
-                                        }
-                                    ]
+                                                    }"
                                 },
                                 "table": {
                                     "function": "function (response) {\
@@ -218,18 +140,7 @@ function StaticPresets(){
                                                             retData.array.push(dot);\
                                                         }\
                                                         return retData;\
-                                                    }",
-                                    "defaults": [
-                                        {
-                                            "sortBy": "name"
-                                        }
-                                    ],
-                                    "transformations": [
-                                        {
-                                            "path": "timestamp",
-                                            "function": "function() {Math.random().toString(36).substr(2, 9);}"
-                                        }
-                                    ]
+                                                }"
                                 }
                             }
                         }
@@ -246,27 +157,8 @@ function StaticPresets(){
                             "url": "/rtm/rest/aggregate/get",
                             "method": "Post",
                             "data": {
-                                "selectors1": [
-                                    {
-                                        "textFilters": [
-                                            {
-                                                "key": "eId",
-                                                "value": ".*",
-                                                "regex": "true"
-                                            }
-                                        ],
-                                        "numericalFilters": []
-                                    }
-                                ],
-                                "serviceParams": {
-                                    "measurementService.nextFactor": "0",
-                                    "aggregateService.sessionId": "defaultSid",
-                                    "aggregateService.granularity": "auto",
-                                    "aggregateService.groupby": "name",
-                                    "aggregateService.cpu": "1",
-                                    "aggregateService.partition": "8",
-                                    "aggregateService.timeout": "600"
-                                }
+                                "selectors1": [{ "textFilters": [{ "key": "eId", "value": ".*", "regex": "true" }], "numericalFilters": [] }],
+                                "serviceParams": { "measurementService.nextFactor": "0", "aggregateService.sessionId": "defaultSid", "aggregateService.granularity": "auto", "aggregateService.groupby": "name", "aggregateService.cpu": "1", "aggregateService.partition": "8", "aggregateService.timeout": "600" }
                             },
                             "postproc": {
                                 "save": {
@@ -313,20 +205,6 @@ function StaticPresets(){
                                                         }\
                                                         return retData;\
                                                     }",
-                                    "abs": {
-                                        "title": "time",
-                                        "unit": "seconds"
-                                    },
-                                    "ord": {
-                                        "title": "duration",
-                                        "unit": "ms"
-                                    },
-                                    "transformations": [
-                                        {
-                                            "path": "timestamp",
-                                            "function": "function () {Math.random().toString(36).substr(2, 9);}"
-                                        }
-                                    ]
                                 },
                                 "table": {
                                     "function": "function (response) {\
@@ -352,18 +230,7 @@ function StaticPresets(){
                                                             retData.array.push(dot);\
                                                         }\
                                                         return retData;\
-                                                    }",
-                                    "defaults": [
-                                        {
-                                            "sortBy": "name"
-                                        }
-                                    ],
-                                    "transformations": [
-                                        {
-                                            "path": "timestamp",
-                                            "function": "function() {Math.random().toString(36).substr(2, 9);}"
-                                        }
-                                    ]
+                                                    }"
                                 }
                             }
                         }
@@ -382,34 +249,7 @@ function StaticPresets(){
                             "service": {
                                 "url": "/rtm/rest/measurement/find",
                                 "method": "Post",
-                                "data": {
-                                    "selectors1": [
-                                        {
-                                            "textFilters": [
-                                                {
-                                                    "key": "eId",
-                                                    "value": "__eId__",
-                                                    "regex": "false"
-                                                },
-                                                {
-                                                    "key": "name",
-                                                    "value": "__name__",
-                                                    "regex": "false"
-                                                }
-                                            ],
-                                            "numericalFilters": []
-                                        }
-                                    ],
-                                    "serviceParams": {
-                                        "measurementService.nextFactor": "0",
-                                        "aggregateService.sessionId": "defaultSid",
-                                        "aggregateService.granularity": "auto",
-                                        "aggregateService.groupby": "name",
-                                        "aggregateService.cpu": "1",
-                                        "aggregateService.partition": "8",
-                                        "aggregateService.timeout": "600"
-                                    }
-                                },
+                                "data": { "selectors1": [{ "textFilters": [{ "key": "eId", "value": "__eId__", "regex": "false" }, { "key": "name", "value": "__name__", "regex": "false" }], "numericalFilters": [] }], "serviceParams": { "measurementService.nextFactor": "0", "aggregateService.sessionId": "defaultSid", "aggregateService.granularity": "auto", "aggregateService.groupby": "name", "aggregateService.cpu": "1", "aggregateService.partition": "8", "aggregateService.timeout": "600" } },
                                 "preproc": {
                                     "replace": {
                                         "target": "data",

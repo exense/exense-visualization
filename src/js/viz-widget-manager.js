@@ -228,7 +228,6 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             controller: function ($scope, wmservice) {
 
                 $scope.dashboards = wmservice.dashboards;
-                console.log($scope.presets);
 
                 // todo: bind to config
                 $scope.saveState = function () {
