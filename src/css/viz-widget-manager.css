@@ -23,8 +23,9 @@
   }
 
   .secondwell {
-    margin: 2px;
-    padding: 2px;
+    margin: 5px;
+    padding: 10px;
+    padding-bottom: 20px;
     border-color: transparent !important;
     background-color: transparent !important;
     background-image: none;

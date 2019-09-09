@@ -1,4 +1,4 @@
-<div display="flex">
+<div display="flex" ng-style="{height: state.shared.options.innercontainer.height + 5 +'px'}">
     <span ng-if="!state.shared.config.barchevron" style="position: absolute; top: 40px; right: 30px; margin-right: 5px; margin-top: 3px;" class="title glyphicon glyphicon-cog glyphicon-viz"
         ng-click="toggleBarchevronToConf()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
     <span ng-if="state.shared.config.barchevron" style="position: absolute; top: 40px; right: 30px; margin-right: 5px; margin-top: 3px;" class="title glyphicon glyphicon-stats glyphicon-viz"
@@ -38,7 +38,7 @@
             </div>
         </uib-tab>
     </uib-tabset>
-    <div ng-if="!state.shared.config.barchevron" class="innercontainer" ng-style="{ height: state.shared.options.innercontainer.height+35+'px'}">
+    <div ng-if="!state.shared.config.barchevron" class="innercontainer">
         <viz-view state="state"></viz-view>
     </div>
 </div>
