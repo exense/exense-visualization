@@ -21,10 +21,13 @@
 	<script src="src/js/export.js"></script>
 	<script src="src/js/tables.js"></script>
 	<script src="src/js/rtm-controls.js"></script>
+	<script src="src/js/global-classes.js"></script>
 	<script src="src/js/viz-query.js"></script>
 	<script src="src/js/viz-dashlet.js"></script>
 	<script src="src/js/viz-mgd-widget.js"></script>
 	<script src="src/js/viz-widget-manager.js"></script>
+
+	<script src="static-presets.js"></script>
 
 	<link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css">
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
@@ -36,12 +39,13 @@
 
 	<script>
 		var demoApp = angular.module('demoApp', [ 'viz-widget-manager' ]);
+		var staticPresets = new StaticPresets();
 	</script>
 </head>
 
 <body>
 	<div ng-app='demoApp'>
-		<viz-dashboard-manager></viz-dashboard-manager>
+		<viz-dashboard-manager presets="staticPresets"></viz-dashboard-manager>
 	</div>
 </body>
 
