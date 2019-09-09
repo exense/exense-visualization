@@ -14,8 +14,7 @@ angular.module('viz-dashlet', ['viz-query'])
 
                 $scope.redraw = 'drawn';
                 $scope.dashlettabstate = $scope.state.tabindex;
-                console.log($scope.state)
-                console.log($scope.state.shared.options)
+                
                 $scope.saveState = function () {
                     $scope.state.tabindex = $scope.dashlettabstate;
                 };

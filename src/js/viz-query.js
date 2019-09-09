@@ -40,12 +40,17 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.$on('child-autorefresh-toggle', function (event, arg) {
                     if (arg.newValue == true) {
                         $scope.autorefreshInterval = setInterval(function () {
-                            if (!$scope.isOngoingQuery){
-                                $scope.fireQuery();
+                            if (!$scope.isOngoingQuery) {
+                                try {
+                                    $scope.fireQuery();
+                                } catch (e) {
+                                    console.log('exception thrown while firing query: ' + e);
+                                    $scope.isOngoingQuery = false;
+                                }
                             }
                         },
-                        1000);
-                    }else{
+                            1000);
+                    } else {
                         clearInterval($scope.autorefreshInterval);
                     }
                 });
@@ -58,6 +63,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 });
 
                 $scope.fireQuery = function () {
+                    $scope.isOngoingQuery = true;
                     $scope.counter++;
                     var datasource = $scope.currentquery.datasource.service;
                     $scope.servicesent = 'url :' + JSON.stringify(datasource.url) + '; payload:' + JSON.stringify(datasource.data);
@@ -73,6 +79,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     if ($scope.asyncInterval) {
                         clearInterval($scope.asyncInterval);
                     }
+                    $scope.isOngoingQuery = false;
                 };
 
                 $scope.executeHttp = function (method, url, payload, successcallback, successTarget, errorcallback) {
@@ -81,6 +88,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 };
 
                 $scope.dispatchSuccessResponse = function (response, successTarget) {
+                    $scope.isOngoingQuery = false;
                     if ($scope.currentquery.type === 'Simple') {
                         $scope.loadData(response, successTarget)
                     }
