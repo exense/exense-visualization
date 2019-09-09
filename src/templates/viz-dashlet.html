@@ -1,9 +1,10 @@
 <div display="flex">
-    <span ng-if="!state.shared.config.barchevron" style="float: right; margin-right: 5px; margin-top: 3px;" class="title glyphicon glyphicon-chevron-down glyphicon-viz"
+    <span ng-if="!state.shared.config.barchevron" style="position: absolute; top: 55px; right: 30px; margin-right: 5px; margin-top: 3px;" class="title glyphicon glyphicon-cog glyphicon-viz"
         ng-click="toggleBarchevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
-    <span ng-if="state.shared.config.barchevron" style="float: right; margin-right: 5px; margin-top: 3px;" class="title glyphicon glyphicon-chevron-up glyphicon-viz"
+    <span ng-if="state.shared.config.barchevron" style="position: absolute; top: 55px; right: 30px; margin-right: 5px; margin-top: 3px;" class="title glyphicon glyphicon-stats glyphicon-viz"
         ng-click="toggleBarchevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
-    <uib-tabset ng-if="state.shared.config.barchevron" class="ul-viewtab dashlet" active="dashlettabstate" ng-click="saveState()">
+        {{state.ta}}
+    <uib-tabset ng-if="state.shared.config.barchevron" class="ul-viewtab dashlet" active="state.tabindex;" ng-click="saveState()">
         <uib-tab index="0">
             <uib-tab-heading>
                 <span class="glyphicon glyphicon-search glyphicon-viz"></span><span style="margin-left: 5px;">Query</span>
@@ -14,21 +15,13 @@
         </uib-tab>
         <uib-tab index="1">
             <uib-tab-heading>
-                <span class="glyphicon glyphicon-eye-open glyphicon-viz"></span><span style="margin-left: 5px;">View</span>
-            </uib-tab-heading>
-            <div class="innercontainer" ng-style="{ height: state.shared.options.innercontainer.height+'px'}">
-                <viz-view state="state"></viz-view>
-            </div>
-        </uib-tab>
-        <uib-tab index="2">
-            <uib-tab-heading>
                 <span class="glyphicon glyphicon-cog glyphicon-viz"></span><span style="margin-left: 5px;">Config</span>
             </uib-tab-heading>
             <div class="innercontainer" ng-style="{ height: state.shared.options.innercontainer.height+'px'}">
                 <viz-config formwidth="state.shared.options.innercontainer.width" state="state"></viz-config>
             </div>
         </uib-tab>
-        <uib-tab index="3">
+        <uib-tab index="2">
             <uib-tab-heading>
                 <span class="glyphicon glyphicon-info-sign glyphicon-viz"></span><span style="margin-left: 5px;">Info</span>
             </uib-tab-heading>
