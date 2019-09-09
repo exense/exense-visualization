@@ -14,12 +14,21 @@ angular.module('viz-dashlet', ['viz-query'])
 
                 $scope.redraw = 'drawn';
 
-                $scope.toggleBarchevron = function(){
+                $scope.toggleBarchevronToConf = function(){
+                    $scope.state.shared.config.barchevron = !$scope.state.shared.config.barchevron;
+                }
+
+                $scope.toggleBarchevronToViz = function(){
+                    $scope.$broadcast('child-firequery', {});
                     $scope.state.shared.config.barchevron = !$scope.state.shared.config.barchevron;
                 }
 
                 $scope.$on('autorefresh-toggle',function(event, arg){
                     $scope.$broadcast('child-autorefresh-toggle', arg);
+                });
+                
+                $scope.$on('firequery',function(event, arg){
+                    $scope.$broadcast('child-firequery', arg);
                 });
             }
         };

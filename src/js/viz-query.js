@@ -55,12 +55,16 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             },
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-transform.html') + '?who=viz-transform&anticache=' + getUniqueId(),
             controller: function ($scope, $http) {
-                
+
                 $scope.counter = 0;
                 $scope.queryFire = false;
                 $scope.isOngoingQuery = false;
                 $scope.autorefreshInterval = null;
-                
+
+                $scope.$on('child-firequery', function (event, arg) {
+                    $scope.fireQuery();
+                });
+
                 $scope.$on('child-autorefresh-toggle', function (event, arg) {
                     if (arg.newValue == true) {
                         $scope.autorefreshInterval = setInterval(function () {
@@ -80,11 +84,15 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 });
 
                 $scope.fireQuery = function () {
-                    $scope.isOngoingQuery = true;
-                    $scope.counter++;
-                    var datasource =  $scope.state.query.datasource.service;
-                    $scope.servicesent = 'url :' + JSON.stringify(datasource.url) + '; payload:' + JSON.stringify(datasource.data);
-                    $scope.executeHttp(datasource.method, datasource.url, datasource.data, $scope.dispatchSuccessResponse, datasource, $scope.dispatchErrorResponse);
+                    try {
+                        $scope.isOngoingQuery = true;
+                        $scope.counter++;
+                        var datasource = $scope.state.query.datasource.service;
+                        $scope.state.shared.http.servicesent = 'url :' + JSON.stringify(datasource.url) + '; payload:' + JSON.stringify(datasource.data);
+                        $scope.executeHttp(datasource.method, datasource.url, datasource.data, $scope.dispatchSuccessResponse, datasource, $scope.dispatchErrorResponse);
+                    } catch (e) {
+                        console.log('exception thrown while firing query: ' + e);
+                    }
                 };
 
                 $scope.dispatchAsync = function (response) {
@@ -106,15 +114,15 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
                 $scope.dispatchSuccessResponse = function (response, successTarget) {
                     $scope.isOngoingQuery = false;
-                    if ( $scope.state.query.type === 'Simple') {
+                    if ($scope.state.query.type === 'Simple') {
                         $scope.loadData(response, successTarget)
                     }
-                    if ( $scope.state.query.type === 'Async') {
-                        var scallback =  $scope.state.query.datasource.callback;
+                    if ($scope.state.query.type === 'Async') {
+                        var scallback = $scope.state.query.datasource.callback;
                         $scope.state.data.raw = response;
-                        $scope.rawserviceresponse = JSON.stringify(response);
-                        if ( $scope.state.query.datasource.service.postproc.save) {
-                            $scope.state.data.savedData = $scope.runResponseProc( $scope.state.query.datasource.service.postproc.save.function, response);
+                        $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
+                        if ($scope.state.query.datasource.service.postproc.save) {
+                            $scope.state.data.savedData = $scope.runResponseProc($scope.state.query.datasource.service.postproc.save.function, response);
                         }
                         var datatosend = scallback.data;
                         var urltosend = scallback.url;
@@ -128,7 +136,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                             }
                         }
 
-                        $scope.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
+                        $scope.state.shared.http.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
                         $scope.asyncInterval = setInterval(function () {
                             $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
                         },
@@ -137,14 +145,14 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 }
 
                 $scope.loadData = function (response, proctarget) {
-                    if ( $scope.state.query.type === 'Simple') {
+                    if ($scope.state.query.type === 'Simple') {
                         $scope.state.data.raw = response;
-                        $scope.rawserviceresponse = JSON.stringify(response);
+                        $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
                     }
-                    if ( $scope.state.query.type === 'Async') {
+                    if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
                             try {
-                                if ($scope.runResponseProc( $scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
+                                if ($scope.runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
                                     clearInterval($scope.asyncInterval);
                                 }
                             } catch{
@@ -152,7 +160,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                             }
                         }
                         $scope.state.data.asyncraw = response;
-                        $scope.rawcallbackresponse = JSON.stringify(response);
+                        $scope.state.shared.http.rawcallbackresponse = JSON.stringify(response);
                     }
                     $scope.state.data.chartData = $scope.runResponseProc(proctarget.postproc.lineChart.function, response);
                     $scope.state.data.tableData = $scope.runResponseProc(proctarget.postproc.table.function, response);
@@ -185,6 +193,17 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     $scope.state.shared.config = $scurrentconfig;
                 };
             }
+        }
+    })
+    .directive('vizInfo', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                formwidth: '=',
+                state: '='
+            },
+            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-info.html') + '?who=viz-info&anticache=' + getUniqueId(),
+            controller: function ($scope, $http) { }
         }
     })
     .directive('jsonText', function () {

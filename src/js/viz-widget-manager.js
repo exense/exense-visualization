@@ -122,7 +122,8 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                         config: {
                             autorefresh: 'Off',
                             barchevron: true
-                        }
+                        },
+                        http: {}
                     },
                     query: {
                         inputtype: "Raw",
