@@ -97,7 +97,8 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             widget.options.innercontainer.width = wmservice.innerContainerWidthSmall;
         };
 
-        wmservice.addWidget = function (dId, initPresets) {
+        wmservice.addWidget = function (dId, presets) {
+
             wId = wmservice.getNewId();
 
             wmservice.shared.options = new DefaultChartOptions(wmservice.chartHeightSmall, wmservice.chartWidthSmall, wmservice.innerContainerHeightSmall, wmservice.innerContainerWidthSmall, 'lineChart');
@@ -136,7 +137,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                         },
                         view: {}
                     },
-                    presets: initPresets
+                    presets: presets
                 }
             };
 
@@ -227,6 +228,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             controller: function ($scope, wmservice) {
 
                 $scope.dashboards = wmservice.dashboards;
+                console.log($scope.presets);
 
                 // todo: bind to config
                 $scope.saveState = function () {
@@ -282,7 +284,8 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
         return {
             restrict: 'E',
             scope: {
-                dashboard: '='
+                dashboard: '=',
+                presets: '='
             },
             templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-widget-manager.html'),
             controller: function ($scope, wmservice) {

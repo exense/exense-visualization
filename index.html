@@ -38,14 +38,17 @@
 	<link rel="stylesheet" href="src/css/viz-widget-manager.css">
 
 	<script>
-		var demoApp = angular.module('demoApp', [ 'viz-widget-manager' ]);
-		var staticPresets = new StaticPresets();
+		var demoApp = angular.module('demoApp', [ 'viz-widget-manager' ])
+		.controller('ctrl', ['$scope', function ($scope) {
+			$scope.staticPresetsInstance = new StaticPresets();
+		}]);
+		
 	</script>
 </head>
 
 <body>
-	<div ng-app='demoApp'>
-		<viz-dashboard-manager presets="staticPresets"></viz-dashboard-manager>
+	<div ng-app='demoApp' ng-controller='ctrl'>
+		<viz-dashboard-manager presets="staticPresetsInstance"></viz-dashboard-manager>
 	</div>
 </body>
 
