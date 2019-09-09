@@ -29,7 +29,8 @@ svg.nvd3-svg{
 
 .tab-content {
     border: 1px solid #333333;
-    padding: 10px;
+    padding: 1px;
+    margin: 1px;
 }
 
 div.dashlet > * > .nav-link {

@@ -15,15 +15,16 @@
   }
   
   .mainwell {
-    padding-top: 10px;
+    padding: 2px;
+    margin: 2px;
     border-color: transparent !important;
     background-color: transparent !important;
     background-image: none;
   }
 
   .secondwell {
-    margin-left: 10px;
-    padding-top: 10px;
+    margin: 2px;
+    padding: 2px;
     border-color: transparent !important;
     background-color: transparent !important;
     background-image: none;

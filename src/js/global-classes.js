@@ -33,6 +33,7 @@ function DefaultChartOptions(chartHeight, chartWidth, innerContainerHeight, inne
                 },
                 axisLabelDistance: -10
             },
+            showLegend: false,
             callback: function (chart) {
                 //console.log("!!! lineChart callback !!!");
             }

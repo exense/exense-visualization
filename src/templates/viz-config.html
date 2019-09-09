@@ -44,13 +44,20 @@
                         <div class="col-md-3 colcontain-grid">
                             <label>Autorefresh</label>
                             <div class="btn-group form-radio">
-                                <label class="btn btn-primary" ng-model="currentconfig.autorefresh"
-                                    uib-btn-radio="'On'" ng-click="$emit('autorefresh-toggle', {newValue : true})">On</label>
-                                <label class="btn btn-primary" ng-model="currentconfig.autorefresh"
-                                    uib-btn-radio="'Off'" ng-click="$emit('autorefresh-toggle', {newValue : false})">Off</label>
+                                <label class="btn btn-primary" ng-model="currentconfig.autorefresh" uib-btn-radio="'On'"
+                                    ng-click="$emit('autorefresh-toggle', {newValue : true})">On</label>
+                                <label class="btn btn-primary" ng-model="currentconfig.autorefresh" uib-btn-radio="'Off'"
+                                    ng-click="$emit('autorefresh-toggle', {newValue : false})">Off</label>
                             </div>
                         </div>
                         <div class="col-md-3 colcontain-grid">
+                            <label>Show legend</label>
+                            <div class="btn-group form-radio">
+                                <label class="btn btn-primary" ng-model="state.shared.options.chart.showLegend" uib-btn-radio="true">On</label>
+                                <label class="btn btn-primary" ng-model="state.shared.options.chart.showLegend" uib-btn-radio="false">Off</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 colcontain-grid">
                                 <label>Dashlet title</label>
                                 <div class="btn-group form-radio">
                                     <input class="form-control" ng-model="currentconfig.dashlettitle" ng-change="$emit('dashlet-title', {newValue : currentconfig.dashlettitle})" />
@@ -60,5 +67,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </uib-accordion>

@@ -159,9 +159,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 state: '='
             },
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-view.html') + '?who=viz-view&anticache=' + getUniqueId(),
-            controller: function ($scope) {
-
-            }
+            controller: function ($scope) {}
         };
     })
     .directive('vizConfig', function () {

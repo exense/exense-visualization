@@ -9,8 +9,8 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
         wmservice.dashboards = [];
 
         // parameterize via arguments or server-originating conf & promise?
-        wmservice.chartHeightSmall = 210;
-        wmservice.chartHeightBig = 460;
+        wmservice.chartHeightSmall = 270;
+        wmservice.chartHeightBig = 480;
         wmservice.chartWidthSmall = 0;
         wmservice.chartWidthBig = 0;
         wmservice.innerContainerHeightSmall = 240;
