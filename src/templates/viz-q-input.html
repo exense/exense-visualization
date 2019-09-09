@@ -20,7 +20,7 @@
                                 Load query... <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
-                                <h5 ng-repeat="qp in state.presets.queries" ng-click="loadQueryPreset(qp)">{{qp.name}}</h5>
+                                <h5 ng-repeat="qp in state.shared.presets.queries" ng-click="loadQueryPreset(qp)">{{qp.name}}</h5>
                             </ul>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
                                 <div ng-if="passedquery.controltype == 'Template'">
-                                    <h5 ng-repeat="t in state.presets.controls.templates" ng-click="loadTemplatePreset(t)">{{t.name}}</h5>
+                                    <h5 ng-repeat="t in state.shared.presets.controls.templates" ng-click="loadTemplatePreset(t)">{{t.name}}</h5>
                                 </div>
                             </ul>
                         </div>

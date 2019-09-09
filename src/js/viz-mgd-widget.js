@@ -13,7 +13,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 widgetid: '=',
                 state: '='
             },
-            templateUrl: vizMgdWidgetcurrentScriptPath.replace('/js/', '/templates/').replace('viz-mgd-widget.js', 'viz-mgd-widget.html'),
+            templateUrl: vizMgdWidgetcurrentScriptPath.replace('/js/', '/templates/').replace('viz-mgd-widget.js', 'viz-mgd-widget.html') + '?who=viz-mgd-widget&anticache=' + getUniqueId(),
             controller: function ($scope, $element) {
                 $scope.currentstate = JSON.parse(JSON.stringify($scope.state));
 

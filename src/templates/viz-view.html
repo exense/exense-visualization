@@ -1,4 +1,4 @@
-<div ng-if="options.chart.type === 'table'" style="text-align: left; justify-content: left;">
+<div ng-if="state.shared.options.chart.type === 'table'" style="text-align: left; justify-content: left;">
     <table class="table">
         <thead>
             <tr>
@@ -14,6 +14,6 @@
         </tbody>
     </table>
 </div>
-<div ng-if="options.chart.type.endsWith('Chart')">  
-    <nvd3 options='options' data='state.data.chartData' style="text-align: center; justify-content: center;"></nvd3>
+<div ng-if="state.shared.options.chart.type.endsWith('Chart')">  
+    <nvd3 options='state.shared.options' data='state.data.chartData' style="text-align: center; justify-content: center;"></nvd3>
 </div>

@@ -27,20 +27,36 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             controller: function ($scope, $http) {
 
                 // Init
-                $scope.currentquery = $scope.state.init.query;
+                $scope.currentquery = $scope.state.query;
                 $scope.counter = 0;
+                $scope.queryFire = false;
+                $scope.isOngoingQuery = false;
+                $scope.autorefreshInterval = null;
 
                 $scope.$on('querychange', function () {
-                    $scope.currentquery = $scope.state.init.query;
+                    $scope.currentquery = $scope.state.query;
+                });
+
+                $scope.$on('child-autorefresh-toggle', function (event, arg) {
+                    if (arg.newValue == true) {
+                        $scope.autorefreshInterval = setInterval(function () {
+                            if (!$scope.isOngoingQuery){
+                                $scope.fireQuery();
+                            }
+                        },
+                        1000);
+                    }else{
+                        clearInterval($scope.autorefreshInterval);
+                    }
                 });
 
                 $scope.$on('templatePhChange', function () {
-                    $scope.state.init.query.datasource.service.data = JSON.parse($scope.runRequestProc(
-                        $scope.state.init.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
-                        JSON.stringify($scope.state.init.query.datasource.service.controls.template.datasource.service.data),
-                        $scope.state.init.query.datasource.service.controls.placeholders));
+                    $scope.state.query.datasource.service.data = JSON.parse($scope.runRequestProc(
+                        $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
+                        JSON.stringify($scope.state.query.datasource.service.controls.template.datasource.service.data),
+                        $scope.state.query.datasource.service.controls.placeholders));
                 });
-                
+
                 $scope.fireQuery = function () {
                     $scope.counter++;
                     var datasource = $scope.currentquery.datasource.service;
@@ -55,7 +71,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 $scope.dispatchErrorResponse = function (response) {
                     console.log('error:' + JSON.stringify(response));
                     if ($scope.asyncInterval) {
-                        clearInterval($scope.asyncInterval)
+                        clearInterval($scope.asyncInterval);
                     }
                 };
 
@@ -150,11 +166,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-config.html') + '?who=viz-config&anticache=' + getUniqueId(),
             controller: function ($scope, $http) {
 
-                // Default state, before loading any presets
-                $scope.currentconfig = $scope.state.init.config;
+                $scope.currentconfig = $scope.state.shared.config;
 
                 $scope.loadConfigPreset = function (preset) {
                     $scope.currentconfig = preset;
+                    $scope.state.shared.config = $scurrentconfig;
                 };
             }
         }
@@ -198,30 +214,29 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             },
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-q-input.html') + '?who=viz-q-input&anticache=' + getUniqueId(),
             controller: function ($scope) {
-
                 $scope.initTemplateControls = function () {
-                    $scope.state.init.query.datasource.service.controls = { template: '', placeholders : {}};
-                    $scope.getNumber = function(num) {
-                      return new Array(num);
+                    $scope.state.query.datasource.service.controls = { template: '', placeholders: {} };
+                    $scope.getNumber = function (num) {
+                        return new Array(num);
                     }
                 };
 
-                $scope.addPlaceholder = function(){
-                    $scope.state.init.query.datasource.service.controls.placeholders.push({placeholder : '__?__', value : '?'});
+                $scope.addPlaceholder = function () {
+                    $scope.state.query.datasource.service.controls.placeholders.push({ placeholder: '__?__', value: '?' });
                 }
 
-                $scope.removePlaceholder = function($index){
-                    $scope.state.init.query.datasource.service.controls.placeholders.splice($index, 1 );
+                $scope.removePlaceholder = function ($index) {
+                    $scope.state.query.datasource.service.controls.placeholders.splice($index, 1);
                 }
 
                 $scope.loadQueryPreset = function (querypreset) {
-                    $scope.state.init.query = querypreset.query;
+                    $scope.state.query = querypreset.query;
                     $scope.$emit('querychange');
                 }
 
                 $scope.loadTemplatePreset = function (template) {
-                    $scope.state.init.query.datasource.service.controls.template = template.queryTemplate;
-                    $scope.state.init.query.datasource.service.controls.placeholders = template.placeholders;
+                    $scope.state.query.datasource.service.controls.template = template.queryTemplate;
+                    $scope.state.query.datasource.service.controls.placeholders = template.placeholders;
                 };
 
             }

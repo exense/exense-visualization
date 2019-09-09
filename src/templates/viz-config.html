@@ -44,10 +44,10 @@
                         <div class="col-md-3 colcontain-grid">
                             <label>Autorefresh</label>
                             <div class="btn-group form-radio">
-                                <label class="btn btn-primary" ng-model="currentconfig.shared.display.autorefresh"
-                                    uib-btn-radio="'On'">On</label>
-                                <label class="btn btn-primary" ng-model="currentconfig.shared.display.autorefresh"
-                                    uib-btn-radio="'Off'">Off</label>
+                                <label class="btn btn-primary" ng-model="currentconfig.autorefresh"
+                                    uib-btn-radio="'On'" ng-click="$emit('autorefresh-toggle', {newValue : true})">On</label>
+                                <label class="btn btn-primary" ng-model="currentconfig.autorefresh"
+                                    uib-btn-radio="'Off'" ng-click="$emit('autorefresh-toggle', {newValue : false})">Off</label>
                             </div>
                         </div>
                     </div>

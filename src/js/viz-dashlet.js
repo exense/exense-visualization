@@ -13,12 +13,16 @@ angular.module('viz-dashlet', ['viz-query'])
             controller: function ($scope, $element) {
 
                 $scope.redraw = 'drawn';
-
                 $scope.dashlettabstate = $scope.state.tabindex;
-
+                console.log($scope.state)
+                console.log($scope.state.shared.options)
                 $scope.saveState = function () {
                     $scope.state.tabindex = $scope.dashlettabstate;
                 };
+
+                $scope.$on('autorefresh-toggle',function(event, arg){
+                    $scope.$broadcast('child-autorefresh-toggle', arg);
+                });
             }
         };
     });

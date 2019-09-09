@@ -4,7 +4,8 @@ var vizWidgetManagercurrentScriptPath = vizWidgetManagerscripts[vizWidgetManager
 angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
     .factory('wmservice', function ($rootScope) {
 
-        var wmservice = { shared: {} };
+        var wmservice = {};
+
         wmservice.dashboards = [];
 
         // parameterize via arguments or server-originating conf & promise?
@@ -61,10 +62,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             for (i = 0; i < wmservice.dashboards.length; i++) {
                 var curDashboard = wmservice.dashboards[i];
                 for (j = 0; j < curDashboard.widgets.length; j++) {
-                    var curWidget = curDashboard.widgets[j];
-                    var old = curWidget.options.chart.width;
-                    curWidget.options.chart.width = newWidth;
-                    curWidget.options.innercontainer.width = newWidth - 50;
+                    var curWidgetOpts = curDashboard.widgets[j].state.shared.options;
+                    var old = curWidgetOpts.chart.width;
+                    curWidgetOpts.chart.width = newWidth;
+                    curWidgetOpts.innercontainer.width = newWidth - 50;
                     //console.log('['+curDashboard.dashboardid+':'+curWidget.widgetId +'] : changed from ' + old + ' to '+curWidget.options.chart.width);
                 }
             }
@@ -74,44 +75,41 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
 
         wmservice.updateSingleChartSize = function (dId, wId, newWidth) {
             var widget = wmservice.getWidget(dId, wId);
-            widget.options.chart.width = newWidth;
-            widget.options.innercontainer.width = newWidth - 50;
+            widget.state.shared.options.chart.width = newWidth;
+            widget.state.shared.options.innercontainer.width = newWidth - 50;
             wmservice.forceRedraw();
         };
 
         wmservice.extendWidget = function (dId, wId) {
             var widget = wmservice.getWidget(dId, wId);
             widget.widgetWidth = 'col-md-12';
-            widget.options.chart.height = wmservice.chartHeightBig;
-            widget.options.chart.width = wmservice.chartWidthBig;
-            widget.options.innercontainer.height = wmservice.innerContainerHeightBig;
-            widget.options.innercontainer.width = wmservice.innerContainerWidthBig;
+            widget.state.shared.options.chart.height = wmservice.chartHeightBig;
+            widget.state.shared.options.chart.width = wmservice.chartWidthBig;
+            widget.state.shared.options.innercontainer.height = wmservice.innerContainerHeightBig;
+            widget.state.shared.options.innercontainer.width = wmservice.innerContainerWidthBig;
         };
 
         wmservice.reduceWidget = function (dId, wId) {
             var widget = wmservice.getWidget(dId, wId);
             widget.widgetWidth = 'col-md-6';
-            widget.options.chart.height = wmservice.chartHeightSmall;
-            widget.options.chart.width = wmservice.chartWidthSmall;
-            widget.options.innercontainer.height = wmservice.innerContainerHeightSmall;
-            widget.options.innercontainer.width = wmservice.innerContainerWidthSmall;
+            widget.state.shared.options.chart.height = wmservice.chartHeightSmall;
+            widget.state.shared.options.chart.width = wmservice.chartWidthSmall;
+            widget.state.shared.options.innercontainer.height = wmservice.innerContainerHeightSmall;
+            widget.state.shared.options.innercontainer.width = wmservice.innerContainerWidthSmall;
         };
 
         wmservice.addWidget = function (dId, presets) {
 
             wId = wmservice.getNewId();
 
-            wmservice.shared.options = new DefaultChartOptions(wmservice.chartHeightSmall, wmservice.chartWidthSmall, wmservice.innerContainerHeightSmall, wmservice.innerContainerWidthSmall, 'lineChart');
-
             widget = {
                 widgetId: wId,
                 widgetWidth: 'col-md-6',
-                options: wmservice.shared.options,
                 title: {
                     enable: true,
                     text: 'Title for Line Chart'
                 },
-                defstate: {
+                state: {
                     tabindex: 0,
                     data: {
                         asyncraw: {},
@@ -120,24 +118,24 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                         tableData: [],
                         savedData: {}
                     },
-                    shared: wmservice.shared,
-                    init: {
+                    shared: {
+                        presets: presets,
+                        options: new DefaultChartOptions(wmservice.chartHeightSmall, wmservice.chartWidthSmall, wmservice.innerContainerHeightSmall, wmservice.innerContainerWidthSmall,
+                            'lineChart'),
                         config: {
                             autorefresh: 'Off'
-                        },
-                        query: {
-                            inputtype: "Raw",
-                            type: "Simple",
-                            datasource: {
-                                service: {
-                                    method: "Get",
-                                    controls: {}
-                                }
-                            }
-                        },
-                        view: {}
+                        }
                     },
-                    presets: presets
+                    query: {
+                        inputtype: "Raw",
+                        type: "Simple",
+                        datasource: {
+                            service: {
+                                method: "Get",
+                                controls: {}
+                            }
+                        }
+                    }
                 }
             };
 
@@ -224,7 +222,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             scope: {
                 presets: '=',
             },
-            templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-dashboard-manager.html'),
+            templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-dashboard-manager.html') + '?who=viz-dashboard-manager&anticache=' + getUniqueId(),
             controller: function ($scope, wmservice) {
 
                 $scope.dashboards = wmservice.dashboards;
@@ -286,7 +284,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                 dashboard: '=',
                 presets: '='
             },
-            templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-widget-manager.html'),
+            templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-widget-manager.html') + '?who=viz-widget-manager&anticache=' + getUniqueId(),
             controller: function ($scope, wmservice) {
 
                 $scope.widgets = $scope.dashboard.widgets;

@@ -3,32 +3,32 @@
         <uib-tab-heading class="vertical-center dashlet">
             <span class="glyphicon glyphicon-search glyphicon-viz"></span><span style="margin-left: 5px;">Query</span>
         </uib-tab-heading>
-        <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
-            <viz-query formwidth="options.innercontainer.width" state="state"></viz-query>
+        <div class="innercontainer" ng-style="{ height: state.shared.options.innercontainer.height+'px'}">
+            <viz-query formwidth="state.shared.options.innercontainer.width" state="state"></viz-query>
         </div>
     </uib-tab>
     <uib-tab index="1">
         <uib-tab-heading>
             <span class="glyphicon glyphicon-eye-open glyphicon-viz"></span><span style="margin-left: 5px;">View</span>
         </uib-tab-heading>
-        <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
-            <viz-view options="options" state="state"></viz-view>
+        <div class="innercontainer" ng-style="{ height: state.shared.options.innercontainer.height+'px'}">
+            <viz-view state="state"></viz-view>
         </div>
     </uib-tab>
     <uib-tab index="2">
         <uib-tab-heading>
             <span class="glyphicon glyphicon-cog glyphicon-viz"></span><span style="margin-left: 5px;">Config</span>
         </uib-tab-heading>
-        <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
-            <viz-config formwidth="options.innercontainer.width" state="state"></viz-config>
+        <div class="innercontainer" ng-style="{ height: state.shared.options.innercontainer.height+'px'}">
+            <viz-config formwidth="state.shared.options.innercontainer.width" state="state"></viz-config>
         </div>
     </uib-tab>
     <uib-tab index="3">
         <uib-tab-heading>
             <span class="glyphicon glyphicon-info-sign glyphicon-viz"></span><span style="margin-left: 5px;">Info</span>
         </uib-tab-heading>
-        <div class="innercontainer" ng-style="{ height: options.innercontainer.height+'px'}">
-            {{options.innercontainer.height}}px
+        <div class="innercontainer" ng-style="{ height: state.shared.options.innercontainer.height+'px'}">
+            {{state.shared.options.innercontainer.height}}px
         </div>
     </uib-tab>
 </uib-tabset>

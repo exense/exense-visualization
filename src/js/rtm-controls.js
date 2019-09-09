@@ -9,7 +9,7 @@ angular.module('rtm-controls', [])
             scope: {
                 state: '='
             },
-            templateUrl: rtmControlscurrentScriptPath.replace('/js/', '/templates/').replace('rtm-controls.js', 'rtm-controls.html'),
+            templateUrl: rtmControlscurrentScriptPath.replace('/js/', '/templates/').replace('rtm-controls.js', 'rtm-controls.html') + '?who=rtm-controls&anticache=' + getUniqueId(),
             controller: function ($scope, $rootScope) {
                 $rootScope.queryResult = {'abc' : 'def'};
             }
