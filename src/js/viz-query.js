@@ -24,19 +24,43 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 state: '='
             },
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-query.html') + '?who=viz-query&anticache=' + getUniqueId(),
-            controller: function ($scope, $http) {
+            controller: function ($scope) {
 
-                // Init
-                $scope.currentquery = $scope.state.query;
+                $scope.$on('templatePhChange', function () {
+                    $scope.state.query.datasource.service.data = JSON.parse($scope.runRequestProc(
+                        $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
+                        JSON.stringify($scope.state.query.datasource.service.controls.template.datasource.service.data),
+                        $scope.state.query.datasource.service.controls.placeholders));
+                });
+            }
+        }
+    })
+    .directive('vizView', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                options: '=',
+                state: '='
+            },
+            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-view.html') + '?who=viz-view&anticache=' + getUniqueId(),
+            controller: function ($scope) { }
+        };
+    })
+    .directive('vizTransform', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                options: '=',
+                state: '='
+            },
+            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-transform.html') + '?who=viz-transform&anticache=' + getUniqueId(),
+            controller: function ($scope, $http) {
+                
                 $scope.counter = 0;
                 $scope.queryFire = false;
                 $scope.isOngoingQuery = false;
                 $scope.autorefreshInterval = null;
-
-                $scope.$on('querychange', function () {
-                    $scope.currentquery = $scope.state.query;
-                });
-
+                
                 $scope.$on('child-autorefresh-toggle', function (event, arg) {
                     if (arg.newValue == true) {
                         $scope.autorefreshInterval = setInterval(function () {
@@ -55,17 +79,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     }
                 });
 
-                $scope.$on('templatePhChange', function () {
-                    $scope.state.query.datasource.service.data = JSON.parse($scope.runRequestProc(
-                        $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
-                        JSON.stringify($scope.state.query.datasource.service.controls.template.datasource.service.data),
-                        $scope.state.query.datasource.service.controls.placeholders));
-                });
-
                 $scope.fireQuery = function () {
                     $scope.isOngoingQuery = true;
                     $scope.counter++;
-                    var datasource = $scope.currentquery.datasource.service;
+                    var datasource =  $scope.state.query.datasource.service;
                     $scope.servicesent = 'url :' + JSON.stringify(datasource.url) + '; payload:' + JSON.stringify(datasource.data);
                     $scope.executeHttp(datasource.method, datasource.url, datasource.data, $scope.dispatchSuccessResponse, datasource, $scope.dispatchErrorResponse);
                 };
@@ -89,15 +106,15 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
                 $scope.dispatchSuccessResponse = function (response, successTarget) {
                     $scope.isOngoingQuery = false;
-                    if ($scope.currentquery.type === 'Simple') {
+                    if ( $scope.state.query.type === 'Simple') {
                         $scope.loadData(response, successTarget)
                     }
-                    if ($scope.currentquery.type === 'Async') {
-                        var scallback = $scope.currentquery.datasource.callback;
+                    if ( $scope.state.query.type === 'Async') {
+                        var scallback =  $scope.state.query.datasource.callback;
                         $scope.state.data.raw = response;
                         $scope.rawserviceresponse = JSON.stringify(response);
-                        if ($scope.currentquery.datasource.service.postproc.save) {
-                            $scope.state.data.savedData = $scope.runResponseProc($scope.currentquery.datasource.service.postproc.save.function, response);
+                        if ( $scope.state.query.datasource.service.postproc.save) {
+                            $scope.state.data.savedData = $scope.runResponseProc( $scope.state.query.datasource.service.postproc.save.function, response);
                         }
                         var datatosend = scallback.data;
                         var urltosend = scallback.url;
@@ -120,14 +137,14 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 }
 
                 $scope.loadData = function (response, proctarget) {
-                    if ($scope.currentquery.type === 'Simple') {
+                    if ( $scope.state.query.type === 'Simple') {
                         $scope.state.data.raw = response;
                         $scope.rawserviceresponse = JSON.stringify(response);
                     }
-                    if ($scope.currentquery.type === 'Async') {
+                    if ( $scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
                             try {
-                                if ($scope.runResponseProc($scope.currentquery.datasource.callback.postproc.asyncEnd.function, response)) {
+                                if ($scope.runResponseProc( $scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
                                     clearInterval($scope.asyncInterval);
                                 }
                             } catch{
@@ -149,17 +166,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     return eval('(' + postProc + ')(requestFragment, workData)');
                 };
             }
-        }
-    })
-    .directive('vizView', function () {
-        return {
-            restrict: 'E',
-            scope: {
-                options: '=',
-                state: '='
-            },
-            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-view.html') + '?who=viz-view&anticache=' + getUniqueId(),
-            controller: function ($scope) {}
         };
     })
     .directive('vizConfig', function () {
@@ -202,8 +208,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             restrict: 'E',
             scope: {
                 options: '=',
-                state: '=',
-                passedquery: '='
+                state: '='
             },
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-q-service.html') + '?who=viz-q-service&anticache=' + getUniqueId(),
             controller: function ($scope) {
@@ -215,8 +220,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             restrict: 'E',
             scope: {
                 options: '=',
-                state: '=',
-                passedquery: '='
+                state: '='
             },
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-q-input.html') + '?who=viz-q-input&anticache=' + getUniqueId(),
             controller: function ($scope) {
@@ -228,7 +232,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 };
 
                 $scope.addPlaceholder = function () {
-                    $scope.state.query.datasource.service.controls.placeholders.push({ placeholder: '__?__', value: '?', isDynamic : false});
+                    $scope.state.query.datasource.service.controls.placeholders.push({ placeholder: '__?__', value: '?', isDynamic: false });
                 }
 
                 $scope.removePlaceholder = function ($index) {
@@ -253,8 +257,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             restrict: 'E',
             scope: {
                 options: '=',
-                state: '=',
-                passedquery: '='
+                state: '='
             },
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-q-preproc.html') + '?who=viz-q-preproc&anticache=' + getUniqueId(),
             controller: function ($scope) {
@@ -266,8 +269,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             restrict: 'E',
             scope: {
                 options: '=',
-                state: '=',
-                passedquery: '='
+                state: '='
             },
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-q-postproc.html') + '?who=viz-q-postproc&anticache=' + getUniqueId(),
             controller: function ($scope) {
