@@ -3,7 +3,6 @@
         ng-click="toggleBarchevronToConf()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
     <span ng-if="state.shared.config.barchevron" style="position: absolute; top: 40px; right: 30px; margin-right: 5px; margin-top: 3px;" class="title glyphicon glyphicon-stats glyphicon-viz"
         ng-click="toggleBarchevronToViz()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
-        {{state.ta}}
     <uib-tabset ng-if="state.shared.config.barchevron" class="ul-viewtab dashlet" active="state.tabindex;" ng-click="saveState()">
         <uib-tab index="0">
             <uib-tab-heading>
