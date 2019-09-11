@@ -18,6 +18,7 @@
 	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+	<script src="src/js/wmservice.js"></script>
 	<script src="src/js/rtm-controls.js"></script>
 	<script src="src/js/global-classes.js"></script>
 	<script src="src/js/viz-query.js"></script>
@@ -36,17 +37,24 @@
 	<link rel="stylesheet" href="src/css/viz-widget-manager.css">
 
 	<script>
-		var demoApp = angular.module('demoApp', [ 'viz-widget-manager' ])
-		.controller('ctrl', ['$scope', function ($scope) {
-			$scope.staticPresetsInstance = new StaticPresets();
+		var vizApp = angular.module('vizApp', ['viz-widget-manager', 'wmservice']);
+		vizApp.controller('topController', ['$scope', '$timeout', function ($scope, $timeout) {
+			$scope.$on('dashboard-ready', function () {
+				$scope.$broadcast('dashboard-new');
+				$scope.$broadcast('dashboard-new');
+				$(document).ready(function () {
+					$scope.$broadcast('dashboard-current-addWidget');
+				});
+			});
 		}]);
-		
 	</script>
 </head>
 
 <body>
-	<div ng-app='demoApp' ng-controller='ctrl'>
-		<viz-dashboard-manager presets="staticPresetsInstance"></viz-dashboard-manager>
+	<div ng-app='vizApp'>
+		<div ng-controller="topController">
+			<viz-dashboard-manager presets="staticPresetsInstance"></viz-dashboard-manager>
+		</div>
 	</div>
 </body>
 

@@ -1,220 +1,7 @@
 var vizWidgetManagerscripts = document.getElementsByTagName("script")
 var vizWidgetManagercurrentScriptPath = vizWidgetManagerscripts[vizWidgetManagerscripts.length - 1].src;
 
-angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
-    .factory('wmservice', function ($rootScope) {
-
-        var wmservice = {};
-
-        wmservice.dashboards = [];
-
-        // parameterize via arguments or server-originating conf & promise?
-        wmservice.chartHeightSmall = 250;
-        wmservice.chartHeightBig = 480;
-        wmservice.chartWidthSmall = 0;
-        wmservice.chartWidthBig = 0;
-        wmservice.innerContainerHeightSmall = 300;
-        wmservice.innerContainerHeightBig = 500;
-        wmservice.innerContainerWidthSmall = 0;
-        wmservice.innerContainerWidthBig = 0;
-
-        wmservice.forceRedraw = function () {
-            //force new angular digest
-            $rootScope.$apply(function () {
-                self.value = 0;
-            });
-        };
-
-        wmservice.getNewId = function () {
-            return Math.random().toString(36).substr(2, 9);
-        };
-
-        wmservice.addDashboard = function () {
-            var dId = wmservice.getNewId();
-            wmservice.dashboards.push({
-                title: 'New dashboard',
-                widgets: [],
-                dashboardid: dId
-            });
-            return dId;
-        };
-
-        wmservice.clearDashboards = function () {
-            wmservice.dashboards.length = 0;
-        };
-
-        wmservice.clearWidgets = function (dId) {
-            wmservice.getDashboardById(dId).widgets.length = 0;
-        };
-
-        wmservice.getWidget = function (dId, wId) {
-            var dWidgets = wmservice.getDashboardById(dId).widgets;
-
-            for (i = 0; i < dWidgets.length; i++) {
-                if (dWidgets[i].widgetId === wId) {
-                    return dWidgets[i];
-                }
-            }
-            return null;
-        };
-
-        wmservice.updateChartsSize = function (newWidth) {
-            for (i = 0; i < wmservice.dashboards.length; i++) {
-                var curDashboard = wmservice.dashboards[i];
-                for (j = 0; j < curDashboard.widgets.length; j++) {
-                    var curWidgetOpts = curDashboard.widgets[j].state.shared.options;
-                    var old = curWidgetOpts.chart.width;
-                    curWidgetOpts.chart.width = newWidth;
-                    curWidgetOpts.innercontainer.width = newWidth - 50;
-                    //console.log('['+curDashboard.dashboardid+':'+curWidget.widgetId +'] : changed from ' + old + ' to '+curWidget.options.chart.width);
-                }
-            }
-
-            wmservice.forceRedraw();
-        };
-
-        wmservice.updateSingleChartSize = function (dId, wId, newWidth) {
-            var widget = wmservice.getWidget(dId, wId);
-            widget.state.shared.options.chart.width = newWidth;
-            widget.state.shared.options.innercontainer.width = newWidth - 50;
-            wmservice.forceRedraw();
-        };
-
-        wmservice.extendWidget = function (dId, wId) {
-            var widget = wmservice.getWidget(dId, wId);
-            widget.widgetWidth = 'col-md-12';
-            widget.state.shared.options.chart.height = wmservice.chartHeightBig;
-            widget.state.shared.options.chart.width = wmservice.chartWidthBig;
-            widget.state.shared.options.innercontainer.height = wmservice.innerContainerHeightBig;
-            widget.state.shared.options.innercontainer.width = wmservice.innerContainerWidthBig;
-        };
-
-        wmservice.reduceWidget = function (dId, wId) {
-            var widget = wmservice.getWidget(dId, wId);
-            widget.widgetWidth = 'col-md-6';
-            widget.state.shared.options.chart.height = wmservice.chartHeightSmall;
-            widget.state.shared.options.chart.width = wmservice.chartWidthSmall;
-            widget.state.shared.options.innercontainer.height = wmservice.innerContainerHeightSmall;
-            widget.state.shared.options.innercontainer.width = wmservice.innerContainerWidthSmall;
-        };
-
-        wmservice.addWidget = function (dId, presets) {
-
-            wId = wmservice.getNewId();
-
-            widget = {
-                widgetId: wId,
-                widgetWidth: 'col-md-6',
-                title: 'Dashlet title',
-                state: {
-                    tabindex: 0,
-                    data: {
-                        asyncraw: {},
-                        raw: {},
-                        chartData: [],
-                        tableData: [],
-                        savedData: {}
-                    },
-                    shared: {
-                        presets: presets,
-                        options: new DefaultChartOptions(wmservice.chartHeightSmall, wmservice.chartWidthSmall, wmservice.innerContainerHeightSmall, wmservice.innerContainerWidthSmall,
-                            'lineChart'),
-                        config: {
-                            autorefresh: 'Off',
-                            barchevron: true
-                        },
-                        http: {}
-                    },
-                    query: {
-                        inputtype: "Raw",
-                        type: "Simple",
-                        datasource: {
-                            service: {
-                                method: "Get",
-                                controls: {}
-                            }
-                        }
-                    }
-                }
-            };
-
-            // initialize every new dashboard with a first basic widget
-            wmservice.getDashboardById(dId).widgets.push(widget);
-        };
-
-        wmservice.removeWidget = function (dId, wId) {
-            var dWidgets = wmservice.getDashboardById(dId).widgets;
-
-            for (i = 0; i < dWidgets.length; i++) {
-                if (dWidgets[i].widgetId === wId) {
-                    dWidgets.splice(i, 1);
-                }
-            }
-        };
-
-        wmservice.getWidgetIndex = function (dId, wId) {
-            return wmservice.getObjectIndexFromArray(wmservice.getDashboardById(dId).widgets, 'widgetId', wId);
-        }
-
-        wmservice.getDashboardIndex = function (dId) {
-            return wmservice.getObjectIndexFromArray(wmservice.dashboards, 'dashboardid', dId);
-        }
-
-        wmservice.getDashboardById = function (dId) {
-            return wmservice.dashboards[wmservice.getDashboardIndex(dId)];
-        }
-
-        wmservice.getObjectIndexFromArray = function (array, oIdKey, oId) {
-            for (i = 0; i < array.length; i++) {
-                if (array[i][oIdKey] === oId) {
-                    return i;
-                }
-            }
-        }
-
-        wmservice.moveWidget = function (dId, old_index, new_index) {
-            var dWidgets = wmservice.getDashboardById(dId).widgets;
-
-            if (new_index >= dWidgets.length) {
-                var k = new_index - dWidgets.length + 1;
-                while (k--) {
-                    arr.push(undefined);
-                }
-            }
-            dWidgets.splice(new_index, 0, dWidgets.splice(old_index, 1)[0]);
-        };
-
-        wmservice.moveWidgetLeft = function (dId, wId) {
-            var widgetIndex = wmservice.getWidgetIndex(dId, wId);
-
-            if (widgetIndex > 0) {
-                wmservice.moveWidget(dId, widgetIndex, widgetIndex - 1);
-            }
-        };
-
-        wmservice.moveWidgetRight = function (dId, wId) {
-            var widgetIndex = wmservice.getWidgetIndex(dId, wId);
-            wmservice.moveWidget(dId, widgetIndex, widgetIndex + 1);
-
-        };
-
-        wmservice.duplicateWidget = function (dId, wId) {
-            var copy = wmservice.getWidgetCopy(dId, wId);
-            wmservice.getDashboardById(dId).widgets.push(copy);
-            wmservice.moveWidget(dId, wmservice.getWidgetIndex(dId, copy.widgetId), wmservice.getWidgetIndex(dId, wId) + 1);
-        };
-
-        wmservice.getWidgetCopy = function (dId, wId) {
-            var copy = JSON.parse(JSON.stringify(wmservice.getWidget(dId, wId)));
-            copy.widgetId = wmservice.getNewId();
-            return copy;
-        };
-
-        // initializing with one dashboard
-        wmservice.addDashboard();
-
-        return wmservice;
-    })
+angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstrap'])
     .directive('vizDashboardManager', function () {
         return {
             restrict: 'E',
@@ -226,6 +13,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
 
                 $scope.dashboards = wmservice.dashboards;
 
+                $scope.$on('dashboard-remove', function(did){
+                    wmservice.removeDashboardById(did);
+                });
+
                 // todo: bind to config
                 $scope.saveState = function () {
                     $scope.savedState = $scope.mgrtabstate;
@@ -235,7 +26,6 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     $(document).ready(function () {
                         wmservice.updateChartsSize(arg.newsize);
                     });
-
                 });
 
                 $scope.$on('single-resize', function (event, arg) {
@@ -252,27 +42,17 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     });
                 });
 
-                $scope.$on('dashboard-clear', function (event, arg) {
+                $scope.$on('dashboard-clear', function () {
                     wmservice.clearDashboards();
                 });
-                $scope.$on('dashboard-current-addWidget', function (event, arg) {
+                $scope.$on('dashboard-current-addWidget', function () {
                     wmservice.addWidget($scope.mgrtabstate, $scope.presets);
                 });
-                $scope.$on('dashboard-current-clearWidgets', function (event, arg) {
+                $scope.$on('dashboard-current-clearWidgets', function () {
                     wmservice.clearWidgets($scope.mgrtabstate);
                 });
-                $scope.$on('dashboard-save', function (event, arg) {
-                    //not yet implemented
-                });
-                $scope.$on('dashboard-load', function (event, arg) {
-                    //not yet implemented
-                });
-                $scope.$on('dashboard-configure', function (event, arg) {
-                    //not yet implemented
-                });
-                $scope.$on('docs', function (event, arg) {
-                    //not yet implemented
-                });
+
+                $scope.$emit('dashboard-ready');
             }
         };
     })
@@ -310,7 +90,8 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     //not implemented yet
                 });
 
-                wmservice.addWidget($scope.dashboard.dashboardid, $scope.presets);
+                // for testing
+                //wmservice.addWidget($scope.dashboard.dashboardid, $scope.presets);
             }
         };
     })

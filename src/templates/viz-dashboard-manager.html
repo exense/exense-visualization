@@ -1,7 +1,14 @@
 <div class="well mainwell">
     <uib-tabset active="mgrtabstate" ng-click="saveState()" vertical="false" justified="true" class="dashboardtab">
         <uib-tab index="d.dashboardid" ng-repeat="d in dashboards track by d.dashboardid">
-            <uib-tab-heading>{{d.dashboardid}}</uib-tab-heading>
+            <uib-tab-heading style="display: inline;">{{d.title}}
+                <ul class="ul-control-d">
+                    <li class="li-control-d">
+                        <span class="glyphicon glyphicon-remove glyphicon-control-d" ng-click="$emit('dashboard-remove', {did: d.dashboardid})"
+                            href="#"></span>
+                    </li>
+                </ul>
+            </uib-tab-heading>
             <viz-widget-manager presets="presets" dashboard="d"></viz-widget-manager>
         </uib-tab>
     </uib-tabset>
