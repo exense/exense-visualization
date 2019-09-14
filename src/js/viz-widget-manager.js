@@ -13,9 +13,9 @@ angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstr
 
                 $scope.dashboards = wmservice.dashboards;
 
-                $scope.$on('dashboard-remove', function(did){
+                $scope.removeDashboard = function(did){
                     wmservice.removeDashboardById(did);
-                });
+                };
 
                 // todo: bind to config
                 $scope.saveState = function () {

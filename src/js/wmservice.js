@@ -161,11 +161,7 @@ angular.module('wmservice', [])
     }
 
     wmservice.removeDashboardById = function (dId) {
-        wmservice.dashboards.length = 0;
-        
-        console.log('sup')
-        console.log(wmservice.dashboards);
-        alert('toto')
+        wmservice.dashboards.splice(wmservice.getDashboardIndex(dId), 1);
     }
 
     wmservice.getObjectIndexFromArray = function (array, oIdKey, oId) {
