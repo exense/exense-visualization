@@ -230,11 +230,31 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
 
                 $scope.dashboards = wmservice.dashboards;
 
+                // default tab (1st)
+                if (wmservice.dashboards.length > 0) {
+                    $scope.mgrtabstate = wmservice.dashboards[0].dashboardid;
+                }
+
+                $scope.selectTab = function (tabIndex) {
+                    console.log('selected:' + tabIndex);
+                    $scope.mgrtabstate = tabIndex;
+                };
+
                 $scope.$on('removeDashboard', function (event, arg) {
-                    if (wmservice.getDashboardIndex($scope.mgrtabstate) > 0) {
-                        var previous = wmservice.dashboards[wmservice.getDashboardIndex($scope.mgrtabstate) - 1].dashboardid;
-                        $scope.mgrtabstate = previous;
-                        $scope.savedState = $scope.mgrtabstate;
+                    //If the currently opened tab is killed
+                    if ($scope.mgrtabstate === arg) {
+                        // if has previous, open previous
+                        if (wmservice.getDashboardIndex($scope.mgrtabstate) > 0) {
+                            var previous = wmservice.dashboards[wmservice.getDashboardIndex($scope.mgrtabstate) - 1].dashboardid;
+                            $scope.mgrtabstate = previous;
+                            $scope.savedState = $scope.mgrtabstate;
+                        } else {// if has next, open next
+                            if (wmservice.getDashboardIndex($scope.mgrtabstate) < wmservice.dashboards.length - 1) {
+                                var next = wmservice.dashboards[wmservice.getDashboardIndex($scope.mgrtabstate) + 1].dashboardid;
+                                $scope.mgrtabstate = next;
+                                $scope.savedState = $scope.mgrtabstate;
+                            }
+                        }
                     }
                     wmservice.removetDashboardById(arg);
                 });
@@ -260,9 +280,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
 
                 $scope.$on('dashboard-new', function (event, arg) {
                     wmservice.addDashboard();
-                    $(document).ready(function () {
-                        $scope.mgrtabstate = $scope.dashboards[$scope.dashboards.length - 1].dashboardid;
-                    });
+                    //Not needed anymore since reimplemented uib-tab
+                    //$(document).ready(function () {
+                    $scope.mgrtabstate = $scope.dashboards[$scope.dashboards.length - 1].dashboardid;
+                    //});
                 });
 
                 $scope.$on('dashboard-clear', function (event, arg) {
@@ -323,7 +344,7 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     //not implemented yet
                 });
 
-                wmservice.addWidget($scope.dashboard.dashboardid, $scope.presets);
+                //wmservice.addWidget($scope.dashboard.dashboardid, $scope.presets);
             }
         };
     })
