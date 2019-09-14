@@ -337,10 +337,6 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     //not implemented yet
                 });
 
-<<<<<<< HEAD
-=======
-                // for testing
->>>>>>> 8923942d1f36e5abf29becd62c9e3f7ad4d7dc76
                 //wmservice.addWidget($scope.dashboard.dashboardid, $scope.presets);
             }
         };
