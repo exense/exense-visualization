@@ -164,6 +164,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             return wmservice.dashboards[wmservice.getDashboardIndex(dId)];
         }
 
+        wmservice.removetDashboardById = function (dId) {
+            wmservice.dashboards.splice(wmservice.getDashboardIndex(dId), 1);
+        }
+
         wmservice.getObjectIndexFromArray = function (array, oIdKey, oId) {
             for (i = 0; i < array.length; i++) {
                 if (array[i][oIdKey] === oId) {
@@ -225,6 +229,15 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
             controller: function ($scope, wmservice) {
 
                 $scope.dashboards = wmservice.dashboards;
+
+                $scope.$on('removeDashboard', function (event, arg) {
+                    if (wmservice.getDashboardIndex($scope.mgrtabstate) > 0) {
+                        var previous = wmservice.dashboards[wmservice.getDashboardIndex($scope.mgrtabstate) - 1].dashboardid;
+                        $scope.mgrtabstate = previous;
+                        $scope.savedState = $scope.mgrtabstate;
+                    }
+                    wmservice.removetDashboardById(arg);
+                });
 
                 // todo: bind to config
                 $scope.saveState = function () {
