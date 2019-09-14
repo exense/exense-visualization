@@ -55,12 +55,6 @@ angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstr
                     $scope.savedState = $scope.mgrtabstate;
                 };
 
-                $scope.$on('global-resize', function (event, arg) {
-                    $(document).ready(function () {
-                        wmservice.updateChartsSize(arg.newsize);
-                    });
-                });
-
                 $scope.$on('single-resize', function (event, arg) {
                     $(document).ready(function () {
                         wmservice.updateSingleChartSize(arg.did, arg.wid, arg.newsize);

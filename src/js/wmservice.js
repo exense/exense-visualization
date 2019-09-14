@@ -65,35 +65,27 @@ angular.module('wmservice', [])
             return null;
         };
 
-        wmservice.updateChartsSize = function (newWidth) {
-            wmservice.computeHeights();
-            for (i = 0; i < wmservice.dashboards.length; i++) {
-                var curDashboard = wmservice.dashboards[i];
-                for (j = 0; j < curDashboard.widgets.length; j++) {
-                    var curWidgetOpts = curDashboard.widgets[j].state.shared.options;
-                    var old = curWidgetOpts.chart.width;
-                    curWidgetOpts.chart.width = newWidth;
-                    curWidgetOpts.innercontainer.width = newWidth - 50;
-
-                    if (widget.widgetWidth === 'col-md-6') {
-                        curWidgetOpts.chart.height = wmservice.chartHeightSmall;
-                        curWidgetOpts.innercontainer.height = wmservice.innerContainerHeightSmall;
-                    }
-                    else {
-                        curWidgetOpts.chart.height = wmservice.chartHeightBig;
-                        curWidgetOpts.innercontainer.height = wmservice.innerContainerHeightBig;
-                    }
-
-                }
-            }
-
-            wmservice.forceRedraw();
-        };
-
         wmservice.updateSingleChartSize = function (dId, wId, newWidth) {
+
+            //should only be done once at manager level
+            wmservice.computeHeights();
+
             var widget = wmservice.getWidget(dId, wId);
             widget.state.shared.options.chart.width = newWidth;
             widget.state.shared.options.innercontainer.width = newWidth - 50;
+
+            if (widget.widgetWidth === 'col-md-6') {
+                console.log('col-md-6!')
+                widget.state.shared.options.chart.height = wmservice.chartHeightSmall;
+                widget.state.shared.options.innercontainer.height = wmservice.innerContainerHeightSmall;
+            }
+            else {
+                console.log(widget.widgetWidth +' === col-md-12!')
+                //console.log('resizing big chart from ' + widget.state.shared.options.chart.height + ' to ' + wmservice.chartHeightBig);
+                widget.state.shared.options.chart.height = wmservice.chartHeightBig;
+                //console.log('resizing big container from ' + widget.state.shared.options.innercontainer.height + ' to ' + wmservice.innerContainerHeightBig);
+                widget.state.shared.options.innercontainer.height = wmservice.innerContainerHeightBig;
+            }
             wmservice.forceRedraw();
         };
 

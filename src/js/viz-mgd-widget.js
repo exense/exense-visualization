@@ -35,7 +35,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 // we must find a way to run this only once
                 // from whichever dashlet exists in the dashboard 
                 $(window).on('resize', function () {
-                    $scope.$emit('global-resize', { newsize: 0.8 * $scope.getActualDashletWidth() });
+                    $scope.resizeSingle();
                 });
 
                 $scope.resizeSingle = function(){
