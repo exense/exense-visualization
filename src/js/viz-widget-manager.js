@@ -272,7 +272,6 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     $(document).ready(function () {
                         wmservice.updateChartsSize(arg.newsize);
                     });
-
                 });
 
                 $scope.$on('single-resize', function (event, arg) {
@@ -290,27 +289,17 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     //});
                 });
 
-                $scope.$on('dashboard-clear', function (event, arg) {
+                $scope.$on('dashboard-clear', function () {
                     wmservice.clearDashboards();
                 });
-                $scope.$on('dashboard-current-addWidget', function (event, arg) {
+                $scope.$on('dashboard-current-addWidget', function () {
                     wmservice.addWidget($scope.mgrtabstate, $scope.presets);
                 });
-                $scope.$on('dashboard-current-clearWidgets', function (event, arg) {
+                $scope.$on('dashboard-current-clearWidgets', function () {
                     wmservice.clearWidgets($scope.mgrtabstate);
                 });
-                $scope.$on('dashboard-save', function (event, arg) {
-                    //not yet implemented
-                });
-                $scope.$on('dashboard-load', function (event, arg) {
-                    //not yet implemented
-                });
-                $scope.$on('dashboard-configure', function (event, arg) {
-                    //not yet implemented
-                });
-                $scope.$on('docs', function (event, arg) {
-                    //not yet implemented
-                });
+
+                $scope.$emit('dashboard-ready');
             }
         };
     })
@@ -348,6 +337,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     //not implemented yet
                 });
 
+<<<<<<< HEAD
+=======
+                // for testing
+>>>>>>> 8923942d1f36e5abf29becd62c9e3f7ad4d7dc76
                 //wmservice.addWidget($scope.dashboard.dashboardid, $scope.presets);
             }
         };
