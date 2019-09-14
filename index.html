@@ -39,12 +39,11 @@
 	<script>
 		var vizApp = angular.module('vizApp', ['viz-widget-manager', 'wmservice']);
 		vizApp.controller('topController', ['$scope', '$timeout', function ($scope, $timeout) {
-			$scope.$on('dashboard-ready', function () {
+			$scope.$on('top.dashboard-new', function () {
 				$scope.$broadcast('dashboard-new');
-				$scope.$broadcast('dashboard-new');
-				$(document).ready(function () {
-					$scope.$broadcast('dashboard-current-addWidget');
-				});
+			});
+			$scope.$on('top.dashboard-clear', function () {
+				$scope.$broadcast('dashboard-clear');
 			});
 		}]);
 	</script>
@@ -53,6 +52,14 @@
 <body>
 	<div ng-app='vizApp'>
 		<div ng-controller="topController">
+				<span><button class="btn btn-primary btn-nav"
+					ng-click="$emit('top.dashboard-new')">
+					<span class="glyphicon glyphicon-file glyphicon-app"></span>
+				</button>
+				<button class="btn btn-primary btn-nav"
+					ng-click="$emit('top.dashboard-clear')">
+					<span class="glyphicon glyphicon-trash glyphicon-app"></span>
+				</button></span>
 			<viz-dashboard-manager presets="staticPresetsInstance"></viz-dashboard-manager>
 		</div>
 	</div>
