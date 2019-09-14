@@ -14,7 +14,7 @@
         </ul>
 
         <div ng-repeat="d in dashboards track by d.dashboardid">
-            <div ng-if="d.dashboardid === mgrtabstate">{{d.dashboardid}} === {{mgrtabstate}}
+            <div ng-if="d.dashboardid === mgrtabstate">
                 <viz-widget-manager presets="presets" dashboard="d"></viz-widget-manager>
             </div>
         </div>

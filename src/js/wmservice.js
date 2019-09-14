@@ -2,7 +2,7 @@ angular.module('wmservice', [])
 .service('wmservice', function ($rootScope) {
 
     var wmservice = {};
-    wmservice.init = false;
+
     wmservice.dashboards = [];
 
     // parameterize via arguments or server-originating conf & promise?
@@ -135,6 +135,7 @@ angular.module('wmservice', [])
             }
         };
 
+        // initialize every new dashboard with a first basic widget
         wmservice.getDashboardById(dId).widgets.push(widget);
     };
 
@@ -160,7 +161,7 @@ angular.module('wmservice', [])
         return wmservice.dashboards[wmservice.getDashboardIndex(dId)];
     }
 
-    wmservice.removeDashboardById = function (dId) {
+    wmservice.removetDashboardById = function (dId) {
         wmservice.dashboards.splice(wmservice.getDashboardIndex(dId), 1);
     }
 
@@ -209,9 +210,5 @@ angular.module('wmservice', [])
         copy.widgetId = wmservice.getNewId();
         return copy;
     };
-
-    // initializing with one dashboard
-    //wmservice.addDashboard();
-
     return wmservice;
 })

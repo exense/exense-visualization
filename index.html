@@ -40,6 +40,7 @@
 		var demoApp = angular.module('demoApp', ['viz-widget-manager'])
 			.controller('ctrl', ['$scope', function ($scope) {
 				$scope.staticPresetsInstance = new StaticPresets();
+
 				$scope.$on('top.dashboard-new', function () {
 					$scope.$broadcast('dashboard-new');
 				});
@@ -52,6 +53,15 @@
 				});
 				$scope.$on('top.dashboard-current-clearWidgets', function () {
 					$scope.$broadcast('dashboard-current-clearWidgets');
+				});
+
+				// For saving time in testing
+				$scope.$on('dashboard-ready', function () {
+					$scope.$broadcast('dashboard-new');
+					$scope.$broadcast('dashboard-new');
+					$(document).ready(function () {
+						$scope.$broadcast('dashboard-current-addWidget');
+					});
 				});
 			}]);
 
