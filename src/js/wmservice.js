@@ -5,21 +5,25 @@ angular.module('wmservice', [])
 
         wmservice.dashboards = [];
 
-        var sHeight = window.innerHeight;
+        wmservice.computeHeights = function () {
+            var sHeight = window.innerHeight;
 
-        // parameterize via arguments or server-originating conf & promise?
-        wmservice.headersHeight = 250;
-        wmservice.chartToContainer = 20;
-        // wmservice.chartHeightSmall = 250;
+            // parameterize via arguments or server-originating conf & promise?
+            wmservice.headersHeight = 250;
+            wmservice.chartToContainer = 15;
+            // wmservice.chartHeightSmall = 250;
 
-        wmservice.chartHeightSmall = (sHeight - wmservice.headersHeight) / 2 - wmservice.chartToContainer;
-        wmservice.chartHeightBig = sHeight  - (wmservice.headersHeight - 80) - wmservice.chartToContainer;
-        wmservice.chartWidthSmall = 0;
-        wmservice.chartWidthBig = 0;
-        wmservice.innerContainerHeightSmall = (sHeight -  wmservice.headersHeight) / 2;
-        wmservice.innerContainerHeightBig = sHeight -  (wmservice.headersHeight - 80);
-        wmservice.innerContainerWidthSmall = 0;
-        wmservice.innerContainerWidthBig = 0;
+            wmservice.chartHeightSmall = (sHeight - wmservice.headersHeight) / 2 - wmservice.chartToContainer;
+            wmservice.chartHeightBig = sHeight - (wmservice.headersHeight - 80) - wmservice.chartToContainer;
+            wmservice.chartWidthSmall = 0;
+            wmservice.chartWidthBig = 0;
+            wmservice.innerContainerHeightSmall = (sHeight - wmservice.headersHeight) / 2;
+            wmservice.innerContainerHeightBig = sHeight - (wmservice.headersHeight - 80);
+            wmservice.innerContainerWidthSmall = 0;
+            wmservice.innerContainerWidthBig = 0;
+        };
+
+        wmservice.computeHeights();
 
         wmservice.forceRedraw = function () {
             //force new angular digest
@@ -62,6 +66,7 @@ angular.module('wmservice', [])
         };
 
         wmservice.updateChartsSize = function (newWidth) {
+            wmservice.computeHeights();
             for (i = 0; i < wmservice.dashboards.length; i++) {
                 var curDashboard = wmservice.dashboards[i];
                 for (j = 0; j < curDashboard.widgets.length; j++) {
@@ -69,7 +74,16 @@ angular.module('wmservice', [])
                     var old = curWidgetOpts.chart.width;
                     curWidgetOpts.chart.width = newWidth;
                     curWidgetOpts.innercontainer.width = newWidth - 50;
-                    //console.log('['+curDashboard.dashboardid+':'+curWidget.widgetId +'] : changed from ' + old + ' to '+curWidget.options.chart.width);
+
+                    if (widget.widgetWidth === 'col-md-6') {
+                        curWidgetOpts.chart.height = wmservice.chartHeightSmall;
+                        curWidgetOpts.innercontainer.height = wmservice.innerContainerHeightSmall;
+                    }
+                    else {
+                        curWidgetOpts.chart.height = wmservice.chartHeightBig;
+                        curWidgetOpts.innercontainer.height = wmservice.innerContainerHeightBig;
+                    }
+
                 }
             }
 
