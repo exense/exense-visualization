@@ -92,3 +92,32 @@ div.dashboardtab > ul > li > a {
 	padding-right: 2px;
   padding-left: 2px;
 }
+
+ul.ul-control-d {
+  float: right;
+  margin-top: -1px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.li-control-d {
+  float: right;
+  margin-left: 3px;
+}
+
+.glyphicon-control-d{
+  color: rgb(0, 240, 0);
+  margin: 0px;
+  padding: 1px;
+}
+
+.glyphicon-control-d:hover{
+  background-color: #333333;
+  color: rgb(0, 255, 106);
+}
+
+div.dashboardtab > ul > li.active > ul > li > span.glyphicon-control-d {
+  color: white;
+}

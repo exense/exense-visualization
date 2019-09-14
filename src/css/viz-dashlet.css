@@ -47,12 +47,6 @@ div.ul-viewtab > ul{
     border: 1px solid #333333;
 }
 
-ul.ul-control {
-    border: 1px solid #333333;
-    margin-top: -1px;
-}
-
-
 div.dashlet > ul > li.active > a, div.dashlet > ul > li.active > a > uib-tab-heading > span{
     background-color: rgb(60, 240, 60) !important;
     color: white;

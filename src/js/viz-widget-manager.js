@@ -240,6 +240,10 @@ angular.module('viz-widget-manager', ['viz-mgd-widget', 'ui.bootstrap'])
                     $scope.mgrtabstate = tabIndex;
                 };
 
+                $scope.isTabActive = function (tabIndex) {
+                    return tabIndex === $scope.mgrtabstate;
+                };
+
                 $scope.$on('removeDashboard', function (event, arg) {
                     //If the currently opened tab is killed
                     if ($scope.mgrtabstate === arg) {
