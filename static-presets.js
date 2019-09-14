@@ -117,30 +117,32 @@ function StaticPresets() {
                                                     }"
                                 },
                                 "table": {
-                                    "function": "function (response) {\
-                                                        var metric = \"avg\";\
-                                                        var retData = { selectedKeys : ['begin'], array : []};\
-                                                        var payload = response.data.payload.stream.streamData;\
-                                                        var begin = \"\";\
-                                                        var payloadKeys = Object.keys(payload);\
-                                                        if (payloadKeys[0].length > 0) {\
-                                                            var keys = Object.keys(payload[payloadKeys[0]]);\
-                                                            for (i = 0; i < keys.length; i++) {\
-                                                                retData.selectedKeys.push(keys[i])\
-                                                            }\
-                                                        }\
-                                                        for (i = 0; i < payloadKeys.length; i++) {\
-                                                            begin = payload[payloadKeys[i]];\
-                                                            var serieskeys = Object.keys(payload[payloadKeys[i]]);\
-                                                            var dot = {};\
-                                                            dot['begin'] = payloadKeys[i];\
-                                                            for (j = 0; j < serieskeys.length; j++) {\
-                                                                dot[serieskeys[j]] = payload[payloadKeys[i]][serieskeys[j]][metric];\
-                                                            }\
-                                                            retData.array.push(dot);\
-                                                        }\
-                                                        return retData;\
-                                                }"
+                                    "function": "function(response) {\
+                        				\
+                        				var metric = 'avg';\
+                        				var retData = {\
+                            				selectedKeys: ['begin'],\
+                            				array: []\
+                        				};\
+                        				var payload = response.data.payload.stream.streamData;\
+                        				var begin = '';\
+                        				var payloadKeys = Object.keys(payload);\
+                    				\
+                        				for (i = 0; i < payloadKeys.length; i++) {\
+                            				begin = payload[payloadKeys[i]];\
+                            				var serieskeys = Object.keys(payload[payloadKeys[i]]);\
+                            				var dot = {};\
+                            				dot['begin'] = payloadKeys[i];\
+                            				for (j = 0; j < serieskeys.length; j++) {\
+                                				dot[serieskeys[j]] = payload[payloadKeys[i]][serieskeys[j]][metric];\
+                                				if(!retData.selectedKeys.includes(serieskeys[j])){\
+                                     				retData.selectedKeys.push(serieskeys[j]);\
+                                 				}\
+                            				}\
+                            				retData.array.push(dot);\
+                        				}\
+                        				return retData;\
+                    				}"
                                 }
                             }
                         }
@@ -207,30 +209,32 @@ function StaticPresets() {
                                                     }",
                                 },
                                 "table": {
-                                    "function": "function (response) {\
-                                                        var metric = \"avg\";\
-                                                        var retData = { selectedKeys : ['begin'], array : []};\
-                                                        var payload = response.data.payload.stream.streamData;\
-                                                        var begin = \"\";\
-                                                        var payloadKeys = Object.keys(payload);\
-                                                        if (payloadKeys[0].length > 0) {\
-                                                            var keys = Object.keys(payload[payloadKeys[0]]);\
-                                                            for (i = 0; i < keys.length; i++) {\
-                                                                retData.selectedKeys.push(keys[i])\
-                                                            }\
-                                                        }\
-                                                        for (i = 0; i < payloadKeys.length; i++) {\
-                                                            begin = payload[payloadKeys[i]];\
-                                                            var serieskeys = Object.keys(payload[payloadKeys[i]]);\
-                                                            var dot = {};\
-                                                            dot['begin'] = payloadKeys[i];\
-                                                            for (j = 0; j < serieskeys.length; j++) {\
-                                                                dot[serieskeys[j]] = payload[payloadKeys[i]][serieskeys[j]][metric];\
-                                                            }\
-                                                            retData.array.push(dot);\
-                                                        }\
-                                                        return retData;\
-                                                    }"
+                                    "function": "function(response) {\
+                                    				\
+                                        				var metric = 'avg';\
+                                        				var retData = {\
+                                            				selectedKeys: ['begin'],\
+                                            				array: []\
+                                        				};\
+                                        				var payload = response.data.payload.stream.streamData;\
+                                        				var begin = '';\
+                                        				var payloadKeys = Object.keys(payload);\
+                                    				\
+                                        				for (i = 0; i < payloadKeys.length; i++) {\
+                                            				begin = payload[payloadKeys[i]];\
+                                            				var serieskeys = Object.keys(payload[payloadKeys[i]]);\
+                                            				var dot = {};\
+                                            				dot['begin'] = payloadKeys[i];\
+                                            				for (j = 0; j < serieskeys.length; j++) {\
+                                                				dot[serieskeys[j]] = payload[payloadKeys[i]][serieskeys[j]][metric];\
+                                                				if(!retData.selectedKeys.includes(serieskeys[j])){\
+                                                     				retData.selectedKeys.push(serieskeys[j]);\
+                                                 				}\
+                                            				}\
+                                            				retData.array.push(dot);\
+                                        				}\
+                                        				return retData;\
+                                    				}"
                                 }
                             }
                         }
