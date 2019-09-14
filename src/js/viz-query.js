@@ -155,7 +155,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                                 if ($scope.runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
                                     clearInterval($scope.asyncInterval);
                                 }
-                            } catch{
+                            } catch(e){
+                                console.log(e);
                                 clearInterval($scope.asyncInterval);
                             }
                         }

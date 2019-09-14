@@ -12,6 +12,10 @@ angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstr
             controller: function ($scope, wmservice) {
 
                 $scope.dashboards = wmservice.dashboards;
+                
+                $scope.$on('dashboard-reload', function(){
+                    $scope.dashboards = wmservice.dashboards;
+                });
 
                 // default tab (1st)
                 if (wmservice.dashboards.length > 0) {
