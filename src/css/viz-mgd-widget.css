@@ -1,6 +1,9 @@
 .dashletcontainer {
-    padding: 2px;
     border: 1px solid #ddd;
+}
+
+.colmdclass{
+    margin-top: 5px;
 }
 
 .glyphicon-control{
