@@ -1,3 +1,5 @@
+var productionmode = false;
+var productionFile = 'viz.js';;
 var devJSFolder = '/js/';
 var devTemplateFolder = '/templates/';
 
