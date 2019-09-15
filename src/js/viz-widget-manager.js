@@ -23,7 +23,6 @@ angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstr
                 }
 
                 $scope.selectTab = function (tabIndex) {
-                    console.log('selected:' + tabIndex);
                     $scope.mgrtabstate = tabIndex;
                 };
 
