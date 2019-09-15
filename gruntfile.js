@@ -15,14 +15,17 @@ module.exports = function (grunt) {
             js: { files: 'src/js/*.js', tasks: ['uglify'] },
         },
         concat: {
-            options: {
-                separator: ';\n',
-            },
             dist1: {
+                options: {
+                    separator: ';\n',
+                },
                 src: ['src/js/dist-settings-prod.js', 'src/js/global-classes.js', 'src/js/rtm-controls.js', 'src/js/viz-dashlet.js', 'src/js/viz-mgd-widget.js', 'src/js/viz-query.js', 'src/js/wmservice.js', 'src/js/viz-widget-manager.js'],
                 dest: 'dist/viz.js',
             },
             dist2: {
+                options: {
+                    separator: '\n',
+                },
                 src: ['src/css/viz-dashlet.css', 'src/css/viz-mgd-widget.css', 'src/css/viz-widget-manager.css'],
                 dest: 'dist/viz.css',
             }
@@ -55,7 +58,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // register at least this one task
-    grunt.registerTask('default', ['concat','uglify', 'copy', 'cssmin']);
+    grunt.registerTask('default', ['concat:dist1','concat:dist2','uglify', 'copy', 'cssmin']);
 
 
 };

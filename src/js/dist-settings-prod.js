@@ -1,2 +1,2 @@
-var productionmode = false;
+var productionmode = true;
 var productionFile = 'viz.js';

@@ -170,7 +170,7 @@ div.form-radio > label.btn, div.form-radio > button{
 .btn-group{
     margin-top: 5px;
     display: block !important;
-};
+}
 .dashletcontainer {
     border: 1px solid #ddd;
 }
@@ -209,7 +209,7 @@ div.form-radio > label.btn, div.form-radio > button{
     float: right;
     margin-left: 3px;
   }
-;
+
 .navbar-fixed-left {
     width: 60px;
     position: fixed;
