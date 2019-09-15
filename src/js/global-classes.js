@@ -1,4 +1,5 @@
-var productionmode = false;
+var productionmode = true;
+var productionFile = 'viz.js';
 
 var devJSFolder = '/js/';
 var devTemplateFolder = '/templates/';
@@ -15,6 +16,7 @@ var registerScript = function(){
     vizScripts[filename] = scriptUrl;
     //console.log(JSON.stringify(vizScripts));
 };
+registerScript();
 
 var resolveTemplateURL = function (containername, componentname){
     if (productionmode === false){
@@ -23,7 +25,7 @@ var resolveTemplateURL = function (containername, componentname){
                            +'?who='+componentname
                            +'&anticache=' + getUniqueId();
     }else{
-        templateUrl = url.replace(filename, 'dist/'+ componentname);
+        templateUrl = vizScripts[productionFile].replace(productionFile, 'templates/'+componentname);
     }
     return templateUrl;
 }
