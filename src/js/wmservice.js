@@ -75,15 +75,11 @@ angular.module('wmservice', [])
             widget.state.shared.options.innercontainer.width = newWidth - 50;
 
             if (widget.widgetWidth === 'col-md-6') {
-                console.log('col-md-6!')
                 widget.state.shared.options.chart.height = wmservice.chartHeightSmall;
                 widget.state.shared.options.innercontainer.height = wmservice.innerContainerHeightSmall;
             }
             else {
-                console.log(widget.widgetWidth +' === col-md-12!')
-                //console.log('resizing big chart from ' + widget.state.shared.options.chart.height + ' to ' + wmservice.chartHeightBig);
                 widget.state.shared.options.chart.height = wmservice.chartHeightBig;
-                //console.log('resizing big container from ' + widget.state.shared.options.innercontainer.height + ' to ' + wmservice.innerContainerHeightBig);
                 widget.state.shared.options.innercontainer.height = wmservice.innerContainerHeightBig;
             }
             wmservice.forceRedraw();
@@ -118,11 +114,8 @@ angular.module('wmservice', [])
                 state: {
                     tabindex: 0,
                     data: {
-                        asyncraw: {},
-                        raw: {},
-                        chartData: [],
-                        tableData: [],
-                        savedData: {}
+                        transformed: [],
+                        state: {}
                     },
                     shared: {
                         presets: presets,

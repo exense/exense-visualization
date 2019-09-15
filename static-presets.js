@@ -11,16 +11,11 @@ function StaticPresets() {
                             "url": "/mocks/001_RESPONSE_Simple_RTM_Measurements.json",
                             "method": "Get",
                             "postproc": {
-                                "lineChart": {
-                                    "function": "function(response){var retData = [];var index = {};var payload = response.data.payload;for (var i = 0; i < payload.length; i++) {var curSeries = payload[i].name;if (!(curSeries in index)) {retData.push({values: [],key: curSeries,color: '#ff7f0e',strokeWidth: 2,classed: 'dashed'});index[curSeries] = retData.length - 1;}retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });}return retData;}",
+                                "transform": {
+                                    "function": "function(response){var retData = [];var index = {};var payload = response.data.payload;for (var i = 0; i < payload.length; i++) {var curSeries = payload[i].name;if (!(curSeries in index)) {retData.push({values: [],key: curSeries});index[curSeries] = retData.length - 1;}retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });}return retData;}",
                                     "abs": { "title": "time", "unit": "seconds" },
                                     "ord": { "title": "duration", "unit": "ms" },
                                     "transformations": [{ "path": "timestamp", "function": "function () {Math.random().toString(36).substr(2, 9);}" }]
-                                },
-                                "table": {
-                                    "function": "function(response) {return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};}",
-                                    "defaults": [{ "sortBy": "name" }],
-                                    "transformations": [{ "path": "timestamp", "function": "function() {Math.random().toString(36).substr(2, 9);}" }]
                                 }
                             }
                         }
@@ -41,16 +36,10 @@ function StaticPresets() {
                                 "serviceParams": { "measurementService.nextFactor": "0", "aggregateService.sessionId": "defaultSid", "aggregateService.granularity": "auto", "aggregateService.groupby": "name", "aggregateService.cpu": "1", "aggregateService.partition": "8", "aggregateService.timeout": "600" }
                             },
                             "postproc": {
-                                "lineChart": {
-                                    "function": "function(response){var retData = [];var index = {};var payload = response.data.payload;for (var i = 0; i < payload.length; i++) {var curSeries = payload[i].name;if (!(curSeries in index)) {retData.push({values: [],key: curSeries,color: '#ff7f0e',strokeWidth: 2,classed: 'dashed'});index[curSeries] = retData.length - 1;}retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });}return retData;}",
+                                "transform": {
+                                    "function": "function(response){var retData = [];var index = {};var payload = response.data.payload;for (var i = 0; i < payload.length; i++) {var curSeries = payload[i].name;if (!(curSeries in index)) {retData.push({values: [],key: curSeries});index[curSeries] = retData.length - 1;}retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });}return retData;}",
                                     "abs": { "title": "time", "unit": "seconds" }, "ord": { "title": "duration", "unit": "ms" },
                                     "transformations": [{ "path": "timestamp", "function": "function () {Math.random().toString(36).substr(2, 9);}" }]
-                                },
-                                "table": {
-                                    "function": "function(response) {return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};}",
-                                    "defaults": [{ "sortBy": "name" }],
-                                    "transformations": [{ "path": "timestamp", "function": "function() {Math.random().toString(36).substr(2, 9);}" }
-                                    ]
                                 }
                             }
                         }
@@ -89,7 +78,7 @@ function StaticPresets() {
                                 "asyncEnd": {
                                     "function": "function(response){return response.data.payload.stream.complete;}",
                                 },
-                                "lineChart": {
+                                "transform": {
                                     "function": "function (response) {\
                                                         var metric = \"avg\";\
                                                         var retData = [];\
@@ -111,38 +100,10 @@ function StaticPresets() {
                                                             }\
                                                         }\
                                                         for (i = 0; i < Object.keys(series).length; i++) {\
-                                                            retData.push({ values: series[Object.keys(series)[i]], key: Object.keys(series)[i], color: '#ff7f0e', strokeWidth: 2, classed: 'dashed' });\
+                                                            retData.push({ values: series[Object.keys(series)[i]], key: Object.keys(series)[i]);\
                                                         }\
                                                         return retData;\
                                                     }"
-                                },
-                                "table": {
-                                    "function": "function(response) {\
-                        				\
-                        				var metric = 'avg';\
-                        				var retData = {\
-                            				selectedKeys: ['begin'],\
-                            				array: []\
-                        				};\
-                        				var payload = response.data.payload.stream.streamData;\
-                        				var begin = '';\
-                        				var payloadKeys = Object.keys(payload);\
-                    				\
-                        				for (i = 0; i < payloadKeys.length; i++) {\
-                            				begin = payload[payloadKeys[i]];\
-                            				var serieskeys = Object.keys(payload[payloadKeys[i]]);\
-                            				var dot = {};\
-                            				dot['begin'] = payloadKeys[i];\
-                            				for (j = 0; j < serieskeys.length; j++) {\
-                                				dot[serieskeys[j]] = payload[payloadKeys[i]][serieskeys[j]][metric];\
-                                				if(!retData.selectedKeys.includes(serieskeys[j])){\
-                                     				retData.selectedKeys.push(serieskeys[j]);\
-                                 				}\
-                            				}\
-                            				retData.array.push(dot);\
-                        				}\
-                        				return retData;\
-                    				}"
                                 }
                             }
                         }
@@ -184,7 +145,7 @@ function StaticPresets() {
                                 "asyncEnd": {
                                     "function": "function(response){return response.data.payload.stream.complete;}",
                                 },
-                                "lineChart": {
+                                "transform": {
                                     "function": "function (response) {\
                                                         var metric = \"avg\";\
                                                         var retData = [];\
@@ -203,38 +164,10 @@ function StaticPresets() {
                                                             }\
                                                         }\
                                                         for (i = 0; i < Object.keys(series).length; i++) {\
-                                                            retData.push({ values: series[Object.keys(series)[i]], key: Object.keys(series)[i], color: '#ff7f0e', strokeWidth: 2, classed: 'dashed' });\
+                                                            retData.push({ values: series[Object.keys(series)[i]], key: Object.keys(series)[i]);\
                                                         }\
                                                         return retData;\
                                                     }",
-                                },
-                                "table": {
-                                    "function": "function(response) {\
-                                    				\
-                                        				var metric = 'avg';\
-                                        				var retData = {\
-                                            				selectedKeys: ['begin'],\
-                                            				array: []\
-                                        				};\
-                                        				var payload = response.data.payload.stream.streamData;\
-                                        				var begin = '';\
-                                        				var payloadKeys = Object.keys(payload);\
-                                    				\
-                                        				for (i = 0; i < payloadKeys.length; i++) {\
-                                            				begin = payload[payloadKeys[i]];\
-                                            				var serieskeys = Object.keys(payload[payloadKeys[i]]);\
-                                            				var dot = {};\
-                                            				dot['begin'] = payloadKeys[i];\
-                                            				for (j = 0; j < serieskeys.length; j++) {\
-                                                				dot[serieskeys[j]] = payload[payloadKeys[i]][serieskeys[j]][metric];\
-                                                				if(!retData.selectedKeys.includes(serieskeys[j])){\
-                                                     				retData.selectedKeys.push(serieskeys[j]);\
-                                                 				}\
-                                            				}\
-                                            				retData.array.push(dot);\
-                                        				}\
-                                        				return retData;\
-                                    				}"
                                 }
                             }
                         }
@@ -261,11 +194,8 @@ function StaticPresets() {
                                     }
                                 },
                                 "postproc": {
-                                    "lineChart": {
-                                        "function": "function(response){var retData = [];var index = {};var payload = response.data.payload;for (var i = 0; i < payload.length; i++) {var curSeries = payload[i].name;if (!(curSeries in index)) {retData.push({values: [],key: curSeries,color: '#ff7f0e',strokeWidth: 2,classed: 'dashed'});index[curSeries] = retData.length - 1;}retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });}return retData;}",
-                                    },
-                                    "table": {
-                                        "function": "function(response) {return { selectedKeys : ['begin', 'name', 'value'], array : response.data.payload};}",
+                                    "transform": {
+                                        "function": "function(response){var retData = [];var index = {};var payload = response.data.payload;for (var i = 0; i < payload.length; i++) {var curSeries = payload[i].name;if (!(curSeries in index)) {retData.push({values: [],key: curSeries});index[curSeries] = retData.length - 1;}retData[index[curSeries]].values.push({ x: payload[i].begin, y: payload[i].value });}return retData;}",
                                     }
                                 }
                             }

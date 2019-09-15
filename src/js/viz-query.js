@@ -43,7 +43,22 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 state: '='
             },
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-view.html') + '?who=viz-view&anticache=' + getUniqueId(),
-            controller: function ($scope) { }
+            controller: function ($scope) {
+                $scope.$watch('state.data.transformed', function () {
+                    if($scope.state.shared.options.chart.type === 'table')
+                        $scope.tableData = toTable($scope.state.data.transformed);
+                    if($scope.state.shared.options.chart.type.endsWith('Chart'))
+                        $scope.chartData = toChart($scope.state.data.transformed);
+                });
+
+                $scope.toChart = function(){
+                    return '';
+                };
+
+                $scope.toTable = function(){
+                    return '';
+                }
+            }
         };
     })
     .directive('vizTransform', function () {
@@ -119,19 +134,19 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     }
                     if ($scope.state.query.type === 'Async') {
                         var scallback = $scope.state.query.datasource.callback;
-                        $scope.state.data.raw = response;
+                        //$scope.state.data.serviceraw = response;
                         $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
                         if ($scope.state.query.datasource.service.postproc.save) {
-                            $scope.state.data.savedData = $scope.runResponseProc($scope.state.query.datasource.service.postproc.save.function, response);
+                            $scope.state.data.state = $scope.runResponseProc($scope.state.query.datasource.service.postproc.save.function, response);
                         }
                         var datatosend = scallback.data;
                         var urltosend = scallback.url;
                         if (scallback.preproc.replace) {
                             if (scallback.preproc.replace.target === 'data') {
-                                datatosend = JSON.parse($scope.runRequestProc(scallback.preproc.replace.function, JSON.stringify(datatosend), $scope.state.data.savedData));
+                                datatosend = JSON.parse($scope.runRequestProc(scallback.preproc.replace.function, JSON.stringify(datatosend), $scope.state.data.state));
                             } else {
                                 if (scallback.preproc.replace.target === 'url') {
-                                    urltosend = JSON.parse($scope.runRequestProc(scallback.preproc.replace.function, JSON.stringify(urltosend), $scope.state.data.savedData));
+                                    urltosend = JSON.parse($scope.runRequestProc(scallback.preproc.replace.function, JSON.stringify(urltosend), $scope.state.data.state));
                                 }
                             }
                         }
@@ -146,7 +161,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
 
                 $scope.loadData = function (response, proctarget) {
                     if ($scope.state.query.type === 'Simple') {
-                        $scope.state.data.raw = response;
+                        //$scope.state.data.serviceraw = response;
                         $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
                     }
                     if ($scope.state.query.type === 'Async') {
@@ -155,16 +170,16 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                                 if ($scope.runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
                                     clearInterval($scope.asyncInterval);
                                 }
-                            } catch(e){
+                            } catch (e) {
                                 console.log(e);
                                 clearInterval($scope.asyncInterval);
                             }
                         }
-                        $scope.state.data.asyncraw = response;
+                        //$scope.state.data.callbackraw = response;
                         $scope.state.shared.http.rawcallbackresponse = JSON.stringify(response);
                     }
-                    $scope.state.data.chartData = $scope.runResponseProc(proctarget.postproc.lineChart.function, response);
-                    $scope.state.data.tableData = $scope.runResponseProc(proctarget.postproc.table.function, response);
+                    $scope.state.data.transformed = $scope.runResponseProc(proctarget.postproc.transform.function, response);
+                    console.log($scope.state.data);
                 };
 
                 $scope.runResponseProc = function (postProc, response) {

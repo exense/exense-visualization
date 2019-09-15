@@ -12,25 +12,13 @@
                         </div>
                         <div class="col-md-12 colcontain-grid">
                             <div class="btn-group">
-                                <label>Chart Postproc</label>
+                                <label>Transform</label>
                                 <div ng-if="state.query.type == 'Simple'">
-                                    <textarea ng-model="state.query.datasource.service.postproc.lineChart.function" class="form-control" />
+                                    <textarea ng-model="state.query.datasource.service.postproc.transform.function" class="form-control" />
                                 </div>
                                 <div ng-if="state.query.type == 'Async'">
-                                    <textarea ng-model="state.query.datasource.callback.postproc.lineChart.function" class="form-control" />
+                                    <textarea ng-model="state.query.datasource.callback.postproc.transform.function" class="form-control" />
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 colcontain-grid">
-                            <div class="btn-group">
-                                <label>Table postproc</label>
-                                <div ng-if="state.query.type == 'Simple'">
-                                    <textarea ng-model="state.query.datasource.service.postproc.table.function" class="form-control" />
-                                </div>
-                                <div ng-if="state.query.type == 'Async'">
-                                    <textarea ng-model="state.query.datasource.callback.postproc.table.function" class="form-control" />
-                                </div>
-
                             </div>
                         </div>
                     </div>
