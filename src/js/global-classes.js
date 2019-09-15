@@ -27,7 +27,7 @@ function DefaultChartOptions(chartHeight, chartWidth, innerContainerHeight, inne
                 axisLabel: 'Time (ms)'
             },
             yAxis: {
-                axisLabel: 'Voltage (v)',
+                axisLabel: 'y',
                 tickFormat: function (d) {
                     return d3.format('.02f')(d);
                 },

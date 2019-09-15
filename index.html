@@ -18,13 +18,7 @@
 	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-	<script src="src/js/wmservice.js"></script>
-	<script src="src/js/rtm-controls.js"></script>
-	<script src="src/js/global-classes.js"></script>
-	<script src="src/js/viz-query.js"></script>
-	<script src="src/js/viz-dashlet.js"></script>
-	<script src="src/js/viz-mgd-widget.js"></script>
-	<script src="src/js/viz-widget-manager.js"></script>
+	<script type="text/javascript" src="dist/viz.js"></script>
 
 	<script src="static-presets.js"></script>
 
@@ -69,22 +63,23 @@
 </head>
 
 <body>
-	<div ng-app='demoApp' ng-controller='ctrl'>
-		<span><button class="btn btn-primary btn-nav" ng-click="$emit('top.dashboard-new')">
-				<span class="glyphicon glyphicon-file glyphicon-app"></span>
-			</button>
-			<button class="btn btn-primary btn-nav" ng-click="$emit('top.dashboard-clear')">
-				<span class="glyphicon glyphicon-trash glyphicon-app"></span>
-			</button>
-			<button class="btn btn-primary btn-nav" ng-click="$emit('top.dashboard-current-addWidget')">
-				<span class="glyphicon glyphicon-plus glyphicon-app"></span>
-			</button>
-			<button class="btn btn-primary btn-nav" ng-click="$emit('top.dashboard-current-clearWidgets')">
-				<span class="glyphicon glyphicon-minus glyphicon-app"></span>
-			</button>
-		</span>
-		<viz-dashboard-manager presets="staticPresetsInstance"></viz-dashboard-manager>
-	</div>
+		<div ng-app='demoApp' ng-controller='ctrl'>
+				<span><button class="btn btn-primary btn-nav" ng-click="$emit('top.dashboard-new')">
+						<span class="glyphicon glyphicon-file glyphicon-app"></span>
+					</button>
+					<button class="btn btn-primary btn-nav" ng-click="$emit('top.dashboard-clear')">
+						<span class="glyphicon glyphicon-trash glyphicon-app"></span>
+					</button>
+					<button class="btn btn-primary btn-nav" ng-click="$emit('top.dashboard-current-addWidget')">
+						<span class="glyphicon glyphicon-plus glyphicon-app"></span>
+					</button>
+					<button class="btn btn-primary btn-nav" ng-click="$emit('top.dashboard-current-clearWidgets')">
+						<span class="glyphicon glyphicon-minus glyphicon-app"></span>
+					</button>
+				</span>
+				
+				<viz-dashboard-manager presets="staticPresetsInstance"></viz-dashboard-manager>
+			</div>
 </body>
 
 </html>
