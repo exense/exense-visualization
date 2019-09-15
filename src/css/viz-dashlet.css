@@ -28,6 +28,8 @@ display: table-cell;
 vertical-align: middle;
 text-align: center;
 margin-top: 20px;
+overflow-y: auto;
+overflow-wrap: break-word;
 }
 
 

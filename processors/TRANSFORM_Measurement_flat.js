@@ -72,7 +72,8 @@ var expected = '[{"x":1567610595151,"y":3498,"z":"Transaction_2"},{"x":156761059
 if (testmode) {
     if (actual === expected) {
         console.log('[PASSED]')
-        //console.log(result);
+        //console.log(actual);
+        console.log(JSON.stringify(transform.toString()))
     }
     else {
         console.log('[FAILED]')

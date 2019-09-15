@@ -1,20 +1,22 @@
-<div ng-if="state.shared.options.chart.type === 'table'" style="text-align: left; justify-content: left; margin-top: 20px; vertical-align: middle !important;">
-    <table class="table">
+<div ng-if="state.shared.options.chart.type === 'table'" style="overflow: scroll !important; text-align: left; justify-content: left; margin-top: 20px; vertical-align: middle !important;">
+    <table class="table" ng-style="{width:state.shared.options.chart.width + 'px'}">
         <thead>
             <tr>
-                <th ng-repeat="k in state.data.tableData.selectedKeys">{{k}}</th>
+                <th>x</th>
+                <th ng-repeat="z in tableData.zlist">{{z}}</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="row in state.data.tableData.array">
-                <td ng-repeat="v in state.data.tableData.selectedKeys">
-                    {{row[v]}}
+            <tr ng-repeat="row in tableData.data">
+                <td>{{row.x}}</td>
+                <td ng-repeat="series in tableData.zlist">
+                    {{row['values'][series]}}
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 
-<div ng-if="state.shared.options.chart.type.endsWith('Chart')">  
-    <nvd3 options='state.shared.options' data='state.data.chartData' style="text-align: center; justify-content: center;"></nvd3>
+<div ng-if="state.shared.options.chart.type.endsWith('Chart')">
+    <nvd3 options='state.shared.options' data='chartData' style="text-align: center; justify-content: center;"></nvd3>
 </div>

@@ -45,19 +45,68 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-view.html') + '?who=viz-view&anticache=' + getUniqueId(),
             controller: function ($scope) {
                 $scope.$watch('state.data.transformed', function () {
-                    if($scope.state.shared.options.chart.type === 'table')
-                        $scope.tableData = toTable($scope.state.data.transformed);
-                    if($scope.state.shared.options.chart.type.endsWith('Chart'))
-                        $scope.chartData = toChart($scope.state.data.transformed);
+                    if ($scope.state.shared.options.chart.type === 'table')
+                        $scope.tableData = $scope.toTable($scope.state.data.transformed);
+                    if ($scope.state.shared.options.chart.type.endsWith('Chart'))
+                        $scope.chartData = $scope.toChart($scope.state.data.transformed);
                 });
 
-                $scope.toChart = function(){
-                    return '';
+                $scope.stringToColour = function (i) {
+                    var num = (i + 1) * 500000;
+                    if ((i % 2) == 0) {
+                        num = num * 100;
+                    }
+                    num >>>= 0;
+                    var b = num & 0xFF,
+                        g = (num & 0xFF00) >>> 8 % 255,
+                        r = (num & 0xFF0000) >>> 16 % 255;
+                    return "rgb(" + [r, g, b].join(",") + ")";
+                }
+
+                $scope.toChart = function (data) {
+                    var x = 'x', y = 'y', z = 'z';//begin,value,name
+                    var retData = [];
+                    var index = {};
+                    var payload = data;
+                    for (var i = 0; i < payload.length; i++) {
+                        var curSeries = payload[i][z];
+                        if (!(curSeries in index)) {
+                            retData.push({
+                                values: [],
+                                key: curSeries,
+                                color: $scope.stringToColour(i),
+                                strokeWidth: 2,
+                                classed: 'dashed'
+                            });
+                            index[curSeries] = retData.length - 1;
+                        }
+                        retData[index[curSeries]].values.push({
+                            x: payload[i][x],
+                            y: payload[i][y]
+                        });
+                    }
+                    return retData;
                 };
 
-                $scope.toTable = function(){
-                    return '';
-                }
+                $scope.toTable = function (data) {
+                    var x = 'x', y = 'y', z = 'z';//begin,value,name
+                    var retData = [], index = {}, zlist = [];
+                    var payload = data;
+                    for (var i = 0; i < payload.length; i++) {
+                        var curSeries = payload[i][x];
+                        if (!(curSeries in index)) {
+                            retData.push({
+                                values: {},
+                                x: curSeries,
+                            });
+                            index[curSeries] = retData.length - 1;
+                        };
+                        retData[index[curSeries]].values[payload[i][z]] = payload[i][y];
+                        if (!zlist.includes(payload[i][z]))
+                            zlist.push(payload[i][z]);
+                    }
+                    return { zlist: zlist.sort(), data: retData };
+                };
             }
         };
     })
@@ -179,7 +228,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                         $scope.state.shared.http.rawcallbackresponse = JSON.stringify(response);
                     }
                     $scope.state.data.transformed = $scope.runResponseProc(proctarget.postproc.transform.function, response);
-                    console.log($scope.state.data);
+                    //console.log($scope.state.data);
                 };
 
                 $scope.runResponseProc = function (postProc, response) {

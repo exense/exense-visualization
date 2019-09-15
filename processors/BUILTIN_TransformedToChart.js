@@ -45,7 +45,7 @@ var expected = '[{"values":[{"x":1567610595151,"y":3498},{"x":1567610596578,"y":
 if (testmode) {
     if (actual === expected) {
         console.log('[PASSED]')
-        //console.log(result);
+        //console.log(actual);
     }
     else {
         console.log('[FAILED]')
