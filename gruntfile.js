@@ -18,9 +18,13 @@ module.exports = function (grunt) {
             options: {
                 separator: ';\n',
             },
-            dist: {
+            dist1: {
                 src: ['src/js/global-classes.js', 'src/js/rtm-controls.js', 'src/js/viz-dashlet.js', 'src/js/viz-mgd-widget.js', 'src/js/viz-query.js', 'src/js/wmservice.js', 'src/js/viz-widget-manager.js'],
                 dest: 'dist/viz.js',
+            },
+            dist2: {
+                src: ['src/css/viz-dashlet.css', 'src/css/viz-mgd-widget.css', 'src/css/viz-widget-manager.css'],
+                dest: 'dist/viz.css',
             }
         },
         copy: {
@@ -37,11 +41,7 @@ module.exports = function (grunt) {
             },
             target: {
                 files: [{
-                    expand: true,
-                    cwd: 'src/css',
-                    src: ['*.css', '!*.min.css'],
-                    dest: 'dist/css',
-                    ext: '.min.css'
+                    'dist/viz.min.css': ['dist/viz.css']
                 }]
             }
         }
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // register at least this one task
-    grunt.registerTask('default', ['concat', 'uglify', 'copy', 'cssmin']);
+    grunt.registerTask('default', ['concat','uglify', 'copy', 'cssmin']);
 
 
 };
