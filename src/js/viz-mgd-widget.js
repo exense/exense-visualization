@@ -16,11 +16,30 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
             templateUrl: vizMgdWidgetcurrentScriptPath.replace('/js/', '/templates/').replace('viz-mgd-widget.js', 'viz-mgd-widget.html') + '?who=viz-mgd-widget&anticache=' + getUniqueId(),
             controller: function ($scope, $element) {
                 $scope.currentstate = JSON.parse(JSON.stringify($scope.state));
-                $scope.chevron = true;
+                $scope.state.shared.chevron = true;
+                $scope.state.shared.savedHeight = $scope.state.shared.options.innercontainer.height;
+                $scope.state.shared.options.innercontainer.offset = 50;
                 $scope.dashlettitle = 'Dashlet title';
 
                 $scope.toggleChevron = function(){
-                    $scope.chevron = !$scope.chevron;
+                    if($scope.state.shared.chevron){
+                        $scope.collapse();
+                    }else{
+                        $scope.restore();
+                    }
+                    $scope.state.shared.chevron = !$scope.state.shared.chevron;
+                };
+
+                $scope.collapse = function(){
+                    $scope.state.shared.savedHeight = $scope.state.shared.options.innercontainer.height;
+                    $scope.state.shared.savedOffset = $scope.state.shared.options.innercontainer.offset;
+                    $scope.state.shared.options.innercontainer.height = 30;
+                    $scope.state.shared.options.innercontainer.offset = 0;
+                };
+
+                $scope.restore = function(){
+                    $scope.state.shared.options.innercontainer.height = $scope.state.shared.savedHeight;
+                    $scope.state.shared.options.innercontainer.offset = $scope.state.shared.savedOffset;
                 };
 
                 $scope.$on('dashlet-title', function (event, arg) {
