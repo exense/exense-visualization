@@ -75,7 +75,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                                 values: [],
                                 key: curSeries,
                                 color: $scope.stringToColour(i),
-                                strokeWidth: 2,
+                                strokeWidth: 3,
                                 classed: 'dashed'
                             });
                             index[curSeries] = retData.length - 1;
