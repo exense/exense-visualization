@@ -79,31 +79,7 @@ function StaticPresets() {
                                     "function": "function(response){return response.data.payload.stream.complete;}",
                                 },
                                 "transform": {
-                                    "function": "function (response) {\
-                                                        var metric = \"avg\";\
-                                                        var retData = [];\
-                                                        var series = {};\
-                                                        var payload = response.data.payload.stream.streamData;\
-                                                        var begin = \"\";\
-                                                        var payloadKeys = Object.keys(payload);\
-                                                        if (payloadKeys[0].length > 0) {\
-                                                            var keys = Object.keys(payload[payloadKeys[0]]);\
-                                                            for (i = 0; i < keys.length; i++) {\
-                                                                series[keys[i]] = [];\
-                                                            }\
-                                                        }\
-                                                        for (i = 0; i < payloadKeys.length; i++) {\
-                                                            begin = payload[payloadKeys[i]];\
-                                                            var serieskeys = Object.keys(payload[payloadKeys[i]]);\
-                                                            for (j = 0; j < serieskeys.length; j++) {\
-                                                                series[serieskeys[j]].push({ x: payloadKeys[i], y: payload[payloadKeys[i]][serieskeys[j]][metric] });\
-                                                            }\
-                                                        }\
-                                                        for (i = 0; i < Object.keys(series).length; i++) {\
-                                                            retData.push({ values: series[Object.keys(series)[i]], key: Object.keys(series)[i]);\
-                                                        }\
-                                                        return retData;\
-                                                    }"
+                                    "function": "function (response) {\r\n    var metric = 'avg';\r\n    var retData = [], series = {};\r\n\r\n    var payload = response.data.payload.stream.streamData;\r\n    var payloadKeys = Object.keys(payload);\r\n\r\n    for (i = 0; i < payloadKeys.length; i++) {\r\n        var serieskeys = Object.keys(payload[payloadKeys[i]])\r\n        for (j = 0; j < serieskeys.length; j++) {\r\n            retData.push({\r\n                x: payloadKeys[i],\r\n                y: payload[payloadKeys[i]][serieskeys[j]][metric],\r\n                z: serieskeys[j]\r\n            });\r\n        }\r\n    }\r\n    return retData;\r\n}"
                                 }
                             }
                         }
@@ -146,28 +122,7 @@ function StaticPresets() {
                                     "function": "function(response){return response.data.payload.stream.complete;}",
                                 },
                                 "transform": {
-                                    "function": "function (response) {\
-                                                        var metric = \"avg\";\
-                                                        var retData = [];\
-                                                        var series = {};\
-                                                        var payload = response.data.payload.stream.streamData;\
-                                                        var begin = \"\";\
-                                                        var payloadKeys = Object.keys(payload);\
-                                                        for (i = 0; i < payloadKeys.length; i++) {\
-                                                            begin = payload[payloadKeys[i]];\
-                                                            var serieskeys = Object.keys(payload[payloadKeys[i]]);\
-                                                            for (j = 0; j < serieskeys.length; j++) {\
-                                                            	if(!series[serieskeys[j]]){\
-                                                            	series[serieskeys[j]] = [];\
-                                                            	}\
-                                                            	series[serieskeys[j]].push({ x: payloadKeys[i], y: payload[payloadKeys[i]][serieskeys[j]][metric] });\
-                                                            }\
-                                                        }\
-                                                        for (i = 0; i < Object.keys(series).length; i++) {\
-                                                            retData.push({ values: series[Object.keys(series)[i]], key: Object.keys(series)[i]);\
-                                                        }\
-                                                        return retData;\
-                                                    }",
+                                    "function": "function (response) {\r\n    var metric = 'avg';\r\n    var retData = [], series = {};\r\n\r\n    var payload = response.data.payload.stream.streamData;\r\n    var payloadKeys = Object.keys(payload);\r\n\r\n    for (i = 0; i < payloadKeys.length; i++) {\r\n        var serieskeys = Object.keys(payload[payloadKeys[i]])\r\n        for (j = 0; j < serieskeys.length; j++) {\r\n            retData.push({\r\n                x: payloadKeys[i],\r\n                y: payload[payloadKeys[i]][serieskeys[j]][metric],\r\n                z: serieskeys[j]\r\n            });\r\n        }\r\n    }\r\n    return retData;\r\n}",
                                 }
                             }
                         }
