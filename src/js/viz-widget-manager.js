@@ -1,5 +1,4 @@
-var vizWidgetManagerscripts = document.getElementsByTagName("script")
-var vizWidgetManagercurrentScriptPath = vizWidgetManagerscripts[vizWidgetManagerscripts.length - 1].src;
+registerScript();
 
 angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstrap'])
     .directive('vizDashboardManager', function (wmservice) {
@@ -8,12 +7,12 @@ angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstr
             scope: {
                 presets: '=',
             },
-            templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-dashboard-manager.html') + '?who=viz-dashboard-manager&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-widget-manager.js', 'viz-dashboard-manager.html'),
             controller: function ($scope, wmservice) {
 
                 $scope.dashboards = wmservice.dashboards;
-                
-                $scope.$on('dashboard-reload', function(){
+
+                $scope.$on('dashboard-reload', function () {
                     $scope.dashboards = wmservice.dashboards;
                 });
 
@@ -90,7 +89,7 @@ angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstr
                 dashboard: '=',
                 presets: '='
             },
-            templateUrl: vizWidgetManagercurrentScriptPath.replace('/js/', '/templates/').replace('viz-widget-manager.js', 'viz-widget-manager.html') + '?who=viz-widget-manager&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-widget-manager.js', 'viz-widget-manager.html'),
             controller: function ($scope, wmservice) {
 
                 $scope.widgets = $scope.dashboard.widgets;

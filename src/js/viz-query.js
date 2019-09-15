@@ -1,20 +1,4 @@
-var vizQueryscripts = document.getElementsByTagName("script")
-var vizQuerycurrentScriptPath = vizQueryscripts[vizQueryscripts.length - 1].src;
-
-var resolve = function (obj, path) {
-    path = path.split('.');
-    var current = obj;
-    while (path.length) {
-        if (typeof current !== 'object') return undefined;
-        current = current[path.shift()];
-    }
-    return current;
-};
-
-var getUniqueId = function () {
-    return Math.random().toString(36).substr(2, 9);
-}
-
+registerScript();
 angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
     .directive('vizQuery', function () {
         return {
@@ -23,7 +7,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 formwidth: '=',
                 state: '='
             },
-            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-query.html') + '?who=viz-query&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-query.js', 'viz-query.html'),
             controller: function ($scope) {
 
                 $scope.$on('templatePhChange', function () {
@@ -42,7 +26,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 options: '=',
                 state: '='
             },
-            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-view.html') + '?who=viz-view&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-query.js', 'viz-view.html'),
             controller: function ($scope) {
                 $scope.$watch('state.data.transformed', function () {
                     if ($scope.state.shared.options.chart.type === 'table')
@@ -117,7 +101,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 options: '=',
                 state: '='
             },
-            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-transform.html') + '?who=viz-transform&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-query.js', 'viz-transform.html'),
             controller: function ($scope, $http) {
 
                 $scope.counter = 0;
@@ -248,7 +232,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 formwidth: '=',
                 state: '='
             },
-            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-config.html') + '?who=viz-config&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
             controller: function ($scope, $http) {
 
                 $scope.currentconfig = $scope.state.shared.config;
@@ -267,7 +251,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 formwidth: '=',
                 state: '='
             },
-            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-info.html') + '?who=viz-info&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-query.js', 'viz-info.html'),
             controller: function ($scope, $http) { }
         }
     })
@@ -294,7 +278,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 options: '=',
                 state: '='
             },
-            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-q-service.html') + '?who=viz-q-service&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-service.html'),
             controller: function ($scope) {
             }
         };
@@ -306,7 +290,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 options: '=',
                 state: '='
             },
-            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-q-input.html') + '?who=viz-q-input&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-input.html'),
             controller: function ($scope) {
                 $scope.initTemplateControls = function () {
                     $scope.state.query.datasource.service.controls = { template: '', placeholders: {} };
@@ -343,7 +327,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 options: '=',
                 state: '='
             },
-            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-q-preproc.html') + '?who=viz-q-preproc&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-preproc.html'),
             controller: function ($scope) {
             }
         };
@@ -355,7 +339,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                 options: '=',
                 state: '='
             },
-            templateUrl: vizQuerycurrentScriptPath.replace('/js/', '/templates/').replace('viz-query.js', 'viz-q-postproc.html') + '?who=viz-q-postproc&anticache=' + getUniqueId(),
+            templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-postproc.html'),
             controller: function ($scope) {
             }
         };

@@ -1,5 +1,4 @@
-var rtmControlsscripts = document.getElementsByTagName("script")
-var rtmControlscurrentScriptPath = rtmControlsscripts[rtmControlsscripts.length-1].src;
+registerScript();
 
 angular.module('rtm-controls', [])
 
@@ -9,9 +8,10 @@ angular.module('rtm-controls', [])
             scope: {
                 state: '='
             },
-            templateUrl: rtmControlscurrentScriptPath.replace('/js/', '/templates/').replace('rtm-controls.js', 'rtm-controls.html') + '?who=rtm-controls&anticache=' + getUniqueId(),
+
+            templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-controls.html'),
             controller: function ($scope, $rootScope) {
-                $rootScope.queryResult = {'abc' : 'def'};
+                $rootScope.queryResult = { 'abc': 'def' };
             }
         };
     })
