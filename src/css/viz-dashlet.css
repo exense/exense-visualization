@@ -21,6 +21,8 @@ svg.nvd3-svg{
 .innercontainer {
     overflow-y: auto;
     overflow-wrap: break-word;
+    justify-content: center;
+    text-align: center;
 }
 
 .chartcontainer{
@@ -32,9 +34,15 @@ overflow-y: auto;
 overflow-wrap: break-word;
 }
 
+.tablecontain{
+    display: inline-block;
+    text-align: left;
+    justify-content: center;
+    margin-top: 20px;
+    vertical-align: middle !important;
+}
 
 .dashletbox{
-display: inline;
 text-align: center;
 justify-content: center;
 vertical-align: middle;

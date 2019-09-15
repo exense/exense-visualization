@@ -1,4 +1,4 @@
-<div ng-if="state.shared.options.chart.type === 'table'" style="overflow: scroll !important; text-align: left; justify-content: left; margin-top: 20px; vertical-align: middle !important;">
+<div ng-if="state.shared.options.chart.type === 'table'" class="tablecontain" ng-style="{height: state.shared.options.chart.height + 'px'}">
     <table class="table" ng-style="{width:state.shared.options.chart.width + 'px'}">
         <thead>
             <tr>
@@ -17,6 +17,6 @@
     </table>
 </div>
 
-<div ng-if="state.shared.options.chart.type.endsWith('Chart')">
+<div ng-if="state.shared.options.chart.type.endsWith('Chart')" class="chartcontainer">
     <nvd3 options='state.shared.options' data='chartData' style="text-align: center; justify-content: center;"></nvd3>
 </div>
