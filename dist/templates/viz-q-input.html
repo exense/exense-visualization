@@ -1,0 +1,122 @@
+<div class="form-wrapper">
+    <div class="form-group center-block">
+        <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
+
+            <div class="row">
+
+                <div class="col-md-4 colcontain-grid">
+                    <label>Input type</label>
+                    <div class="btn-group form-radio">
+                        <label class="btn btn-primary" ng-model="state.query.inputtype" uib-btn-radio="'Raw'">Raw</label>
+                        <label class="btn btn-primary" ng-model="state.query.inputtype" uib-btn-radio="'Controls'">Controls</label>
+                    </div>
+                </div>
+                <div ng-if="state.query.inputtype == 'Raw'">
+                    <div class="col-md-4 colcontain-grid">
+                        <label>Preset</label>
+                        <div class="btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
+                            <button id="load-query" type="button" class="btn btn-primary" uib-dropdown-toggle
+                                ng-disabled="disabled">
+                                Load query... <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
+                                <h5 ng-repeat="qp in state.shared.presets.queries" ng-click="loadQueryPreset(qp)">{{qp.name}}</h5>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="state.query.inputtype == 'Controls'">
+                    <div class="col-md-4 colcontain-grid">
+                        <label>Control type</label>
+                        <div class="btn-group form-radio">
+                            <label class="btn btn-primary" ng-click="initTemplateControls()" ng-model="state.query.controltype"
+                                uib-btn-radio="'Template'">Template</label>
+                            <label class="btn btn-primary" ng-model="state.query.controltype" uib-btn-radio="'RTM'">RTM</label>
+                            <label class="btn btn-primary" ng-model="state.query.controltype" uib-btn-radio="'STEP'">STEP</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 colcontain-grid">
+                        <label>Preset</label>
+                        <div class="btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
+                            <button id="load-controls" type="button" class="btn btn-primary" uib-dropdown-toggle
+                                ng-disabled="disabled">
+                                Load controls... <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
+                                <div ng-if="state.query.controltype == 'Template'">
+                                    <h5 ng-repeat="t in state.shared.presets.controls.templates" ng-click="loadTemplatePreset(t)">{{t.name}}</h5>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="state.query.inputtype == 'Controls'">
+                    <div ng-if="state.query.controltype == 'Template'">
+                        <div class="col-md-12 colcontain-grid">
+                            <label>Placeholders</label>
+                            <span style="display: inline-block !important;">Add:<span class="glyphicon glyphicon-plus"
+                                    ng-click="addPlaceholder()" href="#"></span></span>
+                            <div class="btn-group">
+                                <div class="row" style="display: inline-block !important; width: 100%;">
+                                    <div ng-repeat="item in getNumber(state.query.datasource.service.controls.placeholders.length) track by $index">
+                                        <div class="col-lg-4 colcontain-grid">
+                                            <span style="display: inline-flex;">
+                                                <input type="text" ng-model="state.query.datasource.service.controls.placeholders[$index].placeholder"
+                                                    ng-change="$emit('templatePhChange')" />
+                                                <span class="glyphicon glyphicon-minus" ng-click="removePlaceholder($index)"
+                                                    href="#" style="margin-top: 5px;"></span>
+                                            </span>
+                                            <input type="text" ng-model="state.query.datasource.service.controls.placeholders[$index].value"
+                                                name="input_{{$index}}" class="form-control" ng-change="$emit('templatePhChange')" />
+                                            <input type="checkbox" ng-model="state.query.datasource.service.controls.placeholders[$index].isDynamic">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 colcontain-grid">
+                            <label>Template</label>
+                            <div class="btn-group">
+                                <textarea ng-model="state.query.datasource.service.controls.template.datasource.service.data" class="form-control"
+                                ng-change="$emit('templatePhChange')" />
+                                </div>
+                </div>
+
+                    <div ng-if="state.query.controltype == 'RTM'">
+                        <rtm-controls></rtm-controls>
+                    </div>
+                    <div ng-if="state.query.controltype == 'STEP'">
+                        <div class="col-md-12 colcontain-grid">
+                            <label>STEP</label>
+                            <div class="btn-group">
+                                Not implemented yet
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="col-md-12 colcontain-grid">
+                    <label>Payload</label>
+                    <div class="btn-group">
+                        <textarea type="text" ng-model="state.query.datasource.service.data" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-12 colcontain-grid">
+                    <label>Query params</label>
+                    <div class="btn-group">
+                        <textarea type="text" ng-model="state.query.datasource.service.params" class="form-control" />
+                    </div>
+                </div>
+                <div ng-if="state.query.type == 'Async'">
+                    <div class="col-md-12 colcontain-grid">
+                        <label>Callback Payload</label>
+                        <div class="btn-group">
+                            <textarea  type="text" ng-model="state.query.datasource.callback.data" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

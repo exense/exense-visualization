@@ -11,6 +11,13 @@
     "**/.*",
     "node_modules",
     "bower_components",
+    "src/",
+    "processors/",
+    "mocks/",
+    "index.html",
+    "static-presets.js",
+    "package.json",
+    "package-lock.json",
     "test",
     "tests"
   ],
