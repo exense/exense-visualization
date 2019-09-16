@@ -78,7 +78,7 @@
                         <div class="col-md-12 colcontain-grid">
                             <label>Template</label>
                             <div class="btn-group">
-                                <textarea json-text ng-model="state.query.datasource.service.controls.template.datasource.service.data" class="form-control"
+                                <textarea ng-model="state.query.datasource.service.controls.template.datasource.service.data" class="form-control"
                                 ng-change="$emit('templatePhChange')" />
                                 </div>
                 </div>
@@ -99,20 +99,20 @@
                 <div class="col-md-12 colcontain-grid">
                     <label>Payload</label>
                     <div class="btn-group">
-                        <input json-text type="text" ng-model="state.query.datasource.service.data" class="form-control" />
+                        <textarea type="text" ng-model="state.query.datasource.service.data" class="form-control" />
                     </div>
                 </div>
                 <div class="col-md-12 colcontain-grid">
                     <label>Query params</label>
                     <div class="btn-group">
-                        <input json-text type="text" ng-model="state.query.datasource.service.params" class="form-control" />
+                        <textarea type="text" ng-model="state.query.datasource.service.params" class="form-control" />
                     </div>
                 </div>
                 <div ng-if="state.query.type == 'Async'">
                     <div class="col-md-12 colcontain-grid">
                         <label>Callback Payload</label>
                         <div class="btn-group">
-                            <input json-text type="text" ng-model="state.query.datasource.callback.data" class="form-control" />
+                            <textarea  type="text" ng-model="state.query.datasource.callback.data" class="form-control" />
                         </div>
                     </div>
                 </div>

@@ -11,10 +11,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             controller: function ($scope) {
 
                 $scope.$on('templatePhChange', function () {
-                    $scope.state.query.datasource.service.data = JSON.parse($scope.runRequestProc(
+                    $scope.state.query.datasource.service.data = runRequestProc(
                         $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
-                        JSON.stringify($scope.state.query.datasource.service.controls.template.datasource.service.data),
-                        $scope.state.query.datasource.service.controls.placeholders));
+                        $scope.state.query.datasource.service.controls.template.datasource.service.data,
+                        $scope.state.query.datasource.service.controls.placeholders);
                 });
             }
         }
@@ -170,7 +170,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                         //$scope.state.data.serviceraw = response;
                         $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
                         if ($scope.state.query.datasource.service.postproc.save) {
-                            $scope.state.data.state = $scope.runResponseProc($scope.state.query.datasource.service.postproc.save.function, response);
+                            $scope.state.data.state = runResponseProc($scope.state.query.datasource.service.postproc.save.function, response);
                         }
                         var datatosend = scallback.data;
                         var urltosend = scallback.url;
@@ -200,7 +200,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
                             try {
-                                if ($scope.runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
+                                if (runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
                                     clearInterval($scope.asyncInterval);
                                 }
                             } catch (e) {
@@ -211,16 +211,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                         //$scope.state.data.callbackraw = response;
                         $scope.state.shared.http.rawcallbackresponse = JSON.stringify(response);
                     }
-                    $scope.state.data.transformed = $scope.runResponseProc(proctarget.postproc.transform.function, response);
+                    $scope.state.data.transformed = runResponseProc(proctarget.postproc.transform.function, response);
                     //console.log($scope.state.data);
-                };
-
-                $scope.runResponseProc = function (postProc, response) {
-                    return eval('(' + postProc + ')(response)');
-                };
-
-                $scope.runRequestProc = function (postProc, requestFragment, workData) {
-                    return eval('(' + postProc + ')(requestFragment, workData)');
                 };
             }
         };

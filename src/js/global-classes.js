@@ -27,6 +27,15 @@ var resolveTemplateURL = function (containername, componentname){
     return templateUrl;
 }
 
+
+var runResponseProc = function (postProc, response) {
+    return eval('(' + postProc + ')(response)');
+};
+
+var runRequestProc = function (postProc, requestFragment, workData) {
+    return eval('(' + postProc + ')(requestFragment, workData)');
+};
+
 var resolve = function (obj, path) {
     path = path.split('.');
     var current = obj;
