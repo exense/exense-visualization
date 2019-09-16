@@ -176,10 +176,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                         var urltosend = scallback.url;
                         if (scallback.preproc.replace) {
                             if (scallback.preproc.replace.target === 'data') {
-                                datatosend = JSON.parse($scope.runRequestProc(scallback.preproc.replace.function, JSON.stringify(datatosend), $scope.state.data.state));
+                                datatosend = JSON.parse(runRequestProc(scallback.preproc.replace.function, JSON.stringify(datatosend), $scope.state.data.state));
                             } else {
                                 if (scallback.preproc.replace.target === 'url') {
-                                    urltosend = JSON.parse($scope.runRequestProc(scallback.preproc.replace.function, JSON.stringify(urltosend), $scope.state.data.state));
+                                    urltosend = JSON.parse(runRequestProc(scallback.preproc.replace.function, JSON.stringify(urltosend), $scope.state.data.state));
                                 }
                             }
                         }
