@@ -1,38 +1,39 @@
 .dashletcontainer {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd !important;
 }
 
 .colmdclass{
-    margin-top: 5px;
+    margin-top: 5px !important;
 }
 
 .glyphicon-control{
-    color: rgb(0, 240, 0);
-    margin: 5px;
-    padding: 1px;
+    color: rgb(0, 240, 0) !important;
+    margin: 5px !important;
+    padding: 1px !important;
 }
 
 .glyphicon-control:hover{
-    background-color: rgb(68, 247, 68);
-    color: white;
+    background-color: rgb(68, 247, 68) !important;
+    color: white !important;
 }
 
 .ul-control {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333333;
+    list-style-type: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background-color: #333333 !important;
+    height: 30px !important;
   }
 
   .li-title {
-    float: left;
-    margin-left: 10px;
-    padding: 5px;
-    color: white;
+    float: left !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    color: white !important;
   }
   
 .li-control {
-    float: right;
-    margin-left: 3px;
+    float: right !important;
+    margin-left: 3px !important;
   }

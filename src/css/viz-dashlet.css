@@ -14,7 +14,7 @@ svg.nvd3-svg{
     display: inline !important;
 }
 
-.panel-body {
+.viz-panel-body {
     padding: 0 !important;
 }
 
@@ -52,75 +52,75 @@ vertical-align: middle;
     margin-left: 0;
 }
 
-.tab-content {
+div.ul-viewtab > div.tab-content {
     padding: 0px;
     margin: 0px;
 }
 
 div.dashlet > * > .nav-link {
-    border: 1px solid #ddd;
+    border: 1px solid #ddd !important;
     padding: 5px !important;
 }
 
 ul.ul-control  {
-    border: 1px solid #ddd;
-    margin-top: -1px;
+    border: 1px solid #ddd !important;
+    margin-top: -1px !important;
 }
 
 div.ul-viewtab > ul{
-    border: 1px solid #ddd;
+    border: 1px solid #ddd !important;
 }
 
 div.dashlet > ul > li.active > a, div.dashlet > ul > li.active > a > uib-tab-heading > span{
     background-color: rgb(60, 240, 60) !important;
-    color: white;
+    color: white !important;
 }
 div.dashlet > ul > li > a, div.dashlet > ul > li.active > a, div.dashlet > ul > li > a:hover{
     border: 1px solid #ddd !important;
-    padding: 2px 6px;
+    padding: 2px 6px !important;
 }
 
-.panel-title{
+div.viz-panel-default > * >  h4.panel-title{
     color: black !important;
     text-decoration: none !important;
 }
 
-.panel-title > a:hover, .panel-title > a.active{
+div.viz-panel-default > * > h4.panel-title > a:hover, div.viz-panel-default > * > h4.panel-title > a.active{
     text-decoration: none !important;
     background-color: rgb(0, 255, 106) !important;
     text-decoration: none !important;
     color: white !important;
 }
 
-.panel-heading{
+div.viz-panel-default >  div.panel-heading{
     margin: 0;
     padding: 0;
 }
 
-.btn-primary{
+.viz-btn-primary{
     background-color: rgb(0, 240, 0) !important;
 }
 
-.btn-primary:hover, .panel-group:hover{
+.viz-btn-primary:hover, .viz-panel-group:hover{
     background-color:rgb(0, 255, 106) !important;
 }
 
-.btn-primary.active{
+.viz-btn-primary.active{
     background-color:green !important;
 }
 
-.btn-dashlet {
+.viz-btn-dashlet {
     background-color: rgb(0, 240, 0) !important;
     margin: 5px;
     margin-bottom: 15px;
 }
 
-.btn-container{
+.viz-btn-container{
     justify-content: right;
     text-align: right;
 }
 
-.btn-dashlet:hover {
+.viz-btn-dashlet:hover {
     background-color: rgb(0, 255, 106) !important;
 }
 
@@ -167,7 +167,7 @@ div.form-radio > label.btn, div.form-radio > button{
     font-size: 10px;
 }
 
-.btn-group{
-    margin-top: 5px;
+.viz-btn-group{
+    margin-top: 5px !important;
     display: block !important;
 }

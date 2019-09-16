@@ -1,19 +1,4 @@
-.navbar-fixed-left {
-    width: 60px;
-    position: fixed;
-    border-radius: 0;
-    height: 100%;
-  }
-  
-  .navbar-fixed-left .navbar-nav > li {
-    float: none;  /* Cancel default li float: left */
-    width: 59px;
-  }
-  
-  .navbar-fixed-left + .container {
-    padding-left: 60px;
-  }
-  
+
   .mainwell {
     padding: 2px;
     margin: 2px;
@@ -38,40 +23,38 @@
     margin-left: 0;
     margin-right: 0 !important;
   }
-  .wrapper {
-    margin-left: 140px;
-  }
+
 
 .glyphicon-app {
-    color: white;
-    font-size: 1.2em;
+    color: white !important;
+    font-size: 1.2em !important;
 }
 
 .glyphicon-app:hover {
-    background-color: lime;
+    background-color: lime !important;
 }
 
-.btn-nav {
+.viz-btn-nav {
     background-color: rgb(0, 240, 0) !important;
 }
 
-.btn-nav:hover {
+.viz-btn-nav:hover {
     background-color: rgb(0, 255, 106) !important;
 }
 
 div.dashboardtab > ul > li{
-  margin-right: 5px;
-  margin-left: 0px;
-  padding: 3px;
-  background-color: white;
-  color: rgb(0, 240, 0);
+  margin-right: 5px !important;
+  margin-left: 0px !important;
+  padding: 3px !important;
+  background-color: white !important;
+  color: rgb(0, 240, 0) !important;
   border: 1px solid #333333 !important;
 }
 
 div.dashboardtab > ul > li > a{
   color: rgb(0, 240, 0) !important;
   border: none !important;
-  padding: 0;
+  padding: 0 !important;
 }
 
 div.dashboardtab > ul > li > a:hover{
@@ -87,11 +70,11 @@ div.dashboardtab > ul > li.active, div.dashboardtab > ul > li.active > a{
 div.dashboardtab > ul > li > a {
   text-decoration: none !important;
 }
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
-	position: relative;
-	min-height: 1px;
-	padding-right: 2px;
-  padding-left: 2px;
+.colmdstyle{
+	position: relative !important;
+	min-height: 1px !important;
+	padding-right: 2px !important;
+  padding-left: 2px !important;
 }
 
 ul.ul-control-d {
