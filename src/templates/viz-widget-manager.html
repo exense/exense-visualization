@@ -1,5 +1,34 @@
 <div class="well secondwell" style="justify-content: center; text-align: center;">
-				
+    <div class="row">
+        <ul class="ul-control-g">
+            <li class="li-title">
+                <span ng-if="chevron" class="title glyphicon glyphicon-chevron-down glyphicon-control" ng-click="toggleChevron()"
+                    href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
+                <span ng-if="!chevron" class="title glyphicon glyphicon-chevron-right glyphicon-control" ng-click="toggleChevron()"
+                    href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
+                <span>Global settings</span>
+            </li>
+            <li class="li-control-g">
+                <div class="btn-container">
+                    <button class="btn btn-primary viz-btn-primary" ng-click="applyglobal()"><span
+                            class="glyphicon glyphicon-ok"></span></button>
+                </div>
+            </li>
+            <li class="li-control-g">
+                <div class="btn-container">
+                    <button class="btn btn-primary viz-btn-primary" ng-click="$broadcast('refreshglobal')"><span class="glyphicon glyphicon-refresh"></span></button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <li class="li-title">
+            <span class="text-g">key: <input type="text" ng-model="gkey"></span>
+        </li>
+        <li class="li-title">
+            <span class="text-g">val: <input type="text" ng-model="gval"></span>
+        </li>
+    </div>
     <div class="row">
         <div ng-repeat="o in widgets track by o.widgetId">
             <viz-mgd-widget state="o.state" widgetwidth="o.widgetWidth" widgetid="o.widgetId" dashboardid="dashboard.dashboardid"></viz-mgd-widget>

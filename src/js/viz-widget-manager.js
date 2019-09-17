@@ -94,6 +94,17 @@ angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstr
 
                 $scope.widgets = $scope.dashboard.widgets;
 
+                $scope.chevron = true;
+
+                $scope.applyglobal = function(){
+                    console.log( $scope);
+                    $scope.$broadcast('applyglobal', { gkey: $scope.gkey, gval: $scope.gval});
+                }
+
+                $scope.toggleChevron = function () {
+                    $scope.chevron = !$scope.chevron;
+                };
+
                 $scope.$on('mgdwidget-reduce', function (event, arg) {
                     wmservice.reduceWidget($scope.dashboard.dashboardid, arg.wid);
                 });

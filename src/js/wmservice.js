@@ -125,6 +125,7 @@ angular.module('wmservice', [])
                             autorefresh: 'Off',
                             barchevron: true
                         },
+                        global : {},
                         http: {}
                     },
                     query: {

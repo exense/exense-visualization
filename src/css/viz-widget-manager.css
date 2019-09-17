@@ -85,6 +85,29 @@ ul.ul-control-d {
   padding: 0;
   overflow: hidden;
 }
+
+ul.ul-control-g {
+  list-style-type: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background-color: #333333 !important;
+  height: 30px !important;
+}
+
+span.text-g{
+  color: black;
+}
+
+li.li-control-g {
+  float: right;
+}
+
+li.li-control-g > * > button{
+  padding: 1px 3px;
+  margin-top: 2px;
+  margin-right: 2px;
+}
   
 .li-control-d {
   float: right;

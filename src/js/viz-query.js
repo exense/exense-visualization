@@ -14,8 +14,20 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     $scope.state.query.datasource.service.data = runRequestProc(
                         $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
                         $scope.state.query.datasource.service.controls.template.datasource.service.data,
-                        $scope.state.query.datasource.service.controls.placeholders);
+                        $scope.mergeWithGlobal($scope.state.query.datasource.service.controls.placeholders));
                 });
+
+                $scope.$on('applyglobal', function (event, arg) {
+                    $scope.state.shared.global = arg;
+                    $scope.$emit('templatePhChange');
+                });
+
+                $scope.mergeWithGlobal = function (placeholders) {
+                    var merged = JSON.parse(JSON.stringify(placeholders));
+                    merged.push({placeholder: $scope.state.shared.global.gkey, value: $scope.state.shared.global.gval, isDynamics : false});
+                    console.log(JSON.stringify(merged));
+                    return merged;
+                };
             }
         }
     })
