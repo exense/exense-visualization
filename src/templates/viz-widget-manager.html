@@ -2,9 +2,9 @@
     <div class="row">
         <ul class="ul-control-g">
             <li class="li-title">
-                <span ng-if="chevron" class="title glyphicon glyphicon-chevron-down glyphicon-control" ng-click="toggleChevron()"
+                <span ng-if="mgrstate.globalsettingschevron" class="title glyphicon glyphicon-chevron-down glyphicon-control" ng-click="toggleChevron()"
                     href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
-                <span ng-if="!chevron" class="title glyphicon glyphicon-chevron-right glyphicon-control" ng-click="toggleChevron()"
+                <span ng-if="!mgrstate.globalsettingschevron" class="title glyphicon glyphicon-chevron-right glyphicon-control" ng-click="toggleChevron()"
                     href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
                 <span>Global settings</span>
             </li>
@@ -19,7 +19,7 @@
                 <div class="container settingsformcontainer">
                     <div class="row">
                         <div class="col-md-12 colcontain-grid">
-                            <key-val-collection ng-if="chevron" collection="mgrstate.globalsettings" collectionname="'Global Settings'"></key-val-collection>
+                            <key-val-collection ng-if="mgrstate.globalsettingschevron" collection="mgrstate.globalsettings" collectionname="mgrstate.globalsettingsname"></key-val-collection>
                         </div>
                     </div>
                 </div>

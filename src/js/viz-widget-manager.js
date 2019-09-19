@@ -95,14 +95,16 @@ angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstr
 
                 $scope.widgets = $scope.dashboard.widgets;
 
-                $scope.chevron = true;
-
                 $scope.$on('key-val-collection-change-Global Settings', function(event, arg){
                     $scope.$broadcast('globalsettings-change', arg);
                 });
 
+                $scope.$on('templatePhChange', function(event, arg){
+                    $scope.$broadcast('globalsettings-change', { 'collection' : $scope.mgrstate.globalsettings});
+                });
+
                 $scope.toggleChevron = function () {
-                    $scope.chevron = !$scope.chevron;
+                    $scope.mgrstate.globalsettingschevron = !$scope.mgrstate.globalsettingschevron;
                 };
 
                 $scope.$on('mgdwidget-reduce', function (event, arg) {

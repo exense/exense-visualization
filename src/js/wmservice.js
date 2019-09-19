@@ -43,7 +43,9 @@ angular.module('wmservice', [])
                 widgets: [],
                 dashboardid: dId,
                 mgrstate: {
-                    globalsettings : [{ "key": "__eId__", "value": "??", "isDynamic" : false }]
+                    globalsettings : [{ "key": "__eId__", "value": "??", "isDynamic" : false }],
+                    globalsettingsname : 'Global Settings',
+                    globalsettingschevron: false
                 }
             });
             return dId;

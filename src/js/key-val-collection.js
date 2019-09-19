@@ -10,8 +10,6 @@ angular.module('key-val-collection', ['ui.bootstrap'])
             templateUrl: resolveTemplateURL('key-val-collection.js', 'key-val-collection.html'),
             controller: function ($scope) {
 
-                $scope.collection = [];
-
                 $scope.getNumber = function (num) {
                     return new Array(num);
                 }
@@ -27,6 +25,8 @@ angular.module('key-val-collection', ['ui.bootstrap'])
                 $scope.changed = function(element, elementType){
                     $scope.$emit('key-val-collection-change-' + $scope.collectionname, { type: elementType, element: element, collection: $scope.collection });
                 }
+
+                $scope.$emit('key-val-collection-ready-' + $scope.collectionname);
             }
         }
     })
