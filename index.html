@@ -22,11 +22,10 @@
 	<script src="src/js/global-classes.js"></script>
 	<script src="src/js/rtm-controls.js"></script>
 	<script src="src/js/key-val-collection.js"></script>
-	<script src="src/js/wmservice.js"></script>
 	<script src="src/js/viz-query.js"></script>
 	<script src="src/js/viz-dashlet.js"></script>
 	<script src="src/js/viz-mgd-widget.js"></script>
-	<script src="src/js/viz-widget-manager.js"></script>
+	<script src="src/js/viz-dashboard.js"></script>
 
 	<script src="static-presets.js"></script>
 
@@ -37,12 +36,13 @@
 	<link rel="stylesheet" href="src/css/key-val-collection.css">
 	<link rel="stylesheet" href="src/css/viz-dashlet.css">
 	<link rel="stylesheet" href="src/css/viz-mgd-widget.css">
-	<link rel="stylesheet" href="src/css/viz-widget-manager.css">
+	<link rel="stylesheet" href="src/css/viz-dashboard.css">
 
 	<script>
-		var demoApp = angular.module('demoApp', ['viz-widget-manager'])
+		var demoApp = angular.module('demoApp', ['viz-dashboard'])
 			.controller('ctrl', ['$scope', function ($scope) {
 				$scope.staticPresetsInstance = new StaticPresets();
+				$scope.dashboardsendpoint = [];
 
 				$scope.$on('top.dashboard-new', function () {
 					$scope.$broadcast('dashboard-new');
@@ -86,7 +86,7 @@
 				<span class="glyphicon glyphicon-minus glyphicon-app"></span>
 			</button>
 		</span>
-		<viz-dashboard-manager presets="staticPresetsInstance"></viz-dashboard-manager>
+		<viz-dashboard-manager presets="staticPresetsInstance" dashboards="dashboardsendpoint"></viz-dashboard-manager>
 	</div>
 </body>
 

@@ -1,9 +1,7 @@
 <div class="form-wrapper">
     <div class="form-group center-block">
         <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
-
             <div class="row">
-
                 <div class="col-md-4 colcontain-grid">
                     <label>Input type</label>
                     <div class="btn-group viz-btn-group form-radio">
@@ -78,24 +76,25 @@
                     </div>
                 </div>
             </div>
-                <div class="col-md-12 colcontain-grid">
-                    <label>Payload</label>
-                    <div class="btn-group viz-btn-group">
-                        <textarea type="text" ng-model="state.query.datasource.service.data" class="form-control" />
-                    </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 colcontain-grid">
+                <label>Payload</label>
+                <div class="btn-group viz-btn-group">
+                    <textarea type="text" ng-model="state.query.datasource.service.data" class="form-control" />
                 </div>
-                <div class="col-md-12 colcontain-grid">
-                    <label>Query params</label>
-                    <div class="btn-group viz-btn-group">
-                        <textarea type="text" ng-model="state.query.datasource.service.params" class="form-control" />
-                    </div>
+            </div>
+            <div class="col-md-12 colcontain-grid">
+                <label>Query params</label>
+                <div class="btn-group viz-btn-group">
+                    <textarea type="text" ng-model="state.query.datasource.service.params" class="form-control" />
                 </div>
-                <div ng-if="state.query.type == 'Async'">
-                    <div class="col-md-12 colcontain-grid">
-                        <label>Callback Payload</label>
-                        <div class="btn-group viz-btn-group">
-                            <textarea  type="text" ng-model="state.query.datasource.callback.data" class="form-control" />
-                        </div>
+            </div>
+            <div ng-if="state.query.type == 'Async'">
+                <div class="col-md-12 colcontain-grid">
+                    <label>Callback Payload</label>
+                    <div class="btn-group viz-btn-group">
+                        <textarea  type="text" ng-model="state.query.datasource.callback.data" class="form-control" />
                     </div>
                 </div>
             </div>
