@@ -313,9 +313,12 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
 
                 $scope.loadTemplatePreset = function (template) {
+                    if(!$scope.state.query.datasource.service.controls){
+                        $scope.state.query.datasource.service.controls = {};
+                    }
                     $scope.state.query.datasource.service.controls.template = template.queryTemplate;
                     $scope.state.query.datasource.service.controls.placeholders = template.placeholders;
-                    $scope.$emit('templatePhChange')
+                    $scope.$emit('templatePhChange');
                 };
             }
         };

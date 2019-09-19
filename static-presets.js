@@ -68,9 +68,7 @@ function StaticPresets() {
                         "callback": {
                             "url": "/mocks/002_RESPONSE_Async_Refresh_RTM_Aggregates.json",
                             "method": "Get",
-                            "data": {
-                                "streamedSessionId": "__streamedSessionId__"
-                            },
+                            "data": "{\"streamedSessionId\": \"__streamedSessionId__\"}",
                             "preproc": {
                                 "replace": {
                                     "target": "data",
@@ -111,9 +109,7 @@ function StaticPresets() {
                         "callback": {
                             "url": "/rtm/rest/aggregate/refresh",
                             "method": "Post",
-                            "data": {
-                                "streamedSessionId": "__streamedSessionId__"
-                            },
+                            "data": "{\"streamedSessionId\": \"__streamedSessionId__\"}",
                             "preproc": {
                                 "replace": {
                                     "target": "data",
