@@ -99,6 +99,7 @@ div.viz-panel-default >  div.panel-heading{
 
 .viz-btn-primary{
     background-color: rgb(0, 240, 0) !important;
+    font-weight: bold;
 }
 
 .viz-btn-primary:hover, .viz-panel-group:hover{

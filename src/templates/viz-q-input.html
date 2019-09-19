@@ -15,8 +15,8 @@
                     <div class="col-md-4 colcontain-grid">
                         <label>Preset</label>
                         <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
-                            <button id="load-query" type="button" class="btn btn-primary viz-btn-primary" uib-dropdown-toggle
-                                ng-disabled="disabled">
+                            <button id="load-query" type="button" class="btn btn-primary viz-btn-primary"
+                                uib-dropdown-toggle ng-disabled="disabled">
                                 Load query... <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
@@ -31,15 +31,17 @@
                         <div class="btn-group viz-btn-group form-radio">
                             <label class="btn btn-primary viz-btn-primary" ng-click="initTemplateControls()" ng-model="state.query.controltype"
                                 uib-btn-radio="'Template'">Template</label>
-                            <label class="btn btn-primary viz-btn-primary" ng-model="state.query.controltype" uib-btn-radio="'RTM'">RTM</label>
-                            <label class="btn btn-primary viz-btn-primary" ng-model="state.query.controltype" uib-btn-radio="'STEP'">STEP</label>
+                            <label class="btn btn-primary viz-btn-primary" ng-model="state.query.controltype"
+                                uib-btn-radio="'RTM'">RTM</label>
+                            <label class="btn btn-primary viz-btn-primary" ng-model="state.query.controltype"
+                                uib-btn-radio="'STEP'">STEP</label>
                         </div>
                     </div>
                     <div class="col-md-4 colcontain-grid">
                         <label>Preset</label>
                         <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
-                            <button id="load-controls" type="button" class="btn btn-primary viz-btn-primary" uib-dropdown-toggle
-                                ng-disabled="disabled">
+                            <button id="load-controls" type="button" class="btn btn-primary viz-btn-primary"
+                                uib-dropdown-toggle ng-disabled="disabled">
                                 Load controls... <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
@@ -50,39 +52,17 @@
                         </div>
                     </div>
                 </div>
-
                 <div ng-if="state.query.inputtype == 'Controls'">
                     <div ng-if="state.query.controltype == 'Template'">
                         <div class="col-md-12 colcontain-grid">
-                            <label>Placeholders</label>
-                            <span style="display: inline-block !important;">Add:<span class="glyphicon glyphicon-plus"
-                                    ng-click="addPlaceholder()" href="#"></span></span>
-                            <div class="btn-group viz-btn-group">
-                                <div class="row" style="display: inline-block !important; width: 100%;">
-                                    <div ng-repeat="item in getNumber(state.query.datasource.service.controls.placeholders.length) track by $index">
-                                        <div class="col-lg-4 colcontain-grid">
-                                            <span style="display: inline-flex;">
-                                                <input type="text" ng-model="state.query.datasource.service.controls.placeholders[$index].placeholder"
-                                                    ng-change="$emit('templatePhChange')" />
-                                                <span class="glyphicon glyphicon-minus" ng-click="removePlaceholder($index)"
-                                                    href="#" style="margin-top: 5px;"></span>
-                                            </span>
-                                            <input type="text" ng-model="state.query.datasource.service.controls.placeholders[$index].value"
-                                                name="input_{{$index}}" class="form-control" ng-change="$emit('templatePhChange')" />
-                                            <input type="checkbox" ng-model="state.query.datasource.service.controls.placeholders[$index].isDynamic">
-                                        </div>
+                            <key-val-collection collection="state.query.datasource.service.controls.placeholders" collectionname="'Placeholders'"></key-val-collection>
+                            <div class="col-md-12 colcontain-grid">
+                                <label>Template</label>
+                                <div class="btn-group viz-btn-group">
+                                    <textarea ng-model="state.query.datasource.service.controls.template.datasource.service.data"
+                                        class="form-control" ng-change="$emit('templatePhChange')" />
                                     </div>
-                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12 colcontain-grid">
-                            <label>Template</label>
-                            <div class="btn-group viz-btn-group">
-                                <textarea ng-model="state.query.datasource.service.controls.template.datasource.service.data" class="form-control"
-                                ng-change="$emit('templatePhChange')" />
-                                </div>
-                </div>
-
                     <div ng-if="state.query.controltype == 'RTM'">
                         <rtm-controls></rtm-controls>
                     </div>

@@ -74,7 +74,7 @@ function StaticPresets() {
                             "preproc": {
                                 "replace": {
                                     "target": "data",
-                                    "function": "function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].placeholder, workData[i].value);}return newRequestFragment;}",
+                                    "function": "function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}",
                                 }
                             },
                             "postproc": {
@@ -117,7 +117,7 @@ function StaticPresets() {
                             "preproc": {
                                 "replace": {
                                     "target": "data",
-                                    "function": "function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].placeholder, workData[i].value);}return newRequestFragment;}",
+                                    "function": "function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}",
                                 }
                             },
                             "postproc": {
@@ -137,7 +137,7 @@ function StaticPresets() {
             templates: [
                 {
                     "name": 'RTM Measurements Template',
-                    "placeholders": [{ "placeholder": "__eId__", "value": "?", "isDynamic" : false }, { "placeholder": "__name__", "value": "?", "isDynamic" : false }, { "placeholder": "__minValue__", "value": "0", "isDynamic" : false }, { "placeholder": "__maxValue__", "value": "999999999", "isDynamic" : false }],
+                    "placeholders": [{ "key": "__eId__", "value": "?", "isDynamic" : false }, { "key": "__name__", "value": "?", "isDynamic" : false }, { "key": "__minValue__", "value": "0", "isDynamic" : false }, { "key": "__maxValue__", "value": "999999999", "isDynamic" : false }],
                     "queryTemplate": {
                         "type": "Simple",
                         "datasource": {
@@ -148,7 +148,7 @@ function StaticPresets() {
                                 "preproc": {
                                     "replace": {
                                         "target": "data",
-                                        "function": "function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].placeholder, workData[i].value);}return newRequestFragment;}",
+                                        "function": "function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}",
                                     }
                                 },
                                 "postproc": {

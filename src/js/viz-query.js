@@ -1,5 +1,5 @@
 registerScript();
-angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
+angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-controls'])
     .directive('vizQuery', function () {
         return {
             restrict: 'E',
@@ -10,11 +10,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-query.html'),
             controller: function ($scope) {
 
-                $scope.$on('templatePhChange', function () {
+                $scope.$on('key-val-collection-change-Placeholders', function (event, args) {
                     $scope.state.query.datasource.service.data = runRequestProc(
                         $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
                         $scope.state.query.datasource.service.controls.template.datasource.service.data,
-                        $scope.mergeWithGlobal($scope.state.query.datasource.service.controls.placeholders));
+                        $scope.mergeWithGlobal(args.collection));
                 });
 
                 $scope.$on('applyglobal', function (event, arg) {
@@ -296,20 +296,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-input.html'),
             controller: function ($scope) {
-                $scope.initTemplateControls = function () {
-                    $scope.state.query.datasource.service.controls = { template: '', placeholders: {} };
-                    $scope.getNumber = function (num) {
-                        return new Array(num);
-                    }
-                };
-
-                $scope.addPlaceholder = function () {
-                    $scope.state.query.datasource.service.controls.placeholders.push({ placeholder: '__?__', value: '?', isDynamic: false });
-                }
-
-                $scope.removePlaceholder = function ($index) {
-                    $scope.state.query.datasource.service.controls.placeholders.splice($index, 1);
-                }
 
                 $scope.loadQueryPreset = function (querypreset) {
                     $scope.state.query = querypreset.query;
@@ -320,7 +306,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'rtm-controls'])
                     $scope.state.query.datasource.service.controls.template = template.queryTemplate;
                     $scope.state.query.datasource.service.controls.placeholders = template.placeholders;
                 };
-
             }
         };
     })
