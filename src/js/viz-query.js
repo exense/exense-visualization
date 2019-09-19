@@ -9,24 +9,34 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-query.html'),
             controller: function ($scope) {
+                $scope.templateplaceholders = [];
+                $scope.globalsettings = [];
 
-                $scope.$on('key-val-collection-change-Placeholders', function (event, args) {
+                $scope.$on('key-val-collection-change-Placeholders', function (event, arg) {
+                    $scope.templateplaceholders = arg.collection;
+                    $scope.replaceDataWithTemplate();
+                });
+
+                $scope.$on('templatePhChange', function (event) {
+                    $scope.replaceDataWithTemplate();
+                });
+
+                $scope.replaceDataWithTemplate = function (placeholders) {
                     $scope.state.query.datasource.service.data = runRequestProc(
                         $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
                         $scope.state.query.datasource.service.controls.template.datasource.service.data,
-                        $scope.mergeWithGlobal(args.collection));
+                        $scope.mergePlaceholders());
+                }
+
+                $scope.$on('globalsettings-change', function (event, arg) {
+                    $scope.globalsettings = arg.collection;
+                    $scope.replaceDataWithTemplate();
                 });
 
-                $scope.$on('applyglobal', function (event, arg) {
-                    $scope.state.shared.global = arg;
-                    $scope.$emit('templatePhChange');
-                });
-
-                $scope.mergeWithGlobal = function (placeholders) {
-                    var merged = JSON.parse(JSON.stringify(placeholders));
-                    merged.push({placeholder: $scope.state.shared.global.gkey, value: $scope.state.shared.global.gval, isDynamics : false});
-                    console.log(JSON.stringify(merged));
-                    return merged;
+                $scope.mergePlaceholders = function (placeholders) {
+                    var phcopy = JSON.parse(JSON.stringify($scope.templateplaceholders));
+                    var gscopy = JSON.parse(JSON.stringify($scope.globalsettings));
+                    return gscopy.concat(phcopy); // global settings dominate local placeholders
                 };
             }
         }

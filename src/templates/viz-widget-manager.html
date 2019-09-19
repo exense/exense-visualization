@@ -10,24 +10,22 @@
             </li>
             <li class="li-control-g">
                 <div class="btn-container">
-                    <button class="btn btn-primary viz-btn-primary" ng-click="applyglobal()"><span
-                            class="glyphicon glyphicon-ok"></span></button>
-                </div>
-            </li>
-            <li class="li-control-g">
-                <div class="btn-container">
                     <button class="btn btn-primary viz-btn-primary" ng-click="$broadcast('refreshglobal')"><span class="glyphicon glyphicon-refresh"></span></button>
                 </div>
             </li>
         </ul>
-    </div>
-    <div class="row">
-        <li class="li-title">
-            <span class="text-g">key: <input type="text" ng-model="gkey"></span>
-        </li>
-        <li class="li-title">
-            <span class="text-g">val: <input type="text" ng-model="gval"></span>
-        </li>
+        <div class="form-wrapper">
+            <div class="form-group left-block">
+                <div class="container settingsformcontainer">
+                    <div class="row">
+                        <div class="col-md-12 colcontain-grid">
+                            <key-val-collection ng-if="chevron" collection="mgrstate.globalsettings" collectionname="'Global Settings'"></key-val-collection>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="row">
         <div ng-repeat="o in widgets track by o.widgetId">

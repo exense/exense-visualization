@@ -87,7 +87,8 @@ angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstr
             restrict: 'E',
             scope: {
                 dashboard: '=',
-                presets: '='
+                presets: '=',
+                mgrstate: '='
             },
             templateUrl: resolveTemplateURL('viz-widget-manager.js', 'viz-widget-manager.html'),
             controller: function ($scope, wmservice) {
@@ -96,10 +97,9 @@ angular.module('viz-widget-manager', ['wmservice', 'viz-mgd-widget', 'ui.bootstr
 
                 $scope.chevron = true;
 
-                $scope.applyglobal = function(){
-                    console.log( $scope);
-                    $scope.$broadcast('applyglobal', { gkey: $scope.gkey, gval: $scope.gval});
-                }
+                $scope.$on('key-val-collection-change-Global Settings', function(event, arg){
+                    $scope.$broadcast('globalsettings-change', arg);
+                });
 
                 $scope.toggleChevron = function () {
                     $scope.chevron = !$scope.chevron;

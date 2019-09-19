@@ -95,6 +95,20 @@ ul.ul-control-g {
   height: 30px !important;
 }
 
+.left-block{
+  margin: 0;
+  padding: 0;
+  display: inline !important;
+}
+
+.settingsformcontainer {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  justify-content: left;
+  width: 100% !important;
+}
+
 span.text-g{
   color: black;
 }

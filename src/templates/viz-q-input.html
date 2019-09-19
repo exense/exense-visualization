@@ -54,8 +54,10 @@
                 </div>
                 <div ng-if="state.query.inputtype == 'Controls'">
                     <div ng-if="state.query.controltype == 'Template'">
+                        <hr />
                         <div class="col-md-12 colcontain-grid">
-                            <key-val-collection collection="state.query.datasource.service.controls.placeholders" collectionname="'Placeholders'"></key-val-collection>
+                            <key-val-collection collection="state.query.datasource.service.controls.placeholders"
+                                collectionname="'Placeholders'"></key-val-collection>
                             <div class="col-md-12 colcontain-grid">
                                 <label>Template</label>
                                 <div class="btn-group viz-btn-group">

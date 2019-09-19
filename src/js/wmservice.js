@@ -41,7 +41,10 @@ angular.module('wmservice', [])
             wmservice.dashboards.push({
                 title: 'New dashboard',
                 widgets: [],
-                dashboardid: dId
+                dashboardid: dId,
+                mgrstate: {
+                    globalsettings : [{ "key": "__eId__", "value": "??", "isDynamic" : false }]
+                }
             });
             return dId;
         };
