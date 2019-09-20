@@ -44,9 +44,9 @@
                         <div class="colmdstyle col-md-3 colcontain-grid">
                             <label>Autorefresh</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-btn-primary" ng-model="currentconfig.autorefresh" uib-btn-radio="'On'"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.config.autorefresh" uib-btn-radio="'On'"
                                     ng-click="$emit('autorefresh-toggle', {newValue : true})">On</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="currentconfig.autorefresh" uib-btn-radio="'Off'"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.config.autorefresh" uib-btn-radio="'Off'"
                                     ng-click="$emit('autorefresh-toggle', {newValue : false})">Off</label>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                         <div class="colmdstyle col-md-12 colcontain-grid">
                                 <label>Dashlet title</label>
                                 <div class="btn-group viz-btn-group form-radio">
-                                    <input class="form-control" ng-model="currentconfig.dashlettitle" ng-change="$emit('dashlet-title', {newValue : currentconfig.dashlettitle})" />
+                                    <input class="form-control" ng-model="state.shared.config.dashlettitle" ng-change="$emit('dashlet-title', {newValue : state.shared.config.dashlettitle})" />
                                 </div>
                             </div>
                     </div>

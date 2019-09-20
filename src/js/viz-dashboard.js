@@ -52,7 +52,8 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                         mgrstate: {
                             globalsettings: [{ "key": "__eId__", "value": "??", "isDynamic": false }],
                             globalsettingsname: 'Global Settings',
-                            globalsettingschevron: false
+                            globalsettingschevron: false,
+                            globalsettingsautorefresh: false
                         }
                     });
                     return dId;
@@ -336,11 +337,37 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope) {
 
+                // load time case
+                if($scope.mgrstate.globalsettingsautorefresh){
+                    $scope.toggleAutorefresh();
+                }
+
+                $scope.toggleAutorefresh = function () {
+                    $scope.mgrstate.globalsettingsautorefresh = !$scope.mgrstate.globalsettingsautorefresh;
+                    if($scope.mgrstate.globalsettingsautorefresh){
+                        $scope.addInterval();
+                    }else{
+                        $scope.removeInterval();
+                    }
+                    $scope.$broadcast('globalsettings-refreshToggle', { 'new': $scope.mgrstate.globalsettingsautorefresh })
+                };
+
+                $scope.addInterval = function () {
+                    $scope.mgrstate.gsautorefreshInterval = setInterval(function () {
+                        $scope.$broadcast('globalsettings-change', { 'collection': $scope.mgrstate.globalsettings, async: true});
+                    },setIntervalDefault);
+                }
+
+                $scope.removeInterval = function () {
+                    clearInterval($scope.mgrstate.gsautorefreshInterval);
+                }
+
                 $scope.$on('key-val-collection-change-Global Settings', function (event, arg) {
+                    arg.async = false;
                     $scope.$broadcast('globalsettings-change', arg);
                 });
 
-                $scope.$on('templateph-loaded', function (event, arg) {
+                $scope.$on('templateph-loaded', function () {
                     $scope.$broadcast('globalsettings-change', { 'collection': $scope.mgrstate.globalsettings });
                 });
 
@@ -349,22 +376,22 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                 };
 
                 $scope.$on('mgdwidget-reduce', function (event, arg) {
-                    $scope.$emit('mgdwidget-reduce-d', { 'dashboardid' : $scope.dashboard.dashboardid, 'wid' : arg.wid});
+                    $scope.$emit('mgdwidget-reduce-d', { 'dashboardid': $scope.dashboard.dashboardid, 'wid': arg.wid });
                 });
                 $scope.$on('mgdwidget-extend', function (event, arg) {
-                    $scope.$emit('mgdwidget-extend-d', { 'dashboardid' : $scope.dashboard.dashboardid, 'wid' : arg.wid});
+                    $scope.$emit('mgdwidget-extend-d', { 'dashboardid': $scope.dashboard.dashboardid, 'wid': arg.wid });
                 });
                 $scope.$on('mgdwidget-remove', function (event, arg) {
-                    $scope.$emit('mgdwidget-remove-d', { 'dashboardid' : $scope.dashboard.dashboardid, 'wid' : arg.wid});
+                    $scope.$emit('mgdwidget-remove-d', { 'dashboardid': $scope.dashboard.dashboardid, 'wid': arg.wid });
                 });
                 $scope.$on('mgdwidget-moveLeft', function (event, arg) {
-                    $scope.$emit('mgdwidget-moveLeft-d', { 'dashboardid' : $scope.dashboard.dashboardid, 'wid' : arg.wid});
+                    $scope.$emit('mgdwidget-moveLeft-d', { 'dashboardid': $scope.dashboard.dashboardid, 'wid': arg.wid });
                 });
                 $scope.$on('mgdwidget-moveRight', function (event, arg) {
-                    $scope.$emit('mgdwidget-moveRight-d', { 'dashboardid' : $scope.dashboard.dashboardid, 'wid' : arg.wid});
+                    $scope.$emit('mgdwidget-moveRight-d', { 'dashboardid': $scope.dashboard.dashboardid, 'wid': arg.wid });
                 });
                 $scope.$on('mgdwidget-duplicate', function (event, arg) {
-                    $scope.$emit('mgdwidget-duplicate-d', { 'dashboardid' : $scope.dashboard.dashboardid, 'wid' : arg.wid});
+                    $scope.$emit('mgdwidget-duplicate-d', { 'dashboardid': $scope.dashboard.dashboardid, 'wid': arg.wid });
                 });
                 $scope.$on('mgdwidget-refresh', function (event, arg) {
                     //not implemented yet

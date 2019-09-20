@@ -12,6 +12,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 $scope.$on('templateph-change', function (event, arg) {
                     $scope.state.query.datasource.service.data = arg.data;
+                    if (arg.async) {
+                        $scope.$apply(function () {
+                            self.value = 0;
+                        });
+                    }
                 })
 
                 $scope.loadQueryPreset = function (querypreset) {
@@ -128,7 +133,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                                 }
                             }
                         },
-                            1000);
+                            setIntervalDefault);
                     } else {
                         clearInterval($scope.autorefreshInterval);
                     }
@@ -191,7 +196,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         $scope.asyncInterval = setInterval(function () {
                             $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
                         },
-                            1000);
+                            setIntervalDefault);
                     }
                 }
 
@@ -230,7 +235,13 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
             controller: function ($scope, $http) {
 
-                $scope.currentconfig = $scope.state.shared.config;
+                $scope.$on('globalsettings-refreshToggle', function(event, arg){
+                    if(arg.new){
+                        $scope.state.shared.config.autorefresh = 'On';
+                    }else{
+                        $scope.state.shared.config.autorefresh = 'Off';
+                    }
+                });
 
                 $scope.loadConfigPreset = function (preset) {
                     $scope.currentconfig = preset;
@@ -292,7 +303,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 $scope.$on('key-val-collection-change-Placeholders', function (event, arg) {
                     $scope.templateplaceholders = arg.collection;
-                    $scope.change();
+                    $scope.change(false);
                 });
 
                 $scope.processTemplate = function (placeholders) {
@@ -308,7 +319,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                     // ignoring case where no template has been loaded yet
                     if ($scope.state.query.datasource.service.controls.template) {
-                        $scope.change();
+                        $scope.change(arg.async);
                     }
                 });
 
@@ -327,8 +338,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.$emit('templateph-loaded');
                 };
 
-                $scope.change = function () {
-                    $scope.$emit('templateph-change', { data: $scope.processTemplate() });
+                $scope.change = function (async) {
+                    $scope.$emit('templateph-change', { data: $scope.processTemplate(), async : async});
                 }
             }
         };
