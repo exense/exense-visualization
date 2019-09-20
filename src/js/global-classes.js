@@ -65,6 +65,10 @@ var getUniqueId = function () {
     return Math.random().toString(36).substr(2, 9);
 }
 
+var jsoncopy = function(obj){
+    return JSON.parse(JSON.stringify(obj));
+}
+
 function DefaultChartOptions(chartHeight, chartWidth, innerContainerHeight, innerContainerWidth, chartType) {
     return {
         innercontainer: {

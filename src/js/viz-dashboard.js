@@ -11,6 +11,8 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard-manager.html'),
             controller: function ($scope, $rootScope) {
 
+                $scope.dwrap = new IdIndexArray($scope.dashboards, 'dashboardid');
+
                 // use to be wmservice    
                 $scope.computeHeights = function () {
                     var sHeight = window.innerHeight;
@@ -37,26 +39,6 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                     $rootScope.$apply(function () {
                         self.value = 0;
                     });
-                };
-
-                $scope.getNewId = function () {
-                    return Math.random().toString(36).substr(2, 9);
-                };
-
-                $scope.addDashboard = function () {
-                    var dId = $scope.getNewId();
-                    $scope.dashboards.push({
-                        title: 'New dashboard',
-                        widgets: [],
-                        dashboardid: dId,
-                        mgrstate: {
-                            globalsettings: [{ "key": "__eId__", "value": "??", "isDynamic": false }],
-                            globalsettingsname: 'Global Settings',
-                            globalsettingschevron: false,
-                            globalsettingsautorefresh: false
-                        }
-                    });
-                    return dId;
                 };
 
                 $scope.clearDashboards = function () {
@@ -118,7 +100,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
 
                 $scope.addWidget = function (dId, presets) {
 
-                    wId = $scope.getNewId();
+                    wId = getUniqueId();
 
                     widget = {
                         widgetId: wId,
@@ -226,7 +208,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
 
                 $scope.getWidgetCopy = function (dId, wId) {
                     var copy = JSON.parse(JSON.stringify($scope.getWidget(dId, wId)));
-                    copy.widgetId = $scope.getNewId();
+                    copy.widgetId = getUniqueId();
                     return copy;
                 };
 
@@ -278,7 +260,16 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                 });
 
                 $scope.$on('dashboard-new', function (event, arg) {
-                    $scope.addDashboard();
+                    $scope.dwrap.addNew({
+                        title: 'New dashboard',
+                        widgets: [],
+                        mgrstate: {
+                            globalsettings: [{ "key": "__eId__", "value": "??", "isDynamic": false }],
+                            globalsettingsname: 'Global Settings',
+                            globalsettingschevron: false,
+                            globalsettingsautorefresh: false
+                        }
+                    });
                     //Not needed anymore since reimplemented uib-tab
                     //$(document).ready(function () {
                     $scope.mgrtabstate = $scope.dashboards[$scope.dashboards.length - 1].dashboardid;

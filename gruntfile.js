@@ -19,7 +19,7 @@ module.exports = function (grunt) {
                 options: {
                     separator: ';\n',
                 },
-                src: ['src/js/dist-settings-prod.js', 'src/js/global-classes.js', 'src/js/rtm-controls.js', 'src/js/viz-dashlet.js', 'src/js/viz-mgd-widget.js', 'src/js/viz-query.js', 'src/js/viz-dashboard.js'],
+                src: ['src/js/dist-settings-prod.js', 'src/js/global-classes.js', 'src/js/rtm-controls.js', 'src/js/viz-dashlet.js', 'src/js/viz-mgd-widget.js', 'src/js/viz-query.js', 'src/js/viz-dashboard.js', 'src/js/key-value-collection.js', 'dashlet-coms.js'],
                 dest: 'dist/viz.js',
             },
             dist2: {
