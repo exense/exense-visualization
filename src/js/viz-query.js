@@ -1,5 +1,5 @@
 registerScript();
-angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-controls', 'dashletcomssrv'])
+angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-controls'])
     .directive('vizQuery', function () {
         return {
             restrict: 'E',
@@ -198,6 +198,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     if ($scope.state.query.type === 'Simple') {
                         //$scope.state.data.serviceraw = response;
                         $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
+                        //unique endpoint for master
+                        $scope.state.shared.http.currentresponse = response;
                     }
                     if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
@@ -212,6 +214,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         }
                         //$scope.state.data.callbackraw = response;
                         $scope.state.shared.http.rawcallbackresponse = JSON.stringify(response);
+                        //unique endpoint for master
+                        $scope.state.shared.http.currentresponse = response;
                     }
                     $scope.state.data.transformed = runResponseProc(proctarget.postproc.transform.function, response);
                     //console.log($scope.state.data);
@@ -219,11 +223,12 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             }
         };
     })
-    .directive('vizConfig', function (dashletcomssrv) {
+    .directive('vizConfig', function () {
         return {
             restrict: 'E',
             scope: {
                 formwidth: '=',
+                widgetid: '=',
                 state: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
@@ -241,10 +246,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.currentconfig = preset;
                     $scope.state.shared.config = $scurrentconfig;
                 };
-
-                $scope.toggleMaster = function(){
-                    dashletcomssrv.makeMaster();
-                }
             }
         }
     })

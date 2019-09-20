@@ -82,20 +82,45 @@
                 <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
                     <div class="row">
                         <div class="colmdstyle col-md-3 colcontain-grid">
-                            <label>Master / Slave</label>
+                            <label>Master control</label>
                             <div class="btn-group viz-btn-group form-radio">
                                 <span class="key-val-collection btn btn-primary viz-btn-primary" href="#">
                                     <input type="checkbox" class="form-control" ng-model="state.shared.config.master"
-                                        style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;"
-                                        ng-change="toggleMaster()" />
+                                        style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;" />
                                 </span>
                                 <label class="btn btn-primary viz-label" ng-class="{ active: state.shared.config.master}">Make
                                     master</span>
                             </div>
                         </div>
+                        <div class="colmdstyle col-md-3 colcontain-grid">
+                            <label>Master input</label>
+                            <div class="btn-group viz-btn-group form-radio">
+                                <input class="form-control" ng-model="state.shared.config.masterinput" />
+                            </div>
+                        </div>
+                        <div class="colmdstyle col-md-3 colcontain-grid">
+                            <label>Slave control</label>
+                            <div class="btn-group viz-btn-group form-radio">
+                                <span class="key-val-collection btn btn-primary viz-btn-primary" href="#">
+                                    <input type="checkbox" class="form-control" ng-model="state.shared.config.slave"
+                                        style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;" />
+                                </span>
+                                <label class="btn btn-primary viz-label" ng-class="{ active: state.shared.config.slave}">Make
+                                    slave</span>
+                            </div>
+                        </div>
+                        <div class="colmdstyle col-md-3 colcontain-grid">
+                            <label>Slave output</label>
+                            <div class="btn-group viz-btn-group form-radio">
+                                <input class="form-control" ng-model="state.shared.config.slaveoutput" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
+    </div>
+    </div>
     </div>
 </uib-accordion>

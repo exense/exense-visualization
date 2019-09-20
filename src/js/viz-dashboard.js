@@ -113,7 +113,11 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                                         'lineChart'),
                                     config: {
                                         autorefresh: 'Off',
-                                        barchevron: true
+                                        barchevron: true,
+                                        master: false,
+                                        slave: false,
+                                        masterinput: 'empty',
+                                        slaveoutput: 'empty too'
                                     },
                                     global: {},
                                     http: {}
