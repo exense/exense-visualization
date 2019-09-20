@@ -64,9 +64,7 @@
 				// For saving time in testing
 				$scope.$on('manager-ready', function () {
 					$scope.$broadcast('dashboard-new');
-
 					$scope.$on('dashboard-ready', function (event, arg) {
-						console.log('initializing demo widget.')
 						if(!initTestDashboard){
 							initTestDashboard = true;
 							$scope.$broadcast('dashboard-current-addWidget');

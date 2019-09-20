@@ -17,13 +17,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                             self.value = 0;
                         });
                     }
-                })
-
-                $scope.loadQueryPreset = function (querypreset) {
-                    $scope.state.query = querypreset.query;
-                    //$scope.$emit('query-change');
-                }
-
+                });
             }
         }
     })
@@ -304,6 +298,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             controller: function ($scope) {
 
                 $scope.globalsettings = [];
+
+                $scope.loadQueryPreset = function (querypreset) {
+                    $scope.state.query = querypreset.query;
+                }
 
                 $scope.$on('key-val-collection-change-Placeholders', function (event, arg) {
                     $scope.templateplaceholders = arg.collection;
