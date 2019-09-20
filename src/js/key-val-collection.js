@@ -16,17 +16,22 @@ angular.module('key-val-collection', ['ui.bootstrap'])
 
                 $scope.addElement = function () {
                     $scope.collection.push({ key: '__?__', value: '?', isDynamic: false });
+                    $scope.changed();
                 };
 
                 $scope.removeElement = function ($index) {
                     $scope.collection.splice($index, 1);
+                    $scope.changed();
                 };
 
                 $scope.changed = function(element, elementType){
                     $scope.$emit('key-val-collection-change-' + $scope.collectionname, { type: elementType, element: element, collection: $scope.collection });
                 }
 
-                $scope.$emit('key-val-collection-ready-' + $scope.collectionname);
+                // unused - will probably be discarded in the future, doesn't seem like clean design
+                $scope.$on('force-update-' + $scope.collectionname, function(event, arg){
+                    $scope.$emit('key-val-collection-change-' + $scope.collectionname, { type: 'forced', element: null, collection: $scope.collection });
+                });
             }
         }
     })

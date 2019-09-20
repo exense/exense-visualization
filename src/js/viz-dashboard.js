@@ -340,7 +340,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                     $scope.$broadcast('globalsettings-change', arg);
                 });
 
-                $scope.$on('templatePhChange', function (event, arg) {
+                $scope.$on('templateph-loaded', function (event, arg) {
                     $scope.$broadcast('globalsettings-change', { 'collection': $scope.mgrstate.globalsettings });
                 });
 

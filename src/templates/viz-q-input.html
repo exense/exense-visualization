@@ -60,7 +60,7 @@
                                 <label>Template</label>
                                 <div class="btn-group viz-btn-group">
                                     <textarea ng-model="state.query.datasource.service.controls.template.datasource.service.data"
-                                        class="form-control" ng-change="$emit('templatePhChange')" />
+                                        class="form-control" ng-change="change()" />
                                     </div>
                             </div>
                     <div ng-if="state.query.controltype == 'RTM'">

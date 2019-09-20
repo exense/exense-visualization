@@ -9,35 +9,16 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-query.html'),
             controller: function ($scope) {
-                $scope.templateplaceholders = [];
-                $scope.globalsettings = [];
 
-                $scope.$on('key-val-collection-change-Placeholders', function (event, arg) {
-                    $scope.templateplaceholders = arg.collection;
-                    $scope.replaceDataWithTemplate();
-                });
+                $scope.$on('templateph-change', function(event, arg){
+                    $scope.state.query.datasource.service.data = arg.data;
+                })
 
-                $scope.$on('templatePhChange', function (event) {
-                    $scope.replaceDataWithTemplate();
-                });
-
-                $scope.replaceDataWithTemplate = function (placeholders) {
-                    $scope.state.query.datasource.service.data = runRequestProc(
-                        $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
-                        $scope.state.query.datasource.service.controls.template.datasource.service.data,
-                        $scope.mergePlaceholders());
+                $scope.loadQueryPreset = function (querypreset) {
+                    $scope.state.query = querypreset.query;
+                    //$scope.$emit('query-change');
                 }
-
-                $scope.$on('globalsettings-change', function (event, arg) {
-                    $scope.globalsettings = arg.collection;
-                    $scope.replaceDataWithTemplate();
-                });
-
-                $scope.mergePlaceholders = function (placeholders) {
-                    var phcopy = JSON.parse(JSON.stringify($scope.templateplaceholders));
-                    var gscopy = JSON.parse(JSON.stringify($scope.globalsettings));
-                    return gscopy.concat(phcopy); // global settings dominate local placeholders
-                };
+                
             }
         }
     })
@@ -307,19 +288,56 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-input.html'),
             controller: function ($scope) {
 
-                $scope.loadQueryPreset = function (querypreset) {
-                    $scope.state.query = querypreset.query;
-                    $scope.$emit('querychange');
+                $scope.globalsettings = [];
+
+                $scope.$on('key-val-collection-change-Placeholders', function (event, arg) {
+                    $scope.templateplaceholders = arg.collection;
+                    $scope.change();
+                });
+
+                $scope.processTemplate = function (placeholders) {
+                    return runRequestProc(
+                        $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
+                        $scope.state.query.datasource.service.controls.template.datasource.service.data,
+                        $scope.evalDynamic($scope.mergePlaceholders()));
                 }
 
+                // integration with outer settings via events
+                $scope.$on('globalsettings-change', function (event, arg) {
+                    $scope.globalsettings = arg.collection;
+
+                    // ignoring case where no template has been loaded yet
+                    if ($scope.state.query.datasource.service.controls.template) {
+                        $scope.change();
+                    }
+                });
+
+                $scope.mergePlaceholders = function (placeholders) {
+                    var phcopy = JSON.parse(JSON.stringify($scope.state.query.datasource.service.controls.placeholders));
+                    var gscopy = JSON.parse(JSON.stringify($scope.globalsettings));
+                    return gscopy.concat(phcopy); // global settings dominate local placeholders
+                };
+
+                $scope.evalDynamic = function (placeholders) {
+                    console.log(placeholders);
+                    $.each(placeholders, function (index, placeholder) {
+                        //console.log(placeholder.key + ':' + placeholder.value + ';' + placeholder.isDynamic);
+                    });
+                    return placeholders;
+                };
+
                 $scope.loadTemplatePreset = function (template) {
-                    if(!$scope.state.query.datasource.service.controls){
+                    if (!$scope.state.query.datasource.service.controls) {
                         $scope.state.query.datasource.service.controls = {};
                     }
                     $scope.state.query.datasource.service.controls.template = template.queryTemplate;
                     $scope.state.query.datasource.service.controls.placeholders = template.placeholders;
-                    $scope.$emit('templatePhChange');
+                    $scope.$emit('templateph-loaded');
                 };
+
+                $scope.change = function(){
+                    $scope.$emit('templateph-change', {data : $scope.processTemplate()});
+                }
             }
         };
     })
