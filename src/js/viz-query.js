@@ -1,5 +1,5 @@
 registerScript();
-angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-controls'])
+angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-controls', 'dashletcomssrv'])
     .directive('vizQuery', function () {
         return {
             restrict: 'E',
@@ -225,7 +225,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             }
         };
     })
-    .directive('vizConfig', function () {
+    .directive('vizConfig', function (dashletcomssrv) {
         return {
             restrict: 'E',
             scope: {
@@ -247,6 +247,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.currentconfig = preset;
                     $scope.state.shared.config = $scurrentconfig;
                 };
+
+                $scope.toggleMaster = function(){
+                    dashletcomssrv.makeMaster();
+                }
             }
         }
     })

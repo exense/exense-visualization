@@ -20,6 +20,7 @@
 
 	<script src="src/js/dist-settings-dev.js"></script>
 	<script src="src/js/global-classes.js"></script>
+	<script src="src/js/dashlet-coms.js"></script>
 	<script src="src/js/rtm-controls.js"></script>
 	<script src="src/js/key-val-collection.js"></script>
 	<script src="src/js/viz-query.js"></script>
@@ -39,7 +40,7 @@
 	<link rel="stylesheet" href="src/css/viz-dashboard.css">
 
 	<script>
-		var demoApp = angular.module('demoApp', ['viz-dashboard'])
+		var demoApp = angular.module('demoApp', ['viz-dashboard', 'dashletcomssrv'])
 			.controller('ctrl', ['$scope', function ($scope) {
 				$scope.staticPresetsInstance = new StaticPresets();
 				$scope.dashboardsendpoint = [];
