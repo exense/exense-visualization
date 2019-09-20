@@ -10,7 +10,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-query.html'),
             controller: function ($scope) {
 
-                $scope.$on('templateph-change', function(event, arg){
+                $scope.$on('templateph-change', function (event, arg) {
                     $scope.state.query.datasource.service.data = arg.data;
                 })
 
@@ -18,7 +18,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.query = querypreset.query;
                     //$scope.$emit('query-change');
                 }
-                
+
             }
         }
     })
@@ -299,7 +299,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     return runRequestProc(
                         $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
                         $scope.state.query.datasource.service.controls.template.datasource.service.data,
-                        $scope.evalDynamic($scope.mergePlaceholders()));
+                        evalDynamic($scope.mergePlaceholders()));
                 }
 
                 // integration with outer settings via events
@@ -318,14 +318,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     return gscopy.concat(phcopy); // global settings dominate local placeholders
                 };
 
-                $scope.evalDynamic = function (placeholders) {
-                    console.log(placeholders);
-                    $.each(placeholders, function (index, placeholder) {
-                        //console.log(placeholder.key + ':' + placeholder.value + ';' + placeholder.isDynamic);
-                    });
-                    return placeholders;
-                };
-
                 $scope.loadTemplatePreset = function (template) {
                     if (!$scope.state.query.datasource.service.controls) {
                         $scope.state.query.datasource.service.controls = {};
@@ -335,8 +327,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.$emit('templateph-loaded');
                 };
 
-                $scope.change = function(){
-                    $scope.$emit('templateph-change', {data : $scope.processTemplate()});
+                $scope.change = function () {
+                    $scope.$emit('templateph-change', { data: $scope.processTemplate() });
                 }
             }
         };

@@ -36,6 +36,20 @@ var runRequestProc = function (postProc, requestFragment, workData) {
     return eval('(' + postProc + ')(requestFragment, workData)');
 };
 
+var runDynamicEval = function (expression) {
+    return eval(expression);
+};
+
+var evalDynamic = function (placeholders) {
+    var returned = JSON.parse(JSON.stringify(placeholders));
+    $.each(returned, function (index, placeholder) {
+        if (placeholder.isDynamic) {
+            placeholder.value = runDynamicEval(placeholder.value);
+        }
+    });
+    return returned;
+};
+
 var resolve = function (obj, path) {
     path = path.split('.');
     var current = obj;
