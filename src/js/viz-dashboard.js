@@ -1,6 +1,6 @@
 registerScript();
 
-angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
+angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomssrv'])
     .directive('vizDashboard', function () {
         return {
             restrict: 'E',
@@ -98,42 +98,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
 
                 $scope.$on('addwidget', function (event, arg) {
                     if ($scope.dashboardid === arg.dashboardid) {
-                        $scope.wwrap.addNew({
-                            widgetWidth: 'col-md-6',
-                            title: 'Dashlet title',
-                            state: {
-                                tabindex: 0,
-                                data: {
-                                    transformed: [],
-                                    state: {}
-                                },
-                                shared: {
-                                    presets: $scope.presets,
-                                    options: new DefaultChartOptions($scope.chartHeightSmall, $scope.chartWidthSmall, $scope.innerContainerHeightSmall, $scope.innerContainerWidthSmall,
-                                        'lineChart'),
-                                    config: {
-                                        autorefresh: 'Off',
-                                        barchevron: true,
-                                        master: false,
-                                        slave: false,
-                                        masterinput: 'empty',
-                                        slaveoutput: 'empty too'
-                                    },
-                                    global: {},
-                                    http: {}
-                                },
-                                query: {
-                                    inputtype: "Raw",
-                                    type: "Simple",
-                                    datasource: {
-                                        service: {
-                                            method: "Get",
-                                            controls: {}
-                                        }
-                                    }
-                                }
-                            }
-                        });
+                        var newWidgetId = $scope.wwrap.addNew(new DefaultWidget($scope.presets, $scope.chartHeightSmall, $scope.chartWidthSmall, $scope.innerContainerHeightSmall, $scope.innerContainerWidthSmall));
                     }
                 });
 

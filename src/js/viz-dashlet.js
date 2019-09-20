@@ -33,20 +33,33 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 $scope.$watch('state.shared.config.master', function (isMaster) {
                     if (isMaster) {
+                        dashletcomssrv.registerWidget($scope.dashletid);
                         $scope.$watch('state.shared.config.masterinput', function (newValue) {
-                            dashletcomssrv.updateMasterValue(newValue);
+                            dashletcomssrv.updateMasterValue($scope.dashletid, newValue);
                         });
                     }
                 });
 
-                $scope.$watch('state.shared.config.slave', function (isSlave) {
-                    if (isSlave) {
-                        $scope.$watch(function(){ return dashletcomssrv.value; }, function (newValue) {
+                $scope.$on('master-loaded', function (event, arg) {
+                    $scope.$watch('state.shared.config.slave', function () {
+                        console.log(arg);
+                        var masterid = arg;
+                        $scope.$watch(function () {
+                            return dashletcomssrv.buffer[masterid];
+                        }, function (newValue) {
                             $scope.state.shared.config.slaveoutput = newValue;
                         });
-                    }
+                    });
                 });
 
+                // only register dashlets explicitely marked as masters for now  
+                //dashletcomssrv.registerWidget($scope.dashletid);
+
+                $scope.$watch(function () {
+                    return dashletcomssrv.masters;
+                }, function (newValue) {
+                    $scope.state.shared.config.masters = newValue;
+                }, true);
             }
         };
     });

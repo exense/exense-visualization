@@ -223,7 +223,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             }
         };
     })
-    .directive('vizConfig', function () {
+    .directive('vizConfig', function (dashletcomssrv) {
         return {
             restrict: 'E',
             scope: {
@@ -234,10 +234,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
             controller: function ($scope, $http) {
 
-                $scope.$on('globalsettings-refreshToggle', function(event, arg){
-                    if(arg.new){
+                $scope.$on('globalsettings-refreshToggle', function (event, arg) {
+                    if (arg.new) {
                         $scope.state.shared.config.autorefresh = 'On';
-                    }else{
+                    } else {
                         $scope.state.shared.config.autorefresh = 'Off';
                     }
                 });
@@ -245,6 +245,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.loadConfigPreset = function (preset) {
                     $scope.currentconfig = preset;
                     $scope.state.shared.config = $scurrentconfig;
+                };
+
+                $scope.loadMaster = function (m) {
+                    $scope.$emit('master-loaded', m.mid);
                 };
             }
         }
@@ -342,7 +346,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 };
 
                 $scope.change = function (async) {
-                    $scope.$emit('templateph-change', { data: $scope.processTemplate(), async : async});
+                    $scope.$emit('templateph-change', { data: $scope.processTemplate(), async: async });
                 }
             }
         };

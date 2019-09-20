@@ -4,15 +4,15 @@ angular.module('dashletcomssrv', [])
     .service('dashletcomssrv', function ($rootScope) {
  
         var dashletcomssrv = {};
-        dashletcomssrv.value = '';
-        
-        dashletcomssrv.updateMasterValue = function (newValue) {
-            dashletcomssrv.value = newValue;
-            console.log('srvupdate->'+dashletcomssrv.value)
-        };
+        dashletcomssrv.buffer = {};
+        dashletcomssrv.masters = [];
 
-        dashletcomssrv.readMasterValue = function () {
-            return dashletcomssrv.value;
+        dashletcomssrv.registerWidget = function (dashletid) {
+            dashletcomssrv.masters.push({mid : dashletid});
+        };
+        
+        dashletcomssrv.updateMasterValue = function (dashletid, newValue) {
+            dashletcomssrv.buffer[dashletid] = newValue;
         };
 
         return dashletcomssrv;

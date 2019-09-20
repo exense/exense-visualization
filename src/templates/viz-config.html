@@ -99,22 +99,23 @@
                             </div>
                         </div>
                         <div class="colmdstyle col-md-3 colcontain-grid">
-                            <label>Slave control</label>
-                            <div class="btn-group viz-btn-group form-radio">
-                                <span class="key-val-collection btn btn-primary viz-btn-primary" href="#">
-                                    <input type="checkbox" class="form-control" ng-model="state.shared.config.slave"
-                                        style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;" />
-                                </span>
-                                <label class="btn btn-primary viz-label" ng-class="{ active: state.shared.config.slave}">Make
-                                    slave</span>
-                            </div>
-                        </div>
-                        <div class="colmdstyle col-md-3 colcontain-grid">
                             <label>Slave output</label>
                             <div class="btn-group viz-btn-group form-radio">
                                 <input class="form-control" ng-model="state.shared.config.slaveoutput" />
                             </div>
                         </div>
+                        <div class="col-md-4 colcontain-grid">
+                                <label>Masters</label>
+                                <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="masters.status.isopen">
+                                    <button id="load-master" type="button" class="btn btn-primary viz-btn-primary"
+                                        uib-dropdown-toggle ng-disabled="disabled">
+                                        Choose master... <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-master">
+                                        <h5 ng-repeat="m in state.shared.config.masters" ng-click="loadMaster(m)">{{m.mid}}</h5>
+                                    </ul>
+                                </div>
+                            </div>
                     </div>
                 </div>
 
