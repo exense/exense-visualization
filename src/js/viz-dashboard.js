@@ -11,7 +11,8 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard-manager.html'),
             controller: function ($scope, $rootScope) {
 
-                $scope.dwrap = new IdIndexArray($scope.dashboards, 'dashboardid');
+                $scope.dashboardidkey = 'dashboardid';
+                $scope.dwrap = new IdIndexArray($scope.dashboards, $scope.dashboardidkey);
 
                 // use to be wmservice    
                 $scope.computeHeights = function () {
@@ -46,11 +47,11 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                 };
 
                 $scope.clearWidgets = function (dId) {
-                    $scope.getDashboardById(dId).widgets.length = 0;
+                    $scope.dwrap.getById(dId).widgets.length = 0;
                 };
 
                 $scope.getWidget = function (dId, wId) {
-                    var dWidgets = $scope.getDashboardById(dId).widgets;
+                    var dWidgets = $scope.dwrap.getById(dId).widgets;
 
                     for (i = 0; i < dWidgets.length; i++) {
                         if (dWidgets[i].widgetId === wId) {
@@ -137,11 +138,11 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                     };
 
                     // initialize every new dashboard with a first basic widget
-                    $scope.getDashboardById(dId).widgets.push(widget);
+                    $scope.dwrap.getById(dId).widgets.push(widget);
                 };
 
                 $scope.removeWidget = function (dId, wId) {
-                    var dWidgets = $scope.getDashboardById(dId).widgets;
+                    var dWidgets = $scope.dwrap.getById(dId).widgets;
 
                     for (i = 0; i < dWidgets.length; i++) {
                         if (dWidgets[i].widgetId === wId) {
@@ -151,19 +152,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                 };
 
                 $scope.getWidgetIndex = function (dId, wId) {
-                    return $scope.getObjectIndexFromArray($scope.getDashboardById(dId).widgets, 'widgetId', wId);
-                }
-
-                $scope.getDashboardIndex = function (dId) {
-                    return $scope.getObjectIndexFromArray($scope.dashboards, 'dashboardid', dId);
-                }
-
-                $scope.getDashboardById = function (dId) {
-                    return $scope.dashboards[$scope.getDashboardIndex(dId)];
-                }
-
-                $scope.removetDashboardById = function (dId) {
-                    $scope.dashboards.splice($scope.getDashboardIndex(dId), 1);
+                    return $scope.getObjectIndexFromArray($scope.dwrap.getById(dId).widgets, 'widgetId', wId);
                 }
 
                 $scope.getObjectIndexFromArray = function (array, oIdKey, oId) {
@@ -175,7 +164,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                 }
 
                 $scope.moveWidget = function (dId, old_index, new_index) {
-                    var dWidgets = $scope.getDashboardById(dId).widgets;
+                    var dWidgets = $scope.dwrap.getById(dId).widgets;
 
                     if (new_index >= dWidgets.length) {
                         var k = new_index - dWidgets.length + 1;
@@ -202,7 +191,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
 
                 $scope.duplicateWidget = function (dId, wId) {
                     var copy = $scope.getWidgetCopy(dId, wId);
-                    $scope.getDashboardById(dId).widgets.push(copy);
+                    $scope.dwrap.getById(dId).widgets.push(copy);
                     $scope.moveWidget(dId, $scope.getWidgetIndex(dId, copy.widgetId), $scope.getWidgetIndex(dId, wId) + 1);
                 };
 
@@ -232,19 +221,20 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                     //If the currently opened tab is killed
                     if ($scope.mgrtabstate === arg) {
                         // if has previous, open previous
-                        if ($scope.getDashboardIndex($scope.mgrtabstate) > 0) {
-                            var previous = $scope.dashboards[$scope.getDashboardIndex($scope.mgrtabstate) - 1].dashboardid;
-                            $scope.mgrtabstate = previous;
+                        if ($scope.dwrap.getIndexById($scope.mgrtabstate) > 0) {
+                            $scope.mgrtabstate = $scope.dwrap.getPreviousId($scope.mgrtabstate);
                             $scope.savedState = $scope.mgrtabstate;
                         } else {// if has next, open next
-                            if ($scope.getDashboardIndex($scope.mgrtabstate) < $scope.dashboards.length - 1) {
-                                var next = $scope.dashboards[$scope.getDashboardIndex($scope.mgrtabstate) + 1].dashboardid;
-                                $scope.mgrtabstate = next;
+                            if ($scope.dwrap.getIndexById($scope.mgrtabstate) < $scope.dwrap.count() - 1) {
+                                $scope.mgrtabstate = $scope.dwrap.getNextId($scope.mgrtabstate);
                                 $scope.savedState = $scope.mgrtabstate;
+                            }else{
+                                // Empty session
+                                $scope.mgrtabstate = null;
                             }
                         }
                     }
-                    $scope.removetDashboardById(arg);
+                    $scope.dwrap.removeById(arg);
                 });
 
                 // todo: bind to config
@@ -277,7 +267,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                 });
 
                 $scope.$on('dashboard-clear', function () {
-                    $scope.clearDashboards();
+                    $scope.dwrap.clear();
                 });
                 $scope.$on('dashboard-current-addWidget', function () {
                     $scope.addWidget($scope.mgrtabstate, $scope.presets);

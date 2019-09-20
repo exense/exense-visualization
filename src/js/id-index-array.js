@@ -1,6 +1,3 @@
-var oidkey = 'oid';
-var objkey = 'obj';
-
 function IdIndexArray(arrayArg, oidkeyArg) {
     if(!arrayArg){
         arrayArg = [];
@@ -12,6 +9,9 @@ function IdIndexArray(arrayArg, oidkeyArg) {
     }
     return {
         array: arrayArg,
+        getId: function (obj) {
+            return obj[oidkey];
+        },
         addNew: function (obj) {
             var newId = getUniqueId();
             obj[oidkey] = newId;
@@ -50,6 +50,18 @@ function IdIndexArray(arrayArg, oidkeyArg) {
         },
         count() {
             return this.array.length;
+        },
+        getPrevious(oid){
+            return this.getByIndex(this.getIndexById(oid) - 1);
+        },
+        getPreviousId(oid){
+            return this.getId(this.getPrevious(oid));
+        },
+        getNext(oid){
+            return this.getByIndex(this.getIndexById(oid) + 1);
+        },
+        getNextId(oid){
+            return this.getId(this.getNext(oid));
         }
     };
 };

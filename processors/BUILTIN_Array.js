@@ -12,6 +12,9 @@ function IdIndexArray(arrayArg) {
     }
     return {
         array: arrayArg,
+        getId: function (obj) {
+            return obj[oidkey];
+        },
         addNew: function (obj) {
             var newId = getUniqueId();
             obj[oidkey] = newId;
@@ -50,6 +53,18 @@ function IdIndexArray(arrayArg) {
         },
         count() {
             return this.array.length;
+        },
+        getPrevious(oid){
+            return this.getByIndex(this.getIndexById(oid) - 1);
+        },
+        getPreviousId(oid){
+            return this.getPrevious(oid).getId();
+        },
+        getNext(oid){
+            return this.getByIndex(this.getIndexById(oid) + 1);
+        },
+        getNextId(oid){
+            return this.getNext(oid).getId();
         }
     };
 };
@@ -66,8 +81,12 @@ var id4 = arrayWrapper.addNew({ foo: 'bar4' });
 arrayWrapper.removeById(id3);
 arrayWrapper.removeById(id4);
 
-var actual = arrayWrapper.count() + arrayWrapper.getById(id2).foo+testData[0].foo;
-var expected = 2 + 'bar2'+'bar1';
+var actual = arrayWrapper.count()
++ arrayWrapper.getById(id2).foo
++ testData[0].foo
++ arrayWrapper.getPrevious(arrayWrapper.getId(arrayWrapper.getById(id2))).foo
++ arrayWrapper.getNext(arrayWrapper.getId(arrayWrapper.getById(id1))).foo;
+var expected = 2 + 'bar2'+'bar1'+'bar1'+'bar2';
 
 if (testmode) {
     if (actual === expected) {
