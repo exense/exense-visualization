@@ -42,10 +42,6 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                     });
                 };
 
-                $scope.clearDashboards = function () {
-                    $scope.dashboards.length = 0;
-                };
-
                 $scope.clearWidgets = function (dId) {
                     $scope.dwrap.getById(dId).widgets.length = 0;
                 };
@@ -65,18 +61,18 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
 
                     //should only be done once at manager level
                     $scope.computeHeights();
-
                     var widget = $scope.getWidget(dId, wId);
-                    widget.state.shared.options.chart.width = newWidth;
-                    widget.state.shared.options.innercontainer.width = newWidth - 50;
+                    var options = widget.state.shared.options;
+                    options.chart.width = newWidth;
+                    options.innercontainer.width = newWidth - 50;
 
                     if (widget.widgetWidth === 'col-md-6') {
-                        widget.state.shared.options.chart.height = $scope.chartHeightSmall;
-                        widget.state.shared.options.innercontainer.height = $scope.innerContainerHeightSmall;
+                        options.chart.height = $scope.chartHeightSmall;
+                        options.innercontainer.height = $scope.innerContainerHeightSmall;
                     }
                     else {
-                        widget.state.shared.options.chart.height = $scope.chartHeightBig;
-                        widget.state.shared.options.innercontainer.height = $scope.innerContainerHeightBig;
+                        options.chart.height = $scope.chartHeightBig;
+                        options.innercontainer.height = $scope.innerContainerHeightBig;
                     }
                     $scope.forceRedraw();
                 };
@@ -223,11 +219,9 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                         // if has previous, open previous
                         if ($scope.dwrap.getIndexById($scope.mgrtabstate) > 0) {
                             $scope.mgrtabstate = $scope.dwrap.getPreviousId($scope.mgrtabstate);
-                            $scope.savedState = $scope.mgrtabstate;
                         } else {// if has next, open next
                             if ($scope.dwrap.getIndexById($scope.mgrtabstate) < $scope.dwrap.count() - 1) {
                                 $scope.mgrtabstate = $scope.dwrap.getNextId($scope.mgrtabstate);
-                                $scope.savedState = $scope.mgrtabstate;
                             }else{
                                 // Empty session
                                 $scope.mgrtabstate = null;
@@ -236,11 +230,6 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap'])
                     }
                     $scope.dwrap.removeById(arg);
                 });
-
-                // todo: bind to config
-                $scope.saveState = function () {
-                    $scope.savedState = $scope.mgrtabstate;
-                };
 
                 $scope.$on('single-resize', function (event, arg) {
                     $(document).ready(function () {

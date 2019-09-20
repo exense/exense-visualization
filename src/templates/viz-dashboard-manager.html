@@ -1,6 +1,6 @@
 <div class="well mainwell">
     <div class="dashboardtab">
-        <ul ng-click="saveState()" vertical="false" justified="true" class="nav nav-tabs">
+        <ul vertical="false" justified="true" class="nav nav-tabs">
             <li ng-class="{active : isTabActive(d.dashboardid)}" index="d.dashboardid" ng-repeat="d in dashboards track by d.dashboardid"
                 style="display: inline-flex;">
                 <a ng-click="selectTab(d.dashboardid)">{{d.title}} : {{d.dashboardid}}</a>
