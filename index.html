@@ -41,6 +41,7 @@
 	<link rel="stylesheet" href="src/css/viz-dashboard.css">
 
 	<script>
+		var initTestDashboard = false;
 		var demoApp = angular.module('demoApp', ['viz-dashboard', 'dashletcomssrv'])
 			.controller('ctrl', ['$scope', function ($scope) {
 				$scope.staticPresetsInstance = new StaticPresets();
@@ -61,11 +62,15 @@
 				});
 
 				// For saving time in testing
-				$scope.$on('dashboard-ready', function () {
+				$scope.$on('manager-ready', function () {
 					$scope.$broadcast('dashboard-new');
-					$scope.$broadcast('dashboard-new');
-					$(document).ready(function () {
-						$scope.$broadcast('dashboard-current-addWidget');
+
+					$scope.$on('dashboard-ready', function (event, arg) {
+						console.log('initializing demo widget.')
+						if(!initTestDashboard){
+							initTestDashboard = true;
+							$scope.$broadcast('dashboard-current-addWidget');
+						}
 					});
 				});
 			}]);

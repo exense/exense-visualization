@@ -8,7 +8,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
             scope: {
                 options: '=',
                 widgetwidth: '=',
-                dashboardid: '=',
                 widgetid: '=',
                 state: '='
             },
@@ -57,7 +56,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 });
 
                 $scope.resizeSingle = function () {
-                    $scope.$emit('single-resize', { did: $scope.dashboardid, wid: $scope.widgetid, newsize: 0.8 * $scope.getActualDashletWidth() });
+                    $scope.$emit('single-resize', {wid: $scope.widgetid, newsize: 0.8 * $scope.getActualDashletWidth() });
                 };
 
                 $scope.emitExtend = function () {

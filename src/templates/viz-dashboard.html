@@ -28,8 +28,8 @@
 
     </div>
     <div class="row">
-        <div ng-repeat="o in dashboard.widgets track by o.widgetId">
-            <viz-mgd-widget state="o.state" widgetwidth="o.widgetWidth" widgetid="o.widgetId" dashboardid="dashboard.dashboardid"></viz-mgd-widget>
+        <div ng-repeat="o in dashboard.widgets track by o.oid">
+            <viz-mgd-widget state="o.state" widgetwidth="o.widgetWidth" widgetid="o.oid" ></viz-mgd-widget>
         </div>
     </div>
 
