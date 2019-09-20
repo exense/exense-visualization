@@ -31,21 +31,39 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.$broadcast('child-firequery', arg);
                 });
 
-                $scope.$watch('state.shared.config.master', function (isMaster) {
-                    if (isMaster) {
-                        dashletcomssrv.registerWidget($scope.dashletid);
-                        $scope.$watch('state.shared.config.masterinput', function (newValue) {
-                            dashletcomssrv.updateMasterValue($scope.dashletid, newValue);
-                        });
+                $scope.$on('coms-reset', function(){
+                    console.log('resetting..')
+                    if($scope.state.shared.config.master){
+                        state.shared.config.master = !state.shared.config.master;
+                    }
+                    if($scope.unwatchMaster){
+                        $scope.unwatchMaster();
+                    }
+                    if($scope.unwatchSlave){
+                        $scope.unwatchSlave();
                     }
                 });
 
-                $scope.$on('master-loaded', function (event, arg) {
+                // clean up when slave unchecked
+                // state.shared.config.slave
+
+                // replace watch with event?
+                $scope.$watch('state.shared.config.master', function (isMaster) {
+                    if (isMaster) {
+                        dashletcomssrv.registerWidget($scope.dashletid);
+                        $scope.unwatchMaster = $scope.$watch('state.shared.config.masterinput', function (newValue) {
+                            dashletcomssrv.updateMasterValue($scope.dashletid, newValue);
+                        });
+                    }else{
+                        dashletcomssrv.unregisterWidget($scope.dashletid);
+                    }
+                });
+
+                $scope.$on('master-loaded', function (event, masterid) {
                     $scope.$watch('state.shared.config.slave', function () {
-                        console.log(arg);
-                        var masterid = arg;
-                        $scope.$watch(function () {
-                            return dashletcomssrv.buffer[masterid];
+                        var thisarg = masterid;
+                        $scope.unwatchSlave =  $scope.$watch(function () {
+                            return dashletcomssrv.buffer[thisarg];
                         }, function (newValue) {
                             $scope.state.shared.config.slaveoutput = newValue;
                         });
