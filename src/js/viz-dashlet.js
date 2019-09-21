@@ -71,16 +71,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 });
 
-                $scope.safeApply = function (fn) {
-                    var phase = this.$root.$$phase;
-                    if (phase == '$apply' || phase == '$digest') {
-                        if (fn) {
-                            fn();
-                        }
-                    } else {
-                        this.$apply(fn);
+                $scope.$watch('state.shared.config.dashlettitle', function (newValue){
+                    if ($scope.state.shared.config.master) {
+                        dashletcomssrv.udpdateTitle($scope.dashletid, newValue);
                     }
-                };
+                });
 
                 $scope.unwatchSlave = '';
 
@@ -102,10 +97,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 });
 
                 // no watching directly on the checkbox, only doing something once a master is picked
-                $scope.$on('master-loaded', function (event, masterid) {
+                $scope.$on('master-loaded', function (event, master) {
                     //if master already previously selected, stop watching him
                     $scope.undoSlave();
-                    $scope.startWatchingMaster(masterid);
+                    $scope.state.shared.config.currentmaster = master;
+                    $scope.startWatchingMaster(master.oid);
                 });
 
                 // only register dashlets explicitely marked as masters for now  

@@ -13,6 +13,10 @@ angular.module('dashletcomssrv', [])
             dashletcomssrv.masters.addIfAbsent({'oid' : dashletid, 'title': dashlettitle});
         };
 
+        dashletcomssrv.udpdateTitle = function (dashletid, dashlettitle) {
+            dashletcomssrv.masters.getById(dashletid).title = dashlettitle;             
+        };
+
         dashletcomssrv.unregisterWidget = function (dashletid) {
             dashletcomssrv.masters.removeIfExists(dashletid);
         };

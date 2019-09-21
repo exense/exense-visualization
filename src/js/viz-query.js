@@ -250,7 +250,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 };
 
                 $scope.loadMaster = function (m) {
-                    $scope.$emit('master-loaded', m.oid);
+                    $scope.$emit('master-loaded', m);
                 };
 
                 $scope.titleChange = function(){

@@ -111,7 +111,8 @@
                                     Choose master... <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-master">
-                                    <h5 ng-repeat="m in state.shared.config.masters.getAsArray()" ng-click="loadMaster(m)">{{m.oid}} : {{m.title}}</h5>
+                                    <h5 ng-repeat="m in state.shared.config.masters.getAsArray()" ng-click="loadMaster(m)">
+                                        {{m.oid}} : {{m.title}}</h5>
                                 </ul>
                             </div>
                         </div>
@@ -125,6 +126,15 @@
                     <hr />
                     <label>Test controls</label>
                     <div class="row">
+                        <div class="colmdstyle col-md-3 colcontain-grid">
+                            <label>Current master</label>
+                            <div class="btn-group viz-btn-group form-radio">
+                                {{state.shared.config.currentmaster.oid}}
+                            </div>
+                            <div class="btn-group viz-btn-group form-radio">
+                                {{state.shared.config.currentmaster.title}}
+                            </div>
+                        </div>
                         <div class="colmdstyle col-md-3 colcontain-grid">
                             <label>Master input</label>
                             <div class="btn-group viz-btn-group form-radio">

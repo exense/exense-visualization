@@ -40,7 +40,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     $scope.state.shared.options.innercontainer.offset = $scope.state.shared.savedOffset;
                 };
 
-                $scope.$on('dashlet-title', function (event, arg) {
+                $scope.$on('dashlettitle-change', function (event, arg) {
                     $scope.dashlettitle = arg.newValue;
                 });
 
