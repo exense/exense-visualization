@@ -28,7 +28,7 @@
 
     </div>
     <div class="row">
-        <div ng-repeat="o in dashboard.widgets track by o.oid">
+        <div ng-repeat="o in wwrap.getAsArray() track by o.oid">
             <viz-mgd-widget state="o.state" widgetwidth="o.widgetWidth" widgetid="o.oid" ></viz-mgd-widget>
         </div>
     </div>

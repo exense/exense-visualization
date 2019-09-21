@@ -41,6 +41,19 @@ function DefaultChartOptions(chartHeight, chartWidth, innerContainerHeight, inne
     };
 };
 
+function DefaultDashboard(widget) {
+    return {
+        title: 'New dashboard',
+        widgets: [],
+        mgrstate: {
+            globalsettings: [{ "key": "__eId__", "value": "??", "isDynamic": false }],
+            globalsettingsname: 'Global Settings',
+            globalsettingschevron: false,
+            globalsettingsautorefresh: false
+        }
+    };
+}
+
 function DefaultWidget(presets, chartHeightSmall, chartWidthSmall, innerContainerHeightSmall, innerContainerWidthSmall) {
     return {
         widgetWidth: 'col-md-6',

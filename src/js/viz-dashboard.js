@@ -13,7 +13,11 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope) {
 
-                $scope.wwrap = new IdIndexArray($scope.dashboard.widgets);
+                $scope.wwrap = new IdIndexArray($scope.dashboard.widgets, function (oid) {
+                    console.log('[widgets] ' + oid);
+                })
+
+                console.log($scope.wwrap.getAsArray());
 
                 // load time case
                 if ($scope.mgrstate.globalsettingsautorefresh) {
@@ -99,6 +103,9 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 $scope.$on('addwidget', function (event, arg) {
                     if ($scope.dashboardid === arg.dashboardid) {
                         var newWidgetId = $scope.wwrap.addNew(new DefaultWidget($scope.presets, $scope.chartHeightSmall, $scope.chartWidthSmall, $scope.innerContainerHeightSmall, $scope.innerContainerWidthSmall));
+                        console.log('added widget:' + newWidgetId + ' -> ');
+
+                        console.log($scope.wwrap.getAsArray());
                     }
                 });
 

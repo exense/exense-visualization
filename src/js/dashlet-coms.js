@@ -7,7 +7,9 @@ angular.module('dashletcomssrv', [])
         dashletcomssrv.buffer = {};
         dashletcomssrv.masters = {};
         dashletcomssrv.masters.array = [];
-        dashletcomssrv.masters = new IdIndexArray(dashletcomssrv.masters.array);
+        dashletcomssrv.masters = new IdIndexArray(dashletcomssrv.masters.array, function(oid){
+            console.log('[dashletcomssrv] removing ' + oid);
+        });
 
         dashletcomssrv.registerWidget = function (dashletid, dashlettitle) {
             dashletcomssrv.masters.addIfAbsent({'oid' : dashletid, 'title': dashlettitle});
