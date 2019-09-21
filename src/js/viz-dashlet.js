@@ -120,6 +120,12 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 }, function (newValue) {
                     $scope.state.shared.config.masters = newValue;
                 });
+
+                // after dashlet loaded or duplicated
+                if($scope.state.shared.config.currentmaster){
+                    $scope.undoMaster(); //<- shouldn't be necessary
+                    $scope.startWatchingMaster($scope.state.shared.config.currentmaster.oid);
+                }
             }
         };
     });

@@ -261,7 +261,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.$emit('dashlettitle-change', {newValue : $scope.state.shared.config.dashlettitle})
                 };
 
-                $scope.titleChange();
+                $scope.titleChange();                
             }
         }
     })
