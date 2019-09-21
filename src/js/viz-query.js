@@ -198,8 +198,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     if ($scope.state.query.type === 'Simple') {
                         //$scope.state.data.serviceraw = response;
                         $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
-                        //unique endpoint for master
-                        $scope.state.shared.http.currentresponse = response;
                     }
                     if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
@@ -214,12 +212,18 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         }
                         //$scope.state.data.callbackraw = response;
                         $scope.state.shared.http.rawcallbackresponse = JSON.stringify(response);
-                        //unique endpoint for master
-                        $scope.state.shared.http.currentresponse = response;
                     }
                     $scope.state.data.transformed = runResponseProc(proctarget.postproc.transform.function, response);
                     //console.log($scope.state.data);
                 };
+
+                $scope.$on('slavedata-received', function(event, data){
+                    $scope.loadDataAsSlave(data);
+                });
+
+                $scope.loadDataAsSlave = function(transformed){
+                    $scope.state.data.transformed = transformed;
+                }
             }
         };
     })
@@ -254,7 +258,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 };
 
                 $scope.titleChange = function(){
-                    $scope.$emit('dashlet-title', {newValue : $scope.state.shared.config.dashlettitle})
+                    $scope.$emit('dashlettitle-change', {newValue : $scope.state.shared.config.dashlettitle})
                 };
 
                 $scope.titleChange();

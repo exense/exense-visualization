@@ -19,7 +19,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 }
 
                 $scope.toggleBarchevronToViz = function () {
-                    $scope.$broadcast('child-firequery', {});
+                    //Not firing our own query if slave, just listening to data
+                    if (!$scope.state.shared.config.slave) {
+                        $scope.$broadcast('child-firequery', {});
+                    }
                     $scope.state.shared.config.barchevron = !$scope.state.shared.config.barchevron;
                 }
 
@@ -63,15 +66,15 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.$watch('state.shared.config.master', function (isMaster) {
                     if (isMaster) {
                         dashletcomssrv.registerWidget($scope.dashletid, $scope.state.shared.config.dashlettitle);
-                        $scope.unwatchMaster = $scope.$watch('state.shared.config.masterinput', function (newValue) {
-                            dashletcomssrv.updateMasterValue($scope.dashletid, newValue);
+                        $scope.unwatchMaster = $scope.$watch('state.data.transformed', function (newValue) {
+                            dashletcomssrv.updateMasterValue($scope.dashletid, angular.toJson(newValue));
                         });
                     } else {
                         $scope.undoMaster();
                     }
                 });
 
-                $scope.$watch('state.shared.config.dashlettitle', function (newValue){
+                $scope.$watch('state.shared.config.dashlettitle', function (newValue) {
                     if ($scope.state.shared.config.master) {
                         dashletcomssrv.udpdateTitle($scope.dashletid, newValue);
                     }
@@ -84,14 +87,21 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         var unwatcher = $scope.$watch(function () {
                             return dashletcomssrv.buffer[masterid];
                         }, function (newValue) {
-                            $scope.state.shared.config.slaveoutput = newValue;
+
+                            var parsed = JSON.parse(newValue);
+                            $scope.state.shared.config.slaveoutput = parsed;
+
+                            // Event somehow not propagating right, setting value directly for now
+                            //$scope.$broadcast('slavedata-received', parsed);
+
+                            $scope.state.data.transformed = parsed;
                         });
                         $scope.unwatchSlave = unwatcher;
                     }
                 };
 
-                $scope.$watch('state.shared.config.slave', function (newValue){
-                    if(!newValue){
+                $scope.$watch('state.shared.config.slave', function (newValue) {
+                    if (!newValue) {
                         $scope.undoSlave();
                     }
                 });
@@ -104,15 +114,12 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.startWatchingMaster(master.oid);
                 });
 
-                // only register dashlets explicitely marked as masters for now  
-                //dashletcomssrv.registerWidget($scope.dashletid);
-
                 // bind service masters to config master selection list
                 $scope.$watch(function () {
                     return dashletcomssrv.masters;
                 }, function (newValue) {
                     $scope.state.shared.config.masters = newValue;
-                }, true);
+                });
             }
         };
     });
