@@ -1,6 +1,6 @@
 registerScript();
 
-angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap'])   
+angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashletcomssrv'])   
 .directive('vizDashboardManager', function () {
         return {
             restrict: 'E',
@@ -9,11 +9,8 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap'])
                 dashboards: '='
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard-manager.html'),
-            controller: function ($scope) {
-                $scope.dwrap = new IdIndexArray($scope.dashboards, function(oid){
-                    //console.log('[dashboards] removing ' + oid);
-                    $scope.dwrap.getById(oid).widgets.removeAll();
-                });
+            controller: function ($scope, dashletcomssrv) {
+                $scope.dwrap = new IdIndexArray($scope.dashboards);
 
                 // default tab (1st)
                 if ($scope.dashboards.length > 0 && $scope.dashboards[0] && $scope.dashboards[0].oid) {
@@ -43,6 +40,9 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap'])
                             }
                         }
                     }
+                    $.each($scope.dwrap.getById(arg).widgets.getAsArray(), function(idx, value){
+                        dashletcomssrv.unregisterWidget(value.oid);
+                    })
                     $scope.dwrap.removeById(arg);
                 });
 

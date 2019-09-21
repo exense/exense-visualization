@@ -11,14 +11,9 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 mgrstate: '='
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
-            controller: function ($scope) {
+            controller: function ($scope, dashletcomssrv) {
 
                 $scope.wwrap = $scope.dashboard.widgets;
-
-                $scope.wwrap.setOnRemove(function(oid){
-                    console.log('broadcasting single-remove:' + oid)
-                    $scope.$broadcast('single-remove', oid);
-                })
 
                 // load time case
                 if ($scope.mgrstate.globalsettingsautorefresh) {
@@ -77,6 +72,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     options.innercontainer.width = $scope.innerContainerWidthBig;
                 });
                 $scope.$on('mgdwidget-remove', function (event, arg) {
+                    dashletcomssrv.unregisterWidget(arg.wid);
                     $scope.wwrap.removeById(arg.wid);
                 });
                 $scope.$on('mgdwidget-moveLeft', function (event, arg) {

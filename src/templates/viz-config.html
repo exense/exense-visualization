@@ -86,7 +86,7 @@
                             <div class="btn-group viz-btn-group form-radio">
                                 <span class="key-val-collection btn btn-primary viz-btn-primary" href="#">
                                     <input type="checkbox" class="form-control" ng-model="state.shared.config.master"
-                                        style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;" />
+                                        style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;" ng-click="$emit('isMaster-changed', state.shared.config.master)"/>
                                 </span>
                                 <label class="btn btn-primary viz-label" ng-class="{ active: state.shared.config.master}">Make
                                     master</span>

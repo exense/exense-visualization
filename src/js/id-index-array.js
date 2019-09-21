@@ -1,10 +1,9 @@
-function IdIndexArray(arrayArg, onRemoveFunctionArg) {
+function IdIndexArray(arrayArg) {
     if (!arrayArg) {
         throw 'Please provide array ref as argument.';
     }
     return {
         array: arrayArg,
-        onRemoveFunction: onRemoveFunctionArg,
         getId: function (obj) {
             return obj['oid'];
         },
@@ -42,12 +41,10 @@ function IdIndexArray(arrayArg, onRemoveFunctionArg) {
             return this.array[idx]['oid'];
         },
         removeById: function (oid) {
-            this.onRemove(oid);
             this.array.splice(this.getIndexById(oid), 1);
         },
         removeByIndex: function (idx) {
             var oid = this.getIdByIndex(idx);
-            this.onRemove(oid);
             this.array.splice(idx, 1);
         },
         copyById: function (oid) {
@@ -102,19 +99,22 @@ function IdIndexArray(arrayArg, onRemoveFunctionArg) {
             //found
             return this.removeByIndex(index);
         },
-        onRemove: function (oid) {
-            this.onRemoveFunction(oid);
-        },
         removeAll: function () {
+            console.log('[idindexarray] removeAll called. collection size:' + this.array.length);
             for (var i = 0; i < this.array.length; i++) {
-                this.removeByIndex(i);
+                try{
+                    console.log('[ITERATION '+i+']')
+                    this.removeByIndex(i);
+                }catch(e){
+                    console.log('error: ' + e);
+                }finally{
+                    console.log(i);
+                }
             }
+            console.log('[idindexarray] removall finished.')
         },
         getAsArray: function(){
             return this.array;
-        },
-        setOnRemove: function(newOnRemoveFunction){
-            this.onRemoveFunction = newOnRemoveFunction;
         }
     };
 };
