@@ -87,7 +87,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     }
                 });
                 $scope.$on('mgdwidget-duplicate', function (event, arg) {
-                    $scope.wwrap.dupplicateById(arg.wid);
+                    $scope.wwrap.duplicateById(arg.wid);
                 });
 
                 $scope.$on('clearwidgets', function (event, arg) {

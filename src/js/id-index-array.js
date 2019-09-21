@@ -53,8 +53,11 @@ function IdIndexArray(arrayArg) {
             copy['oid'] = getUniqueId();
             return copy;
         },
-        dupplicateById: function (oid) {
-            return this.addExisting(this.copyById(oid));
+        duplicateById: function (oid) {
+            var newId = this.addExisting(this.copyById(oid)); // pushed at the end of the array
+            var copyIdx = this.getIndexById(newId);
+            var originalIdx = this.getIndexById(oid);
+            this.moveFromToIndex(copyIdx, originalIdx + 1);
         },
         moveFromToIndex: function (old_index, new_index) {
             this.array.splice(new_index, 0, this.array.splice(old_index, 1)[0]);
