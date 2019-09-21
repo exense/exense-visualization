@@ -1,7 +1,7 @@
 registerScript();
 
 angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
-    .directive('vizDashlet', function () {
+    .directive('vizDashlet', function ($rootScope) {
         return {
             restrict: 'E',
             scope: {
@@ -31,48 +31,87 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.$broadcast('child-firequery', arg);
                 });
 
-                $scope.$on('coms-reset', function(){
-                    console.log('resetting..')
-                    if($scope.state.shared.config.master){
-                        state.shared.config.master = !state.shared.config.master;
-                    }
-                    if($scope.unwatchMaster){
+                $scope.undoMaster = function () {
+                    dashletcomssrv.unregisterWidget($scope.dashletid);
+                    if ($scope.unwatchMaster) {
                         $scope.unwatchMaster();
                     }
-                    if($scope.unwatchSlave){
+                }
+
+                $scope.undoSlave = function () {
+                    if ($scope.unwatchSlave) {
                         $scope.unwatchSlave();
                     }
+                }
+
+                $scope.$on('coms-reset', function () {
+                    if ($scope.state.shared.config.master) {
+                        $scope.state.shared.config.master = !$scope.state.shared.config.master;
+                    }
+                    $scope.undoMaster();
+
+                    if ($scope.state.shared.config.slave) {
+                        $scope.state.shared.config.slave = !$scope.state.shared.config.slave;
+                    }
+                    $scope.undoSlave();
                 });
 
                 // clean up when slave unchecked
                 // state.shared.config.slave
 
-                // replace watch with event?
+                // working with values directly here for now, could pass target as event arg though
                 $scope.$watch('state.shared.config.master', function (isMaster) {
                     if (isMaster) {
-                        dashletcomssrv.registerWidget($scope.dashletid);
+                        dashletcomssrv.registerWidget($scope.dashletid, $scope.state.shared.config.dashlettitle);
                         $scope.unwatchMaster = $scope.$watch('state.shared.config.masterinput', function (newValue) {
                             dashletcomssrv.updateMasterValue($scope.dashletid, newValue);
                         });
-                    }else{
-                        dashletcomssrv.unregisterWidget($scope.dashletid);
+                    } else {
+                        $scope.undoMaster();
                     }
                 });
 
-                $scope.$on('master-loaded', function (event, masterid) {
-                    $scope.$watch('state.shared.config.slave', function () {
-                        var thisarg = masterid;
-                        $scope.unwatchSlave =  $scope.$watch(function () {
-                            return dashletcomssrv.buffer[thisarg];
+                $scope.safeApply = function (fn) {
+                    var phase = this.$root.$$phase;
+                    if (phase == '$apply' || phase == '$digest') {
+                        if (fn) {
+                            fn();
+                        }
+                    } else {
+                        this.$apply(fn);
+                    }
+                };
+
+                $scope.unwatchSlave = '';
+
+                $scope.startWatchingMaster = function (masterid) {
+                    if ($scope.state.shared.config.slave) {
+                        var unwatcher = $scope.$watch(function () {
+                            return dashletcomssrv.buffer[masterid];
                         }, function (newValue) {
                             $scope.state.shared.config.slaveoutput = newValue;
                         });
-                    });
+                        $scope.unwatchSlave = unwatcher;
+                    }
+                };
+
+                $scope.$watch('state.shared.config.slave', function (newValue){
+                    if(!newValue){
+                        $scope.undoSlave();
+                    }
+                });
+
+                // no watching directly on the checkbox, only doing something once a master is picked
+                $scope.$on('master-loaded', function (event, masterid) {
+                    //if master already previously selected, stop watching him
+                    $scope.undoSlave();
+                    $scope.startWatchingMaster(masterid);
                 });
 
                 // only register dashlets explicitely marked as masters for now  
                 //dashletcomssrv.registerWidget($scope.dashletid);
 
+                // bind service masters to config master selection list
                 $scope.$watch(function () {
                     return dashletcomssrv.masters;
                 }, function (newValue) {

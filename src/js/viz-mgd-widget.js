@@ -17,7 +17,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $scope.state.shared.chevron = true;
                 $scope.state.shared.savedHeight = $scope.state.shared.options.innercontainer.height;
                 $scope.state.shared.options.innercontainer.offset = 50;
-                $scope.dashlettitle = 'Dashlet title';
+                $scope.dashlettitle = $scope.state.title;
 
                 $scope.toggleChevron = function () {
                     if ($scope.state.shared.chevron) {

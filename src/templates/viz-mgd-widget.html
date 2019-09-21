@@ -7,7 +7,7 @@
                                         ng-click="toggleChevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
                                 <span ng-if="!state.shared.chevron" class="title glyphicon glyphicon-chevron-right glyphicon-control"
                                         ng-click="toggleChevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
-                                <span class="title">{{dashlettitle}}:{{widgetid}}</span>
+                                <span class="title">{{widgetid}} : {{dashlettitle}}</span>
                         </li>
                         <li class="li-control">
                                 <span class="glyphicon glyphicon-remove glyphicon-control" ng-click="$emit('mgdwidget-remove', {wid: widgetid})"

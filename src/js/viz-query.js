@@ -234,6 +234,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
             controller: function ($scope, $http) {
 
+                $scope.state.shared.config.dashlettitle = $scope.state.title;
+
                 $scope.$on('globalsettings-refreshToggle', function (event, arg) {
                     if (arg.new) {
                         $scope.state.shared.config.autorefresh = 'On';
@@ -250,6 +252,12 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.loadMaster = function (m) {
                     $scope.$emit('master-loaded', m.oid);
                 };
+
+                $scope.titleChange = function(){
+                    $scope.$emit('dashlet-title', {newValue : $scope.state.shared.config.dashlettitle})
+                };
+
+                $scope.titleChange();
             }
         }
     })

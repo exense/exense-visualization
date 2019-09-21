@@ -44,8 +44,8 @@ function DefaultChartOptions(chartHeight, chartWidth, innerContainerHeight, inne
 function DefaultWidget(presets, chartHeightSmall, chartWidthSmall, innerContainerHeightSmall, innerContainerWidthSmall) {
     return {
         widgetWidth: 'col-md-6',
-        title: 'Dashlet title',
         state: {
+            title: 'New dashlet',
             tabindex: 0,
             data: {
                 transformed: [],
@@ -56,6 +56,7 @@ function DefaultWidget(presets, chartHeightSmall, chartWidthSmall, innerContaine
                 options: new DefaultChartOptions(chartHeightSmall, chartWidthSmall, innerContainerHeightSmall, innerContainerWidthSmall,
                     'lineChart'),
                 config: {
+                    dashlettitle: 'New Dashlet',
                     autorefresh: 'Off',
                     barchevron: true,
                     master: false,

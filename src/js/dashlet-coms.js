@@ -9,8 +9,8 @@ angular.module('dashletcomssrv', [])
         dashletcomssrv.masters.array = [];
         dashletcomssrv.masters = new IdIndexArray(dashletcomssrv.masters.array);
 
-        dashletcomssrv.registerWidget = function (dashletid) {
-            dashletcomssrv.masters.addIfAbsent({oid : dashletid});
+        dashletcomssrv.registerWidget = function (dashletid, dashlettitle) {
+            dashletcomssrv.masters.addIfAbsent({'oid' : dashletid, 'title': dashlettitle});
         };
 
         dashletcomssrv.unregisterWidget = function (dashletid) {
