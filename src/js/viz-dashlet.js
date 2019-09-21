@@ -134,7 +134,15 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.startWatchingMaster($scope.state.shared.config.currentmaster.oid);
                 }
 
-                $scope.$on('external-remove', function () {
+                $scope.$on('single-remove', function (event, arg) {
+                    console.log('single-remove targeting '+arg+' was received by ' + $scope.dashletid)
+                    if (arg === $scope.dashletid) {
+                        $scope.prepareRemove();
+                    }
+                });
+
+                $scope.$on('global-remove', function () {
+                    console.log('---> global')
                     $scope.prepareRemove();
                 });
 

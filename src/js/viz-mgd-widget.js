@@ -79,7 +79,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                 $scope.removeWidget = function(){
                     $scope.$emit('mgdwidget-remove', {wid: $scope.widgetid});
-                    $scope.$broadcast('external-remove');
+                    $scope.$broadcast('broadcasting single-remove', $scope.widgetid);
                 }
             }
         };

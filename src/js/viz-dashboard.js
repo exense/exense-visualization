@@ -15,8 +15,9 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
 
                 $scope.wwrap = $scope.dashboard.widgets;
 
-                $scope.wwrap.setOnRemove(function(){
-                    $scope.$broadcast('external-remove');
+                $scope.wwrap.setOnRemove(function(oid){
+                    console.log('broadcasting single-remove:' + oid)
+                    $scope.$broadcast('single-remove', oid);
                 })
 
                 // load time case

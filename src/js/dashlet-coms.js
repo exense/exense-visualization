@@ -12,6 +12,7 @@ angular.module('dashletcomssrv', [])
         });
 
         dashletcomssrv.registerWidget = function (dashletid, dashlettitle) {
+            console.log('[dashletcomssrv] registering ' + dashletid);
             dashletcomssrv.masters.addIfAbsent({'oid' : dashletid, 'title': dashlettitle});
         };
 
@@ -20,10 +21,9 @@ angular.module('dashletcomssrv', [])
         };
 
         dashletcomssrv.unregisterWidget = function (dashletid) {
-            console.log('unregistering ' + dashletid);
+            console.log('[dashletcomssrv] unregistering ' + dashletid);
             dashletcomssrv.masters.removeIfExists(dashletid);
         };
-
         
         dashletcomssrv.updateMasterValue = function (dashletid, newValue) {
             dashletcomssrv.buffer[dashletid] = newValue;
