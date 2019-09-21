@@ -87,14 +87,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         var unwatcher = $scope.$watch(function () {
                             return dashletcomssrv.buffer[masterid];
                         }, function (newValue) {
-
-                            var parsed = JSON.parse(newValue);
-                            $scope.state.shared.config.slaveoutput = parsed;
-
                             // Event somehow not propagating right, setting value directly for now
                             //$scope.$broadcast('slavedata-received', parsed);
-
-                            $scope.state.data.transformed = parsed;
+                            $scope.state.data.transformed = JSON.parse(newValue);
                         });
                         $scope.unwatchSlave = unwatcher;
                     }
