@@ -240,14 +240,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 $scope.state.shared.config.dashlettitle = $scope.state.title;
 
-                $scope.$on('globalsettings-refreshToggle', function (event, arg) {
-                    if (arg.new) {
-                        $scope.state.shared.config.autorefresh = 'On';
-                    } else {
-                        $scope.state.shared.config.autorefresh = 'Off';
-                    }
-                });
-
                 $scope.loadConfigPreset = function (preset) {
                     $scope.currentconfig = preset;
                     $scope.state.shared.config = $scurrentconfig;

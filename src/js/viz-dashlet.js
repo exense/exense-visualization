@@ -14,6 +14,16 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 $scope.redraw = 'drawn';
 
+                $scope.$on('globalsettings-refreshToggle', function (event, arg) {
+                    if (arg.new) {
+                        if (!$scope.state.shared.config.slave) {
+                            $scope.state.shared.config.autorefresh = 'On';
+                        }
+                    } else {
+                        $scope.state.shared.config.autorefresh = 'Off';
+                    }
+                });
+
                 $scope.toggleBarchevronToConf = function () {
                     $scope.state.shared.config.barchevron = !$scope.state.shared.config.barchevron;
                 }
@@ -117,7 +127,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 });
 
                 // after dashlet loaded or duplicated
-                if($scope.state.shared.config.currentmaster){
+                if ($scope.state.shared.config.currentmaster) {
                     $scope.undoMaster(); //<- shouldn't be necessary
                     $scope.startWatchingMaster($scope.state.shared.config.currentmaster.oid);
                 }
