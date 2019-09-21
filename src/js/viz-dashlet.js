@@ -45,8 +45,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 });
 
                 $scope.undoMaster = function () {
-                    dashletcomssrv.unregisterWidget($scope.dashletid);
+                    // we shouldn't be registered if we don't have an unwatcher
+                    //dashletcomssrv.unregisterWidget($scope.dashletid);
                     if ($scope.unwatchMaster) {
+                        dashletcomssrv.unregisterWidget($scope.dashletid);
                         $scope.unwatchMaster();
                     }
                 }
@@ -130,6 +132,16 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 if ($scope.state.shared.config.currentmaster) {
                     $scope.undoMaster(); //<- shouldn't be necessary
                     $scope.startWatchingMaster($scope.state.shared.config.currentmaster.oid);
+                }
+
+                $scope.$on('external-remove', function () {
+                    $scope.prepareRemove();
+                });
+
+                $scope.prepareRemove = function () {
+                    if ($scope.state.shared.config.master) {
+                        dashletcomssrv.unregisterWidget($scope.dashletid);
+                    }
                 }
             }
         };

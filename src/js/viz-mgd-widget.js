@@ -76,6 +76,11 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $(document).ready(function () {
                     $scope.resizeSingle();
                 });
+
+                $scope.removeWidget = function(){
+                    $scope.$emit('mgdwidget-remove', {wid: $scope.widgetid});
+                    $scope.$broadcast('external-remove');
+                }
             }
         };
     });

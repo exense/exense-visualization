@@ -41,10 +41,12 @@ function DefaultChartOptions(chartHeight, chartWidth, innerContainerHeight, inne
     };
 };
 
-function DefaultDashboard(widget) {
+function DefaultDashboard(widgets) {
     return {
         title: 'New dashboard',
-        widgets: [],
+        widgets: new IdIndexArray(widgets, function (oid) {
+            console.log('[widgets] ' + oid + '--default removal--');
+        }),
         mgrstate: {
             globalsettings: [{ "key": "__eId__", "value": "??", "isDynamic": false }],
             globalsettingsname: 'Global Settings',

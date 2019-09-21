@@ -20,6 +20,7 @@ angular.module('dashletcomssrv', [])
         };
 
         dashletcomssrv.unregisterWidget = function (dashletid) {
+            console.log('unregistering ' + dashletid);
             dashletcomssrv.masters.removeIfExists(dashletid);
         };
 

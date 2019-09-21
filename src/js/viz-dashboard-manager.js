@@ -11,8 +11,8 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap'])
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard-manager.html'),
             controller: function ($scope) {
                 $scope.dwrap = new IdIndexArray($scope.dashboards, function(oid){
-                    console.log('[dashboards] removing ' + oid);
-                    console.log($scope.dwrap.getById(oid));
+                    //console.log('[dashboards] removing ' + oid);
+                    $scope.dwrap.getById(oid).widgets.removeAll();
                 });
 
                 // default tab (1st)
@@ -47,7 +47,7 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap'])
                 });
 
                 $scope.$on('dashboard-new', function (event, arg) {
-                    $scope.dwrap.addNew(new DefaultDashboard());
+                    $scope.dwrap.addNew(new DefaultDashboard([]));
                     $scope.mgrtabstate = $scope.dwrap.getId($scope.dwrap.getByIndex($scope.dwrap.count() - 1));
                 });
 

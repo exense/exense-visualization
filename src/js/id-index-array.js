@@ -112,6 +112,9 @@ function IdIndexArray(arrayArg, onRemoveFunctionArg) {
         },
         getAsArray: function(){
             return this.array;
+        },
+        setOnRemove: function(newOnRemoveFunction){
+            this.onRemoveFunction = newOnRemoveFunction;
         }
     };
 };
