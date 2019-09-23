@@ -1,0 +1,43 @@
+<div ng-attr-class="colmdclass {{widgetwidth}}" ng-style="{height: state.shared.options.innercontainer.height + state.shared.options.innercontainer.offset +'px'}">
+        <div class="dashletcontainer" ng-style="{height: state.shared.options.innercontainer.height + state.shared.options.innercontainer.offset +'px'}">
+                <ul class="ul-control">
+
+                        <li class="li-title">
+                                <span ng-if="state.shared.chevron" class="title glyphicon glyphicon-chevron-down glyphicon-control"
+                                        ng-click="toggleChevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
+                                <span ng-if="!state.shared.chevron" class="title glyphicon glyphicon-chevron-right glyphicon-control"
+                                        ng-click="toggleChevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
+                                <span class="title">{{widgetid}} : {{dashlettitle}}</span>
+                        </li>
+                        <li class="li-control">
+                                <span class="glyphicon glyphicon-remove glyphicon-control" ng-click="removeWidget()"
+                                        href="#"></span>
+                        </li>
+                        <div ng-if="widgetwidth == 'col-md-6'">
+                                <li class="li-control">
+                                        <span class="glyphicon glyphicon-resize-full glyphicon-control" ng-click="emitExtend()"
+                                                href="#"></span>
+                                </li>
+                        </div>
+                        <div ng-if="widgetwidth == 'col-md-12'">
+                                <li class="li-control">
+                                        <span class="glyphicon glyphicon-resize-small glyphicon-control" ng-click="emitReduce()"
+                                                href="#"></span>
+                                </li>
+                        </div>
+                        <li class="li-control">
+                                <span class="glyphicon glyphicon-arrow-right glyphicon-control" ng-click="$emit('mgdwidget-moveRight', {wid: widgetid})"
+                                        href="#"></span>
+                        </li>
+                        <li class="li-control">
+                                <span class="glyphicon glyphicon-arrow-left glyphicon-control" ng-click="$emit('mgdwidget-moveLeft', {wid: widgetid})"
+                                        href="#"></span>
+                        </li>
+                        <li class="li-control">
+                                <span class="glyphicon glyphicon-duplicate glyphicon-control" ng-click="$emit('mgdwidget-duplicate', {wid: widgetid})"
+                                        href="#"></span>
+                        </li>
+                </ul>
+                <viz-dashlet ng-if="state.shared.chevron" state="state" dashletid="widgetid" ></viz-dashlet>
+        </div>
+</div>
