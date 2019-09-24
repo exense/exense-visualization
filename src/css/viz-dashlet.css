@@ -1,3 +1,8 @@
+label{
+    margin: 0px;
+    padding: 0px;
+}
+
 .glyphicon-viz {
     color:  rgb(0, 240, 0);
     text-shadow: 1px 1px 1px #ccc;
@@ -16,6 +21,20 @@ svg.nvd3-svg{
 
 .viz-panel-body {
     padding: 0 !important;
+}
+
+div.panel-default.viz-panel-default > * > div.panel-body{
+    padding: 0px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+viz-query > * > div.panel-group{
+    margin: 2px;
+}
+
+hr.viz-hr{
+    margin: 8px;
 }
 
 .innercontainer {
@@ -141,7 +160,8 @@ label.viz-label.active:hover{
 }
 
 .form-wrapper {
-    margin-top: 10px;
+    margin: 0px;
+    padding: 0px;
 }
 
 .form-group{

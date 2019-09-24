@@ -49,10 +49,8 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div ng-if="state.query.inputtype == 'Controls'">
                     <div ng-if="state.query.controltype == 'Template'">
-                        <hr />
+                        <hr class="viz-hr" />
                         <div class="col-md-12 colcontain-grid">
                             <key-val-collection collection="state.query.datasource.service.controls.placeholders"
                                 collectionname="'Placeholders'"></key-val-collection>
@@ -61,8 +59,9 @@
                                 <div class="btn-group viz-btn-group">
                                     <textarea ng-model="state.query.datasource.service.controls.template.datasource.service.data"
                                         class="form-control" ng-change="change()" />
-                                    </div>
+                                </div>
                             </div>
+                        </div>
                     <div ng-if="state.query.controltype == 'RTM'">
                         <rtm-controls></rtm-controls>
                     </div>
@@ -77,6 +76,9 @@
                 </div>
             </div>
         </div>
+
+        <hr class="viz-hr" />
+
         <div class="row">
             <div class="col-md-12 colcontain-grid">
                 <label>Payload</label>
