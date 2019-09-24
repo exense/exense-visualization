@@ -61,7 +61,7 @@ function StaticPresets() {
                             }",
                             "postproc": {
                                 "save": {
-                                    "function": "function(response){return [{ placeholder : '__streamedSessionId__', value : response.data.payload.streamedSessionId, isDynamic : false }];}",
+                                    "function": "function(response){return [{ key : '__streamedSessionId__', value : response.data.payload.streamedSessionId, isDynamic : false }];}",
                                 }
                             }
                         },
@@ -102,7 +102,7 @@ function StaticPresets() {
                             }",
                             "postproc": {
                                 "save": {
-                                    "function": "function(response){return [{ placeholder : '__streamedSessionId__', value : response.data.payload.streamedSessionId, isDynamic : false }];}",
+                                    "function": "function(response){return [{ key : '__streamedSessionId__', value : response.data.payload.streamedSessionId, isDynamic : false }];}",
                                 }
                             }
                         },
