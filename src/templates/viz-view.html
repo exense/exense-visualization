@@ -22,5 +22,5 @@
 </div>
 
 <div ng-if="state.shared.options.chart.type.endsWith('Chart')" class="chartcontainer">
-    <nvd3 options='state.shared.options' data='chartData' style="text-align: center; justify-content: center;"></nvd3>
+    <nvd3 options="state.shared.options" api="indirection.api" data="chartData" config="{refreshDataOnly: false, deepWatchDataDepth: 0}" style="text-align: center; justify-content: center;"></nvd3>
 </div>

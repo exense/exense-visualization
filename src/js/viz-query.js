@@ -21,11 +21,15 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-view.html'),
             controller: function ($scope) {
+                $scope.indirection = {};
+                
                 $scope.$watch('state.data.transformed', function () {
-                    if ($scope.state.shared.options.chart.type === 'table')
+                    if ($scope.state.shared.options.chart.type === 'table'){
                         $scope.tableData = $scope.toTable($scope.state.data.transformed);
-                    if ($scope.state.shared.options.chart.type.endsWith('Chart'))
+                    }
+                    if ($scope.state.shared.options.chart.type.endsWith('Chart')){
                         $scope.chartData = $scope.toChart($scope.state.data.transformed);
+                    }
                 });
 
                 $scope.isPagingOff = function () {
