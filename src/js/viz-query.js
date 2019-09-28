@@ -21,11 +21,15 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-view.html'),
             controller: function ($scope) {
-                $scope.$watch('state.data.transformed', function () {
-                    if ($scope.state.shared.options.chart.type === 'table')
-                        $scope.tableData = $scope.toTable($scope.state.data.transformed);
-                    if ($scope.state.shared.options.chart.type.endsWith('Chart'))
-                        $scope.chartData = $scope.toChart($scope.state.data.transformed);
+                $scope.$watch('state.data.transformed', function (newvalue) {
+                    if (newvalue && newvalue.dashdata) {
+                        if ($scope.state.shared.options.chart.type === 'table') {
+                            $scope.tableData = $scope.toTable(newvalue.dashdata);
+                        }
+                        if ($scope.state.shared.options.chart.type.endsWith('Chart')) {
+                            $scope.chartData = $scope.toChart(newvalue.dashdata);
+                        }
+                    }
                 });
 
                 $scope.isPagingOff = function () {
@@ -185,8 +189,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.$on('isMaster-changed', function (event, newValue) {
                     if (!newValue) {
                         dashletcomssrv.registerWidget($scope.widgetid, $scope.state.shared.config.dashlettitle);
-                        $scope.unwatchMaster = $scope.$watch('state.data.rawresponse', function (newValue) {
-                            dashletcomssrv.updateMasterValue($scope.widgetid, angular.toJson(newValue));
+                        //updating both values upon change on transformed for optimization/simplicity
+                        // could be two distinct updates via service
+                        $scope.unwatchMaster = $scope.$watch('state.data.transformed', function (newValue) {
+                            dashletcomssrv.updateMasterValue($scope.widgetid, { transformed: angular.toJson(newValue.dashdata), raw: angular.toJson($scope.state.data.rawresponse.dashdata)});
                         });
                     }
                     else {
@@ -206,10 +212,21 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     if ($scope.state.shared.config.slave) {
                         var unwatcher = $scope.$watch(function () {
                             return dashletcomssrv.buffer[masterid];
-                        }, function (newValue) {
+                        }, function (newvalue) {
                             try {
-                                $scope.state.data.rawresponse = JSON.parse(newValue);
-                            }catch(e){
+                                if ($scope.state.shared.config.target) {
+                                    // watcher not firing if using bracket syntax...
+                                    var target = $scope.state.shared.config.target;
+                                    if (target === 'state.data.transformed') {
+                                        $scope.state.data.transformed = { dashdata: JSON.parse(newvalue.transformed) };
+                                    }
+                                    if (target === 'state.data.rawresponse') {
+                                        $scope.state.data.rawresponse = { dashdata: JSON.parse(newvalue.raw) };
+                                    }
+                                } else {
+                                    console.log('slave target is undefined.')
+                                }
+                            } catch (e) {
                                 console.log(e);
                             }
                         });

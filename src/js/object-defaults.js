@@ -78,7 +78,8 @@ function DefaultWidget(displaymode, presets, chartHeightSmall, chartWidthSmall, 
                     master: false,
                     slave: false,
                     masterinput: 'empty',
-                    slaveoutput: 'empty too'
+                    slaveoutput: 'empty too',
+                    target: 'state.data.transformed',
                 },
                 global: {},
                 http: {}

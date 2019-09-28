@@ -106,16 +106,14 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 };
 
                 $scope.loadData = function (response, proctarget) {
-                    var rawresponse = response;
                     if ($scope.state.query.type === 'Simple') {
-                        $scope.state.shared.http.rawserviceresponse = rawresponse;
+                        $scope.state.shared.http.rawserviceresponse = response;
                     }
                     if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
                             try {
-                                // if has consumed stream
+                                // stream consumed
                                 if (runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
-                                    console.log('stream consumed.')
                                     $scope.clearAsync();
                                 }
                             } catch (e) {
@@ -123,16 +121,12 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 $scope.clearAsync();
                             }
                         }
-                        $scope.state.shared.http.rawcallbackresponse = rawresponse;
+                        $scope.state.shared.http.rawcallbackresponse = response;
                     }
-                    $scope.state.data.rawresponse = rawresponse;
+                    $scope.state.data.rawresponse = { dashdata : response };
                 };
 
                 $scope.$watch('state.data.rawresponse', function (newValue) {
-                    if ($scope.state.shared.config.slave) {
-                        console.log('slave read new value.')
-                    }
-
                     var proctarget = undefined;
                     if ($scope.state.query.type === 'Simple') {
                         proctarget = $scope.state.query.datasource.service;
@@ -140,8 +134,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.query.type === 'Async') {
                         proctarget = $scope.state.query.datasource.callback;
                     }
-                    if (proctarget && proctarget.postproc) { // due to watch init
-                        $scope.state.data.transformed = runResponseProc(proctarget.postproc.transform.function, newValue);
+                    if (proctarget && proctarget.postproc && newValue) { // due to watch init
+                        $scope.state.data.transformed = { dashdata : runResponseProc(proctarget.postproc.transform.function, newValue.dashdata) };
                     }
                     $scope.isOngoingQuery = false;
                 });
