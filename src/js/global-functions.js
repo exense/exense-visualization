@@ -27,7 +27,7 @@ var resolveTemplateURL = function (containername, componentname) {
     return templateUrl;
 }
 
-var setIntervalDefault = 5000;
+var setIntervalDefault = 2000;
 
 var runResponseProc = function (postProc, response) {
     return eval('(' + postProc + ')(response)');

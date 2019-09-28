@@ -162,7 +162,7 @@ function StaticPresets() {
                         "paged": {
                             "ispaged": "On",
                             "offsets": {
-                                "first": { "vid": "__FACTOR__", "start": "return 0;", "next": "return value + 1;", "previous": "if(value > 0) return value - 1;" },
+                                "first": { "vid": "__FACTOR__", "start": "return 0;", "next": "return value + 1;", "previous": "if(value > 0){ return value - 1;} else{ return 0;}" },
                                 "second": {}
                             }
                         }

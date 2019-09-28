@@ -151,7 +151,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
 
                 //Master-slave
-                
+
                 $scope.undoMaster = function () {
                     console.log($scope.widgetid + ': undoMaster')
                     // we shouldn't be registered if we don't have an unwatcher
@@ -351,8 +351,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.$on('globalsettings-change', function (event, arg) {
                     $scope.globalsettings = arg.collection;
 
-                    // ignoring case where no template has been loaded yet
-                    if ($scope.state.query.controls.template) {
+                    // when no template has been loaded, just save the data, no need to trigger an update
+                    if ($scope.state.query.controls && $scope.state.query.controls.template) {
                         $scope.change(arg.async);
                     }
                 });
@@ -361,10 +361,12 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     var phcopy = JSON.parse(JSON.stringify($scope.state.query.controls.template.placeholders));
                     var gscopy = JSON.parse(JSON.stringify($scope.globalsettings));
                     var pagingph = [];
-                    console.log($scope.state)
+                    
                     if ($scope.state.query.controls.template && $scope.state.query.paged.ispaged === 'On') {
                         pagingph.push({ key: $scope.state.query.paged.offsets.first.vid, value: $scope.state.query.paged.offsets.first.state });
-                        pagingph.push({ key: $scope.state.query.paged.offsets.second.vid, value: $scope.state.query.paged.offsets.second.state });
+                        if ($scope.state.query.paged.offsets.second) {
+                            pagingph.push({ key: $scope.state.query.paged.offsets.second.vid, value: $scope.state.query.paged.offsets.second.state });
+                        }
                     }
                     console.log('merging paging:')
                     console.log(pagingph)
@@ -380,14 +382,28 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.query.controls.template.templatedParams = template.templatedParams;
                     $scope.state.query.controls.template.placeholders = template.placeholders;
 
+                    // already updated due to paging event/callback
+                    //$scope.change();
+
                     $scope.$emit('templateph-loaded');
                 };
+
+                $scope.$on('update-template-nofire', function(){
+                    $scope.change();    
+                });
+
+                $scope.$on('update-template', function(){
+                    $scope.change();
+                    $scope.$emit('template-updated');
+                });
 
                 $scope.change = function (async) {
                     var appliedTemplate = $scope.processTemplate();
                     $scope.state.query.datasource.service.data = appliedTemplate.data;
                     $scope.state.query.datasource.service.params = appliedTemplate.params;
                 }
+
+                $scope.$emit('dashletinput-ready');
             }
         };
     })

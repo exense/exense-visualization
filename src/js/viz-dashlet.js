@@ -40,11 +40,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     try {
                         $scope.isOngoingQuery = true;
                         var srv = $scope.state.query.datasource.service;
-                        if(!srv.params){
+                        if (!srv.params) {
                             srv.params = ""; // prevent "undefined" string from being concatenated
                         }
                         $scope.state.shared.http.servicesent = 'url :' + JSON.stringify(srv.url + srv.params) + '; payload:' + JSON.stringify(srv.data);
-                        $scope.executeHttp(srv.method, srv.url+srv.params, srv.data, $scope.dispatchSuccessResponse, srv, $scope.dispatchErrorResponse);
+                        $scope.executeHttp(srv.method, srv.url + srv.params, srv.data, $scope.dispatchSuccessResponse, srv, $scope.dispatchErrorResponse);
                     } catch (e) {
                         console.log('exception thrown while firing query: ' + e);
                     }
@@ -96,7 +96,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         var executionFunction = function () {
                             $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
                         };
-                        $scope.asyncInterval = setInterval(executionFunction,setIntervalDefault);
+                        $scope.asyncInterval = setInterval(executionFunction, setIntervalDefault);
                         executionFunction(); //execute once immmediately;
                     }
                 }
@@ -146,49 +146,53 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 });
 
-                $scope.$on('templateph-loaded', function () {
-                    $scope.initPaging();
-                });
-
                 // Paging
 
+                // also initPaging() on barchevron (back to config)?
+                $scope.$on('templateph-loaded', function () {
+                    if ($scope.state.query.controls
+                        && $scope.state.query.controls.template
+                        && $scope.state.query.paged.ispaged) {
+                        $scope.initPaging();
+                    }
+                });
+
                 $scope.$on('firenext', function () {
-                    console.log('firenext')
                     $scope.nextPaging();
-                    $scope.fireQuery();
                 });
 
                 $scope.$on('fireprevious', function () {
-                    console.log('fireprevious')
                     $scope.previousPaging();
+                });
+
+                $scope.$on('template-updated', function () {
                     $scope.fireQuery();
                 });
-                
+
                 $scope.initPaging = function () {
-                    var curtmplt = $scope.state.query.controls.template;
-                    if (curtmplt.paged
-                        && curtmplt.paged.offsets
-                        && curtmplt.paged.offsets.first) {
-                        curtmplt.paged.offsets.first.state = runValueFunction(curtmplt.paged.offsets.first.start);
-                        console.log(curtmplt.paged.offsets.first.state);
-                        if (curtmplt.paged.offsets.second) {
-                            curtmplt.paged.offsets.second.state = runValueFunction(curtmplt.paged.offsets.second.start);
+                    var paged = $scope.state.query.paged;
+                    if (paged && paged.offsets && paged.offsets.first) {
+                        paged.offsets.first.state = runValueFunction(paged.offsets.first.start);
+                        if (paged.offsets.second) {
+                            paged.offsets.second.state = runValueFunction(paged.offsets.second.start);
                         }
                     }
+                    $scope.$broadcast('update-template-nofire');
                 }
 
                 $scope.nextPaging = function () {
-                    var curtmplt = $scope.state.query.controls.template;
-                    console.log('firstState=' + curtmplt.paged.offsets.first.state);
-                    curtmplt.paged.offsets.first.state = runValueFunction(curtmplt.paged.offsets.first.next, curtmplt.paged.offsets.first.state);
-                    console.log('newfirstState=' + curtmplt.paged.offsets.first.state);
-                    curtmplt.paged.offsets.second.state = runValueFunction(curtmplt.paged.offsets.second.next, curtmplt.paged.offsets.second.state);
+                    var paged = $scope.state.query.paged;
+                    paged.offsets.first.state = runValueFunction(paged.offsets.first.next, paged.offsets.first.state);
+                    paged.offsets.second.state = runValueFunction(paged.offsets.second.next, paged.offsets.second.state);
+                    $scope.$broadcast('update-template');
                 }
 
                 $scope.previousPaging = function () {
-                    var curtmplt = $scope.state.query.controls.template;
-                    curtmplt.paged.offsets.first.state = runValueFunction(curtmplt.paged.offsets.first.previous, curtmplt.paged.offsets.first.state);
-                    curtmplt.paged.offsets.second.state = runValueFunction(curtmplt.paged.offsets.second.previous, curtmplt.paged.offsets.second.state);
+                    var paged = $scope.state.query.paged;
+                    paged.offsets.first.state = runValueFunction(paged.offsets.first.previous, paged.offsets.first.state);
+                    console.log('firstState after previous:' + paged.offsets.first.state);
+                    paged.offsets.second.state = runValueFunction(paged.offsets.second.previous, paged.offsets.second.state);
+                    $scope.$broadcast('update-template');
                 }
             }
         };
