@@ -9,7 +9,8 @@
                                         ng-click="toggleChevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
                                 <span class="title">{{widgetid}} : {{dashlettitle}}</span>
                         </li>
-                        <li class="li-control">
+
+                        <li class="li-control" ng-show="displaymode === 'managed'">
                                 <span class="glyphicon glyphicon-remove glyphicon-control" ng-click="removeWidget()"
                                         href="#"></span>
                         </li>
@@ -33,7 +34,7 @@
                                 <span class="glyphicon glyphicon-arrow-left glyphicon-control" ng-click="$emit('mgdwidget-moveLeft', {wid: widgetid})"
                                         href="#"></span>
                         </li>
-                        <li class="li-control">
+                        <li class="li-control" ng-show="displaymode === 'managed'">
                                 <span class="glyphicon glyphicon-duplicate glyphicon-control" ng-click="$emit('mgdwidget-duplicate', {wid: widgetid})"
                                         href="#"></span>
                         </li>

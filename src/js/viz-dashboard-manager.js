@@ -6,7 +6,8 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
             restrict: 'E',
             scope: {
                 presets: '=',
-                dashboards: '='
+                dashboards: '=',
+                displaymode: '='
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard-manager.html'),
             controller: function ($scope, dashletcomssrv) {

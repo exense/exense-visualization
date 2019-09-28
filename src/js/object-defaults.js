@@ -56,7 +56,7 @@ function DefaultDashboard(widgets) {
     };
 }
 
-function DefaultWidget(presets, chartHeightSmall, chartWidthSmall, innerContainerHeightSmall, innerContainerWidthSmall) {
+function DefaultWidget(displaymode, presets, chartHeightSmall, chartWidthSmall, innerContainerHeightSmall, innerContainerWidthSmall) {
     return {
         widgetWidth: 'col-md-6',
         state: {
@@ -68,6 +68,7 @@ function DefaultWidget(presets, chartHeightSmall, chartWidthSmall, innerContaine
             },
             shared: {
                 presets: presets,
+                displaymode: displaymode,
                 options: new DefaultChartOptions(chartHeightSmall, chartWidthSmall, innerContainerHeightSmall, innerContainerWidthSmall,
                     'lineChart'),
                 config: {

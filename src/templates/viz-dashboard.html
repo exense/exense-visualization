@@ -1,5 +1,5 @@
 <div class="well secondwell" style="justify-content: center; text-align: center;">
-    <div class="row">
+    <div class="row" ng-show="displaymode === 'managed'">
         <ul class="ul-control-g">
             <li class="li-title">
                 <span ng-show="mgrstate.globalsettingschevron" class="title glyphicon glyphicon-chevron-down glyphicon-control" ng-click="toggleChevron()"
@@ -29,7 +29,7 @@
     </div>
     <div class="row">
         <div ng-repeat="o in wwrap.getAsArray() track by o.oid">
-            <viz-mgd-widget state="o.state" widgetwidth="o.widgetWidth" widgetid="o.oid" ></viz-mgd-widget>
+            <viz-mgd-widget displaymode="displaymode" state="o.state" widgetwidth="o.widgetWidth" widgetid="o.oid" ></viz-mgd-widget>
         </div>
     </div>
 

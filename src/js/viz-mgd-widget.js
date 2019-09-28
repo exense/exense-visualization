@@ -6,6 +6,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
         return {
             restrict: 'E',
             scope: {
+                displaymode: '=',
                 options: '=',
                 widgetwidth: '=',
                 widgetid: '=',

@@ -7,6 +7,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             scope: {
                 dashboard: '=',
                 dashboardid: '=',
+                displaymode: '=',
                 presets: '=',
                 mgrstate: '='
             },
@@ -103,7 +104,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
 
                 $scope.$on('addwidget', function (event, arg) {
                     if ($scope.dashboardid === arg.dashboardid) {
-                        var newWidgetId = $scope.wwrap.addNew(new DefaultWidget($scope.presets, $scope.chartHeightSmall, $scope.chartWidthSmall, $scope.innerContainerHeightSmall, $scope.innerContainerWidthSmall));
+                        var newWidgetId = $scope.wwrap.addNew(new DefaultWidget($scope.displaymode, $scope.presets, $scope.chartHeightSmall, $scope.chartWidthSmall, $scope.innerContainerHeightSmall, $scope.innerContainerWidthSmall));
                     }
                 });
 
