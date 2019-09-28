@@ -99,16 +99,16 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 };
 
-                $scope.clearAsync = function(){
+                $scope.clearAsync = function () {
                     if ($scope.asyncInterval) {
                         clearInterval($scope.asyncInterval);
                     }
                 };
 
                 $scope.loadData = function (response, proctarget) {
+                    var rawresponse = response;
                     if ($scope.state.query.type === 'Simple') {
-                        //$scope.state.data.serviceraw = response;
-                        $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
+                        $scope.state.shared.http.rawserviceresponse = rawresponse;
                     }
                     if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
@@ -123,25 +123,32 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 $scope.clearAsync();
                             }
                         }
-                        //$scope.state.data.callbackraw = response;
-                        $scope.state.shared.http.rawcallbackresponse = JSON.stringify(response);
+                        $scope.state.shared.http.rawcallbackresponse = rawresponse;
                     }
-                    $scope.state.data.transformed = runResponseProc(proctarget.postproc.transform.function, response);
-                    //console.log($scope.state.data);
-
-                    $scope.isOngoingQuery = false;
+                    $scope.state.data.rawresponse = rawresponse;
                 };
 
-                $scope.loadDataAsSlave = function (transformed) {
-                    $scope.state.data.transformed = transformed;
-                }
+                $scope.$watch('state.data.rawresponse', function (newValue) {
+                    if ($scope.state.shared.config.slave) {
+                        console.log('slave read new value.')
+                    }
+
+                    var proctarget = undefined;
+                    if ($scope.state.query.type === 'Simple') {
+                        proctarget = $scope.state.query.datasource.service;
+                    }
+                    if ($scope.state.query.type === 'Async') {
+                        proctarget = $scope.state.query.datasource.callback;
+                    }
+                    if (proctarget && proctarget.postproc) { // due to watch init
+                        $scope.state.data.transformed = runResponseProc(proctarget.postproc.transform.function, newValue);
+                    }
+                    $scope.isOngoingQuery = false;
+                });
 
                 $scope.$watch('state.shared.config.autorefresh', function (newValue) {
-                    console.log('toggling, newValue='+newValue);
                     if (newValue === 'On') {
-                        console.log('Activating autorefresh.')
                         $scope.autorefreshInterval = setInterval(function () {
-                            console.log('Autorefresh firing. isOngoingQuery:' + $scope.isOngoingQuery);
                             if (!$scope.isOngoingQuery) {
                                 try {
                                     $scope.fireQuery();
@@ -153,7 +160,6 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             }
                         }, setIntervalDefault);
                     } else {
-                        console.log('Deactivating autorefresh.')
                         if ($scope.autorefreshInterval) {
                             clearInterval($scope.autorefreshInterval);
                         }

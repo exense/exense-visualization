@@ -185,7 +185,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.$on('isMaster-changed', function (event, newValue) {
                     if (!newValue) {
                         dashletcomssrv.registerWidget($scope.widgetid, $scope.state.shared.config.dashlettitle);
-                        $scope.unwatchMaster = $scope.$watch('state.data.transformed', function (newValue) {
+                        $scope.unwatchMaster = $scope.$watch('state.data.rawresponse', function (newValue) {
                             dashletcomssrv.updateMasterValue($scope.widgetid, angular.toJson(newValue));
                         });
                     }
@@ -207,11 +207,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         var unwatcher = $scope.$watch(function () {
                             return dashletcomssrv.buffer[masterid];
                         }, function (newValue) {
-                            // Event somehow not propagating right, setting value directly for now
-                            // Update: event was not propagating due to controller out of scope
-                            // This is not an issue anymore with most responsibilities at dashlet level
-                            //$scope.$broadcast('slavedata-received', parsed);
-                            $scope.state.data.transformed = JSON.parse(newValue);
+                            try {
+                                $scope.state.data.rawresponse = JSON.parse(newValue);
+                            }catch(e){
+                                console.log(e);
+                            }
                         });
                         $scope.unwatchSlave = unwatcher;
                     }
@@ -355,7 +355,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     var phcopy = JSON.parse(JSON.stringify($scope.state.query.controls.template.placeholders));
                     var gscopy = JSON.parse(JSON.stringify($scope.globalsettings));
                     var pagingph = [];
-                    
+
                     if ($scope.state.query.controls.template && $scope.state.query.paged.ispaged === 'On') {
                         pagingph.push({ key: $scope.state.query.paged.offsets.first.vid, value: $scope.state.query.paged.offsets.first.state });
                         if ($scope.state.query.paged.offsets.second) {
@@ -380,11 +380,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.$emit('templateph-loaded');
                 };
 
-                $scope.$on('update-template-nofire', function(){
-                    $scope.change();    
+                $scope.$on('update-template-nofire', function () {
+                    $scope.change();
                 });
 
-                $scope.$on('update-template', function(){
+                $scope.$on('update-template', function () {
                     $scope.change();
                     $scope.$emit('template-updated');
                 });
