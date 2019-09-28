@@ -45,10 +45,14 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     $scope.$broadcast('globalsettings-change', arg);
                 });
 
+                // Should not be necessary, just "cache locally" in component until GSettingd change
+                // and make sure that GSettings are sent via ready/go events upon loading the components
+                /*
                 $scope.$on('templateph-loaded', function () {
                     $scope.$broadcast('globalsettings-change', { 'collection': $scope.mgrstate.globalsettings });
                 });
-
+                */
+               
                 $scope.toggleChevron = function () {
                     $scope.mgrstate.globalsettingschevron = !$scope.mgrstate.globalsettingschevron;
                 };

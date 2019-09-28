@@ -51,6 +51,10 @@ div.dashboardtab > ul > li{
   border: 1px solid #333333 !important;
 }
 
+a:hover{
+  cursor: pointer !important;
+}
+
 div.dashboardtab > ul > li > a{
   color: rgb(0, 240, 0) !important;
   border: none !important;
