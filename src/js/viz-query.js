@@ -37,7 +37,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         $scope.chartData = $scope.toChart($scope.state.data.transformed);
                 });
 
-<<<<<<< HEAD
                 $scope.isPagingOff = function () {
                     if ($scope.state.query.controls
                         && $scope.state.query.controls.template
@@ -48,8 +47,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     }
                 }
 
-=======
->>>>>>> master
                 $scope.stringToColour = function (i) {
                     var num = (i + 1) * 500000;
                     if ((i % 2) == 0) {
@@ -276,7 +273,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.$emit('dashlettitle-change', {newValue : $scope.state.shared.config.dashlettitle})
                 };
 
-<<<<<<< HEAD
                 $scope.titleChange();
 
 
@@ -392,9 +388,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     //this is only an attempt. reregistration is avoided at service level
                     dashletcomssrv.registerWidget($scope.widgetid, $scope.state.shared.config.dashlettitle);
                 }
-=======
-                $scope.titleChange();                
->>>>>>> master
             }
         }
     })
@@ -469,13 +462,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.$on('globalsettings-change', function (event, arg) {
                     $scope.globalsettings = arg.collection;
 
-<<<<<<< HEAD
                     // when no template has been loaded, just save the data, no need to trigger an update
                     if ($scope.state.query.controls && $scope.state.query.controls.template) {
-=======
-                    // ignoring case where no template has been loaded yet
-                    if ($scope.state.query.datasource.service.controls.template) {
->>>>>>> master
                         $scope.change(arg.async);
                     }
                 });
@@ -483,7 +471,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.mergePlaceholders = function (placeholders) {
                     var phcopy = JSON.parse(JSON.stringify($scope.state.query.datasource.service.controls.placeholders));
                     var gscopy = JSON.parse(JSON.stringify($scope.globalsettings));
-<<<<<<< HEAD
                     var pagingph = [];
                     
                     if ($scope.state.query.controls.template && $scope.state.query.paged.ispaged === 'On') {
@@ -493,16 +480,12 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         }
                     }
                     return gscopy.concat(phcopy).concat(pagingph); // global settings dominate local placeholders
-=======
-                    return gscopy.concat(phcopy); // global settings dominate local placeholders
->>>>>>> master
                 };
 
                 $scope.loadTemplatePreset = function (template) {
                     if (!$scope.state.query.datasource.service.controls) {
                         $scope.state.query.datasource.service.controls = {};
                     }
-<<<<<<< HEAD
                     $scope.state.query.controls.template.templatedPayload = template.templatedPayload;
                     $scope.state.query.controls.template.templatedParams = template.templatedParams;
                     $scope.state.query.controls.template.placeholders = template.placeholders;
@@ -510,10 +493,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     // already updated due to paging event/callback
                     //$scope.change();
 
-=======
-                    $scope.state.query.datasource.service.controls.template = template.queryTemplate;
-                    $scope.state.query.datasource.service.controls.placeholders = template.placeholders;
->>>>>>> master
                     $scope.$emit('templateph-loaded');
                 };
 
