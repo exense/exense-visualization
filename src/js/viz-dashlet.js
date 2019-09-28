@@ -45,8 +45,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     try {
                         $scope.isOngoingQuery = true;
                         var srv = $scope.state.query.datasource.service;
-                        $scope.state.shared.http.servicesent = 'url :' + JSON.stringify(curtmplt.url + curtmplt.params) + '; payload:' + JSON.stringify(curtmplt.data);
-                        $scope.executeHttp(curtmplt.method, curtmplt.url+curtmplt.params, curtmplt.data, $scope.dispatchSuccessResponse, curtmplt, $scope.dispatchErrorResponse);
+                        $scope.state.shared.http.servicesent = 'url :' + JSON.stringify(srv.url + srv.params) + '; payload:' + JSON.stringify(srv.data);
+                        $scope.executeHttp(srv.method, srv.url+srv.params, srv.data, $scope.dispatchSuccessResponse, srv, $scope.dispatchErrorResponse);
                     } catch (e) {
                         console.log('exception thrown while firing query: ' + e);
                     }
@@ -164,30 +164,30 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 });
                 
                 $scope.initPaging = function () {
-                    var curtmplt = $scope.state.query.controls.template;
-                    if (curtmplt.paged
-                        && curtmplt.paged.offsets
-                        && curtmplt.paged.offsets.first) {
-                        curtmplt.paged.offsets.first.state = runValueFunction(curtmplt.paged.offsets.first.start);
-                        console.log(curtmplt.paged.offsets.first.state);
-                        if (curtmplt.paged.offsets.second) {
-                            curtmplt.paged.offsets.second.state = runValueFunction(curtmplt.paged.offsets.second.start);
+                    var curpaged = $scope.state.query.paged;
+                    if (curpaged
+                        && curpaged.offsets
+                        && curpaged.offsets.first) {
+                        curpaged.offsets.first.state = runValueFunction(curpaged.offsets.first.start);
+                        console.log(curpaged.offsets.first.state);
+                        if (curpaged.offsets.second) {
+                            curpaged.offsets.second.state = runValueFunction(curpaged.offsets.second.start);
                         }
                     }
                 }
 
                 $scope.nextPaging = function () {
-                    var curtmplt = $scope.state.query.controls.template;
-                    console.log('firstState=' + curtmplt.paged.offsets.first.state);
-                    curtmplt.paged.offsets.first.state = runValueFunction(curtmplt.paged.offsets.first.next, curtmplt.paged.offsets.first.state);
-                    console.log('newfirstState=' + curtmplt.paged.offsets.first.state);
-                    curtmplt.paged.offsets.second.state = runValueFunction(curtmplt.paged.offsets.second.next, curtmplt.paged.offsets.second.state);
+                    var curpaged = $scope.state.query.paged;
+                    console.log('firstState=' + curpaged.offsets.first.state);
+                    curpaged.offsets.first.state = runValueFunction(curpaged.offsets.first.next, curpaged.offsets.first.state);
+                    console.log('newfirstState=' + curpaged.offsets.first.state);
+                    curpaged.offsets.second.state = runValueFunction(curpaged.offsets.second.next, curpaged.offsets.second.state);
                 }
 
                 $scope.previousPaging = function () {
-                    var curtmplt = $scope.state.query.controls.template;
-                    curtmplt.paged.offsets.first.state = runValueFunction(curtmplt.paged.offsets.first.previous, curtmplt.paged.offsets.first.state);
-                    curtmplt.paged.offsets.second.state = runValueFunction(curtmplt.paged.offsets.second.previous, curtmplt.paged.offsets.second.state);
+                    var curpaged = $scope.state.query.paged;
+                    curpaged.offsets.first.state = runValueFunction(curpaged.offsets.first.previous, curpaged.offsets.first.state);
+                    curpaged.offsets.second.state = runValueFunction(curpaged.offsets.second.previous, curpaged.offsets.second.state);
                 }
 
 

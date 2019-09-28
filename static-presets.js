@@ -133,14 +133,19 @@ function StaticPresets() {
             templates: [
                 {
                     "name": 'RTM Measurements Template',
-                    "placeholders": [{ "key": "__eId__", "value": "?", "isDynamic" : false }, { "key": "__name__", "value": "?", "isDynamic" : false }, { "key": "__minValue__", "value": "0", "isDynamic" : false }, { "key": "__maxValue__", "value": "999999999", "isDynamic" : false }],
+                    "placeholders": [{ "key": "__eId__", "value": "?", "isDynamic": false }, { "key": "__name__", "value": "?", "isDynamic": false }, { "key": "__minValue__", "value": "0", "isDynamic": false }, { "key": "__maxValue__", "value": "999999999", "isDynamic": false }],
+                    "templatedPayload": "{ \"selectors1\": [{ \"textFilters\": [{ \"key\": \"eId\", \"value\": \"__eId__\", \"regex\": \"false\" }, { \"key\": \"name\", \"value\": \"__name__\", \"regex\": \"false\" }], \"numericalFilters\": [{\"key\":\"begin\",\"minValue\":\"__minValue__\",\"maxValue\":\"__maxValue__\"}] }], \"serviceParams\": { \"measurementService.nextFactor\": \"__FACTOR__\", \"aggregateService.sessionId\": \"defaultSid\", \"aggregateService.granularity\": \"auto\", \"aggregateService.groupby\": \"name\", \"aggregateService.cpu\": \"1\", \"aggregateService.partition\": \"8\", \"aggregateService.timeout\": \"600\" } }",
+                    "templatedParams": "?something=__TOTO__",
                     "queryTemplate": {
+                        "inputtype": "Controls",
+                        "controltype": "Template",
                         "type": "Simple",
                         "datasource": {
                             "service": {
                                 "url": "/rtm/rest/measurement/find",
                                 "method": "Post",
-                                "data": "{ \"selectors1\": [{ \"textFilters\": [{ \"key\": \"eId\", \"value\": \"__eId__\", \"regex\": \"false\" }, { \"key\": \"name\", \"value\": \"__name__\", \"regex\": \"false\" }], \"numericalFilters\": [{\"key\":\"begin\",\"minValue\":\"__minValue__\",\"maxValue\":\"__maxValue__\"}] }], \"serviceParams\": { \"measurementService.nextFactor\": \"0\", \"aggregateService.sessionId\": \"defaultSid\", \"aggregateService.granularity\": \"auto\", \"aggregateService.groupby\": \"name\", \"aggregateService.cpu\": \"1\", \"aggregateService.partition\": \"8\", \"aggregateService.timeout\": \"600\" } }",
+                                "data": "",
+                                "params": "",
                                 "preproc": {
                                     "replace": {
                                         "target": "data",
@@ -152,6 +157,13 @@ function StaticPresets() {
                                         "function": "function (response) {\r\n    var x = 'begin', y = 'value', z = 'name';\r\n    var retData = [], index = {};\r\n    var payload = response.data.payload;\r\n    for (var i = 0; i < payload.length; i++) {\r\n        retData.push({\r\n            x: payload[i][x],\r\n            y: payload[i][y],\r\n            z: payload[i][z]\r\n        });\r\n    }\r\n    return retData;\r\n}",
                                     }
                                 }
+                            }
+                        },
+                        "paged": {
+                            "ispaged": "On",
+                            "offsets": {
+                                "first": { "vid": "__FACTOR__", "start": "return 0;", "next": "return value + 1;", "previous": "if(value > 0) return value - 1;" },
+                                "second": {}
                             }
                         }
                     }
