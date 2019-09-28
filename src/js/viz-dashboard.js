@@ -108,7 +108,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
 
                     // parameterize via arguments or server-originating conf & promise?
                     $scope.headersHeight = 250;
-                    $scope.chartToContainer = 35;
+                    $scope.chartToContainer = 15;
                     // $scope.chartHeightSmall = 250;
 
                     $scope.chartHeightSmall = (sHeight - $scope.headersHeight) / 2 - $scope.chartToContainer;
