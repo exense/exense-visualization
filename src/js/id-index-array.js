@@ -100,18 +100,9 @@ function IdIndexArray(arrayArg) {
             return this.removeByIndex(index);
         },
         removeAll: function () {
-            console.log('[idindexarray] removeAll called. collection size:' + this.array.length);
             for (var i = 0; i < this.array.length; i++) {
-                try{
-                    console.log('[ITERATION '+i+']')
-                    this.removeByIndex(i);
-                }catch(e){
-                    console.log('error: ' + e);
-                }finally{
-                    console.log(i);
-                }
+                this.removeByIndex(i);
             }
-            console.log('[idindexarray] removall finished.')
         },
         getAsArray: function(){
             return this.array;

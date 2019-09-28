@@ -63,7 +63,6 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 };
 
                 $scope.executeHttp = function (method, url, payload, successcallback, successTarget, errorcallback) {
-                    console.log('executeHttp')
                     if (method === 'Get') { $http.get(url).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
                     if (method === 'Post') { $http.post(url, payload).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
                 };
@@ -190,7 +189,6 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.previousPaging = function () {
                     var paged = $scope.state.query.paged;
                     paged.offsets.first.state = runValueFunction(paged.offsets.first.previous, paged.offsets.first.state);
-                    console.log('firstState after previous:' + paged.offsets.first.state);
                     paged.offsets.second.state = runValueFunction(paged.offsets.second.previous, paged.offsets.second.state);
                     $scope.$broadcast('update-template');
                 }

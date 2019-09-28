@@ -11,7 +11,6 @@ var registerScript = function () {
     var filename = filenameSplit[filenameSplit.length - 1];
 
     vizScripts[filename] = scriptUrl;
-    //console.log(JSON.stringify(vizScripts));
 };
 registerScript();
 

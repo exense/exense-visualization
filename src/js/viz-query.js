@@ -153,7 +153,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 //Master-slave
 
                 $scope.undoMaster = function () {
-                    console.log($scope.widgetid + ': undoMaster')
                     // we shouldn't be registered if we don't have an unwatcher
                     dashletcomssrv.unregisterWidget($scope.widgetid);
                     if ($scope.unwatchMaster) {
@@ -185,7 +184,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 $scope.$on('isMaster-changed', function (event, newValue) {
                     if (!newValue) {
-                        console.log('registering dashlet with id:' + $scope.widgetid);
                         dashletcomssrv.registerWidget($scope.widgetid, $scope.state.shared.config.dashlettitle);
                         $scope.unwatchMaster = $scope.$watch('state.data.transformed', function (newValue) {
                             dashletcomssrv.updateMasterValue($scope.widgetid, angular.toJson(newValue));
@@ -213,8 +211,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                             // Update: event was not propagating due to controller out of scope
                             // This is not an issue anymore with most responsibilities at dashlet level
                             //$scope.$broadcast('slavedata-received', parsed);
-                            console.log('newValue')
-                            console.log(newValue);
                             $scope.state.data.transformed = JSON.parse(newValue);
                         });
                         $scope.unwatchSlave = unwatcher;
@@ -244,7 +240,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 $scope.$on('single-remove', function (event, arg) {
                     if (arg === $scope.widgetid) {
-                        console.log('single-remove targeting ' + arg + ' was received.');
                         $scope.prepareRemove();
                     }
                 });
@@ -254,7 +249,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 });
 
                 $scope.prepareRemove = function () {
-                    console.log('prepareRemove called.')
                     if ($scope.state.shared.config.master) {
                         dashletcomssrv.unregisterWidget($scope.widgetid);
                     }
@@ -368,8 +362,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                             pagingph.push({ key: $scope.state.query.paged.offsets.second.vid, value: $scope.state.query.paged.offsets.second.state });
                         }
                     }
-                    console.log('merging paging:')
-                    console.log(pagingph)
                     return gscopy.concat(phcopy).concat(pagingph); // global settings dominate local placeholders
                 };
 

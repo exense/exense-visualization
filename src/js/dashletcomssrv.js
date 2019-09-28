@@ -12,7 +12,6 @@ angular.module('dashletcomssrv', [])
         });
 
         dashletcomssrv.registerWidget = function (widgetid, dashlettitle) {
-            console.log('[dashletcomssrv] registering ' + widgetid);
             dashletcomssrv.masters.addIfAbsent({'oid' : widgetid, 'title': dashlettitle});
         };
 
@@ -21,7 +20,6 @@ angular.module('dashletcomssrv', [])
         };
 
         dashletcomssrv.unregisterWidget = function (widgetid) {
-            console.log('[dashletcomssrv] unregistering ' + widgetid);
             dashletcomssrv.masters.removeIfExists(widgetid);
         };
         
