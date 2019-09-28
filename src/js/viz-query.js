@@ -9,6 +9,15 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-query.html'),
             controller: function ($scope) {
+
+                $scope.$on('templateph-change', function (event, arg) {
+                    $scope.state.query.datasource.service.data = arg.data;
+                    if (arg.async) {
+                        $scope.$apply(function () {
+                            self.value = 0;
+                        });
+                    }
+                });
             }
         }
     })
@@ -28,6 +37,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         $scope.chartData = $scope.toChart($scope.state.data.transformed);
                 });
 
+<<<<<<< HEAD
                 $scope.isPagingOff = function () {
                     if ($scope.state.query.controls
                         && $scope.state.query.controls.template
@@ -38,6 +48,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     }
                 }
 
+=======
+>>>>>>> master
                 $scope.stringToColour = function (i) {
                     var num = (i + 1) * 500000;
                     if ((i % 2) == 0) {
@@ -105,8 +117,126 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 state: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-transform.html'),
-            controller: function ($scope) {
+            controller: function ($scope, $http) {
 
+                $scope.counter = 0;
+                $scope.queryFire = false;
+                $scope.isOngoingQuery = false;
+                $scope.autorefreshInterval = null;
+
+                $scope.$on('child-firequery', function (event, arg) {
+                    $scope.fireQuery();
+                });
+
+                $scope.$on('child-autorefresh-toggle', function (event, arg) {
+                    if (arg.newValue == true) {
+                        $scope.autorefreshInterval = setInterval(function () {
+                            if (!$scope.isOngoingQuery) {
+                                try {
+                                    $scope.fireQuery();
+                                } catch (e) {
+                                    console.log('exception thrown while firing query: ' + e);
+                                    $scope.isOngoingQuery = false;
+                                }
+                            }
+                        },
+                            setIntervalDefault);
+                    } else {
+                        clearInterval($scope.autorefreshInterval);
+                    }
+                });
+
+                $scope.fireQuery = function () {
+                    try {
+                        $scope.isOngoingQuery = true;
+                        $scope.counter++;
+                        var datasource = $scope.state.query.datasource.service;
+                        $scope.state.shared.http.servicesent = 'url :' + JSON.stringify(datasource.url) + '; payload:' + JSON.stringify(datasource.data);
+                        $scope.executeHttp(datasource.method, datasource.url, datasource.data, $scope.dispatchSuccessResponse, datasource, $scope.dispatchErrorResponse);
+                    } catch (e) {
+                        console.log('exception thrown while firing query: ' + e);
+                    }
+                };
+
+                $scope.dispatchAsync = function (response) {
+                    console.log('async:' + JSON.stringify(response));
+                };
+
+                $scope.dispatchErrorResponse = function (response) {
+                    console.log('error:' + JSON.stringify(response));
+                    if ($scope.asyncInterval) {
+                        clearInterval($scope.asyncInterval);
+                    }
+                    $scope.isOngoingQuery = false;
+                };
+
+                $scope.executeHttp = function (method, url, payload, successcallback, successTarget, errorcallback) {
+                    if (method === 'Get') { $http.get(url).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
+                    if (method === 'Post') { $http.post(url, payload).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
+                };
+
+                $scope.dispatchSuccessResponse = function (response, successTarget) {
+                    $scope.isOngoingQuery = false;
+                    if ($scope.state.query.type === 'Simple') {
+                        $scope.loadData(response, successTarget)
+                    }
+                    if ($scope.state.query.type === 'Async') {
+                        var scallback = $scope.state.query.datasource.callback;
+                        //$scope.state.data.serviceraw = response;
+                        $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
+                        if ($scope.state.query.datasource.service.postproc.save) {
+                            $scope.state.data.state = runResponseProc($scope.state.query.datasource.service.postproc.save.function, response);
+                        }
+                        var datatosend = scallback.data;
+                        var urltosend = scallback.url;
+                        if (scallback.preproc.replace) {
+                            if (scallback.preproc.replace.target === 'data') {
+                                datatosend = JSON.parse(runRequestProc(scallback.preproc.replace.function, datatosend, $scope.state.data.state));
+                            } else {
+                                if (scallback.preproc.replace.target === 'url') {
+                                    urltosend = JSON.parse(runRequestProc(scallback.preproc.replace.function, urltosend, $scope.state.data.state));
+                                }
+                            }
+                        }
+
+                        $scope.state.shared.http.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
+                        $scope.asyncInterval = setInterval(function () {
+                            $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
+                        },
+                            setIntervalDefault);
+                    }
+                }
+
+                $scope.loadData = function (response, proctarget) {
+                    if ($scope.state.query.type === 'Simple') {
+                        //$scope.state.data.serviceraw = response;
+                        $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
+                    }
+                    if ($scope.state.query.type === 'Async') {
+                        if ($scope.asyncInterval) {
+                            try {
+                                if (runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
+                                    clearInterval($scope.asyncInterval);
+                                }
+                            } catch (e) {
+                                console.log(e);
+                                clearInterval($scope.asyncInterval);
+                            }
+                        }
+                        //$scope.state.data.callbackraw = response;
+                        $scope.state.shared.http.rawcallbackresponse = JSON.stringify(response);
+                    }
+                    $scope.state.data.transformed = runResponseProc(proctarget.postproc.transform.function, response);
+                    //console.log($scope.state.data);
+                };
+
+                $scope.$on('slavedata-received', function(event, data){
+                    $scope.loadDataAsSlave(data);
+                });
+
+                $scope.loadDataAsSlave = function(transformed){
+                    $scope.state.data.transformed = transformed;
+                }
             }
         };
     })
@@ -119,7 +249,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 state: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
-            controller: function ($scope) {
+            controller: function ($scope, $http) {
 
                 $scope.state.shared.config.dashlettitle = $scope.state.title;
 
@@ -142,10 +272,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.$emit('master-loaded', m);
                 };
 
-                $scope.titleChange = function () {
-                    $scope.$emit('dashlettitle-change', { newValue: $scope.state.shared.config.dashlettitle })
+                $scope.titleChange = function(){
+                    $scope.$emit('dashlettitle-change', {newValue : $scope.state.shared.config.dashlettitle})
                 };
 
+<<<<<<< HEAD
                 $scope.titleChange();
 
 
@@ -261,6 +392,9 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     //this is only an attempt. reregistration is avoided at service level
                     dashletcomssrv.registerWidget($scope.widgetid, $scope.state.shared.config.dashlettitle);
                 }
+=======
+                $scope.titleChange();                
+>>>>>>> master
             }
         }
     })
@@ -272,7 +406,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 state: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-info.html'),
-            controller: function ($scope) { }
+            controller: function ($scope, $http) { }
         }
     })
     .directive('jsonText', function () {
@@ -325,35 +459,31 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 });
 
                 $scope.processTemplate = function (placeholders) {
-                    var data = runRequestProc(
-                        $scope.state.query.datasource.service.preproc.replace.function,
-                        $scope.state.query.controls.template.templatedPayload,
+                    return runRequestProc(
+                        $scope.state.query.datasource.service.controls.template.datasource.service.preproc.replace.function,
+                        $scope.state.query.datasource.service.controls.template.datasource.service.data,
                         evalDynamic($scope.mergePlaceholders()));
-
-                    var params = runRequestProc(
-                        $scope.state.query.datasource.service.preproc.replace.function,
-                        $scope.state.query.controls.template.templatedParams,
-                        evalDynamic($scope.mergePlaceholders()));
-
-                    return {
-                        data: data,
-                        params: params
-                    };
                 }
 
                 // integration with outer settings via events
                 $scope.$on('globalsettings-change', function (event, arg) {
                     $scope.globalsettings = arg.collection;
 
+<<<<<<< HEAD
                     // when no template has been loaded, just save the data, no need to trigger an update
                     if ($scope.state.query.controls && $scope.state.query.controls.template) {
+=======
+                    // ignoring case where no template has been loaded yet
+                    if ($scope.state.query.datasource.service.controls.template) {
+>>>>>>> master
                         $scope.change(arg.async);
                     }
                 });
 
                 $scope.mergePlaceholders = function (placeholders) {
-                    var phcopy = JSON.parse(JSON.stringify($scope.state.query.controls.template.placeholders));
+                    var phcopy = JSON.parse(JSON.stringify($scope.state.query.datasource.service.controls.placeholders));
                     var gscopy = JSON.parse(JSON.stringify($scope.globalsettings));
+<<<<<<< HEAD
                     var pagingph = [];
                     
                     if ($scope.state.query.controls.template && $scope.state.query.paged.ispaged === 'On') {
@@ -363,13 +493,16 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         }
                     }
                     return gscopy.concat(phcopy).concat(pagingph); // global settings dominate local placeholders
+=======
+                    return gscopy.concat(phcopy); // global settings dominate local placeholders
+>>>>>>> master
                 };
 
                 $scope.loadTemplatePreset = function (template) {
-                    $scope.state.query = template.queryTemplate;
-                    if (!$scope.state.query.controls) {
-                        $scope.state.query.controls = { template: {} };
+                    if (!$scope.state.query.datasource.service.controls) {
+                        $scope.state.query.datasource.service.controls = {};
                     }
+<<<<<<< HEAD
                     $scope.state.query.controls.template.templatedPayload = template.templatedPayload;
                     $scope.state.query.controls.template.templatedParams = template.templatedParams;
                     $scope.state.query.controls.template.placeholders = template.placeholders;
@@ -377,6 +510,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     // already updated due to paging event/callback
                     //$scope.change();
 
+=======
+                    $scope.state.query.datasource.service.controls.template = template.queryTemplate;
+                    $scope.state.query.datasource.service.controls.placeholders = template.placeholders;
+>>>>>>> master
                     $scope.$emit('templateph-loaded');
                 };
 
@@ -390,9 +527,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 });
 
                 $scope.change = function (async) {
-                    var appliedTemplate = $scope.processTemplate();
-                    $scope.state.query.datasource.service.data = appliedTemplate.data;
-                    $scope.state.query.datasource.service.params = appliedTemplate.params;
+                    $scope.$emit('templateph-change', { data: $scope.processTemplate(), async: async });
                 }
 
                 $scope.$emit('dashletinput-ready');

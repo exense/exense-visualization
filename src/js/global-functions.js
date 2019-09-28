@@ -3,25 +3,25 @@ var devTemplateFolder = '/templates/';
 
 var vizScripts = {};
 
-var registerScript = function () {
+var registerScript = function(){
     var scripts = document.getElementsByTagName("script");
     var scriptUrl = scripts[scripts.length - 1].src;
 
     var filenameSplit = scriptUrl.split("/");
-    var filename = filenameSplit[filenameSplit.length - 1];
+    var filename = filenameSplit[filenameSplit.length-1];
 
     vizScripts[filename] = scriptUrl;
 };
 registerScript();
 
-var resolveTemplateURL = function (containername, componentname) {
-    if (productionmode === false) {
+var resolveTemplateURL = function (containername, componentname){
+    if (productionmode === false){
         templateUrl = vizScripts[containername].replace(devJSFolder, devTemplateFolder)
-            .replace(containername, componentname)
-            + '?who=' + componentname
-            + '&anticache=' + getUniqueId();
-    } else {
-        templateUrl = vizScripts[productionFile].replace(productionFile, 'templates/' + componentname);
+                          .replace(containername, componentname)
+                           +'?who='+componentname
+                           +'&anticache=' + getUniqueId();
+    }else{
+        templateUrl = vizScripts[productionFile].replace(productionFile, 'templates/'+componentname);
     }
     return templateUrl;
 }
@@ -34,10 +34,6 @@ var runResponseProc = function (postProc, response) {
 
 var runRequestProc = function (postProc, requestFragment, workData) {
     return eval('(' + postProc + ')(requestFragment, workData)');
-};
-
-var runValueFunction = function (functionFragment, value) {
-    return eval('(function(value){' + functionFragment + '})(value)');
 };
 
 var runDynamicEval = function (expression) {
@@ -68,6 +64,6 @@ var getUniqueId = function () {
     return Math.random().toString(36).substr(2, 9);
 }
 
-var jsoncopy = function (obj) {
+var jsoncopy = function(obj){
     return JSON.parse(JSON.stringify(obj));
 }

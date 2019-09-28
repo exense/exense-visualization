@@ -10,7 +10,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 state: '='
             },
             templateUrl: resolveTemplateURL('viz-dashlet.js', 'viz-dashlet.html'),
-            controller: function ($scope, $element, $http, dashletcomssrv) {
+            controller: function ($scope, $element, dashletcomssrv) {
 
                 $scope.selectTab = function (tabIndex) {
                     $scope.state.tabindex = tabIndex;
