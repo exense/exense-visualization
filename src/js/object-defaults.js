@@ -48,7 +48,7 @@ function DefaultDashboard(widgets) {
             console.log('[widgets] ' + oid + '--default removal--');
         }),
         mgrstate: {
-            globalsettings: [{ "key": "__eId__", "value": "??", "isDynamic": false }],
+            globalsettings: [{ "key": "__eId__", "value": ".*", "isDynamic": false }],
             globalsettingsname: 'Global Settings',
             globalsettingschevron: false,
             globalsettingsautorefresh: false

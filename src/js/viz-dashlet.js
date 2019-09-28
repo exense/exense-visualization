@@ -26,7 +26,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 $scope.toggleBarchevronToViz = function () {
                     //Not firing our own query if slave, just listening to data
-                    if (!$scope.state.shared.config.slave) {
+                    //Also not firing if autorefresh is on
+                    if (!$scope.state.shared.config.slave && ($scope.state.shared.config.autorefresh !== 'On')) {
                         $scope.fireQuery();
                     }
                     $scope.state.shared.config.barchevron = !$scope.state.shared.config.barchevron;
@@ -34,7 +35,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 // Query firing
                 $scope.isOngoingQuery = false;
-                $scope.autorefreshInterval = null;
+                $scope.autorefreshInterval = undefined;
 
                 $scope.fireQuery = function () {
                     try {
@@ -50,15 +51,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 };
 
-                $scope.dispatchAsync = function (response) {
-                    console.log('async:' + JSON.stringify(response));
-                };
-
                 $scope.dispatchErrorResponse = function (response) {
                     console.log('error:' + JSON.stringify(response));
-                    if ($scope.asyncInterval) {
-                        clearInterval($scope.asyncInterval);
-                    }
+                    $scope.clearAsync();
                     $scope.isOngoingQuery = false;
                 };
 
@@ -68,37 +63,47 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 };
 
                 $scope.dispatchSuccessResponse = function (response, successTarget) {
-                    $scope.isOngoingQuery = false;
-                    if ($scope.state.query.type === 'Simple') {
-                        $scope.loadData(response, successTarget)
-                    }
-                    if ($scope.state.query.type === 'Async') {
-                        var scallback = $scope.state.query.datasource.callback;
-                        //$scope.state.data.serviceraw = response;
-                        $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
-                        if ($scope.state.query.datasource.service.postproc.save) {
-                            $scope.state.data.state = runResponseProc($scope.state.query.datasource.service.postproc.save.function, response);
+                    try {
+                        if ($scope.state.query.type === 'Simple') {
+                            $scope.loadData(response, successTarget)
                         }
-                        var datatosend = scallback.data;
-                        var urltosend = scallback.url;
-                        if (scallback.preproc.replace) {
-                            if (scallback.preproc.replace.target === 'data') {
-                                datatosend = JSON.parse(runRequestProc(scallback.preproc.replace.function, datatosend, $scope.state.data.state));
-                            } else {
-                                if (scallback.preproc.replace.target === 'url') {
-                                    urltosend = JSON.parse(runRequestProc(scallback.preproc.replace.function, urltosend, $scope.state.data.state));
+                        if ($scope.state.query.type === 'Async') {
+                            var scallback = $scope.state.query.datasource.callback;
+                            //$scope.state.data.serviceraw = response;
+                            $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
+                            if ($scope.state.query.datasource.service.postproc.save) {
+                                $scope.state.data.state = runResponseProc($scope.state.query.datasource.service.postproc.save.function, response);
+                            }
+                            var datatosend = scallback.data;
+                            var urltosend = scallback.url;
+                            if (scallback.preproc.replace) {
+                                if (scallback.preproc.replace.target === 'data') {
+                                    datatosend = JSON.parse(runRequestProc(scallback.preproc.replace.function, datatosend, $scope.state.data.state));
+                                } else {
+                                    if (scallback.preproc.replace.target === 'url') {
+                                        urltosend = JSON.parse(runRequestProc(scallback.preproc.replace.function, urltosend, $scope.state.data.state));
+                                    }
                                 }
                             }
-                        }
 
-                        $scope.state.shared.http.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
-                        var executionFunction = function () {
-                            $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
-                        };
-                        $scope.asyncInterval = setInterval(executionFunction, setIntervalDefault);
-                        executionFunction(); //execute once immmediately;
+                            $scope.state.shared.http.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
+                            var executionFunction = function () {
+                                $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
+                            };
+                            $scope.asyncInterval = setInterval(executionFunction, 500);
+                        }
+                    } catch (e) {
+                        console.log(e);
+                        $scope.clearAsync();
+                        $scope.isOngoingQuery = false;
                     }
-                }
+                };
+
+                $scope.clearAsync = function(){
+                    if ($scope.asyncInterval) {
+                        clearInterval($scope.asyncInterval);
+                    }
+                };
 
                 $scope.loadData = function (response, proctarget) {
                     if ($scope.state.query.type === 'Simple') {
@@ -108,12 +113,14 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
                             try {
+                                // if has consumed stream
                                 if (runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
-                                    clearInterval($scope.asyncInterval);
+                                    console.log('stream consumed.')
+                                    $scope.clearAsync();
                                 }
                             } catch (e) {
                                 console.log(e);
-                                clearInterval($scope.asyncInterval);
+                                $scope.clearAsync();
                             }
                         }
                         //$scope.state.data.callbackraw = response;
@@ -121,27 +128,35 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                     $scope.state.data.transformed = runResponseProc(proctarget.postproc.transform.function, response);
                     //console.log($scope.state.data);
+
+                    $scope.isOngoingQuery = false;
                 };
 
                 $scope.loadDataAsSlave = function (transformed) {
                     $scope.state.data.transformed = transformed;
                 }
 
-                $scope.$on('autorefresh-toggle', function (event, arg) {
-                    if (arg.newValue == true) {
+                $scope.$watch('state.shared.config.autorefresh', function (newValue) {
+                    console.log('toggling, newValue='+newValue);
+                    if (newValue === 'On') {
+                        console.log('Activating autorefresh.')
                         $scope.autorefreshInterval = setInterval(function () {
+                            console.log('Autorefresh firing. isOngoingQuery:' + $scope.isOngoingQuery);
                             if (!$scope.isOngoingQuery) {
                                 try {
                                     $scope.fireQuery();
                                 } catch (e) {
-                                    console.log('exception thrown while firing query: ' + e);
+                                    console.log('[Autorefresh interval] unable to refresh due to error: ' + e);
+                                    // agressive
                                     $scope.isOngoingQuery = false;
                                 }
                             }
-                        },
-                            setIntervalDefault);
+                        }, setIntervalDefault);
                     } else {
-                        clearInterval($scope.autorefreshInterval);
+                        console.log('Deactivating autorefresh.')
+                        if ($scope.autorefreshInterval) {
+                            clearInterval($scope.autorefreshInterval);
+                        }
                     }
                 });
 
