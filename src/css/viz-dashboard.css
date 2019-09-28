@@ -57,12 +57,12 @@ div.dashboardtab > ul > li > a{
   padding: 0 !important;
 }
 
-div.dashboardtab > ul > li > a:hover{
+div.dashboardtab > ul > li > a:hover, div.dashboardtab > ul > li > a:hover > span.glyphicon-viz{
   color: white !important;
   background-color: rgb(0, 255, 106) !important;
 }
 
-div.dashboardtab > ul > li.active, div.dashboardtab > ul > li.active > a{
+div.dashboardtab > ul > li.active, div.dashboardtab > ul > li.active > a, div.dashboardtab > ul > li.active > a > span.glyphicon-viz{
   color: white !important;
   background-color: rgb(0, 240, 0) !important;
 }

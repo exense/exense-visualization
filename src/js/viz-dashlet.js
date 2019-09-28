@@ -12,6 +12,14 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
             templateUrl: resolveTemplateURL('viz-dashlet.js', 'viz-dashlet.html'),
             controller: function ($scope, $element, $http, dashletcomssrv) {
 
+                $scope.selectTab = function (tabIndex) {
+                    $scope.selectedTab = tabIndex;
+                };
+
+                $scope.isTabActive = function (tabIndex) {
+                    return tabIndex === $scope.selectedTab;
+                };
+
                 $scope.redraw = 'drawn';
 
                 $scope.$on('globalsettings-refreshToggle', function (event, arg) {
