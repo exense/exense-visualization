@@ -34,7 +34,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         && $scope.state.query.paged.ispaged) {
                         return $scope.state.query.paged.ispaged === 'Off';
                     } else {
-                        return false;
+                        return true;
                     }
                 }
 

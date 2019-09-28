@@ -93,10 +93,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         }
 
                         $scope.state.shared.http.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
-                        $scope.asyncInterval = setInterval(function () {
+                        var executionFunction = function () {
                             $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
-                        },
-                            setIntervalDefault);
+                        };
+                        $scope.asyncInterval = setInterval(executionFunction,setIntervalDefault);
+                        executionFunction(); //execute once immmediately;
                     }
                 }
 
