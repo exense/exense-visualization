@@ -16,26 +16,9 @@ function DefaultChartOptions(chartHeight, chartWidth, innerContainerHeight, inne
             },
             x: function (d) { return d.x; },
             y: function (d) { return d.y; },
-            useInteractiveGuideline: true,
-            dispatch: {
-                stateChange: function (e) { console.log("stateChange"); },
-                changeState: function (e) { console.log("changeState"); },
-                tooltipShow: function (e) { console.log("tooltipShow"); },
-                tooltipHide: function (e) { console.log("tooltipHide"); }
-            },
-            xAxis: {
-                axisLabel: 'Time (ms)'
-            },
-            yAxis: {
-                axisLabel: 'y',
-                tickFormat: function (d) {
-                    return d3.format('.02f')(d);
-                },
-                axisLabelDistance: -10
-            },
             showLegend: false,
-            callback: function (chart) {
-                //console.log("!!! lineChart callback !!!");
+            scatter: {
+                onlyCircles: false
             }
         }
     };
