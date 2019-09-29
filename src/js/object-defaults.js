@@ -11,7 +11,7 @@ function DefaultChartOptions(chartHeight, chartWidth, innerContainerHeight, inne
             margin: {
                 top: 20,
                 right: 20,
-                bottom: 40,
+                bottom: 50,
                 left: 55
             },
             x: function (d) { return d.x; },
@@ -19,6 +19,13 @@ function DefaultChartOptions(chartHeight, chartWidth, innerContainerHeight, inne
             showLegend: false,
             scatter: {
                 onlyCircles: false
+            },
+            forceY: 0,
+            xAxis: {
+                tickFormat: function (d) {
+                    return d3.time.format("%H:%M:%S")(new Date(d));
+                },
+                rotateLabels: -30
             }
         }
     };
