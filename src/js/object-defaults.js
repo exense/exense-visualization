@@ -39,7 +39,7 @@ function DefaultDashletData(){
 
 function DefaultDashletState(){
     return new DashletState(
-    'new', true, 0,
+    'New Dashlet', true, 0,
     new DefaultDashletData(),
     new DefaultChartOptions(),
     new DefaultConfig(),

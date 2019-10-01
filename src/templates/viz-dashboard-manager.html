@@ -3,7 +3,7 @@
         <ul ng-show="displaymode === 'managed'" vertical="false" justified="true" class="nav nav-tabs">
             <li ng-class="{active : isTabActive(d.oid)}" index="d.oid" ng-repeat="d in dashboards track by d.oid"
                 style="display: inline-flex;">
-                <a ng-click="selectTab(d.oid)">{{d.oid}} : {{d.title}}</a>
+                <a ng-click="selectTab(d.oid)">{{d.title}}</a>
                 <ul class="ul-control-d">
                     <li class="li-control-d">
                         <span class="glyphicon glyphicon-remove glyphicon-control-d" ng-click="$emit('removeDashboard', d.oid)"

@@ -113,7 +113,7 @@
                                 </button>
                                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-master">
                                     <h5 ng-repeat="m in state.config.masters.getAsArray()" ng-click="loadMaster(m)">
-                                        {{m.oid}} : {{m.title}}</h5>
+                                        {{m.title}}</h5>
                                 </ul>
                             </div>
                         </div>
@@ -137,7 +137,7 @@
                         <div class="colmdstyle col-md-10 colcontain-grid">
                             <label>Current master</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                {{state.config.currentmaster.oid}} : {{state.config.currentmaster.title}}
+                            {{state.config.currentmaster.title}}
                             </div>
                         </div>
                     </div>
