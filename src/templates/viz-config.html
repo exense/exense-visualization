@@ -12,7 +12,7 @@
                                     Load config... <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-config">
-                                    <h5 ng-repeat="c in state.presets.configs" ng-click="loadConfigPreset(c)">{{c.name}}</h5>
+                                    <h5 ng-repeat="c in presets.configs" ng-click="loadConfigPreset(c)">{{c.name}}</h5>
                                 </ul>
                             </div>
                         </div>
@@ -32,40 +32,40 @@
                         <div class="colmdstyle col-md-12 colcontain-grid">
                             <label>Viz type</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.options.chart.type"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
                                     uib-btn-radio="'table'">table</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.options.chart.type"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
                                     uib-btn-radio="'lineChart'">lineChart</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.options.chart.type"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
                                     uib-btn-radio="'multiBarChart'">multiBarChart</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.options.chart.type"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
                                     uib-btn-radio="'scatterChart'">scatterChart</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.options.chart.type"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
                                     uib-btn-radio="'discreteBarChart'">discreteBarChart</label>
                             </div>
                         </div>
                         <div class="colmdstyle col-md-3 colcontain-grid">
                             <label>Autorefresh</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.config.autorefresh"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.config.autorefresh"
                                     uib-btn-radio="'On'">On</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.config.autorefresh"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.config.autorefresh"
                                     uib-btn-radio="'Off'">Off</label>
                             </div>
                         </div>
                         <div class="colmdstyle col-md-3 colcontain-grid">
                             <label>Show legend</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.options.chart.showLegend"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.showLegend"
                                     uib-btn-radio="true">On</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.options.chart.showLegend"
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.showLegend"
                                     uib-btn-radio="false">Off</label>
                             </div>
                         </div>
                         <div class="colmdstyle col-md-12 colcontain-grid">
                             <label>Dashlet title</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <input class="form-control" ng-model="state.shared.config.dashlettitle" ng-change="titleChange()" />
+                                <input class="form-control" ng-model="state.title" ng-change="titleChange()" />
                             </div>
                         </div>
                     </div>
@@ -85,11 +85,11 @@
                             <label>Master control</label>
                             <div class="btn-group viz-btn-group form-radio">
                                 <span class="key-val-collection btn btn-primary viz-btn-primary" href="#">
-                                    <input type="checkbox" class="form-control" ng-model="state.shared.config.master"
+                                    <input type="checkbox" class="form-control" ng-model="state.config.master"
                                         style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;"
-                                        ng-click="$emit('isMaster-changed', state.shared.config.master)" />
+                                        ng-click="$emit('isMaster-changed', state.config.master)" />
                                 </span>
-                                <label class="btn btn-primary viz-label" ng-class="{ active: state.shared.config.master}">Make
+                                <label class="btn btn-primary viz-label" ng-class="{ active: state.config.master}">Make
                                     master</span>
                             </div>
                         </div>
@@ -97,14 +97,14 @@
                             <label>Slave control</label>
                             <div class="btn-group viz-btn-group form-radio">
                                 <span class="key-val-collection btn btn-primary viz-btn-primary" href="#">
-                                    <input type="checkbox" class="form-control" ng-model="state.shared.config.slave"
+                                    <input type="checkbox" class="form-control" ng-model="state.config.slave"
                                         style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;" />
                                 </span>
-                                <label class="btn btn-primary viz-label" ng-class="{active: state.shared.config.slave}">Make
+                                <label class="btn btn-primary viz-label" ng-class="{active: state.config.slave}">Make
                                     slave</span>
                             </div>
                         </div>
-                        <div ng-if="state.shared.config.slave" class="col-md-3 colcontain-grid">
+                        <div ng-if="state.config.slave" class="col-md-3 colcontain-grid">
                             <label>Subscribe to</label>
                             <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="masters.status.isopen">
                                 <button id="load-master" type="button" class="btn btn-primary viz-btn-primary"
@@ -112,17 +112,17 @@
                                     Choose master... <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-master">
-                                    <h5 ng-repeat="m in state.shared.config.masters.getAsArray()" ng-click="loadMaster(m)">
+                                    <h5 ng-repeat="m in state.config.masters.getAsArray()" ng-click="loadMaster(m)">
                                         {{m.oid}} : {{m.title}}</h5>
                                 </ul>
                             </div>
                         </div>
-                        <div ng-if="state.shared.config.slave" class="col-md-3 colcontain-grid">
+                        <div ng-if="state.config.slave" class="col-md-3 colcontain-grid">
                                 <label>Data target</label>
                                 <div class="btn-group viz-btn-group form-radio">
-                                    <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.config.target"
+                                    <label class="btn btn-primary viz-btn-primary" ng-model="state.config.target"
                                         uib-btn-radio="'state.data.rawresponse'">Raw</label>
-                                    <label class="btn btn-primary viz-btn-primary" ng-model="state.shared.config.target"
+                                    <label class="btn btn-primary viz-btn-primary" ng-model="state.config.target"
                                         uib-btn-radio="'state.data.transformed'">Transformed</label>
                                 </div>
                         </div>
@@ -137,7 +137,7 @@
                         <div class="colmdstyle col-md-10 colcontain-grid">
                             <label>Current master</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                {{state.shared.config.currentmaster.oid}} : {{state.shared.config.currentmaster.title}}
+                                {{state.config.currentmaster.oid}} : {{state.config.currentmaster.title}}
                             </div>
                         </div>
                     </div>

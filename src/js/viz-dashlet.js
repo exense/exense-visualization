@@ -5,9 +5,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
         return {
             restrict: 'E',
             scope: {
-                options: '=',
                 widgetid: '=',
-                state: '='
+                state: '=',
+                displaymode: '=',
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-dashlet.js', 'viz-dashlet.html'),
             controller: function ($scope, $element, $http, dashletcomssrv) {
@@ -21,16 +22,16 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 };
 
                 $scope.toggleBarchevronToConf = function () {
-                    $scope.state.shared.config.barchevron = !$scope.state.shared.config.barchevron;
+                    $scope.state.config.barchevron = !$scope.state.config.barchevron;
                 }
 
                 $scope.toggleBarchevronToViz = function () {
                     //Not firing our own query if slave, just listening to data
                     //Also not firing if autorefresh is on
-                    if (!$scope.state.shared.config.slave && ($scope.state.shared.config.autorefresh !== 'On')) {
+                    if (!$scope.state.config.slave && ($scope.state.config.autorefresh !== 'On')) {
                         $scope.fireQuery();
                     }
-                    $scope.state.shared.config.barchevron = !$scope.state.shared.config.barchevron;
+                    $scope.state.config.barchevron = !$scope.state.config.barchevron;
                 }
 
                 // Query firing
@@ -44,7 +45,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         if (!srv.params) {
                             srv.params = ""; // prevent "undefined" string from being concatenated
                         }
-                        $scope.state.shared.http.servicesent = 'url :' + JSON.stringify(srv.url + srv.params) + '; payload:' + JSON.stringify(srv.data);
+                        $scope.state.http.servicesent = 'url :' + JSON.stringify(srv.url + srv.params) + '; payload:' + JSON.stringify(srv.data);
                         $scope.executeHttp(srv.method, srv.url + srv.params, srv.data, $scope.dispatchSuccessResponse, srv, $scope.dispatchErrorResponse);
                     } catch (e) {
                         console.log('exception thrown while firing query: ' + e);
@@ -70,7 +71,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         if ($scope.state.query.type === 'Async') {
                             var scallback = $scope.state.query.datasource.callback;
                             //$scope.state.data.serviceraw = response;
-                            $scope.state.shared.http.rawserviceresponse = JSON.stringify(response);
+                            $scope.state.http.rawserviceresponse = JSON.stringify(response);
                             if ($scope.state.query.datasource.service.postproc.save) {
                                 $scope.state.data.state = runResponseProc($scope.state.query.datasource.service.postproc.save.function, response);
                             }
@@ -86,7 +87,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 }
                             }
 
-                            $scope.state.shared.http.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
+                            $scope.state.http.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
                             var executionFunction = function () {
                                 $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
                             };
@@ -107,7 +108,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 $scope.loadData = function (response, proctarget) {
                     if ($scope.state.query.type === 'Simple') {
-                        $scope.state.shared.http.rawserviceresponse = response;
+                        $scope.state.http.rawserviceresponse = response;
                     }
                     if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
@@ -121,7 +122,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 $scope.clearAsync();
                             }
                         }
-                        $scope.state.shared.http.rawcallbackresponse = response;
+                        $scope.state.http.rawcallbackresponse = response;
                     }
                     $scope.state.data.rawresponse = { dashdata : response };
                 };
@@ -140,7 +141,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.isOngoingQuery = false;
                 });
 
-                $scope.$watch('state.shared.config.autorefresh', function (newValue) {
+                $scope.$watch('state.config.autorefresh', function (newValue) {
                     if (newValue === 'On') {
                         $scope.autorefreshInterval = setInterval(function () {
                             if (!$scope.isOngoingQuery) {

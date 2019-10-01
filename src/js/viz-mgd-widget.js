@@ -12,40 +12,36 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 state: '=',
                 headersheight: '=',
                 charttocontainer: '=',
-                foo: '='
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-mgd-widget.js', 'viz-mgd-widget.html'),
             controller: function ($scope, $element) {
 
-                console.log('init')
-                console.log($scope.headersheight)
-                console.log($scope.charttocontainer)
-
                 $scope.currentstate = JSON.parse(JSON.stringify($scope.state));
-                $scope.state.shared.chevron = true;
-                $scope.state.shared.savedHeight = $scope.state.shared.options.innercontainer.height;
-                $scope.state.shared.options.innercontainer.offset = 50;
+                $scope.state.chevron = true;
+                $scope.state.savedHeight = $scope.state.options.innercontainer.height;
+                $scope.state.options.innercontainer.offset = 50;
                 $scope.dashlettitle = $scope.state.title;
 
                 $scope.toggleChevron = function () {
-                    if ($scope.state.shared.chevron) {
+                    if ($scope.state.chevron) {
                         $scope.collapse();
                     } else {
                         $scope.restore();
                     }
-                    $scope.state.shared.chevron = !$scope.state.shared.chevron;
+                    $scope.state.chevron = !$scope.state.chevron;
                 };
 
                 $scope.collapse = function () {
-                    $scope.state.shared.savedHeight = $scope.state.shared.options.innercontainer.height;
-                    $scope.state.shared.savedOffset = $scope.state.shared.options.innercontainer.offset;
-                    $scope.state.shared.options.innercontainer.height = 30;
-                    $scope.state.shared.options.innercontainer.offset = 0;
+                    $scope.state.savedHeight = $scope.state.options.innercontainer.height;
+                    $scope.state.savedOffset = $scope.state.options.innercontainer.offset;
+                    $scope.state.options.innercontainer.height = 30;
+                    $scope.state.options.innercontainer.offset = 0;
                 };
 
                 $scope.restore = function () {
-                    $scope.state.shared.options.innercontainer.height = $scope.state.shared.savedHeight;
-                    $scope.state.shared.options.innercontainer.offset = $scope.state.shared.savedOffset;
+                    $scope.state.options.innercontainer.height = $scope.state.savedHeight;
+                    $scope.state.options.innercontainer.offset = $scope.state.savedOffset;
                 };
 
                 $scope.$on('dashlettitle-change', function (event, arg) {
@@ -60,7 +56,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                     //should only be done once at manager level
                     $scope.computeHeights();
-                    var options = $scope.state.shared.options;
+                    var options = $scope.state.options;
                     options.chart.width = newWidth;
                     options.innercontainer.width = newWidth - 50;
 
@@ -85,10 +81,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $scope.computeHeights = function () {
                     var sHeight = window.innerHeight;
 
-                    console.log('compute')
-                    console.log($scope.headersheight)
-                    console.log($scope.charttocontainer)
-
                     $scope.chartHeightSmall = (sHeight - $scope.headersheight) / 2 - $scope.charttocontainer;
                     $scope.chartHeightBig = sHeight - ($scope.headersheight - 80) - $scope.charttocontainer;
                     $scope.chartWidthSmall = 0;
@@ -97,9 +89,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     $scope.innerContainerHeightBig = sHeight - ($scope.headersheight - 80);
                     $scope.innerContainerWidthSmall = 0;
                     $scope.innerContainerWidthBig = 0;
-
-                    
-                    console.log($scope.innerContainerHeightSmall)
                 };
 
                 $scope.computeHeights();
@@ -116,7 +105,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                 $scope.extend = function () {
                     $scope.state.widgetwidth = 'col-md-12';
-                    var options = $scope.state.shared.options;
+                    var options = $scope.state.options;
                     options.chart.height = $scope.chartHeightBig;
                     options.chart.width = $scope.chartWidthBig;
                     options.innercontainer.height = $scope.innerContainerHeightBig;
@@ -130,7 +119,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                 $scope.reduce = function () {
                     $scope.state.widgetwidth = 'col-md-6';
-                    var options = $scope.state.shared.options;
+                    var options = $scope.state.options;
                     options.chart.height = $scope.chartHeightSmall;
                     options.chart.width = $scope.chartWidthSmall;
                     options.innercontainer.height = $scope.innerContainerHeightSmall;

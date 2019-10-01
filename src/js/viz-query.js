@@ -5,7 +5,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             restrict: 'E',
             scope: {
                 formwidth: '=',
-                state: '='
+                state: '=',
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-query.html'),
             controller: function ($scope) {
@@ -16,17 +17,17 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
-                options: '=',
-                state: '='
+                state: '=',
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-view.html'),
             controller: function ($scope) {
                 $scope.$watch('state.data.transformed', function (newvalue) {
                     if (newvalue && newvalue.dashdata) {
-                        if ($scope.state.shared.options.chart.type === 'table') {
+                        if ($scope.state.options.chart.type === 'table') {
                             $scope.tableData = $scope.toTable(newvalue.dashdata);
                         }
-                        if ($scope.state.shared.options.chart.type.endsWith('Chart')) {
+                        if ($scope.state.options.chart.type.endsWith('Chart')) {
                             $scope.chartData = $scope.toChart(newvalue.dashdata);
                         }
                     }
@@ -105,8 +106,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
-                options: '=',
-                state: '='
+                state: '=',
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-transform.html'),
             controller: function ($scope) {
@@ -120,26 +121,25 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             scope: {
                 formwidth: '=',
                 widgetid: '=',
-                state: '='
+                state: '=',
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
             controller: function ($scope) {
 
-                $scope.state.shared.config.dashlettitle = $scope.state.title;
-
                 $scope.$on('globalsettings-refreshToggle', function (event, arg) {
                     if (arg.new) {
-                        if (!$scope.state.shared.config.slave) {
-                            $scope.state.shared.config.autorefresh = 'On';
+                        if (!$scope.state.config.slave) {
+                            $scope.state.config.autorefresh = 'On';
                         }
                     } else {
-                        $scope.state.shared.config.autorefresh = 'Off';
+                        $scope.state.config.autorefresh = 'Off';
                     }
                 });
 
                 $scope.loadConfigPreset = function (preset) {
                     $scope.currentconfig = preset;
-                    $scope.state.shared.config = $scurrentconfig;
+                    $scope.state.config = $scurrentconfig;
                 };
 
                 $scope.loadMaster = function (m) {
@@ -147,7 +147,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 };
 
                 $scope.titleChange = function () {
-                    $scope.$emit('dashlettitle-change', { newValue: $scope.state.shared.config.dashlettitle })
+                    $scope.$emit('dashlettitle-change', { newValue: $scope.state.title })
                 };
 
                 $scope.titleChange();
@@ -172,23 +172,23 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
 
                 $scope.$on('coms-reset', function () {
-                    if ($scope.state.shared.config.master) {
-                        $scope.state.shared.config.master = !$scope.state.shared.config.master;
+                    if ($scope.state.config.master) {
+                        $scope.state.config.master = !$scope.state.config.master;
                     }
                     $scope.undoMaster();
 
-                    if ($scope.state.shared.config.slave) {
-                        $scope.state.shared.config.slave = !$scope.state.shared.config.slave;
+                    if ($scope.state.config.slave) {
+                        $scope.state.config.slave = !$scope.state.config.slave;
                     }
                     $scope.undoSlave();
                 });
 
                 // clean up when slave unchecked
-                // state.shared.config.slave
+                // state.config.slave
 
                 $scope.$on('isMaster-changed', function (event, newValue) {
                     if (!newValue) {
-                        dashletcomssrv.registerWidget($scope.widgetid, $scope.state.shared.config.dashlettitle);
+                        dashletcomssrv.registerWidget($scope.widgetid, $scope.state.title);
                         //updating both values upon change on transformed for optimization/simplicity
                         // could be two distinct updates via service
                         $scope.unwatchMaster = $scope.$watch('state.data.transformed', function (newValue) {
@@ -200,8 +200,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     }
                 });
 
-                $scope.$watch('state.shared.config.dashlettitle', function (newValue) {
-                    if ($scope.state.shared.config.master) {
+                $scope.$watch('state.title', function (newValue) {
+                    if ($scope.state.config.master) {
                         dashletcomssrv.udpdateTitle($scope.widgetid, newValue);
                     }
                 });
@@ -209,14 +209,14 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.unwatchSlave = '';
 
                 $scope.startWatchingMaster = function (masterid) {
-                    if ($scope.state.shared.config.slave) {
+                    if ($scope.state.config.slave) {
                         var unwatcher = $scope.$watch(function () {
                             return dashletcomssrv.buffer[masterid];
                         }, function (newvalue) {
                             try {
-                                if ($scope.state.shared.config.target) {
+                                if ($scope.state.config.target) {
                                     // watcher not firing if using bracket syntax...
-                                    var target = $scope.state.shared.config.target;
+                                    var target = $scope.state.config.target;
                                     if (target === 'state.data.transformed') {
                                         $scope.state.data.transformed = { dashdata: JSON.parse(newvalue.transformed) };
                                     }
@@ -234,7 +234,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     }
                 };
 
-                $scope.$watch('state.shared.config.slave', function (newValue) {
+                $scope.$watch('state.config.slave', function (newValue) {
                     if (!newValue) {
                         $scope.undoSlave();
                     }
@@ -244,7 +244,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.$on('master-loaded', function (event, master) {
                     //if master already previously selected, stop watching him
                     $scope.undoSlave();
-                    $scope.state.shared.config.currentmaster = master;
+                    $scope.state.config.currentmaster = master;
                     $scope.startWatchingMaster(master.oid);
                 });
 
@@ -252,7 +252,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.$watch(function () {
                     return dashletcomssrv.masters;
                 }, function (newValue) {
-                    $scope.state.shared.config.masters = newValue;
+                    $scope.state.config.masters = newValue;
                 });
 
                 $scope.$on('single-remove', function (event, arg) {
@@ -266,17 +266,17 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 });
 
                 $scope.prepareRemove = function () {
-                    if ($scope.state.shared.config.master) {
+                    if ($scope.state.config.master) {
                         dashletcomssrv.unregisterWidget($scope.widgetid);
                     }
                 }
 
                 // after dashlet loaded or duplicated
-                if ($scope.state.shared.config.currentmaster) { //slave
-                    $scope.startWatchingMaster($scope.state.shared.config.currentmaster.oid);
-                } if ($scope.state.shared.config.master) { //master
+                if ($scope.state.config.currentmaster) { //slave
+                    $scope.startWatchingMaster($scope.state.config.currentmaster.oid);
+                } if ($scope.state.config.master) { //master
                     //this is only an attempt. reregistration is avoided at service level
-                    dashletcomssrv.registerWidget($scope.widgetid, $scope.state.shared.config.dashlettitle);
+                    dashletcomssrv.registerWidget($scope.widgetid, $scope.state.title);
                 }
             }
         }
@@ -286,7 +286,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             restrict: 'E',
             scope: {
                 formwidth: '=',
-                state: '='
+                state: '=',
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-info.html'),
             controller: function ($scope) { }
@@ -312,8 +313,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
-                options: '=',
-                state: '='
+                state: '=',
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-service.html'),
             controller: function ($scope) {
@@ -324,8 +325,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
-                options: '=',
-                state: '='
+                state: '=',
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-input.html'),
             controller: function ($scope) {
@@ -420,8 +421,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
-                options: '=',
-                state: '='
+                state: '=',
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-preproc.html'),
             controller: function ($scope) {
@@ -432,8 +433,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
-                options: '=',
-                state: '='
+                state: '=',
+                presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-postproc.html'),
             controller: function ($scope) {
