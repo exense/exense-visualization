@@ -26,12 +26,16 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 }
 
                 $scope.toggleBarchevronToViz = function () {
+                    $scope.fireQueryDependingOnContext();
+                    $scope.state.viewtoggle = !$scope.state.viewtoggle;
+                }
+
+                $scope.fireQueryDependingOnContext = function(){
                     //Not firing our own query if slave, just listening to data
                     //Also not firing if autorefresh is on
                     if (!$scope.state.config.slave && ($scope.state.config.autorefresh !== 'On')) {
                         $scope.fireQuery();
                     }
-                    $scope.state.viewtoggle = !$scope.state.viewtoggle;
                 }
 
                 // Query firing
@@ -124,7 +128,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         }
                         $scope.state.http.rawcallbackresponse = response;
                     }
-                    $scope.state.data.rawresponse = { dashdata : response };
+                    $scope.state.data.rawresponse = { dashdata: response };
                 };
 
                 $scope.$watch('state.data.rawresponse', function (newValue) {
@@ -135,8 +139,12 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.query.type === 'Async') {
                         proctarget = $scope.state.query.datasource.callback;
                     }
-                    if (proctarget && proctarget.postproc && newValue) { // due to watch init
-                        $scope.state.data.transformed = { dashdata : runResponseProc(proctarget.postproc.transform.function, keyvalarrayToIndex(evalDynamic(proctarget.postproc.transform.args), 'key', 'value'),  newValue.dashdata) };
+                    if (proctarget && proctarget.postproc && newValue && newValue.dashdata) { // due to watch init
+                        if (proctarget.postproc.transform.function && proctarget.postproc.transform.function.length > 0) {
+                            $scope.state.data.transformed = { dashdata: runResponseProc(proctarget.postproc.transform.function, keyvalarrayToIndex(evalDynamic(proctarget.postproc.transform.args), 'key', 'value'), newValue.dashdata) };
+                        } else {
+                            console.log('Warning: a new raw value was read by widget with id : ' + $scope.widgetid + ' but no transform function was provided'); console.log($scope.state.data.transformed);
+                        }
                     }
                     $scope.isOngoingQuery = false;
                 });
@@ -207,6 +215,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     paged.offsets.first.state = runValueFunction(paged.offsets.first.previous, paged.offsets.first.state);
                     paged.offsets.second.state = runValueFunction(paged.offsets.second.previous, paged.offsets.second.state);
                     $scope.$broadcast('update-template');
+                }
+
+                if(!$scope.state.viewtoggle){
+                    console.log('Firing initial query')
+                    $scope.fireQueryDependingOnContext();
                 }
             }
         };

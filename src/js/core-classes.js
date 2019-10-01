@@ -8,8 +8,9 @@ function Dashboard(widgets, title, state) {
     };
 }
 
-function Widget(bstwidth, dstate) {
+function Widget(widgetid, bstwidth, dstate) {
     return {
+        oid : widgetid,
         wstate: {
             widgetwidth: bstwidth,
         },
@@ -37,14 +38,15 @@ function DashletState(title, viewtoggle, tabindex, data, chartoptions, config, q
     };
 }
 
-function DashletData(transformed, state) {
+function DashletData(transformed, rawresponse, state) {
     return {
         transformed: transformed,
+        rawresponse: rawresponse,
         state: state
     };
 };
 
-function Config(autorefresh, viewtoggle, master, slave, target) {
+function Config(autorefresh, master, slave, target) {
     return {
         autorefresh: autorefresh,
         master: master,

@@ -192,7 +192,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         //updating both values upon change on transformed for optimization/simplicity
                         // could be two distinct updates via service
                         $scope.unwatchMaster = $scope.$watch('state.data.transformed', function (newValue) {
-                            dashletcomssrv.updateMasterValue($scope.widgetid, { transformed: angular.toJson(newValue.dashdata), raw: angular.toJson($scope.state.data.rawresponse.dashdata)});
+                            dashletcomssrv.updateMasterValue($scope.widgetid, { transformed: angular.toJson(newValue.dashdata), raw: angular.toJson($scope.state.data.rawresponse.dashdata) });
                         });
                     }
                     else {
@@ -213,21 +213,25 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         var unwatcher = $scope.$watch(function () {
                             return dashletcomssrv.buffer[masterid];
                         }, function (newvalue) {
-                            try {
-                                if ($scope.state.config.target) {
-                                    // watcher not firing if using bracket syntax...
-                                    var target = $scope.state.config.target;
-                                    if (target === 'state.data.transformed') {
-                                        $scope.state.data.transformed = { dashdata: JSON.parse(newvalue.transformed) };
+                            if (newvalue) {
+                                try {
+                                    if ($scope.state.config.target) {
+                                        // watcher not firing if using bracket syntax...
+                                        var target = $scope.state.config.target;
+                                        if (target === 'state.data.transformed') {
+                                            $scope.state.data.transformed = { dashdata: JSON.parse(newvalue.transformed) };
+                                        }
+                                        if (target === 'state.data.rawresponse') {
+                                            $scope.state.data.rawresponse = { dashdata: JSON.parse(newvalue.raw) };
+                                        }
+                                    } else {
+                                        console.log('slave target is undefined.')
                                     }
-                                    if (target === 'state.data.rawresponse') {
-                                        $scope.state.data.rawresponse = { dashdata: JSON.parse(newvalue.raw) };
-                                    }
-                                } else {
-                                    console.log('slave target is undefined.')
+                                } catch (e) {
+                                    console.log(e);
                                 }
-                            } catch (e) {
-                                console.log(e);
+                            } else {
+                                console.log('Warning: an undefined newvalue has been read by slave with id:' + $scope.widgetid);
                             }
                         });
                         $scope.unwatchSlave = unwatcher;

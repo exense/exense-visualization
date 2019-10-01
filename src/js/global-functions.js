@@ -31,9 +31,6 @@ var setIntervalDefault = 3000;
 var keyvalarrayToIndex = function(array, keyKey, valKey){
     var index = {};
     $.each(array, function(idx, e){
-        console.log(e)
-        console.log(e[keyKey])
-        
         index[e[keyKey]] = e[valKey];
     });
     return index;

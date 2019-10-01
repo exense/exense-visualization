@@ -34,7 +34,7 @@ function DefaultChartOptions() {
 };
 
 function DefaultDashletData(){
-    return new DashletData([], {})
+    return new DashletData([], {}, {})
 };
 
 function DefaultDashletState(){
@@ -48,6 +48,7 @@ function DefaultDashletState(){
 
 function DefaultWidget() {
     return new Widget(
+        getUniqueId(),
         'col-md-6',
         new DefaultDashletState()
     );  
