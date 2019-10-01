@@ -15,22 +15,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, dashletcomssrv) {
-
-                if (!$scope.headersheightinput) {
-                    $scope.headersheight = 250;
-                }else{
-                    $scope.headersheight = $scope.headersheightinput;
-                }
-
-                if (!$scope.charttocontainerinput) {
-                    $scope.charttocontainer = 35;
-                }else{
-                    $scope.charttocontainer = $scope.charttocontainerinput;
-                }
-
-                $scope.headHeight =  $scope.headersHeight;
-                $scope.chartRatio =  $scope.chartToContainer;
-
+                
                 $scope.wwrap = $scope.dashboard.widgets;
 
                 // load time case
@@ -99,7 +84,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
 
                 $scope.$on('addwidget', function (event, arg) {
                     if ($scope.dashboardid === arg.dashboardid) {
-                        var newWidgetId = $scope.wwrap.addNew(new DefaultWidget($scope.chartHeightSmall, $scope.chartWidthSmall, $scope.innerContainerHeightSmall, $scope.innerContainerWidthSmall));
+                        var newWidgetId = $scope.wwrap.addNew(new DefaultWidget());
                     }
                 });
 

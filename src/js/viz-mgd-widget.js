@@ -10,12 +10,25 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 widgetid: '=',
                 wstate: '=',
                 state: '=',
-                headersheight: '=',
-                charttocontainer: '=',
+                headersheightinput: '=',
+                charttocontainerinput: '=',
                 presets: '='
             },
             templateUrl: resolveTemplateURL('viz-mgd-widget.js', 'viz-mgd-widget.html'),
             controller: function ($scope, $element) {
+
+                //Local Defaults in case nothing provided (designed to fil 4 reduced dashlets on standard)
+                if (!$scope.headersheightinput) {
+                    $scope.headersheight = window.innerHeight / 4 +30;
+                }else{
+                    $scope.headersheight = $scope.headersheightinput;
+                }
+
+                if (!$scope.charttocontainerinput) {
+                    $scope.charttocontainer = 35;
+                }else{
+                    $scope.charttocontainer = $scope.charttocontainerinput;
+                }
 
                 $scope.currentstate = JSON.parse(JSON.stringify($scope.state));
                 $scope.state.chevron = true;

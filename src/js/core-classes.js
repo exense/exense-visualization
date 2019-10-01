@@ -17,13 +17,19 @@ function Widget(bstwidth, dstate) {
     };
 };
 
-function DashletState(title, viewtoggle, tabindex, data, options, config, query){
+function DashletState(title, viewtoggle, tabindex, data, chartoptions, config, query){
     return {
         title: title,
         viewtoggle: viewtoggle,
         tabindex: tabindex,
         data: data,
-        options: options,
+        options: {
+            innercontainer: {
+                height: 0, // all derived dynamically
+                width: 0, // all derived dynamically
+            },
+            chart: chartoptions
+        },
         config: config,
         global: {},
         http: {},
@@ -57,11 +63,11 @@ function MgrState(gsettings, gautorefresh, gchevron, title) {
     }
 }
 
-function ChartOptions(chartHeight, chartWidth, chartType) {
+function ChartOptions(chartType) {
     return {
         type: chartType,
-        height: chartHeight,
-        width: chartWidth,
+        height: 0, // all derived dynamically
+        width: 0, // all derived dynamically
         margin: {
             top: 20,
             right: 20,
@@ -88,20 +94,6 @@ function ChartOptions(chartHeight, chartWidth, chartType) {
         }
     };
 }
-
-function ContainerOptions(innerContainerHeight, innerContainerWidth) {
-    return {
-        height: innerContainerHeight,
-        width: innerContainerWidth,
-    };
-};
-
-function Options(chartOptions, containerOptions) {
-    return {
-        innercontainer: containerOptions,
-        chart: chartOptions
-    };
-};
 
 function Query(inputtype, type, method, controls) {
     return {

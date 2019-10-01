@@ -13,8 +13,6 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
             templateUrl: resolveTemplateURL('viz-dashlet.js', 'viz-dashlet.html'),
             controller: function ($scope, $element, $http, dashletcomssrv) {
 
-                console.log($scope.state.viewtoggle);
-
                 $scope.selectTab = function (tabIndex) {
                     $scope.state.tabindex = tabIndex;
                 };

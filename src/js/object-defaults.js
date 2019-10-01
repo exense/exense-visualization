@@ -24,30 +24,27 @@ function DefaultQuery() {
     return new Query("Raw", "Simple", "Get", {});
 };
 
-function DefaultChartOptions(chartHeight, chartWidth) {
-    return new ChartOptions(chartHeight, chartWidth, "lineChart");
+function DefaultChartOptions() {
+    return new ChartOptions("lineChart");
 };
 
 function DefaultDashletData(){
     return new DashletData([], {})
 };
 
-function DefaultDashletState(chartHeight, chartWidth, containerHeight, containerWidth){
+function DefaultDashletState(){
     return new DashletState(
     'new', true, 0,
     new DefaultDashletData(),
-    new Options(
-        new DefaultChartOptions(chartHeight, chartWidth),
-        new ContainerOptions(containerHeight, containerWidth)
-    ),
+    new DefaultChartOptions(),
     new DefaultConfig(),
     new DefaultQuery());
 };
 
-function DefaultWidget(chartHeight, chartWidth, containerHeight, containerWidth) {
+function DefaultWidget() {
     return new Widget(
         'col-md-6',
-        new DefaultDashletState(chartHeight, chartWidth, containerHeight, containerWidth)
+        new DefaultDashletState()
     );  
 };
 
