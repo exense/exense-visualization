@@ -136,9 +136,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         proctarget = $scope.state.query.datasource.callback;
                     }
                     if (proctarget && proctarget.postproc && newValue) { // due to watch init
-                        console.log('args')
-                        console.log(proctarget.postproc.transform.args);
-                        $scope.state.data.transformed = { dashdata : runResponseProc(proctarget.postproc.transform.function, proctarget.postproc.transform.args,  newValue.dashdata) };
+                        $scope.state.data.transformed = { dashdata : runResponseProc(proctarget.postproc.transform.function, keyvalarrayToIndex(evalDynamic(proctarget.postproc.transform.args), 'key', 'value'),  newValue.dashdata) };
                     }
                     $scope.isOngoingQuery = false;
                 });

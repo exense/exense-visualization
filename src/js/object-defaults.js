@@ -24,8 +24,8 @@ function DefaultQuery() {
     return new SimpleQuery(
         "Raw",
         new Service("", "Get", "",
-            new Preproc({}, {}),
-            new Postproc({}, {}, {}, {}, {}))
+            new Preproc("data", ""),
+            new Postproc("", "", [], {}, ""))
         );
 };
 
