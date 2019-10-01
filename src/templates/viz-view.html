@@ -6,13 +6,13 @@
     <table class="table" ng-style="{width:state.options.chart.width + 'px'}">
         <thead>
             <tr>
-                <th>x</th>
+                <th>xAxis</th>
                 <th ng-repeat="z in tableData.zlist">{{z}}</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="row in tableData.data">
-                <td>{{row.x}}</td>
+                <td><label data-ng-bind="formatPotentialTimestamp(row.x)" /></td>
                 <td ng-repeat="series in tableData.zlist">
                     {{row['values'][series]}}
                 </td>

@@ -33,6 +33,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     }
                 });
 
+                $scope.formatPotentialTimestamp = function(value){
+                    return formatPotentialTimestamp(value);
+                };
+
                 $scope.isPagingOff = function () {
                     if ($scope.state.query.controls
                         && $scope.state.query.controls.template

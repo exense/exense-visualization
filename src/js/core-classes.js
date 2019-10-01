@@ -86,11 +86,7 @@ function ChartOptions(chartType) {
         xAxis: {
             tickFormat: function (d) {
                 //interpret these ranges as timestamp for now
-                if ((d > 1000000000 && d < 2000000000) || (d > 1000000000000 && d < 2000000000000)) {
-                    return d3.time.format("%H:%M:%S")(new Date(d));
-                } else {
-                    return d;
-                }
+                return formatPotentialTimestamp(d);
             },
             rotateLabels: -30
         }
