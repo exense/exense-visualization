@@ -183,10 +183,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.undoSlave();
                 });
 
-                // clean up when slave unchecked
-                // state.config.slave
-
-                $scope.$on('isMaster-changed', function (event, newValue) {
+                $scope.makeMaster = function(newValue){
+                	console.log('newValue:' +newValue);
                     if (!newValue) {
                         dashletcomssrv.registerWidget($scope.widgetid, $scope.state.title);
                         //updating both values upon change on transformed for optimization/simplicity
@@ -198,6 +196,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     else {
                         $scope.undoMaster();
                     }
+                }
+
+                $scope.$on('isMaster-changed', function (event, newValue) {
+                	$scope.makeMaster(newValue);
                 });
 
                 $scope.$watch('state.title', function (newValue) {
@@ -277,10 +279,13 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 // after dashlet loaded or duplicated
                 if ($scope.state.config.currentmaster) { //slave
-                    $scope.startWatchingMaster($scope.state.config.currentmaster.oid);
+                    // let masters register first
+                    $(document).ready(function () {
+                        $scope.startWatchingMaster($scope.state.config.currentmaster.oid);
+                    });
+                    
                 } if ($scope.state.config.master) { //master
-                    //this is only an attempt. reregistration is avoided at service level
-                    dashletcomssrv.registerWidget($scope.widgetid, $scope.state.title);
+                    $scope.makeMaster(false);
                 }
             }
         }
