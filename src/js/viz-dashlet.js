@@ -13,6 +13,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
             templateUrl: resolveTemplateURL('viz-dashlet.js', 'viz-dashlet.html'),
             controller: function ($scope, $element, $http, dashletcomssrv) {
 
+                console.log($scope.state.viewtoggle);
+
                 $scope.selectTab = function (tabIndex) {
                     $scope.state.tabindex = tabIndex;
                 };
@@ -22,7 +24,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 };
 
                 $scope.toggleBarchevronToConf = function () {
-                    $scope.state.config.barchevron = !$scope.state.config.barchevron;
+                    $scope.state.viewtoggle = !$scope.state.viewtoggle;
                 }
 
                 $scope.toggleBarchevronToViz = function () {
@@ -31,7 +33,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if (!$scope.state.config.slave && ($scope.state.config.autorefresh !== 'On')) {
                         $scope.fireQuery();
                     }
-                    $scope.state.config.barchevron = !$scope.state.config.barchevron;
+                    $scope.state.viewtoggle = !$scope.state.viewtoggle;
                 }
 
                 // Query firing
@@ -163,7 +165,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 // Paging
 
-                // also initPaging() on barchevron (back to config)?
+                // also initPaging() on viewtoggle (back to config)?
                 $scope.$on('templateph-loaded', function () {
                     if ($scope.state.query.controls
                         && $scope.state.query.controls.template

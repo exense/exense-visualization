@@ -1,4 +1,4 @@
-<div ng-attr-class="colmdclass {{state.widgetwidth}}" ng-style="{height: state.options.innercontainer.height + state.options.innercontainer.offset +'px'}">
+<div ng-attr-class="colmdclass {{wstate.widgetwidth}}" ng-style="{height: state.options.innercontainer.height + state.options.innercontainer.offset +'px'}">
         <div class="dashletcontainer" ng-style="{height: state.options.innercontainer.height + state.options.innercontainer.offset +'px'}">
                 <ul class="ul-control">
 
@@ -14,13 +14,13 @@
                                 <span class="glyphicon glyphicon-remove glyphicon-control" ng-click="removeWidget()"
                                         href="#"></span>
                         </li>
-                        <div ng-if="state.widgetwidth == 'col-md-6'">
+                        <div ng-if="wstate.widgetwidth == 'col-md-6'">
                                 <li class="li-control">
                                         <span class="glyphicon glyphicon-resize-full glyphicon-control" ng-click="extend()"
                                                 href="#"></span>
                                 </li>
                         </div>
-                        <div ng-if="state.widgetwidth == 'col-md-12'">
+                        <div ng-if="wstate.widgetwidth == 'col-md-12'">
                                 <li class="li-control">
                                         <span class="glyphicon glyphicon-resize-small glyphicon-control" ng-click="reduce()"
                                                 href="#"></span>

@@ -8,29 +8,39 @@ function Dashboard(widgets, title, state) {
     };
 }
 
-function Widget(title, tabindex, bstwidth, options, config, query) {
+function Widget(bstwidth, dstate) {
     return {
-        state: {
-            title: title,
-            tabindex: tabindex,
+        wstate: {
             widgetwidth: bstwidth,
-            data: {
-                transformed: [],
-                state: {}
-            },
-            options: options,
-            config: config,
-            global: {},
-            http: {},
-            query: query
-        }
+        },
+        state: dstate
     };
 };
 
-function Config(autorefresh, barchevron, master, slave, target) {
+function DashletState(title, viewtoggle, tabindex, data, options, config, query){
+    return {
+        title: title,
+        viewtoggle: viewtoggle,
+        tabindex: tabindex,
+        data: data,
+        options: options,
+        config: config,
+        global: {},
+        http: {},
+        query: query
+    };
+}
+
+function DashletData(transformed, state){
+    return {
+        transformed: transformed,
+        state: state
+    };
+};
+
+function Config(autorefresh, viewtoggle, master, slave, target) {
     return {
         autorefresh: autorefresh,
-        barchevron: barchevron,
         master: master,
         slave: slave,
         target: target,

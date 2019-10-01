@@ -7,8 +7,8 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
             restrict: 'E',
             scope: {
                 displaymode: '=',
-                options: '=',
                 widgetid: '=',
+                wstate: '=',
                 state: '=',
                 headersheight: '=',
                 charttocontainer: '=',
@@ -60,7 +60,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     options.chart.width = newWidth;
                     options.innercontainer.width = newWidth - 50;
 
-                    if ($scope.state.widgetwidth === 'col-md-6') {
+                    if ($scope.wstate.widgetwidth === 'col-md-6') {
                         options.chart.height = $scope.chartHeightSmall;
                         options.innercontainer.height = $scope.innerContainerHeightSmall;
                     }
@@ -104,7 +104,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 };
 
                 $scope.extend = function () {
-                    $scope.state.widgetwidth = 'col-md-12';
+                    $scope.wstate.widgetwidth = 'col-md-12';
                     var options = $scope.state.options;
                     options.chart.height = $scope.chartHeightBig;
                     options.chart.width = $scope.chartWidthBig;
@@ -118,7 +118,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 };
 
                 $scope.reduce = function () {
-                    $scope.state.widgetwidth = 'col-md-6';
+                    $scope.wstate.widgetwidth = 'col-md-6';
                     var options = $scope.state.options;
                     options.chart.height = $scope.chartHeightSmall;
                     options.chart.width = $scope.chartWidthSmall;
