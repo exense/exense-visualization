@@ -9,10 +9,27 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 dashboardid: '=',
                 displaymode: '=',
                 presets: '=',
-                mgrstate: '='
+                mgrstate: '=',
+                headersheightinput: '=',
+                charttocontainerinput: '='
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, dashletcomssrv) {
+
+                if (!$scope.headersheightinput) {
+                    $scope.headersheight = 250;
+                }else{
+                    $scope.headersheight = $scope.headersheightinput;
+                }
+
+                if (!$scope.charttocontainerinput) {
+                    $scope.charttocontainer = 35;
+                }else{
+                    $scope.charttocontainer = $scope.charttocontainerinput;
+                }
+
+                $scope.headHeight =  $scope.headersHeight;
+                $scope.chartRatio =  $scope.chartToContainer;
 
                 $scope.wwrap = $scope.dashboard.widgets;
 
@@ -49,29 +66,11 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 $scope.$on('dashletinput-ready', function () {
                     $scope.$broadcast('globalsettings-change', { 'collection': $scope.mgrstate.globalsettings });
                 });
-               
+
                 $scope.toggleChevron = function () {
                     $scope.mgrstate.globalsettingschevron = !$scope.mgrstate.globalsettingschevron;
                 };
 
-                $scope.$on('mgdwidget-reduce', function (event, arg) {
-                    var widget = $scope.wwrap.getById(arg.wid);
-                    widget.widgetWidth = 'col-md-6';
-                    var options = widget.state.shared.options;
-                    options.chart.height = $scope.chartHeightSmall;
-                    options.chart.width = $scope.chartWidthSmall;
-                    options.innercontainer.height = $scope.innerContainerHeightSmall;
-                    options.innercontainer.width = $scope.innerContainerWidthSmall;
-                });
-                $scope.$on('mgdwidget-extend', function (event, arg) {
-                    var widget = $scope.wwrap.getById(arg.wid);
-                    widget.widgetWidth = 'col-md-12';
-                    var options = widget.state.shared.options;
-                    options.chart.height = $scope.chartHeightBig;
-                    options.chart.width = $scope.chartWidthBig;
-                    options.innercontainer.height = $scope.innerContainerHeightBig;
-                    options.innercontainer.width = $scope.innerContainerWidthBig;
-                });
                 $scope.$on('mgdwidget-remove', function (event, arg) {
                     dashletcomssrv.unregisterWidget(arg.wid);
                     $scope.wwrap.removeById(arg.wid);
@@ -104,59 +103,13 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     }
                 });
 
-                $scope.computeHeights = function () {
-                    var sHeight = window.innerHeight;
-
-                    // parameterize via arguments or server-originating conf & promise?
-                    $scope.headersHeight = 250;
-                    $scope.chartToContainer = 35;
-                    // $scope.chartHeightSmall = 250;
-
-                    $scope.chartHeightSmall = (sHeight - $scope.headersHeight) / 2 - $scope.chartToContainer;
-                    $scope.chartHeightBig = sHeight - ($scope.headersHeight - 80) - $scope.chartToContainer;
-                    $scope.chartWidthSmall = 0;
-                    $scope.chartWidthBig = 0;
-                    $scope.innerContainerHeightSmall = (sHeight - $scope.headersHeight) / 2;
-                    $scope.innerContainerHeightBig = sHeight - ($scope.headersHeight - 80);
-                    $scope.innerContainerWidthSmall = 0;
-                    $scope.innerContainerWidthBig = 0;
-                };
-
-                $scope.computeHeights();
-
-                $scope.$on('single-resize', function (event, arg) {
-                    $(document).ready(function () {
-                        $scope.updateSingleChartSize(arg.wid, arg.newsize);
-                    });
-
+                $(window).on('resize', function () {
+                    $scope.$broadcast('resize-widget');
                 });
 
-                $scope.updateSingleChartSize = function (wId, newWidth) {
-
-                    //should only be done once at manager level
-                    $scope.computeHeights();
-                    var widget = $scope.wwrap.getById(wId);
-                    var options = widget.state.shared.options;
-                    options.chart.width = newWidth;
-                    options.innercontainer.width = newWidth - 50;
-
-                    if (widget.widgetWidth === 'col-md-6') {
-                        options.chart.height = $scope.chartHeightSmall;
-                        options.innercontainer.height = $scope.innerContainerHeightSmall;
-                    }
-                    else {
-                        options.chart.height = $scope.chartHeightBig;
-                        options.innercontainer.height = $scope.innerContainerHeightBig;
-                    }
-                    $scope.forceRedraw();
-                };
-
-                $scope.forceRedraw = function () {
-                    //force new angular digest
-                    $scope.$apply(function () {
-                        self.value = 0;
-                    });
-                };
+                $(document).ready(function () {
+                    $scope.$broadcast('resize-widget');
+                });
 
                 $scope.$emit('dashboard-ready');
             }
