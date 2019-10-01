@@ -17,7 +17,7 @@ function Widget(bstwidth, dstate) {
     };
 };
 
-function DashletState(title, viewtoggle, tabindex, data, chartoptions, config, query){
+function DashletState(title, viewtoggle, tabindex, data, chartoptions, config, query) {
     return {
         title: title,
         viewtoggle: viewtoggle,
@@ -37,7 +37,7 @@ function DashletState(title, viewtoggle, tabindex, data, chartoptions, config, q
     };
 }
 
-function DashletData(transformed, state){
+function DashletData(transformed, state) {
     return {
         transformed: transformed,
         state: state
@@ -93,17 +93,86 @@ function ChartOptions(chartType) {
             rotateLabels: -30
         }
     };
-}
+};
 
-function Query(inputtype, type, method, controls) {
+function Preproc(replacetarget, replacefunc) {
+    return {
+        replace: {
+            target: replacetarget,
+            function: replacefunc
+        }
+    };
+};
+
+//Not implemented yet
+function Transformation(transformfunc, transformargs) {
+    return {
+        function: transformfunc,
+        args: transformargs
+    };
+};
+
+function Postproc(asyncendfunc, transformfunc, transformargs, savefunc, transformations) {
+    return {
+        asyncEnd: {
+            function: asyncendfunc
+        },
+        transform: {
+            function: transformfunc,
+            args: transformargs,
+            transformations: transformations
+        },
+        save: {
+            function: savefunc
+        }
+    };
+};
+
+function Service(url, method, data, preproc, postproc) {
+    return {
+        url: url,
+        method: method,
+        data: data,
+        preproc: preproc,
+        postproc: postproc
+    };
+};
+
+function SimpleQuery(inputtype, service) {
     return {
         inputtype: inputtype,
-        type: type,
+        type: 'Simple',
         datasource: {
-            service: {
-                method: method,
-                controls: controls
-            }
+            service: service
         }
+    };
+};
+
+function AsyncQuery(inputtype, mainservice, callback) {
+    return {
+        inputtype: inputtype,
+        type: 'Async',
+        datasource: {
+            service: mainservice,
+            callback: callback
+        }
+    };
+};
+
+function Placeholder(key, value, isdynamic) {
+    return {
+        key: key,
+        value: value,
+        isDynamic: isdynamic
+    };
+}
+
+function Template(name, placeholders, payloadTemplate, paramsTemplate, query) {
+    return {
+        name: name,
+        placeholders: placeholders,
+        templatedPayload: payloadTemplate,
+        templatedParams: paramsTemplate,
+        queryTemplate: query
     };
 };

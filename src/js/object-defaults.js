@@ -21,7 +21,12 @@ function DefaultConfig() {
 };
 
 function DefaultQuery() {
-    return new Query("Raw", "Simple", "Get", {});
+    return new SimpleQuery(
+        "Raw",
+        new Service("", "Get", "",
+            new Preproc({}, {}),
+            new Postproc({}, {}, {}, {}, {}))
+        );
 };
 
 function DefaultChartOptions() {

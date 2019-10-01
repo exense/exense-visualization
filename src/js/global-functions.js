@@ -28,8 +28,8 @@ var resolveTemplateURL = function (containername, componentname) {
 
 var setIntervalDefault = 3000;
 
-var runResponseProc = function (postProc, response) {
-    return eval('(' + postProc + ')(response)');
+var runResponseProc = function (postProc, args, response) {
+    return eval('(' + postProc + ')(response, args)');
 };
 
 var runRequestProc = function (postProc, requestFragment, workData) {

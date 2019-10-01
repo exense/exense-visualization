@@ -73,7 +73,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             //$scope.state.data.serviceraw = response;
                             $scope.state.http.rawserviceresponse = JSON.stringify(response);
                             if ($scope.state.query.datasource.service.postproc.save) {
-                                $scope.state.data.state = runResponseProc($scope.state.query.datasource.service.postproc.save.function, response);
+                                $scope.state.data.state = runResponseProc($scope.state.query.datasource.service.postproc.save.function, null, response);
                             }
                             var datatosend = scallback.data;
                             var urltosend = scallback.url;
@@ -114,7 +114,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         if ($scope.asyncInterval) {
                             try {
                                 // stream consumed
-                                if (runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, response)) {
+                                if (runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, null, response)) {
                                     $scope.clearAsync();
                                 }
                             } catch (e) {
@@ -136,7 +136,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         proctarget = $scope.state.query.datasource.callback;
                     }
                     if (proctarget && proctarget.postproc && newValue) { // due to watch init
-                        $scope.state.data.transformed = { dashdata : runResponseProc(proctarget.postproc.transform.function, newValue.dashdata) };
+                        console.log('args')
+                        console.log(proctarget.postproc.transform.args);
+                        $scope.state.data.transformed = { dashdata : runResponseProc(proctarget.postproc.transform.function, proctarget.postproc.transform.args,  newValue.dashdata) };
                     }
                     $scope.isOngoingQuery = false;
                 });
