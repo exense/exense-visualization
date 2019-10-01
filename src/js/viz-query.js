@@ -183,14 +183,17 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.undoSlave();
                 });
 
-                $scope.makeMaster = function(newValue){
-                	console.log('newValue:' +newValue);
+                $scope.makeMaster = function (newValue) {
                     if (!newValue) {
                         dashletcomssrv.registerWidget($scope.widgetid, $scope.state.title);
                         //updating both values upon change on transformed for optimization/simplicity
                         // could be two distinct updates via service
-                        $scope.unwatchMaster = $scope.$watch('state.data.transformed', function (newValue) {
-                            dashletcomssrv.updateMasterValue($scope.widgetid, { transformed: angular.toJson(newValue.dashdata), raw: angular.toJson($scope.state.data.rawresponse.dashdata) });
+                        $scope.unwatchMaster = $scope.$watch('state.data.transformed', function (newvalue) {
+                            if (newvalue) {
+                                dashletcomssrv.updateMasterValue($scope.widgetid, { transformed: angular.toJson(newvalue.dashdata), raw: angular.toJson($scope.state.data.rawresponse.dashdata) });
+                            } else {
+                                console.log('Warning: a failed transformation occured, we are not broadcasting new value to slaves.')
+                            }
                         });
                     }
                     else {
@@ -199,7 +202,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
 
                 $scope.$on('isMaster-changed', function (event, newValue) {
-                	$scope.makeMaster(newValue);
+                    $scope.makeMaster(newValue);
                 });
 
                 $scope.$watch('state.title', function (newValue) {
@@ -283,7 +286,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $(document).ready(function () {
                         $scope.startWatchingMaster($scope.state.config.currentmaster.oid);
                     });
-                    
+
                 } if ($scope.state.config.master) { //master
                     $scope.makeMaster(false);
                 }

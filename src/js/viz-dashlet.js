@@ -143,7 +143,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         if (proctarget.postproc.transform.function && proctarget.postproc.transform.function.length > 0) {
                             $scope.state.data.transformed = { dashdata: runResponseProc(proctarget.postproc.transform.function, keyvalarrayToIndex(evalDynamic(proctarget.postproc.transform.args), 'key', 'value'), newValue.dashdata) };
                         } else {
-                            console.log('Warning: a new raw value was read by widget with id : ' + $scope.widgetid + ' but no transform function was provided'); console.log($scope.state.data.transformed);
+                            console.log('Warning: a new raw value was read by widget with id : ' + $scope.widgetid + ' but no transform function was provided');
                         }
                     }
                     $scope.isOngoingQuery = false;
@@ -218,7 +218,6 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 }
 
                 if(!$scope.state.viewtoggle){
-                    console.log('Firing initial query')
                     $scope.fireQueryDependingOnContext();
                 }
             }
