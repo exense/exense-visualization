@@ -4,14 +4,14 @@
             <div class="row">
                 <div class="colmdstyle col-md-12 colcontain-grid">
                     <div class="btn-group viz-btn-group">
-                        <label>Main preproc function</label>
-                        <textarea ng-model="state.query.datasource.service.preproc.function" class="form-control" />
+                        <label>Replace function</label>
+                        <textarea ng-model="state.query.datasource.service.preproc.replace.function" class="form-control" />
                         </div>
                 </div>
                 <div ng-if="state.query.type == 'Async'">
                  <div class="colmdstyle col-md-12 colcontain-grid">
                     <div class="btn-group viz-btn-group">
-                        <label>Replace preproc function</label>
+                        <label>Replace function</label>
                         <textarea ng-model="state.query.datasource.callback.preproc.replace.function" class="form-control" />
                     </div>
                  </div>

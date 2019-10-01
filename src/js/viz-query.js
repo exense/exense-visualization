@@ -355,15 +355,20 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 });
 
                 $scope.processTemplate = function (placeholders) {
-                    var data = runRequestProc(
-                        $scope.state.query.datasource.service.preproc.replace.function,
-                        $scope.state.query.controls.template.templatedPayload,
-                        evalDynamic($scope.mergePlaceholders()));
+                    var data = "", params= "";
+                    if ($scope.state.query.controls.template.templatedPayload) {
+                        data = runRequestProc(
+                            $scope.state.query.datasource.service.preproc.replace.function,
+                            $scope.state.query.controls.template.templatedPayload,
+                            evalDynamic($scope.mergePlaceholders()));
+                    }
 
-                    var params = runRequestProc(
-                        $scope.state.query.datasource.service.preproc.replace.function,
-                        $scope.state.query.controls.template.templatedParams,
-                        evalDynamic($scope.mergePlaceholders()));
+                    if ($scope.state.query.controls.template.templatedParams) {
+                        params = runRequestProc(
+                            $scope.state.query.datasource.service.preproc.replace.function,
+                            $scope.state.query.controls.template.templatedParams,
+                            evalDynamic($scope.mergePlaceholders()));
+                    }
 
                     return {
                         data: data,

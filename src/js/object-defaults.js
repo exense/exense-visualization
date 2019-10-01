@@ -54,3 +54,8 @@ function DefaultWidget() {
     );  
 };
 
+function DefaultOffPaging() {
+    return new Paging('Off', {}, {});
+};
+
+

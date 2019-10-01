@@ -10,7 +10,7 @@ function Dashboard(widgets, title, state) {
 
 function Widget(widgetid, bstwidth, dstate) {
     return {
-        oid : widgetid,
+        oid: widgetid,
         wstate: {
             widgetwidth: bstwidth,
         },
@@ -150,6 +150,12 @@ function SimpleQuery(inputtype, service) {
     };
 };
 
+function Paging() {
+    return {
+
+    }
+};
+
 function AsyncQuery(inputtype, mainservice, callback) {
     return {
         inputtype: inputtype,
@@ -169,6 +175,7 @@ function Placeholder(key, value, isdynamic) {
     };
 }
 
+//Used when loading only template (via GUI)
 function Template(name, placeholders, payloadTemplate, paramsTemplate, query) {
     return {
         name: name,
@@ -176,5 +183,47 @@ function Template(name, placeholders, payloadTemplate, paramsTemplate, query) {
         templatedPayload: payloadTemplate,
         templatedParams: paramsTemplate,
         queryTemplate: query
+    };
+};
+
+//Used when loading entire templatedQuery state (programmatically)
+function TemplatedQuery(controltype, basequery, paging, controls) {
+    return {
+        inputtype: 'Controls',
+        controltype: controltype,
+        type: basequery.type,
+        datasource: basequery.datasource,
+        paged: paging,
+        controls: controls
+    };
+};
+
+//example:"__FACTOR__", "return 0;", "return value + 1;", "if(value > 0){return value - 1;} else{return 0;}"
+function Offset(vid, startfunc, nextfunc, previousfunc) {
+    return {
+        vid: vid,
+        start: startfunc,
+        next: nextfunc,
+        previous: previousfunc
+    };
+};
+
+function Paging(active, first, second) {
+    return {
+        ispaged: active, // 'On'
+        offsets: {
+            first: first,
+            second: second
+        }
+    };
+};
+
+function TemplateControls(templatedPayload, templatedParams, placeholders) {
+    return {
+        template: {
+            templatedPayload: templatedPayload,
+            templatedParams: templatedParams,
+            placeholders: placeholders
+        }
     };
 };
