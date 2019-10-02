@@ -1,0 +1,38 @@
+<div class="well secondwell" style="justify-content: center; text-align: center;">
+    <div class="row" ng-show="displaymode === 'managed'">
+        <ul class="ul-control-g">
+            <li class="li-title">
+                <span ng-show="mgrstate.globalsettingschevron" class="title glyphicon glyphicon-chevron-down glyphicon-control"
+                    ng-click="toggleChevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
+                <span ng-show="!mgrstate.globalsettingschevron" class="title glyphicon glyphicon-chevron-right glyphicon-control"
+                    ng-click="toggleChevron()" href="#" style="margin: 0px; padding: 0px; margin-left: -8px;"></span>
+                <span>Global settings</span>
+            </li>
+            <li class="li-control-g">
+                <div class="btn-container">
+                    <button class="btn btn-primary viz-btn-primary" ng-click="toggleAutorefresh()" ng-class="{active : mgrstate.globalsettingsautorefresh}"><span
+                            class="glyphicon glyphicon-refresh"></span></button>
+                </div>
+            </li>
+        </ul>
+        <div class="form-wrapper">
+            <div class="form-group left-block">
+                <div class="container settingsformcontainer">
+                    <div class="row">
+                        <div class="col-md-12 colcontain-grid">
+                            <key-val-collection ng-show="mgrstate.globalsettingschevron" collection="mgrstate.globalsettings"
+                                collectionname="mgrstate.globalsettingsname"></key-val-collection>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div ng-repeat="o in wwrap.getAsArray() track by o.oid">
+            <viz-mgd-widget displaymode="displaymode" state="o.state" wstate="o.wstate" widgetid="o.oid" headersheightinput="headersheightinput" charttocontainerinput="charttocontainerinput" presets="presets" ></viz-mgd-widget>
+        </div>
+    </div>
+
+</div>
