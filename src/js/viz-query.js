@@ -397,9 +397,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 $scope.$on('globalsettings-change-init', function (event, arg) {
                     if (!$scope.globalsettingschangeinit || $scope.globalsettingschangeinit === false) {
-
-                        console.log('initializing input with global settings.');
-
                         $scope.updateLocalSettings(arg);
                         $scope.$emit('dashletinput-initialized');
                         $scope.globalsettingschangeinit = true;
