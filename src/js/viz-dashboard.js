@@ -49,7 +49,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 });
 
                 $scope.$on('dashletinput-ready', function () {
-                    $scope.$broadcast('globalsettings-change', { 'collection': $scope.mgrstate.globalsettings });
+                    $scope.$broadcast('globalsettings-change-init', { 'collection': $scope.mgrstate.globalsettings });
                 });
 
                 $scope.toggleChevron = function () {

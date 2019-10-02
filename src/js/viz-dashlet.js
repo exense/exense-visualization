@@ -218,7 +218,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 }
 
                 if(!$scope.state.viewtoggle){
-                    $scope.fireQueryDependingOnContext();
+                    $scope.$on('dashletinput-initialized', function () {
+                        $scope.fireQueryDependingOnContext();
+                    });
                 }
             }
         };

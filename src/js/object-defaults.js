@@ -17,7 +17,7 @@ function DefaultDashboard(widgets) {
 };
 
 function DefaultConfig() {
-    return new Config('Off', true, false, 'state.data.transformed');
+    return new Config('Off', false, false, '');
 };
 
 function DefaultQuery() {

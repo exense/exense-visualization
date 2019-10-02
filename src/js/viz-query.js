@@ -380,14 +380,23 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     };
                 }
 
-                // integration with outer settings via events
-                $scope.$on('globalsettings-change', function (event, arg) {
+                $scope.updateLocalSettings = function(arg){
                     $scope.globalsettings = arg.collection;
 
                     // when no template has been loaded, just save the data, no need to trigger an update
                     if ($scope.state.query.controls && $scope.state.query.controls.template) {
                         $scope.change(arg.async);
                     }
+                }
+
+                // integration with outer settings via events
+                $scope.$on('globalsettings-change', function (event, arg) {
+                    $scope.updateLocalSettings(arg);
+                });
+
+                $scope.$on('globalsettings-change-init', function (event, arg) {
+                    $scope.updateLocalSettings(arg);
+                    $scope.$emit('dashletinput-initialized');
                 });
 
                 $scope.mergePlaceholders = function (placeholders) {
