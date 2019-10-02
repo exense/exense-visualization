@@ -43,6 +43,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.autorefreshInterval = undefined;
 
                 $scope.fireQuery = function () {
+                    console.log('['+$scope.widgetid+']Firing query.');
                     try {
                         $scope.isOngoingQuery = true;
                         var srv = $scope.state.query.datasource.service;
@@ -107,6 +108,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.clearAsync = function () {
                     if ($scope.asyncInterval) {
                         clearInterval($scope.asyncInterval);
+                    }else{
+                    	console.log('Could not clear async (null or undefined).');
                     }
                 };
 
@@ -118,10 +121,14 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
                             try {
+                                console.log('checking if stream consumed.')
                                 // stream consumed
                                 if (runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, null, response)) {
+                                    console.log('consumed. Clearing Async and resetting query fire.')
                                     $scope.clearAsync();
                                     $scope.isOngoingQuery = false;
+                                }else{
+                                    console.log('Stream incomplete -> ' + JSON.stringify(response));
                                 }
                             } catch (e) {
                                 console.log(e);
@@ -155,7 +162,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         $scope.autorefreshInterval = setInterval(function () {
                             if (!$scope.isOngoingQuery) {
                                 try {
-                                    console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Firing.");
+                                    //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Firing.");
                                     $scope.fireQuery();
                                 } catch (e) {
                                     console.log('[Autorefresh] unable to refresh due to error: ' + e + "; Starting new query.");
@@ -163,7 +170,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                     $scope.isOngoingQuery = false;
                                 }
                             }else{
-                                console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Skipping interval.");
+                                //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Skipping interval.");
                             }
                         }, setIntervalDefault);
                     } else {

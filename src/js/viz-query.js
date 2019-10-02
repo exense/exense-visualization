@@ -33,7 +33,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     }
                 });
 
-                $scope.formatPotentialTimestamp = function(value){
+                $scope.formatPotentialTimestamp = function (value) {
                     return formatPotentialTimestamp(value);
                 };
 
@@ -348,6 +348,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             controller: function ($scope) {
 
                 $scope.globalsettings = [];
+                $scope.globalsettingschangeinit = false;
 
                 $scope.loadQueryPreset = function (querypreset) {
                     $scope.state.query = querypreset.query;
@@ -359,7 +360,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 });
 
                 $scope.processTemplate = function (placeholders) {
-                    var data = "", params= "";
+                    var data = "", params = "";
                     if ($scope.state.query.controls.template.templatedPayload) {
                         data = runRequestProc(
                             $scope.state.query.datasource.service.preproc.replace.function,
@@ -380,7 +381,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     };
                 }
 
-                $scope.updateLocalSettings = function(arg){
+                $scope.updateLocalSettings = function (arg) {
                     $scope.globalsettings = arg.collection;
 
                     // when no template has been loaded, just save the data, no need to trigger an update
@@ -395,8 +396,14 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 });
 
                 $scope.$on('globalsettings-change-init', function (event, arg) {
-                    $scope.updateLocalSettings(arg);
-                    $scope.$emit('dashletinput-initialized');
+                    if (!$scope.globalsettingschangeinit || $scope.globalsettingschangeinit === false) {
+
+                        console.log('initializing input with global settings.');
+
+                        $scope.updateLocalSettings(arg);
+                        $scope.$emit('dashletinput-initialized');
+                        $scope.globalsettingschangeinit = true;
+                    }
                 });
 
                 $scope.mergePlaceholders = function (placeholders) {
