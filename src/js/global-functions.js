@@ -81,13 +81,17 @@ var jsoncopy = function (obj) {
 }
 
 var formatPotentialTimestamp = function(d){
-	var value = 0;
-	if (d > 1000000000 && d < 2000000000) {
-		value = d * 1024;
-		return d3.time.format("%H:%M:%S")(new Date(value));
+	var value;
+	if((typeof d) === "string"){
+		value = parseInt(d);
+	}else{
+		value = d;
+	}
+	if (value > 1000000000 && value < 2000000000) {
+		value = value * 1000;
 	}
 	if(d >= 1000000000000 && d <= 2000000000000){
-		return d3.time.format("%H:%M:%S")(new Date(d));
+		return d3.time.format("%H:%M:%S")(new Date(value));
 	} else {
 		return d;
 	}
