@@ -65,7 +65,7 @@ function MgrState(gsettings, gautorefresh, gchevron, title) {
     }
 }
 
-function ChartOptions(chartType, useInteractiveGuideline) {
+function ChartOptions(chartType, useInteractiveGuideline, stacked) {
     return {
         type: chartType,
         height: 0, // all derived dynamically
@@ -76,6 +76,7 @@ function ChartOptions(chartType, useInteractiveGuideline) {
             bottom: 50,
             left: 55
         },
+        stacked : stacked,
         useInteractiveGuideline : useInteractiveGuideline,
         x: function (d) { return d.x; },
         y: function (d) { return d.y; },

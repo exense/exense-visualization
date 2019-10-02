@@ -30,7 +30,7 @@ function DefaultQuery() {
 };
 
 function DefaultChartOptions() {
-    return new ChartOptions("lineChart", false);
+    return new ChartOptions("lineChart", false, false);
 };
 
 function DefaultDashletData(){
