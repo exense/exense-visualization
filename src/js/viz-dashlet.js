@@ -38,7 +38,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 }
 
-                // Query firing
+                // init
                 $scope.isOngoingQuery = false;
                 $scope.autorefreshInterval = undefined;
 
@@ -57,7 +57,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 };
 
                 $scope.dispatchErrorResponse = function (response) {
-                    console.log('error:' + JSON.stringify(response));
+                    console.log('error:' + JSON.stringify(response) + "; Resetting Query refresh.");
                     $scope.clearAsync();
                     $scope.isOngoingQuery = false;
                 };
@@ -70,7 +70,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.dispatchSuccessResponse = function (response, successTarget) {
                     try {
                         if ($scope.state.query.type === 'Simple') {
-                            $scope.loadData(response, successTarget)
+                            $scope.loadData(response, successTarget);
                         }
                         if ($scope.state.query.type === 'Async') {
                             var scallback = $scope.state.query.datasource.callback;
@@ -113,6 +113,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.loadData = function (response, proctarget) {
                     if ($scope.state.query.type === 'Simple') {
                         $scope.state.http.rawserviceresponse = response;
+                        $scope.isOngoingQuery = false;
                     }
                     if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
@@ -120,6 +121,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 // stream consumed
                                 if (runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, null, response)) {
                                     $scope.clearAsync();
+                                    $scope.isOngoingQuery = false;
                                 }
                             } catch (e) {
                                 console.log(e);
@@ -146,7 +148,6 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             console.log('Warning: a new raw value was read by widget with id : ' + $scope.widgetid + ' but no transform function was provided');
                         }
                     }
-                    $scope.isOngoingQuery = false;
                 });
 
                 $scope.$watch('state.config.autorefresh', function (newValue) {
@@ -154,12 +155,15 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         $scope.autorefreshInterval = setInterval(function () {
                             if (!$scope.isOngoingQuery) {
                                 try {
+                                    console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Firing.");
                                     $scope.fireQuery();
                                 } catch (e) {
-                                    console.log('[Autorefresh interval] unable to refresh due to error: ' + e);
+                                    console.log('[Autorefresh] unable to refresh due to error: ' + e + "; Starting new query.");
                                     // agressive
                                     $scope.isOngoingQuery = false;
                                 }
+                            }else{
+                                console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Skipping interval.");
                             }
                         }, setIntervalDefault);
                     } else {

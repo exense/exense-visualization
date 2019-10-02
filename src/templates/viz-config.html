@@ -42,6 +42,8 @@
                                     uib-btn-radio="'scatterChart'">scatterChart</label>
                                 <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
                                     uib-btn-radio="'discreteBarChart'">discreteBarChart</label>
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
+                                    uib-btn-radio="'stackedAreaChart'">stackedAreaChart</label>
                             </div>
                         </div>
                         <div class="colmdstyle col-md-3 colcontain-grid">
@@ -85,8 +87,7 @@
                             <label>Master control</label>
                             <div class="btn-group viz-btn-group form-radio">
                                 <span class="key-val-collection btn btn-primary viz-btn-primary" href="#">
-                                    <input type="checkbox" class="form-control" ng-model="state.config.master"
-                                        style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;"
+                                    <input type="checkbox" class="form-control" ng-model="state.config.master" style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;"
                                         ng-click="$emit('isMaster-changed', state.config.master)" />
                                 </span>
                                 <label class="btn btn-primary viz-label" ng-class="{ active: state.config.master}">Make
@@ -97,8 +98,7 @@
                             <label>Slave control</label>
                             <div class="btn-group viz-btn-group form-radio">
                                 <span class="key-val-collection btn btn-primary viz-btn-primary" href="#">
-                                    <input type="checkbox" class="form-control" ng-model="state.config.slave"
-                                        style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;" />
+                                    <input type="checkbox" class="form-control" ng-model="state.config.slave" style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;" />
                                 </span>
                                 <label class="btn btn-primary viz-label" ng-class="{active: state.config.slave}">Make
                                     slave</span>
@@ -118,13 +118,13 @@
                             </div>
                         </div>
                         <div ng-if="state.config.slave" class="col-md-3 colcontain-grid">
-                                <label>Data target</label>
-                                <div class="btn-group viz-btn-group form-radio">
-                                    <label class="btn btn-primary viz-btn-primary" ng-model="state.config.target"
-                                        uib-btn-radio="'state.data.rawresponse'">Raw</label>
-                                    <label class="btn btn-primary viz-btn-primary" ng-model="state.config.target"
-                                        uib-btn-radio="'state.data.transformed'">Transformed</label>
-                                </div>
+                            <label>Data target</label>
+                            <div class="btn-group viz-btn-group form-radio">
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.config.target"
+                                    uib-btn-radio="'state.data.rawresponse'">Raw</label>
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.config.target"
+                                    uib-btn-radio="'state.data.transformed'">Transformed</label>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -137,7 +137,7 @@
                         <div class="colmdstyle col-md-10 colcontain-grid">
                             <label>Current master</label>
                             <div class="btn-group viz-btn-group form-radio">
-                            {{state.config.currentmaster.title}}
+                                {{state.config.currentmaster.title}}
                             </div>
                         </div>
                     </div>
