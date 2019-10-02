@@ -43,7 +43,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.autorefreshInterval = undefined;
 
                 $scope.fireQuery = function () {
-                    console.log('['+$scope.widgetid+']Firing query.');
+                    //in case any async query ongoing
+                    $scope.clearAsync();
+                    //console.log('['+$scope.widgetid+']Firing query.');
                     try {
                         $scope.isOngoingQuery = true;
                         var srv = $scope.state.query.datasource.service;
