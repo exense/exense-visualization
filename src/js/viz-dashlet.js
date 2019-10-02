@@ -121,14 +121,13 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.query.type === 'Async') {
                         if ($scope.asyncInterval) {
                             try {
-                                console.log('checking if stream consumed.')
                                 // stream consumed
                                 if (runResponseProc($scope.state.query.datasource.callback.postproc.asyncEnd.function, null, response)) {
-                                    console.log('consumed. Clearing Async and resetting query fire.')
+                                    //console.log('consumed. Clearing Async and resetting query fire.')
                                     $scope.clearAsync();
                                     $scope.isOngoingQuery = false;
                                 }else{
-                                    console.log('Stream incomplete -> ' + JSON.stringify(response));
+                                    //console.log('Stream incomplete -> ' + JSON.stringify(response));
                                 }
                             } catch (e) {
                                 console.log(e);
