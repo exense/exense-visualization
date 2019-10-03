@@ -113,6 +113,10 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 	console.log('dashboard.widgets changed, new widget size= ' + newvalue.length);
                 	$scope.onstartup();
                 });
+
+                $scope.$on('$destroy', function(){
+                    $scope.removeInterval();
+                });
             }
         };
     })
