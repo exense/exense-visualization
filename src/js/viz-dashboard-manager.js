@@ -26,12 +26,6 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                     return tabIndex === $scope.mgrtabstate;
                 };
 
-                $scope.$on('remove-all-dashboards', function (event, arg) {
-                    $.each($scope.dwrap.getAsArray(), function (idx, value) {
-                        $scope.removeDashboard(value.oid);
-                    });
-                });
-
                 $scope.registerTermination = function(dashboardid){
                     $scope.$on('d-terminated-' + dashboardid, function () {
                         console.log('[m]received terminated event from: [d:' + dashboardid + ']. Effectively removing dashboard');
@@ -66,6 +60,15 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                 });
 
                 $scope.$on('dashboard-clear', function () {
+                    var didList = [];
+                    $.each($scope.dwrap.getAsArray(), function (idx, value) {
+                        didList.push(value.oid);
+                    });
+                    $.each(didList, function (idx, value) {
+                        console.log('[m] sending termination event to: [d:' + value + ']');
+                        $scope.removeDashboard(value);
+                    });
+
                     $scope.dwrap.clear();
                 });
 
