@@ -48,7 +48,7 @@
 		var demoApp = angular.module('demoApp', ['viz-dashboard-manager', 'dashletcomssrv'])
 			.controller('ctrl', ['$scope', function ($scope) {
 				$scope.staticPresetsInstance = new StaticPresets();
-				$scope.dashboardsendpoint = [];
+				$scope.dashboardsendpoint = [new DefaultDashboard([new DefaultWidget()])];
 
 				$scope.$on('top.dashboard-new', function () {
 					$scope.$broadcast('dashboard-new');
@@ -63,17 +63,7 @@
 				$scope.$on('top.dashboard-current-clearWidgets', function () {
 					$scope.$broadcast('dashboard-current-clearWidgets');
 				});
-
-				// For saving time in testing
-				$scope.$on('manager-ready', function () {
-					$scope.$broadcast('dashboard-new');
-					$scope.$on('dashboard-ready', function (event, arg) {
-						if(!initTestDashboard){
-							initTestDashboard = true;
-							$scope.$broadcast('dashboard-current-addWidget');
-						}
-					});
-				});
+				
 			}]);
 
 	</script>

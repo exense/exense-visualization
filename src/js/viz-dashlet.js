@@ -252,11 +252,6 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.$broadcast('update-template');
                 };
 
-                $scope.$on('w-terminate-'+$scope.widgetid, function () {
-                    $scope.terminate();
-                    $scope.$emit('w-terminated-'+$scope.widgetid);
-                });
-
                 $scope.terminate = function(){
                     console.log('['+$scope.widgetid+'] terminating...');
                     dashletcomssrv.unregisterWidget($scope.widgetid);
@@ -279,6 +274,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         $scope.fireQueryDependingOnContext();
                     });
                 }
+
+                $scope.$on('$destroy', function(){
+                    $scope.terminate();
+                });
             }
         };
     });

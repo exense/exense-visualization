@@ -7,16 +7,14 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
             scope: {
                 presets: '=',
                 dashboards: '=',
-                displaymode: '='
+                displaymode: '=',
+                headersheightinput: '=',
+                charttocontainerinput: '=',
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard-manager.html'),
             controller: function ($scope, dashletcomssrv) {
-                $scope.dwrap = new IdIndexArray($scope.dashboards);
 
-                // default tab (1st)
-                if ($scope.dashboards.length > 0 && $scope.dashboards[0] && $scope.dashboards[0].oid) {
-                    $scope.mgrtabstate = $scope.dashboards[0].oid;
-                }
+                $scope.init = false;
 
                 $scope.selectTab = function (tabIndex) {
                     $scope.mgrtabstate = tabIndex;
@@ -24,13 +22,6 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
 
                 $scope.isTabActive = function (tabIndex) {
                     return tabIndex === $scope.mgrtabstate;
-                };
-
-                $scope.registerTermination = function(dashboardid){
-                    $scope.$on('d-terminated-' + dashboardid, function () {
-                        console.log('[m]received terminated event from: [d:' + dashboardid + ']. Effectively removing dashboard');
-                        $scope.dwrap.removeById(dashboardid);
-                    });
                 };
 
                 $scope.removeDashboard = function(dashboardid) {
@@ -48,27 +39,16 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                             }
                         }
                     }
-                    console.log('[m]sending termination event to: [d:'+dashboardid+']');
-                    $scope.$broadcast('d-terminate-'+dashboardid);
+                    $scope.dwrap.removeById(dashboardid);
                 };
 
                 $scope.$on('dashboard-new', function (event, arg) {
                     var newdashboardid = $scope.dwrap.addNew(new DefaultDashboard([]));
                     console.log('[m] adding dashboard: ['+newdashboardid+']');
-                    $scope.registerTermination(newdashboardid);
-                    $scope.mgrtabstate = $scope.dwrap.getId($scope.dwrap.getByIndex($scope.dwrap.count() - 1));
+                    $scope.mgrtabstate = newdashboardid;
                 });
 
                 $scope.$on('dashboard-clear', function () {
-                    var didList = [];
-                    $.each($scope.dwrap.getAsArray(), function (idx, value) {
-                        didList.push(value.oid);
-                    });
-                    $.each(didList, function (idx, value) {
-                        console.log('[m] sending termination event to: [d:' + value + ']');
-                        $scope.removeDashboard(value);
-                    });
-
                     $scope.dwrap.clear();
                 });
 
@@ -79,8 +59,29 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                     $scope.$broadcast('clearwidgets', { dashboardid: $scope.mgrtabstate });
                 });
 
+                //multiplexing multiple events
+                $scope.$on('dashletinput-initialized', function () {
+                    if(!$scope.init){
+                    $scope.init = true;
+                    $scope.$broadcast('resize-widget');
+                    $scope.$emit('manager-fully-loaded');
+                }
+                });
 
-                $scope.$emit('manager-ready');
+                $scope.onstartup = function(){
+                    $scope.dwrap = new IdIndexArray($scope.dashboards);
+                    if ($scope.dashboards.length > 0 && $scope.dashboards[0] && $scope.dashboards[0].oid) {
+                        $scope.mgrtabstate = $scope.dashboards[0].oid;
+                    }
+                    $scope.$emit('manager-ready');
+                }
+
+                $scope.onstartup();
+                
+                $scope.$watch('dashboards', function(newvalue){
+                	console.log('dashboards changed, new size= ' + newvalue.length);
+                	$scope.onstartup();
+                });
             }
         };
     })

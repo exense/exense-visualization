@@ -16,40 +16,6 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, dashletcomssrv) {
 
-                $scope.wwrap = $scope.dashboard.widgets;
-
-                $scope.gsautorefreshInterval = null;
-
-                $scope.$on('d-terminate-' + $scope.dashboardid, function () {
-                    var widList = [];
-                    $.each($scope.wwrap.getAsArray(), function (idx, value) {
-                        widList.push(value.oid);
-                    });
-                    $.each(widList, function (idx, value) {
-                        console.log('[d:' + $scope.dashboardid + '] sending termination event to: [w:' + value + ']');
-                        $scope.$broadcast('w-terminate-' + value);
-                    });
-
-                    console.log('emitting:' + 'd-terminated-' + $scope.dashboardid);
-                    $scope.$emit('d-terminated-' + $scope.dashboardid);
-                });
-
-                $.each($scope.wwrap.getAsArray(), function (idx, value) {
-                    $scope.registerTermination(value.oid);
-                });
-
-                $scope.registerTermination = function (widgetid) {
-                    $scope.$on('w-terminated-' + widgetid, function () {
-                        console.log('[d:' + $scope.dashboardid + ']received terminated event from: [w:' + widgetid + ']. Effectively removing widget');
-                        $scope.wwrap.removeById(widgetid);
-                    });
-                };
-
-                // load time case
-                if ($scope.mgrstate.globalsettingsautorefresh) {
-                    $scope.toggleAutorefresh();
-                }
-
                 $scope.toggleAutorefresh = function () {
                     $scope.mgrstate.globalsettingsautorefresh = !$scope.mgrstate.globalsettingsautorefresh;
                     if ($scope.mgrstate.globalsettingsautorefresh) {
@@ -93,8 +59,9 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 };
 
                 $scope.$on('mgdwidget-remove', function (event, arg) {
-                    $scope.$broadcast('w-terminate-' + arg.wid);
+                    $scope.wwrap.removeById(arg.wid);
                 });
+                
                 $scope.$on('mgdwidget-moveLeft', function (event, arg) {
                     var widgetIndex = $scope.wwrap.getIndexById(arg.wid);
                     if (widgetIndex > 0) {
@@ -121,8 +88,6 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     if ($scope.dashboardid === arg.dashboardid) {
                         var newWidgetId = $scope.wwrap.addNew(new DefaultWidget());
                         console.log('[d:' + $scope.dashboardid + '] adding widget: [' + newWidgetId + ']');
-                        //console.log($scope.wwrap.getAsArray());
-                        $scope.registerTermination(newWidgetId);
                     }
                 });
 
@@ -130,11 +95,24 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     $scope.$broadcast('resize-widget');
                 });
 
-                $(document).ready(function () {
-                    $scope.$broadcast('resize-widget');
-                });
+                $scope.onstartup = function(){
+                    $scope.wwrap = $scope.dashboard.widgets;
 
-                $scope.$emit('dashboard-ready');
+                    $scope.gsautorefreshInterval = null;
+  
+                    if ($scope.mgrstate.globalsettingsautorefresh) {
+                        $scope.toggleAutorefresh();
+                    }
+                    
+                    $scope.$emit('dashboard-ready');
+                }
+
+                $scope.onstartup();
+                
+                $scope.$watch('dashboard.widgets', function(newvalue){
+                	console.log('dashboard.widgets changed, new widget size= ' + newvalue.length);
+                	$scope.onstartup();
+                });
             }
         };
     })
