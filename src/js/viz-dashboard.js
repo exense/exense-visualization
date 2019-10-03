@@ -20,6 +20,31 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
 
                 $scope.gsautorefreshInterval = null;
 
+                $scope.$on('d-terminate-' + $scope.dashboardid, function () {
+                    var widList = [];
+                    $.each($scope.wwrap.getAsArray(), function (idx, value) {
+                        widList.push(value.oid);
+                    });
+                    $.each(widList, function (idx, value) {
+                        console.log('[d:' + $scope.dashboardid + '] sending termination event to: [w:' + value + ']');
+                        $scope.$broadcast('w-terminate-' + value);
+                    });
+
+                    console.log('emitting:' + 'd-terminated-' + $scope.dashboardid);
+                    $scope.$emit('d-terminated-' + $scope.dashboardid);
+                });
+
+                $.each($scope.wwrap.getAsArray(), function (idx, value) {
+                    $scope.registerTermination(value.oid);
+                });
+
+                $scope.registerTermination = function (widgetid) {
+                    $scope.$on('w-terminated-' + widgetid, function () {
+                        console.log('[d:' + $scope.dashboardid + ']received terminated event from: [w:' + widgetid + ']. Effectively removing widget');
+                        $scope.wwrap.removeById(widgetid);
+                    });
+                };
+
                 // load time case
                 if ($scope.mgrstate.globalsettingsautorefresh) {
                     $scope.toggleAutorefresh();
@@ -38,7 +63,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 $scope.addInterval = function () {
 
                     var duration = setIntervalDefault;
-                    if($scope.mgrstate.gsautorefreshIntervalDuration){
+                    if ($scope.mgrstate.gsautorefreshIntervalDuration) {
                         duration = $scope.mgrstate.gsautorefreshIntervalDuration;
                     }
 
@@ -68,8 +93,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 };
 
                 $scope.$on('mgdwidget-remove', function (event, arg) {
-                    dashletcomssrv.unregisterWidget(arg.wid);
-                    $scope.wwrap.removeById(arg.wid);
+                    $scope.$broadcast('w-terminate-' + arg.wid);
                 });
                 $scope.$on('mgdwidget-moveLeft', function (event, arg) {
                     var widgetIndex = $scope.wwrap.getIndexById(arg.wid);
@@ -96,6 +120,9 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 $scope.$on('addwidget', function (event, arg) {
                     if ($scope.dashboardid === arg.dashboardid) {
                         var newWidgetId = $scope.wwrap.addNew(new DefaultWidget());
+                        console.log('[d:' + $scope.dashboardid + '] adding widget: [' + newWidgetId + ']');
+                        //console.log($scope.wwrap.getAsArray());
+                        $scope.registerTermination(newWidgetId);
                     }
                 });
 

@@ -26,9 +26,22 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                     return tabIndex === $scope.mgrtabstate;
                 };
 
-                $scope.$on('removeDashboard', function (event, arg) {
+                $scope.$on('remove-all-dashboards', function (event, arg) {
+                    $.each($scope.dwrap.getAsArray(), function (idx, value) {
+                        $scope.removeDashboard(value.oid);
+                    });
+                });
+
+                $scope.registerTermination = function(dashboardid){
+                    $scope.$on('d-terminated-' + dashboardid, function () {
+                        console.log('[m]received terminated event from: [d:' + dashboardid + ']. Effectively removing dashboard');
+                        $scope.dwrap.removeById(dashboardid);
+                    });
+                };
+
+                $scope.removeDashboard = function(dashboardid) {
                     //If the currently opened tab is killed
-                    if ($scope.mgrtabstate === arg) {
+                    if ($scope.mgrtabstate === dashboardid) {
                         // if has previous, open previous
                         if ($scope.dwrap.getIndexById($scope.mgrtabstate) > 0) {
                             $scope.mgrtabstate = $scope.dwrap.getPreviousId($scope.mgrtabstate);
@@ -41,14 +54,14 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                             }
                         }
                     }
-                    $.each($scope.dwrap.getById(arg).widgets.getAsArray(), function(idx, value){
-                        dashletcomssrv.unregisterWidget(value.oid);
-                    })
-                    $scope.dwrap.removeById(arg);
-                });
+                    console.log('[m]sending termination event to: [d:'+dashboardid+']');
+                    $scope.$broadcast('d-terminate-'+dashboardid);
+                };
 
                 $scope.$on('dashboard-new', function (event, arg) {
-                    $scope.dwrap.addNew(new DefaultDashboard([]));
+                    var newdashboardid = $scope.dwrap.addNew(new DefaultDashboard([]));
+                    console.log('[m] adding dashboard: ['+newdashboardid+']');
+                    $scope.registerTermination(newdashboardid);
                     $scope.mgrtabstate = $scope.dwrap.getId($scope.dwrap.getByIndex($scope.dwrap.count() - 1));
                 });
 

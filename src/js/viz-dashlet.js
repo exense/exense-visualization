@@ -13,6 +13,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
             templateUrl: resolveTemplateURL('viz-dashlet.js', 'viz-dashlet.html'),
             controller: function ($scope, $element, $http, dashletcomssrv) {
 
+                $scope.state.unwatchers = [];
+
                 $scope.selectTab = function (tabIndex) {
                     $scope.state.tabindex = tabIndex;
                 };
@@ -98,7 +100,6 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             var executionFunction = function () {
                                 $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
                             };
-                            $scope.clearAsync();
                             $scope.setAsyncInterval(executionFunction);
                         }
                     } catch (e) {
@@ -109,6 +110,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 };
 
                 $scope.setAsyncInterval = function(callback){
+                    $scope.clearAsync();
+
                     var duration = setIntervalAsyncDefault;
                     if($scope.state.config.asyncrefreshduration){
                         duration = $scope.state.config.asyncrefreshduration;
@@ -149,7 +152,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.state.data.rawresponse = { dashdata: response };
                 };
 
-                $scope.$watch('state.data.rawresponse', function (newValue) {
+                $scope.state.unwatchers.push($scope.$watch('state.data.rawresponse', function (newValue) {
                     var proctarget = undefined;
                     if ($scope.state.query.type === 'Simple') {
                         proctarget = $scope.state.query.datasource.service;
@@ -164,7 +167,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             console.log('Warning: a new raw value was read by widget with id : ' + $scope.widgetid + ' but no transform function was provided');
                         }
                     }
-                });
+                }));
 
                 $scope.clearAutorefreshInterval = function(){
                     if($scope.autorefreshInterval){
@@ -172,12 +175,12 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 }
 
-                $scope.$watch('state.config.autorefresh', function (newValue) {
+                $scope.state.unwatchers.push($scope.$watch('state.config.autorefresh', function (newValue) {
                     $scope.clearAutorefreshInterval();
                     if (newValue === 'On') {
                         $scope.setAutorefreshInterval();
                     }
-                });
+                }));
 
                 $scope.setAutorefreshInterval = function(){
                     var duration = setIntervalDefault;
@@ -247,7 +250,29 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     paged.offsets.first.state = runValueFunction(paged.offsets.first.previous, paged.offsets.first.state);
                     paged.offsets.second.state = runValueFunction(paged.offsets.second.previous, paged.offsets.second.state);
                     $scope.$broadcast('update-template');
-                }
+                };
+
+                $scope.$on('w-terminate-'+$scope.widgetid, function () {
+                    $scope.terminate();
+                    $scope.$emit('w-terminated-'+$scope.widgetid);
+                });
+
+                $scope.terminate = function(){
+                    console.log('['+$scope.widgetid+'] terminating...');
+                    dashletcomssrv.unregisterWidget($scope.widgetid);
+                    $scope.clearAsync();
+                    $scope.clearAutorefreshInterval();
+                    $scope.state.config.autorefresh = 'Off';
+                    $scope.state.data = {};
+                    $scope.state = null;
+                    console.log('['+$scope.widgetid+'] termination complete.');
+                };
+
+                $scope.unwatchAll = function(){
+                    $.each($scope.state.unwatchers, function(idx, unwatcher){
+                        unwatcher();
+                    });
+                };
 
                 if(!$scope.state.viewtoggle){
                     $scope.$on('dashletinput-initialized', function () {

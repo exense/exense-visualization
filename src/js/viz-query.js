@@ -22,7 +22,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-view.html'),
             controller: function ($scope) {
-                $scope.$watch('state.data.transformed', function (newvalue) {
+                $scope.state.unwatchers.push($scope.$watch('state.data.transformed', function (newvalue) {
                     if (newvalue && newvalue.dashdata) {
                         if ($scope.state.options.chart.type === 'table') {
                             $scope.tableData = $scope.toTable(newvalue.dashdata);
@@ -31,7 +31,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                             $scope.chartData = $scope.toChart(newvalue.dashdata);
                         }
                     }
-                });
+                }));
 
                 $scope.formatPotentialTimestamp = function (value) {
                     return formatPotentialTimestamp(value);
@@ -209,11 +209,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.makeMaster(newValue);
                 });
 
-                $scope.$watch('state.title', function (newValue) {
+                $scope.state.unwatchers.push($scope.$watch('state.title', function (newValue) {
                     if ($scope.state.config.master) {
                         dashletcomssrv.udpdateTitle($scope.widgetid, newValue);
                     }
-                });
+                }));
 
                 $scope.unwatchSlave = '';
 
@@ -247,11 +247,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     }
                 };
 
-                $scope.$watch('state.config.slave', function (newValue) {
+                $scope.state.unwatchers.push($scope.$watch('state.config.slave', function (newValue) {
                     if (!newValue) {
                         $scope.undoSlave();
                     }
-                });
+                }));
 
                 // no watching directly on the checkbox, only doing something once a master is picked
                 $scope.$on('master-loaded', function (event, master) {
@@ -262,11 +262,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 });
 
                 // bind service masters to config master selection list
-                $scope.$watch(function () {
+                $scope.state.unwatchers.push($scope.$watch(function () {
                     return dashletcomssrv.masters;
                 }, function (newValue) {
                     $scope.state.config.masters = newValue;
-                });
+                }));
 
                 $scope.$on('single-remove', function (event, arg) {
                     if (arg === $scope.widgetid) {
