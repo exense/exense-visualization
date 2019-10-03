@@ -27,6 +27,7 @@ var resolveTemplateURL = function (containername, componentname) {
 }
 
 var setIntervalDefault = 3000;
+var setIntervalAsyncDefault = 500;
 
 var keyvalarrayToIndex = function(array, keyKey, valKey){
     var index = {};

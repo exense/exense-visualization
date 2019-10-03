@@ -46,22 +46,24 @@ function DashletData(transformed, rawresponse, state) {
     };
 };
 
-function Config(autorefresh, master, slave, target) {
+function Config(autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration) {
     return {
         autorefresh: autorefresh,
         master: master,
         slave: slave,
         target: target,
+        autorefreshduration: autorefreshduration,
+        asyncrefreshduration: asyncrefreshduration
     };
 }
 
-function MgrState(gsettings, gautorefresh, gchevron, title) {
+function MgrState(gsettings, gautorefresh, gchevron, title, autorefreshduration) {
     return {
         globalsettings: gsettings,
         globalsettingsautorefresh: gautorefresh,
         globalsettingschevron: gchevron,
         globalsettingsname: title,
-        gsautorefreshInterval: null
+        gsautorefreshIntervalDuration: autorefreshduration
     }
 }
 

@@ -15,8 +15,10 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, dashletcomssrv) {
-                
+
                 $scope.wwrap = $scope.dashboard.widgets;
+
+                $scope.gsautorefreshInterval = null;
 
                 // load time case
                 if ($scope.mgrstate.globalsettingsautorefresh) {
@@ -34,13 +36,22 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 };
 
                 $scope.addInterval = function () {
-                    $scope.mgrstate.gsautorefreshInterval = setInterval(function () {
+
+                    var duration = setIntervalDefault;
+                    if($scope.mgrstate.gsautorefreshIntervalDuration){
+                        duration = $scope.mgrstate.gsautorefreshIntervalDuration;
+                    }
+
+                    $scope.removeInterval();
+                    $scope.gsautorefreshInterval = setInterval(function () {
                         $scope.$broadcast('globalsettings-change', { 'collection': $scope.mgrstate.globalsettings, async: true });
-                    }, setIntervalDefault);
+                    }, duration);
                 }
 
                 $scope.removeInterval = function () {
-                    clearInterval($scope.mgrstate.gsautorefreshInterval);
+                    if ($scope.gsautorefreshInterval) {
+                        clearInterval($scope.gsautorefreshInterval);
+                    }
                 }
 
                 $scope.$on('key-val-collection-change-Global Settings', function (event, arg) {

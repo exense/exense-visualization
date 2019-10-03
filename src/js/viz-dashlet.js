@@ -43,7 +43,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.autorefreshInterval = undefined;
 
                 $scope.fireQuery = function () {
-                    //in case any async query ongoing
+                    //in case any async query already ongoing
                     $scope.clearAsync();
                     //console.log('['+$scope.widgetid+']Firing query.');
                     try {
@@ -98,8 +98,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             var executionFunction = function () {
                                 $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
                             };
-                            $scope.clearInterval();
-                            $scope.asyncInterval = setInterval(executionFunction, 500);
+                            $scope.clearAsync();
+                            $scope.setAsyncInterval(executionFunction);
                         }
                     } catch (e) {
                         console.log(e);
@@ -108,11 +108,18 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 };
 
+                $scope.setAsyncInterval = function(callback){
+                    var duration = setIntervalAsyncDefault;
+                    if($scope.state.config.asyncrefreshduration){
+                        duration = $scope.state.config.asyncrefreshduration;
+                    }
+
+                    $scope.asyncInterval = setInterval(callback, duration);
+                };
+
                 $scope.clearAsync = function () {
                     if ($scope.asyncInterval) {
                         clearInterval($scope.asyncInterval);
-                    }else{
-                    	console.log('Could not clear async (null or undefined).');
                     }
                 };
 
@@ -159,28 +166,40 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 });
 
+                $scope.clearAutorefreshInterval = function(){
+                    if($scope.autorefreshInterval){
+                        clearInterval($scope.autorefreshInterval);
+                    }
+                }
+
                 $scope.$watch('state.config.autorefresh', function (newValue) {
+                    $scope.clearAutorefreshInterval();
                     if (newValue === 'On') {
-                        $scope.autorefreshInterval = setInterval(function () {
-                            if (!$scope.isOngoingQuery) {
-                                try {
-                                    //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Firing.");
-                                    $scope.fireQuery();
-                                } catch (e) {
-                                    console.log('[Autorefresh] unable to refresh due to error: ' + e + "; Starting new query.");
-                                    // agressive
-                                    $scope.isOngoingQuery = false;
-                                }
-                            }else{
-                                //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Skipping interval.");
-                            }
-                        }, setIntervalDefault);
-                    } else {
-                        if ($scope.autorefreshInterval) {
-                            clearInterval($scope.autorefreshInterval);
-                        }
+                        $scope.setAutorefreshInterval();
                     }
                 });
+
+                $scope.setAutorefreshInterval = function(){
+                    var duration = setIntervalDefault;
+                    if($scope.state.config.autorefreshduration){
+                        duration = $scope.state.config.autorefreshduration;
+                    }
+
+                    $scope.autorefreshInterval = setInterval(function () {
+                        if (!$scope.isOngoingQuery) {
+                            try {
+                                //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Firing.");
+                                $scope.fireQuery();
+                            } catch (e) {
+                                console.log('[Autorefresh] unable to refresh due to error: ' + e + "; Starting new query.");
+                                // agressive
+                                $scope.isOngoingQuery = false;
+                            }
+                        }else{
+                            //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Skipping interval.");
+                        }
+                    }, duration);
+                }
 
                 // Paging
 
