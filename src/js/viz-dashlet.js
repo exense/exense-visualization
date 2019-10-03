@@ -98,6 +98,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             var executionFunction = function () {
                                 $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
                             };
+                            $scope.clearInterval();
                             $scope.asyncInterval = setInterval(executionFunction, 500);
                         }
                     } catch (e) {
