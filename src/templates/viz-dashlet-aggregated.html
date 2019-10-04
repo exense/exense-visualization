@@ -23,15 +23,15 @@
 
 
         <div ng-show="state.viewtoggle && isTabActive(0)" class="innercontainer" ng-style="{ height: state.options.innercontainer.height+'px'}">
-            <viz-query formwidth="state.options.innercontainer.width" state="state" presets="presets" ></viz-query>
+            <viz-query state="state" presets="presets" ></viz-query>
         </div>
 
         <div ng-show="state.viewtoggle && isTabActive(1)" class="innercontainer" ng-style="{ height: state.options.innercontainer.height+'px'}">
-            <viz-transform formwidth="state.options.innercontainer.width" state="state" presets="presets" ></viz-transform>
+            <viz-transform state="state" presets="presets" ></viz-transform>
         </div>
 
         <div ng-show="state.viewtoggle && isTabActive(2)" class="innercontainer" ng-style="{ height: state.options.innercontainer.height+'px'}">
-            <viz-config formwidth="state.options.innercontainer.width" state="state" widgetid="widgetid" presets="presets" ></viz-config>
+            <viz-config state="state" widgetid="widgetid" presets="presets" ></viz-config>
         </div>
 
         <div ng-show="state.viewtoggle && isTabActive(3)" class="innercontainer" ng-style="{ height: state.options.innercontainer.height+'px'}">

@@ -1,28 +1,28 @@
 <uib-accordion>
-    <div uib-accordion-group class="panel-default viz-panel-default" heading="Execution" is-open="state.gui.status.execution" is-disabled="testing.status.isFirstDisabled">
+    <div uib-accordion-group class="panel-default viz-panel-default" heading="Execution" is-open="state.gui.status.execution"
+        is-disabled="testing.status.isFirstDisabled">
         <div class="form-wrapper">
             <div class="form-group center-block">
-                <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
-
+                <div class="container innerformcontainer">
                     <div class="row">
-
                         <div class="colmdstyle col-md-4 colcontain-grid">
                             <label>Fire query</label>
                             <div class="btn-container">
-                                <button class="btn btn-primary viz-btn-primary" ng-click="$emit('firequery', {})"><span class="glyphicon glyphicon-ok"></span></button>
+                                <button class="btn btn-primary viz-btn-primary" ng-click="$emit('firequery', {})">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
                             </div>
-
                         </div>
                         <div class="colmdstyle col-md-12 colcontain-grid">
                             <label>Service request</label>
                             <div class="btn-container">
-                                <div class="well well-lg innerwell">{{state.http.servicesent}}</div>
-                            </div>
+                                <textarea type="text" ng-model="state.http.servicesent" class="form-control" />
+                                </div>
                         </div>
                         <div class="colmdstyle col-md-12 colcontain-grid">
                             <label>Service response</label>
                             <div class="btn-container">
-                                <div class="well well-lg innerwell">{{state.http.rawserviceresponse}}</div>
+                                <textarea type="text" ng-model="state.http.rawserviceresponse" class="form-control" />
                             </div>
                         </div>
 
@@ -30,13 +30,13 @@
                             <div class="colmdstyle col-md-12 colcontain-grid">
                                 <label>Callback request</label>
                                 <div class="btn-container">
-                                    <div class="well well-lg innerwell">{{state.http.callbacksent}}</div>
+                                    <textarea type="text" ng-model="state.http.callbacksent" class="form-control" />
                                 </div>
                             </div>
                             <div class="colmdstyle col-md-12 colcontain-grid">
                                 <label>Callback response</label>
                                 <div class="btn-container">
-                                    <div class="well well-lg innerwell">{{state.http.rawcallbackresponse}}</div>
+                                    <textarea type="text" ng-model="state.http.rawcallbackresponse" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -54,7 +54,6 @@
                 <label>Alerts</label>
                 <div class="well well-lg innerwell">message...</div>
             </p>
-
         </div>
     </div>
 </uib-accordion>

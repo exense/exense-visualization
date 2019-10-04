@@ -4,7 +4,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
-                formwidth: '=',
                 state: '=',
                 presets: '='
             },
@@ -123,7 +122,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
-                formwidth: '=',
                 widgetid: '=',
                 state: '=',
                 presets: '='
@@ -301,7 +299,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
-                formwidth: '=',
                 state: '=',
                 presets: '='
             },
