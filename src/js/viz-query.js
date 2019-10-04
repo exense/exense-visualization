@@ -16,11 +16,17 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
+                customheight: '=',
                 state: '=',
                 presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-view.html'),
             controller: function ($scope) {
+
+                if($scope.customheight){
+                    $scope.state.options.chart.height = customheight - 10;
+                }
+
                 $scope.state.unwatchers.push($scope.$watch('state.data.transformed', function (newvalue) {
                     if (newvalue && newvalue.dashdata) {
                         if ($scope.state.options.chart.type === 'table') {
