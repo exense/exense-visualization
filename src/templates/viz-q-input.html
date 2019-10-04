@@ -12,7 +12,7 @@
                 <div ng-if="state.query.inputtype == 'Raw'">
                     <div class="col-md-4 colcontain-grid">
                         <label>Preset</label>
-                        <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
+                        <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="state.gui.status.presetquery">
                             <button id="load-query" type="button" class="btn btn-primary viz-btn-primary"
                                 uib-dropdown-toggle ng-disabled="disabled">
                                 Load query... <span class="caret"></span>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-md-4 colcontain-grid">
                         <label>Preset</label>
-                        <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="lg.status.isopen">
+                        <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="state.gui.status.presetcontrols">
                             <button id="load-controls" type="button" class="btn btn-primary viz-btn-primary"
                                 uib-dropdown-toggle ng-disabled="disabled">
                                 Load controls... <span class="caret"></span>

@@ -1,5 +1,5 @@
 <uib-accordion>
-    <div uib-accordion-group class="panel-default viz-panel-default" heading="Execution" is-open="testing.status.isFirstOpen" is-disabled="testing.status.isFirstDisabled">
+    <div uib-accordion-group class="panel-default viz-panel-default" heading="Execution" is-open="state.gui.status.execution" is-disabled="testing.status.isFirstDisabled">
         <div class="form-wrapper">
             <div class="form-group center-block">
                 <div class="container innerformcontainer" ng-style="{ width: formwidth+'px'}">
@@ -47,7 +47,7 @@
     </div>
 </uib-accordion>
 <uib-accordion>
-    <div uib-accordion-group class="panel-default viz-panel-default" heading="Info" is-open="infoalert.status.isFirstOpen"
+    <div uib-accordion-group class="panel-default viz-panel-default" heading="Info" is-open="state.gui.status.info"
         is-disabled="infoalert.status.isFirstDisabled">
         <div class="form-wrapper">
             <p class="form-group">

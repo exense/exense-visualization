@@ -223,6 +223,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }, duration);
                 }
 
+                // info pane trigger
+                $scope.$on('firequery', function () {
+                    $scope.fireQuery();
+                });
+
                 // Paging
 
                 // also initPaging() on viewtoggle (back to config)?

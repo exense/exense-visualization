@@ -26,24 +26,31 @@ function DefaultQuery() {
         new Service("", "Get", "",
             new Preproc("data", ""),
             new Postproc("", "", [], {}, ""))
-        );
+    );
 };
 
 function DefaultChartOptions() {
     return new ChartOptions("lineChart", false, false);
 };
 
-function DefaultDashletData(){
+function DefaultDashletData() {
     return new DashletData([], {}, {})
 };
 
-function DefaultDashletState(){
+function DefaultGui() {
+    return new Gui(false, false, false, false, false,
+        false, false, false, false, false,
+        true, false, false);
+};
+
+function DefaultDashletState() {
     return new DashletState(
-    'New Dashlet', true, 0,
-    new DefaultDashletData(),
-    new DefaultChartOptions(),
-    new DefaultConfig(),
-    new DefaultQuery());
+        'New Dashlet', true, 0,
+        new DefaultDashletData(),
+        new DefaultChartOptions(),
+        new DefaultConfig(),
+        new DefaultQuery(),
+        new DefaultGui());
 };
 
 function DefaultWidget() {
@@ -51,7 +58,7 @@ function DefaultWidget() {
         getUniqueId(),
         'col-md-6',
         new DefaultDashletState()
-    );  
+    );
 };
 
 function DefaultOffPaging() {

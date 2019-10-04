@@ -1,15 +1,15 @@
 <uib-accordion>
-    <div uib-accordion-group class="panel-default viz-panel-default" heading="Service" is-open="presets.status.isFirstOpen" is-disabled="presets.status.isFirstDisabled">
+    <div uib-accordion-group class="panel-default viz-panel-default" heading="Service" is-open="state.gui.status.service" is-disabled="presets.status.isFirstDisabled">
         <viz-q-service formwidth="state.options.innercontainer.width" state="state" presets="presets" ></viz-q-service>
     </div>
 </uib-accordion>
 <uib-accordion>
-    <div uib-accordion-group class="panel-default viz-panel-default" heading="Input" is-open="datasource.status.isFirstOpen" is-disabled="datasource.status.isFirstDisabled">
+    <div uib-accordion-group class="panel-default viz-panel-default" heading="Input" is-open="state.gui.status.input" is-disabled="datasource.status.isFirstDisabled">
         <viz-q-input formwidth="state.options.innercontainer.width" state="state" presets="presets" ></viz-q-input>
     </div>
 </uib-accordion>
 <uib-accordion>
-    <div uib-accordion-group class="panel-default viz-panel-default" heading="Pre-processing" is-open="postproc.status.isFirstOpen"
+    <div uib-accordion-group class="panel-default viz-panel-default" heading="Pre-processing" is-open="state.gui.status.preproc"
         is-disabled="postproc.status.isFirstDisabled">
         <viz-q-preproc formwidth="state.options.innercontainer.width" state="state" presets="presets" ></viz-q-preproc>
     </div>

@@ -8,7 +8,7 @@ function StaticPresets() {
                     "type": "Simple",
                     "datasource": {
                         "service": {
-                            "url": "/mocks/001_RESPONSE_Simple_RTM_Measurements.json",
+                            "url": "/test/mocks/001_RESPONSE_Simple_RTM_Measurements.json",
                             "method": "Get",
                             "postproc": {
                                 "transform": {
@@ -52,7 +52,7 @@ function StaticPresets() {
                     "type": "Async",
                     "datasource": {
                         "service": {
-                            "url": "/mocks/002_RESPONSE_Async_Get_RTM_Aggregates.json",
+                            "url": "/test/mocks/002_RESPONSE_Async_Get_RTM_Aggregates.json",
                             "method": "Get",
                             "data": "{\
                                 \"selectors1\": [{ \"textFilters\": [{ \"key\": \"eId\", \"value\": \"JUnit_Dynamic\", \"regex\": \"false\" }, { \"key\": \"name\", \"value\": \"Transaction_1\", \"regex\": \"false\" }], \"numericalFilters\": [] }],\
@@ -65,7 +65,7 @@ function StaticPresets() {
                             }
                         },
                         "callback": {
-                            "url": "/mocks/002_RESPONSE_Async_Refresh_RTM_Aggregates.json",
+                            "url": "/test/mocks/002_RESPONSE_Async_Refresh_RTM_Aggregates.json",
                             "method": "Get",
                             "data": "{\"streamedSessionId\": \"__streamedSessionId__\"}",
                             "preproc": {
