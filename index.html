@@ -12,6 +12,7 @@
 	<title>exense-visualization</title>
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-route/angular-route.min.js"></script>
 	<script src="bower_components/d3/d3.js"></script>
 	<script src="bower_components/nvd3/build/nv.d3.js"></script>
 	<script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
@@ -32,7 +33,10 @@
 	<script src="src/js/viz-dashboard.js"></script>
 	<script src="src/js/viz-dashboard-manager.js"></script>
 
-	<script src="static-presets.js"></script>
+	<script src="src/js/viz.js"></script>
+	<script src="src/js/explore.js"></script>
+
+	<script src="test/js/static-presets.js"></script>
 
 	<link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.min.css">
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
@@ -42,50 +46,33 @@
 	<link rel="stylesheet" href="src/css/viz-dashlet.css">
 	<link rel="stylesheet" href="src/css/viz-mgd-widget.css">
 	<link rel="stylesheet" href="src/css/viz-dashboard.css">
+</head>
+
+<body ng-app="myApp">
+	<span>
+		<a href="#!viz"><button class="btn btn-primary btn-nav viz-btn-nav"><span class="glyphicon glyphicon-picture glyphicon-app"></span></button></a>
+		<a href="#!explore"><button class="btn btn-primary btn-nav viz-btn-nav"><span class="glyphicon glyphicon-search glyphicon-app"></span></button></a>
+	</span>
+
+	<div ng-view></div>
 
 	<script>
 		var initTestDashboard = false;
-		var demoApp = angular.module('demoApp', ['viz-dashboard-manager', 'dashletcomssrv'])
-			.controller('ctrl', ['$scope', function ($scope) {
-				$scope.staticPresetsInstance = new StaticPresets();
-				$scope.dashboardsendpoint = [new DefaultDashboard([new DefaultWidget()])];
-
-				$scope.$on('top.dashboard-new', function () {
-					$scope.$broadcast('dashboard-new');
-				});
-				$scope.$on('top.dashboard-clear', function () {
-					$scope.$broadcast('dashboard-clear');
-				});
-
-				$scope.$on('top.dashboard-current-addWidget', function () {
-					$scope.$broadcast('dashboard-current-addWidget');
-				});
-				$scope.$on('top.dashboard-current-clearWidgets', function () {
-					$scope.$broadcast('dashboard-current-clearWidgets');
-				});
-				
-			}]);
+		var myApp = angular.module('myApp', ['ngRoute', 'viz', 'explore'])
+			.config(['$routeProvider',
+				function config($routeProvider) {
+					$routeProvider.
+						when('/viz', {
+							template: '<viz />'
+						}).
+						when('/explore', {
+							template: '<explore />'
+						}).
+						otherwise('/viz');
+				}
+			])
 
 	</script>
-</head>
-
-<body>
-	<div ng-app='demoApp' ng-controller='ctrl'>
-		<span><button class="btn btn-primary btn-nav viz-btn-nav" ng-click="$emit('top.dashboard-new')">
-				<span class="glyphicon glyphicon-file glyphicon-app"></span>
-			</button>
-			<button class="btn btn-primary btn-nav viz-btn-nav" ng-click="$emit('top.dashboard-clear')">
-				<span class="glyphicon glyphicon-trash glyphicon-app"></span>
-			</button>
-			<button class="btn btn-primary btn-nav viz-btn-nav" ng-click="$emit('top.dashboard-current-addWidget')">
-				<span class="glyphicon glyphicon-plus glyphicon-app"></span>
-			</button>
-			<button class="btn btn-primary btn-nav viz-btn-nav" ng-click="$emit('top.dashboard-current-clearWidgets')">
-				<span class="glyphicon glyphicon-minus glyphicon-app"></span>
-			</button>
-		</span>
-		<viz-dashboard-manager displaymode="'managed'" presets="staticPresetsInstance" dashboards="dashboardsendpoint"></viz-dashboard-manager>
-	</div>
 </body>
 
 </html>

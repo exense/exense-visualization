@@ -1,19 +1,38 @@
 registerScript();
 
 angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
-    .directive('vizDashlet', function ($rootScope) {
+    .directive('vizDashlet', function () {
+        
+        var controllerScript = 'viz-dashlet.js';
+        var aggTemplateUrl = resolveTemplateURL(controllerScript, 'viz-dashlet-aggregated.html');
+        var expTemplateUrl = resolveTemplateURL(controllerScript, 'viz-dashlet-exploded.html');
+        var errorTemplateUrl = resolveTemplateURL(controllerScript, 'error-template.html');
+
         return {
             restrict: 'E',
             scope: {
                 widgetid: '=',
                 state: '=',
+                displaytype: '=',
                 displaymode: '=',
                 presets: '='
             },
-            templateUrl: resolveTemplateURL('viz-dashlet.js', 'viz-dashlet.html'),
-            controller: function ($scope, $element, $http, dashletcomssrv) {
-
+            template: '<div ng-include="resolveDynamicTemplate()"></div>',
+            controller: function ($scope, $http, dashletcomssrv) {
                 $scope.state.unwatchers = [];
+
+                $scope.resolveDynamicTemplate = function () {
+                    if ($scope.displaytype === 'aggregated') {
+                        return aggTemplateUrl;
+                    }
+                    else {
+                        if ($scope.displaytype === 'exploded') {
+                            return expTemplateUrl;
+                        }else{
+                            return errorTemplateUrl;
+                        }
+                    }
+                };
 
                 $scope.selectTab = function (tabIndex) {
                     $scope.state.tabindex = tabIndex;
@@ -32,7 +51,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.state.viewtoggle = !$scope.state.viewtoggle;
                 }
 
-                $scope.fireQueryDependingOnContext = function(){
+                $scope.fireQueryDependingOnContext = function () {
                     //Not firing our own query if slave, just listening to data
                     //Also not firing if autorefresh is on
                     if (!$scope.state.config.slave && ($scope.state.config.autorefresh !== 'On')) {
@@ -109,11 +128,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 };
 
-                $scope.setAsyncInterval = function(callback){
+                $scope.setAsyncInterval = function (callback) {
                     $scope.clearAsync();
 
                     var duration = setIntervalAsyncDefault;
-                    if($scope.state.config.asyncrefreshduration){
+                    if ($scope.state.config.asyncrefreshduration) {
                         duration = $scope.state.config.asyncrefreshduration;
                     }
 
@@ -139,7 +158,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                     //console.log('consumed. Clearing Async and resetting query fire.')
                                     $scope.clearAsync();
                                     $scope.isOngoingQuery = false;
-                                }else{
+                                } else {
                                     //console.log('Stream incomplete -> ' + JSON.stringify(response));
                                 }
                             } catch (e) {
@@ -169,8 +188,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 }));
 
-                $scope.clearAutorefreshInterval = function(){
-                    if($scope.autorefreshInterval){
+                $scope.clearAutorefreshInterval = function () {
+                    if ($scope.autorefreshInterval) {
                         clearInterval($scope.autorefreshInterval);
                     }
                 }
@@ -182,9 +201,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 }));
 
-                $scope.setAutorefreshInterval = function(){
+                $scope.setAutorefreshInterval = function () {
                     var duration = setIntervalDefault;
-                    if($scope.state.config.autorefreshduration){
+                    if ($scope.state.config.autorefreshduration) {
                         duration = $scope.state.config.autorefreshduration;
                     }
 
@@ -198,7 +217,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 // agressive
                                 $scope.isOngoingQuery = false;
                             }
-                        }else{
+                        } else {
                             //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Skipping interval.");
                         }
                     }, duration);
@@ -252,30 +271,30 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.$broadcast('update-template');
                 };
 
-                $scope.terminate = function(){
-                    console.log('['+$scope.widgetid+'] terminating...');
+                $scope.terminate = function () {
+                    console.log('[' + $scope.widgetid + '] terminating...');
                     dashletcomssrv.unregisterWidget($scope.widgetid);
                     $scope.clearAsync();
                     $scope.clearAutorefreshInterval();
                     $scope.state.config.autorefresh = 'Off';
                     $scope.state.data = {};
                     $scope.state = null;
-                    console.log('['+$scope.widgetid+'] termination complete.');
+                    console.log('[' + $scope.widgetid + '] termination complete.');
                 };
 
-                $scope.unwatchAll = function(){
-                    $.each($scope.state.unwatchers, function(idx, unwatcher){
+                $scope.unwatchAll = function () {
+                    $.each($scope.state.unwatchers, function (idx, unwatcher) {
                         unwatcher();
                     });
                 };
 
-                if(!$scope.state.viewtoggle){
+                if (!$scope.state.viewtoggle) {
                     $scope.$on('dashletinput-initialized', function () {
                         $scope.fireQueryDependingOnContext();
                     });
                 }
 
-                $scope.$on('$destroy', function(){
+                $scope.$on('$destroy', function () {
                     $scope.terminate();
                 });
             }

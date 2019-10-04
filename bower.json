@@ -25,6 +25,7 @@
   "dependencies": {
     "angular-nvd3": "^1.0.9",
     "angular": "^1.7.8",
+    "angular-route": "^1.7.8",
     "d3": "https://github.com/mbostock-bower/d3-bower.git#3.4.4",
     "nvd3": "^1.8.6",
     "angular-bootstrap": "^2.5.0",

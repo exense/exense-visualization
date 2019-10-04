@@ -44,7 +44,6 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
 
                 $scope.$on('dashboard-new', function (event, arg) {
                     var newdashboardid = $scope.dwrap.addNew(new DefaultDashboard([]));
-                    console.log('[m] adding dashboard: ['+newdashboardid+']');
                     $scope.mgrtabstate = newdashboardid;
                 });
 
