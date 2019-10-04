@@ -37,10 +37,16 @@ function DefaultDashletData() {
     return new DashletData([], {}, {})
 };
 
-function DefaultGui() {
+function DefaultGuiClosed() {
     return new Gui(false, false, false, false, false,
         false, false, false, false, false,
-        true, false, false);
+        false, false, false);
+};
+
+function DefaultGuiOpen() {
+    return new Gui(true, false, true, true, false,
+        true, true, false, false, true,
+        true, true, true);
 };
 
 function DefaultDashletState() {
@@ -50,7 +56,17 @@ function DefaultDashletState() {
         new DefaultChartOptions(),
         new DefaultConfig(),
         new DefaultQuery(),
-        new DefaultGui());
+        new DefaultGuiClosed());
+};
+
+function ExplorationDashletState() {
+    return new DashletState(
+        'New Dashlet', true, 0,
+        new DefaultDashletData(),
+        new DefaultChartOptions(),
+        new DefaultConfig(),
+        new DefaultQuery(),
+        new DefaultGuiOpen());
 };
 
 function DefaultWidget() {
