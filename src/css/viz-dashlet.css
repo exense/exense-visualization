@@ -8,13 +8,11 @@ label{
 }
 
 .glyphicon-viz {
-    color:  rgb(0, 240, 0);
     text-shadow: 1px 1px 1px #ccc;
     font-size: 1.2em;
 }
 
 .glyphicon-viz:hover {
-    color: rgb(68, 247, 68);
     text-shadow: 1px 1px 1px #ccc;
     font-size: 1.2em;
 }
@@ -95,7 +93,6 @@ div.ul-viewtab > ul{
 }
 
 div.dashlet > ul > li.active > a, div.dashlet > ul > li.active > a > uib-tab-heading > span{
-    background-color: rgb(60, 240, 60) !important;
     color: white !important;
 }
 div.dashlet > ul > li > a, div.dashlet > ul > li.active > a, div.dashlet > ul > li > a:hover{
@@ -110,7 +107,6 @@ div.viz-panel-default > * >  h4.panel-title{
 
 div.viz-panel-default > * > h4.panel-title > a:hover, div.viz-panel-default > * > h4.panel-title > a.active{
     text-decoration: none !important;
-    background-color: rgb(0, 255, 106) !important;
     text-decoration: none !important;
     color: white !important;
 }
@@ -123,33 +119,14 @@ div.viz-panel-default >  div.panel-heading{
 label.viz-label{
     height: 25px !important;
     padding-top: 5px !important;
-    background-color: rgb(0, 240, 0) !important;
     font-weight: bold;
-}
-
-label.viz-label:hover{
-    background-color:rgb(0, 240, 0) !important;
-}
-
-label.viz-label.active:hover{
-    background-color:green !important;
 }
 
 .viz-btn-primary{
-    background-color: rgb(0, 240, 0) !important;
     font-weight: bold;
 }
 
-.viz-btn-primary:hover, .viz-panel-group:hover{
-    background-color:rgb(0, 255, 106) !important;
-}
-
-.viz-btn-primary.active{
-    background-color:green !important;
-}
-
 .viz-btn-dashlet {
-    background-color: rgb(0, 240, 0) !important;
     margin: 5px;
     margin-bottom: 15px;
 }
@@ -157,10 +134,6 @@ label.viz-label.active:hover{
 .viz-btn-container{
     justify-content: right;
     text-align: right;
-}
-
-.viz-btn-dashlet:hover {
-    background-color: rgb(0, 255, 106) !important;
 }
 
 .form-wrapper {

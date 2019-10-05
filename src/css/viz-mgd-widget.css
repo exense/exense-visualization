@@ -7,13 +7,11 @@
 }
 
 .glyphicon-control{
-    color: rgb(0, 240, 0) !important;
     margin: 5px !important;
     padding: 1px !important;
 }
 
 .glyphicon-control:hover{
-    background-color: rgb(68, 247, 68) !important;
     color: white !important;
 }
 
