@@ -24,7 +24,6 @@ input.key-val-collection{
     display: block;
 	height: 20px;
 	width: 20px;
-	color: white;
 	font-size: 8px;
 	text-align: center !important;
 	margin: 0px;
@@ -34,7 +33,6 @@ input.key-val-collection{
 .glyphicon.paging:hover{
 	height: 20px;
 	width: 20px;
-    color: white !important;
 	font-size: 8px;
 	text-align: center !important;
 	margin: 0px;
@@ -42,7 +40,6 @@ input.key-val-collection{
 }
 
 .glyphicon-viz.key-val-collection{
-    color:  white;
     padding: 2px 4px !important;
     font-size: 10px !important;
     font-family: sans-serif !important;
@@ -51,7 +48,6 @@ input.key-val-collection{
 }
 
 .viz-btn-primary.key-val-collection{
-    color: white !important;
     padding: 2px 4px !important;
     font-size: 10px !important;
     font-family: sans-serif;
@@ -59,7 +55,6 @@ input.key-val-collection{
 }
 
 .viz-btn-primary.key-val-collection:hover, .viz-panel-group:hover{
-    color: white !important;
     padding: 2px 4px !important;
     font-size: 10px !important;
     font-family: sans-serif;
