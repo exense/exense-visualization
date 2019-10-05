@@ -4,13 +4,13 @@
             <li class="li-title" style="display: inline-flex;">
                     <div class="btn-container" ng-show="mgrstate.globalsettingschevron" >
                             <button class="btn btn-primary viz-btn-primary" ng-click="toggleChevron()"
-                                    style="margin: 0px; padding: 0px;">
+                                    style="margin: 0px; padding: 0px;" uib-tooltip="Collapse settings" tooltip-placement="right">
                                     <span class="title glyphicon glyphicon-chevron-down glyphicon-control" style="margin: 0px;" ></span>
                             </button>
                     </div>
                     <div class="btn-container" ng-show="!mgrstate.globalsettingschevron" >
                             <button class="btn btn-primary viz-btn-primary" ng-click="toggleChevron()"
-                                    style="margin: 0px; padding: 0px;">
+                                    style="margin: 0px; padding: 0px;" uib-tooltip="Expand settings" tooltip-placement="right">
                                     <span class="title glyphicon glyphicon-chevron-right glyphicon-control" style="margin: 0px;"></span>
                             </button>
                     </div>
@@ -21,7 +21,7 @@
             <li class="li-control li-control-alt">
                 <div class="btn-container">
                     <button class="btn btn-primary viz-btn-primary" ng-click="toggleAutorefresh()" ng-class="{active : mgrstate.globalsettingsautorefresh}"><span
-                            class="glyphicon glyphicon-refresh"></span></button>
+                            class="glyphicon glyphicon-refresh" uib-tooltip="Turn on autorefresh" ></span></button>
                 </div>
             </li>
         </ul>

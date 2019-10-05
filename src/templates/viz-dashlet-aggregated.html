@@ -2,15 +2,18 @@
     <div class="dashboardtab" ng-show="displaymode === 'managed'">
         <div class="btn-container" ng-if="!state.viewtoggle" style="position: absolute; top: 35px; right: 30px; margin-right:
             5px; margin-top: -3px;">
-            <button class="btn btn-primary viz-btn-primary" ng-click="toggleBarchevronToConf()" ng-class="{active : mgrstate.globalsettingsautorefresh}" style="padding: 0px 5px;">
+            <button class="btn btn-primary viz-btn-primary" ng-click="toggleBarchevronToConf()" ng-class="{active : mgrstate.globalsettingsautorefresh}"
+                style="padding: 0px 5px;" uib-tooltip="Go to settings">
                 <span class="glyphicon glyphicon-cog"></span>
             </button>
         </div>
 
         <div class="btn-container" ng-if="state.viewtoggle" style="position: absolute; top: 35px; right: 30px; margin-right:
             5px; margin-top: -3px;">
-            <button class="btn btn-primary viz-btn-primary" ng-click="toggleBarchevronToViz()" ng-class="{active : mgrstate.globalsettingsautorefresh}" style="padding: 0px 5px;">
-                <span class="glyphicon glyphicon-stats"></span>
+            <button class="btn btn-primary viz-btn-primary" ng-click="toggleBarchevronToViz()" ng-class="{active : mgrstate.globalsettingsautorefresh}"
+                style="padding: 0px 5px;" uib-tooltip="Go to view (triggers query)">
+                <span class=" glyphicon
+                glyphicon-stats"></span>
             </button>
         </div>
 
