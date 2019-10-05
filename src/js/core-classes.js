@@ -242,12 +242,16 @@ function Paging(active, first, second) {
     };
 };
 
-function TemplateControls(templatedPayload, templatedParams, placeholders) {
+function Controls(template) {
     return {
-        template: {
-            templatedPayload: templatedPayload,
-            templatedParams: templatedParams,
-            placeholders: placeholders
-        }
+        template: template
+    };
+};
+
+function Template(templatedPayload, templatedParams, placeholders) {
+    return {
+        templatedPayload: templatedPayload,
+        templatedParams: templatedParams,
+        placeholders: placeholders
     };
 };

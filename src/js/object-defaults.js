@@ -24,9 +24,17 @@ function DefaultQuery() {
     return new SimpleQuery(
         "Raw",
         new Service("", "Get", "",
-            new Preproc("data", ""),
-            new Postproc("", "", [], {}, ""))
+            new Preproc("data", null),
+            new Postproc(null, null, [], {}, null))
     );
+};
+
+function DefaultControls(template) {
+    return new Controls({});
+};
+
+function DefaultTemplate(templatedPayload, templatedParams, placeholders) {
+    return new Template("", "", []);
 };
 
 function DefaultChartOptions() {
@@ -78,7 +86,7 @@ function DefaultWidget() {
     );
 };
 
-function DefaultOffPaging() {
+function DefaultPaging() {
     return new Paging('Off', {}, {});
 };
 

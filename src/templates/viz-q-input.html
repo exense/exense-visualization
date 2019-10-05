@@ -6,7 +6,7 @@
                     <label>Input type</label>
                     <div class="btn-group viz-btn-group form-radio">
                         <label class="btn btn-primary viz-btn-primary" ng-model="state.query.inputtype" uib-btn-radio="'Raw'">Raw</label>
-                        <label class="btn btn-primary viz-btn-primary" ng-model="state.query.inputtype" uib-btn-radio="'Controls'">Controls</label>
+                        <label class="btn btn-primary viz-btn-primary" ng-model="state.query.inputtype" uib-btn-radio="'Controls'"  ng-click="initControls()">Controls</label>
                     </div>
                 </div>
                 <div ng-if="state.query.inputtype == 'Raw'">
@@ -27,7 +27,7 @@
                     <div class="col-md-4 colcontain-grid">
                         <label>Control type</label>
                         <div class="btn-group viz-btn-group form-radio">
-                            <label class="btn btn-primary viz-btn-primary" ng-click="initTemplateControls()" ng-model="state.query.controltype"
+                            <label class="btn btn-primary viz-btn-primary" ng-click="initTemplate()" ng-model="state.query.controltype"
                                 uib-btn-radio="'Template'">Template</label>
                             <label class="btn btn-primary viz-btn-primary" ng-model="state.query.controltype"
                                 uib-btn-radio="'RTM'">RTM</label>

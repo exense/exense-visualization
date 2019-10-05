@@ -23,7 +23,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-view.html'),
             controller: function ($scope) {
 
-                if($scope.customheight){
+                if ($scope.customheight) {
                     $scope.state.options.chart.height = customheight - 10;
                 }
 
@@ -353,8 +353,13 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.globalsettings = [];
                 $scope.globalsettingschangeinit = false;
 
-                $scope.initTemplateControls = function(){
-                    //TODO
+                $scope.initControls = function () {
+                    $scope.state.query.controls = new DefaultControls();
+                    $scope.state.query.paged = new DefaultPaging();
+                }
+
+                $scope.initTemplate = function () {
+                    $scope.state.query.controls.template = new DefaultTemplate();
                 }
 
                 $scope.loadQueryPreset = function (querypreset) {
@@ -368,20 +373,21 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 $scope.processTemplate = function (placeholders) {
                     var data = "", params = "";
-                    if ($scope.state.query.controls.template.templatedPayload) {
-                        data = runRequestProc(
-                            $scope.state.query.datasource.service.preproc.replace.function,
-                            $scope.state.query.controls.template.templatedPayload,
-                            evalDynamic($scope.mergePlaceholders()));
-                    }
+                    if ($scope.state.query.datasource.service.preproc.replace.function) {
+                        if ($scope.state.query.controls.template.templatedPayload) {
+                            data = runRequestProc(
+                                $scope.state.query.datasource.service.preproc.replace.function,
+                                $scope.state.query.controls.template.templatedPayload,
+                                evalDynamic($scope.mergePlaceholders()));
+                        }
 
-                    if ($scope.state.query.controls.template.templatedParams) {
-                        params = runRequestProc(
-                            $scope.state.query.datasource.service.preproc.replace.function,
-                            $scope.state.query.controls.template.templatedParams,
-                            evalDynamic($scope.mergePlaceholders()));
+                        if ($scope.state.query.controls.template.templatedParams) {
+                            params = runRequestProc(
+                                $scope.state.query.datasource.service.preproc.replace.function,
+                                $scope.state.query.controls.template.templatedParams,
+                                evalDynamic($scope.mergePlaceholders()));
+                        }
                     }
-
                     return {
                         data: data,
                         params: params
