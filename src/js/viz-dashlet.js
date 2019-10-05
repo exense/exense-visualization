@@ -147,7 +147,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 $scope.loadData = function (response, proctarget) {
                     if ($scope.state.query.type === 'Simple') {
-                        $scope.state.http.rawserviceresponse = response;
+                        $scope.state.http.rawserviceresponse = JSON.stringify(response);
                         $scope.isOngoingQuery = false;
                     }
                     if ($scope.state.query.type === 'Async') {
