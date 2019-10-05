@@ -113,9 +113,8 @@ div.viz-panel-default >  div.panel-heading{
 }
 
 label.viz-label{
-    height: 25px !important;
-    padding-top: 5px !important;
-    font-weight: bold;
+    text-decoration: none !important;
+    font-weight: 1;
 }
 
 .viz-btn-primary{

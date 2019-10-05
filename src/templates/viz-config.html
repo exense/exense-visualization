@@ -86,22 +86,20 @@
                         <div class="colmdstyle col-md-3 colcontain-grid">
                             <label>Master control</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <span class="key-val-collection btn btn-primary viz-btn-primary" href="#">
+                                <span class="key-val-collection btn btn-primary viz-btn-primary">
                                     <input type="checkbox" class="form-control" ng-model="state.config.master" style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;"
                                         ng-click="$emit('isMaster-changed', state.config.master)" />
                                 </span>
-                                <label class="btn btn-primary viz-label" ng-class="{ active: state.config.master}">Make
-                                    master</span>
+                                <label class="viz-label" ng-class="{ active: state.config.master}">Make master</label>
                             </div>
                         </div>
                         <div class="colmdstyle col-md-3 colcontain-grid">
                             <label>Slave control</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <span class="key-val-collection btn btn-primary viz-btn-primary" href="#">
+                                <span class="key-val-collection btn btn-primary viz-btn-primary">
                                     <input type="checkbox" class="form-control" ng-model="state.config.slave" style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;" />
                                 </span>
-                                <label class="btn btn-primary viz-label" ng-class="{active: state.config.slave}">Make
-                                    slave</span>
+                                <label class="viz-label" ng-class="{active: state.config.slave}">Make slave</label>
                             </div>
                         </div>
                         <div ng-if="state.config.slave" class="col-md-3 colcontain-grid">
