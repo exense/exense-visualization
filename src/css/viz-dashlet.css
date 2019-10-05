@@ -115,6 +115,8 @@ div.viz-panel-default >  div.panel-heading{
 label.viz-label{
     text-decoration: none !important;
     font-weight: 1;
+    margin-left: 3px;
+    margin-top: 2px;
 }
 
 .viz-btn-primary{
