@@ -19,17 +19,21 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                 //Local Defaults in case nothing provided (designed to fil 4 reduced dashlets on standard)
                 if (!$scope.headersheightinput) {
-                    $scope.headersheight = window.innerHeight / 4 +30;
-                }else{
+                    $scope.headersheight = window.innerHeight / 4 + 30;
+                } else {
                     $scope.headersheight = $scope.headersheightinput;
                 }
 
                 if (!$scope.charttocontainerinput) {
                     $scope.charttocontainer = 35;
-                }else{
+                } else {
                     $scope.charttocontainer = $scope.charttocontainerinput;
                 }
 
+                $scope.toggleAutorefresh = function () {
+                    $scope.wstate.autorefresh = !$scope.wstate.autorefresh;
+                    $scope.$broadcast('globalsettings-refreshToggle', { 'new': $scope.wstate.autorefresh });
+                };
                 $scope.currentstate = JSON.parse(JSON.stringify($scope.state));
                 $scope.state.chevron = true;
                 $scope.state.savedHeight = $scope.state.options.innercontainer.height;

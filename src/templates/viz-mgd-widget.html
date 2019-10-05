@@ -50,6 +50,16 @@
                                         </div>
                                 </li>
                         </div>
+                        <div ng-if="wstate.widgetwidth == 'col-md-6'">
+                                        <li class="li-control li-control-alt">
+                                                <div class="btn-container">
+                                                        <button class="btn btn-primary viz-btn-primary" ng-click="toggleAutorefresh()"
+                                                                uib-tooltip="Turn on autorefresh" ng-class="{active : wstate.autorefresh}">
+                                                                <span class="title glyphicon glyphicon-refresh glyphicon-control"></span>
+                                                        </button>
+                                                </div>
+                                        </li>
+                                </div>
                         <li class="li-control li-control-alt">
                                 <div class="btn-container">
                                         <button class="btn btn-primary viz-btn-primary" ng-click="$emit('mgdwidget-moveRight', {wid: widgetid})"

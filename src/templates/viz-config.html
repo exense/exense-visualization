@@ -29,7 +29,16 @@
             <div class="form-group center-block">
                 <div class="container innerformcontainer">
                     <div class="row">
-                        <div class="colmdstyle col-md-12 colcontain-grid">
+                        <div class="colmdstyle col-md-2 colcontain-grid">
+                            <label>Show legend</label>
+                            <div class="btn-group viz-btn-group form-radio">
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.showLegend"
+                                    uib-btn-radio="true">On</label>
+                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.showLegend"
+                                    uib-btn-radio="false">Off</label>
+                            </div>
+                        </div>
+                        <div class="colmdstyle col-md-10 colcontain-grid">
                             <label>Viz type</label>
                             <div class="btn-group viz-btn-group form-radio">
                                 <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
@@ -46,22 +55,13 @@
                                     uib-btn-radio="'stackedAreaChart'">stackedAreaChart</label>
                             </div>
                         </div>
-                        <div class="colmdstyle col-md-3 colcontain-grid">
+                        <div class="colmdstyle col-md-3 colcontain-grid" ng-show="false">
                             <label>Autorefresh</label>
                             <div class="btn-group viz-btn-group form-radio">
                                 <label class="btn btn-primary viz-btn-primary" ng-model="state.config.autorefresh"
                                     uib-btn-radio="'On'">On</label>
                                 <label class="btn btn-primary viz-btn-primary" ng-model="state.config.autorefresh"
                                     uib-btn-radio="'Off'">Off</label>
-                            </div>
-                        </div>
-                        <div class="colmdstyle col-md-3 colcontain-grid">
-                            <label>Show legend</label>
-                            <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.showLegend"
-                                    uib-btn-radio="true">On</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.showLegend"
-                                    uib-btn-radio="false">Off</label>
                             </div>
                         </div>
                         <div class="colmdstyle col-md-12 colcontain-grid">

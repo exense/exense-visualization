@@ -73,6 +73,7 @@ function DefaultWidget() {
     return new Widget(
         getUniqueId(),
         'col-md-6',
+        false,
         new DefaultDashletState()
     );
 };

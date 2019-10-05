@@ -8,11 +8,12 @@ function Dashboard(widgets, title, state) {
     };
 }
 
-function Widget(widgetid, bstwidth, dstate) {
+function Widget(widgetid, bstwidth, wrefresh, dstate) {
     return {
         oid: widgetid,
         wstate: {
             widgetwidth: bstwidth,
+            autorefresh: wrefresh
         },
         state: dstate
     };
