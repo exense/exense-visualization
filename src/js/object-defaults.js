@@ -73,6 +73,9 @@ function DefaultSaveFunct(){
     return "function(response){\r\treturn [\r\t\t{\r\t\t\tkey : '__mykey__', value : response.status, isDynamic : false\r\t\t}\r\t];\r}";
 }
 
+function DefaultInfo(){
+    return new Info('Off');
+}
 
 function DefaultControls(template) {
     return new Controls({});
@@ -109,7 +112,9 @@ function DefaultDashletState() {
         new DefaultChartOptions(),
         new DefaultConfig(),
         new DefaultQuery(),
-        new DefaultGuiClosed());
+        new DefaultGuiClosed(),
+        new DefaultInfo()
+        );
 };
 
 function ExplorationDashletState() {
@@ -119,7 +124,9 @@ function ExplorationDashletState() {
         new DefaultChartOptions(),
         new DefaultConfig(),
         new DefaultQuery(),
-        new DefaultGuiOpen());
+        new DefaultGuiOpen(),
+        new Info('On')
+        );
 };
 
 function DefaultWidget() {

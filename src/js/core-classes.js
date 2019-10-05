@@ -19,6 +19,17 @@ function Widget(widgetid, bstwidth, wrefresh, dstate) {
     };
 };
 
+function Info(showraw){
+    return {
+        showraw: showraw,
+        alert: {
+            message : "",
+            counter : 0,
+        },
+        http: {}
+    };
+}
+
 function Gui(presets, loadconfig, display, coms, subscribeto,
     execution, info, presetquery, presetcontrols, service,
     input, preproc, postproc) {
@@ -41,7 +52,7 @@ function Gui(presets, loadconfig, display, coms, subscribeto,
     };
 }
 
-function DashletState(title, viewtoggle, tabindex, data, chartoptions, config, query, gui) {
+function DashletState(title, viewtoggle, tabindex, data, chartoptions, config, query, gui, info) {
     return {
         title: title,
         viewtoggle: viewtoggle,
@@ -56,7 +67,7 @@ function DashletState(title, viewtoggle, tabindex, data, chartoptions, config, q
         },
         config: config,
         global: {},
-        http: {},
+        info: info,
         gui : gui,
         query: query
     };

@@ -309,7 +309,33 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 presets: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-info.html'),
-            controller: function ($scope) { }
+            controller: function ($scope) {
+
+                $scope.errorboxcolor = 'gray';
+
+                $scope.$on('cleanup-info', function () {
+                    $scope.state.info.http.rawserviceresponse = "";
+                    $scope.state.info.http.rawcallbackresponse = "";
+                });
+
+                $scope.$on('errormessage', function (event, arg) {
+                    $scope.state.info.alert.message = arg + "\n\n" + $scope.state.info.alert.message;
+                    $scope.state.info.alert.counter++;
+                });
+
+                $scope.clearMessages = function () {
+                    $scope.state.info.alert.message = "";
+                    $scope.state.info.alert.counter = 0;
+                };
+
+                $scope.$watch('state.info.alert.counter', function (newvalue) {
+                    if (newvalue > 0) {
+                        $scope.errorboxcolor = '#ff7a00';
+                    } else {
+                        $scope.errorboxcolor = 'gray';
+                    }
+                });
+            }
         }
     })
     .directive('jsonText', function () {
@@ -337,7 +363,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-service.html'),
             controller: function ($scope) {
-                $scope.initAsync = function(){
+                $scope.initAsync = function () {
                     var savedservice = JSON.parse(angular.toJson($scope.state.query.datasource.service));
                     $scope.state.query = new DefaultAsyncQuery();
                     $scope.state.query.datasource.service = savedservice;
