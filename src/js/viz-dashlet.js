@@ -101,18 +101,19 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             $scope.loadData(response, successTarget);
                         }
                         if ($scope.state.query.type === 'Async') {
+                            var srv = $scope.state.query.datasource.service;
                             var scallback = $scope.state.query.datasource.callback;
                             //$scope.state.data.serviceraw = response;
                             $scope.state.http.rawserviceresponse = JSON.stringify(response);
                             if ($scope.state.query.datasource.service.postproc.save) {
-                                $scope.state.data.state = runResponseProc($scope.state.query.datasource.service.postproc.save.function, null, response);
+                                $scope.state.data.state = runResponseProc(srv.postproc.save.function, null, response);
                             }
 
-                            $scope.executeReplace(scallback);
+                            $scope.executeReplace(scallback, $scope.state.data.placeholdersstate);
 
-                            $scope.state.http.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
+                            $scope.state.http.callbacksent = 'url :' + JSON.stringify(scallback.url) + '; payload:' + JSON.stringify(scallback.data);
                             var executionFunction = function () {
-                                $scope.executeHttp(scallback.method, urltosend, datatosend, $scope.loadData, scallback, $scope.dispatchErrorResponse)
+                                $scope.executeHttp(scallback.method, scallback.url, scallback.data, $scope.loadData, scallback, $scope.dispatchErrorResponse)
                             };
                             $scope.setAsyncInterval(executionFunction);
                         }
@@ -123,14 +124,21 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 };
 
-                $scope.executeReplace = function (service) {
+                //TODO: this should be scoped inside viz-query (inputs) and triggered via events
+                $scope.executeReplace = function (service, mergedplaceholders) {
+                    var mergedstate;
+                    if (mergedplaceholders) {
+                        mergedstate = $scope.state.data.state.concat(mergedplaceholders);
+                    }else{
+                        mergedstate = $scope.state.data.state;
+                    }
                     var datatosend = service.data;
                     var urltosend = service.url;
                     if (service.preproc.replace && service.preproc.replace.function) {
                         var replaced;
                         if (datatosend) {
                             try {
-                                replaced = runRequestProc(service.preproc.replace.function, datatosend, $scope.state.data.state);
+                                replaced = runRequestProc(service.preproc.replace.function, datatosend, mergedstate);
                                 datatosend = JSON.parse(replaced);
                             } catch (e) {
                                 console.log('An issue occured while replacing payload data: ' + e);
@@ -138,7 +146,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         }
                         if (urltosend) {
                             try {
-                                replaced = runRequestProc(service.preproc.replace.function, urltosend, $scope.state.data.state);
+                                replaced = runRequestProc(service.preproc.replace.function, urltosend, mergedstate);
                                 urltosend = replaced;
                             } catch (e) {
                                 console.log('An issue occured while replacing url params: ' + e);

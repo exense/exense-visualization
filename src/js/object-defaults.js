@@ -70,7 +70,7 @@ function DefaultReplaceFunc(){
 }
 
 function DefaultSaveFunct(){
-    return "function(response){\r\treturn [\r\t\t{\r\t\t\tkey : '__mykey__', value : response.myvalue, isDynamic : false\r\t\t}\r\t];\r}";
+    return "function(response){\r\treturn [\r\t\t{\r\t\t\tkey : '__mykey__', value : response.status, isDynamic : false\r\t\t}\r\t];\r}";
 }
 
 

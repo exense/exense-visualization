@@ -378,19 +378,22 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 $scope.processTemplate = function (placeholders) {
                     var data = "", params = "";
+                    //TODO:replace doesn't really need to be exposed if it's only used as part of the Template control
+
+                    $scope.state.data.placeholdersstate = evalDynamic($scope.mergePlaceholders());
                     if ($scope.state.query.datasource.service.preproc.replace.function) {
                         if ($scope.state.query.controls.template.templatedPayload) {
                             data = runRequestProc(
                                 $scope.state.query.datasource.service.preproc.replace.function,
                                 $scope.state.query.controls.template.templatedPayload,
-                                evalDynamic($scope.mergePlaceholders()));
+                                $scope.state.data.placeholdersstate);
                         }
 
                         if ($scope.state.query.controls.template.templatedParams) {
                             params = runRequestProc(
                                 $scope.state.query.datasource.service.preproc.replace.function,
                                 $scope.state.query.controls.template.templatedParams,
-                                evalDynamic($scope.mergePlaceholders()));
+                                $scope.state.data.placeholdersstate);
                         }
                     }
                     return {
