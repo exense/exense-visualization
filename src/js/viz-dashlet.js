@@ -42,6 +42,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     return tabIndex === $scope.state.tabindex;
                 };
 
+                $scope.messageBoxClick = function(){
+                    $scope.$broadcast('clearmessages');
+                };
+
                 $scope.toggleBarchevronToConf = function () {
                     $scope.state.viewtoggle = !$scope.state.viewtoggle;
                 }

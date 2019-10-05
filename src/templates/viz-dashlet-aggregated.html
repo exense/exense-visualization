@@ -23,14 +23,18 @@
             </li>
             <li ng-show="state.info.alert.counter > 0" style="float: right !important; border: none !important;">
                 <div class="btn-container">
-                    <span class="label label-danger" style="padding: 5px 10px;">{{state.info.alert.counter}}</span>
+                    <button class="btn btn-danger viz-btn-primary" style="padding: 0px 8px;" uib-tooltip="{{state.info.alert.message}}" ng-click="messageBoxClick()">
+                        {{state.info.alert.counter}}
+                    </button>
                 </div>
             </li>
         </ul>
-        <ul class="nav nav-tabs" style="float: right !important;">
+        <ul class="nav nav-tabs" style="float: right !important; border: none;">
             <li ng-show="state.info.alert.counter > 0" ng-if="!state.viewtoggle" style="border: none !important;">
                 <div class="btn-container">
-                    <span class="label label-danger" style="padding: 5px 10px;">{{state.info.alert.counter}}</span>
+                    <button class="btn btn-danger viz-btn-primary" style="padding: 0px 8px;" uib-tooltip="{{state.info.alert.message}}" ng-click="messageBoxClick()">
+                        {{state.info.alert.counter}}
+                    </button>
                 </div>
             </li>
             <li ng-if="!state.viewtoggle" style="border: none !important;">

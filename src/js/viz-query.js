@@ -322,6 +322,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.info.alert.message = arg + "\n\n" + $scope.state.info.alert.message;
                     $scope.state.info.alert.counter++;
                 });
+                
+                $scope.$on('clearmessages', function () {
+                    $scope.clearMessages();
+                });
 
                 $scope.clearMessages = function () {
                     $scope.state.info.alert.message = "";
