@@ -33,22 +33,17 @@
 div.dashboardtab > ul > li{
   margin-right: 5px !important;
   margin-left: 0px !important;
-  padding: 3px !important;
-  border: 1px solid #333333 !important;
+  border-left: 1px solid #333333 !important;
+  border-right: 1px solid #333333 !important;
+  border-top: 1px solid #333333 !important;
 }
 
-a:hover{
+div.dashboardtab > ul > li > a, li > div.btn-container {
+  padding: 2px !important;
   cursor: pointer !important;
-}
-
-div.dashboardtab > ul > li > a{
   border: none !important;
-  padding: 0 !important;
 }
 
-div.dashboardtab > ul > li > a {
-  text-decoration: none !important;
-}
 .colmdstyle{
 	position: relative !important;
 	min-height: 1px !important;
@@ -56,22 +51,22 @@ div.dashboardtab > ul > li > a {
   padding-left: 2px !important;
 }
 
-ul.ul-control-d {
-  float: right;
-  margin-top: -1px;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
 ul.ul-control {
   list-style-type: none !important;
   margin: 0 !important;
   padding: 0 !important;
   overflow: hidden !important;
-  background-color: #333333 !important;
   height: 30px !important;
+  border: none !important;
+}
+
+.ul-control-alt{
+  background-color: #333333 !important;
+  color: white;
+}
+
+.ul-control-main{
+  background-color: white !important;
 }
 
 .left-block{
@@ -92,26 +87,20 @@ span.text-g{
   color: black;
 }
 
-li.li-control {
+.li-control-alt{
+  background-color: #333333;
   float: right;
 }
+
 
 li.li-control > * > button{
   padding: 1px 3px;
   margin-top: 2px;
   margin-right: 2px;
 }
-  
-.li-control-d {
-  float: right;
-  margin-left: 3px;
-}
 
-.glyphicon-control-d{
-  margin: 0px;
-  padding: 1px;
-}
-
-.glyphicon-control-d:hover{
-  background-color: #333333;
+.li-title {
+  float: left !important;
+  margin: 0px !important;
+  padding: 0px !important;
 }
