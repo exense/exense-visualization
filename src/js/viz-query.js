@@ -337,6 +337,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-service.html'),
             controller: function ($scope) {
+                $scope.initAsync = function(){
+                    var savedservice = JSON.parse(angular.toJson($scope.state.query.datasource.service));
+                    $scope.state.query = new DefaultAsyncQuery();
+                    $scope.state.query.datasource.service = savedservice;
+                }
             }
         };
     })

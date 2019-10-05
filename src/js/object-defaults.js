@@ -21,13 +21,58 @@ function DefaultConfig() {
 };
 
 function DefaultQuery() {
-    return new SimpleQuery(
-        "Raw",
-        new Service("", "Get", "",
-            new Preproc("data", null),
-            new Postproc(null, null, [], {}, null))
-    );
+    return new DefaultSimpleQuery();
 };
+
+function DefaultSimpleQuery(){
+    return new SimpleQuery("Raw", new DefaultService());
+};
+
+function DefaultAsyncQuery(){
+    return new AsyncQuery("Raw", new DefaultService(), new DefaultCallback());
+};
+
+function DefaultService() {
+    return new Service("", "Get", "",
+        new DefaultPreproc(),
+        new DefaultPostproc());
+};
+
+function DefaultCallback() {
+    return new Callback("", "Get", "",
+        new DefaultPreproc(),
+        new DefaultPostproc());
+};
+
+function DefaultPreproc() {
+    return new Preproc("data", DefaultReplaceFunc());
+};
+
+function DefaultPostproc() {
+    return new Postproc(
+        DefaultAsyncEndFunc(),
+        DefaultTransformFunc(),
+        [],
+        DefaultSaveFunct(),
+        {});
+};
+
+function DefaultAsyncEndFunc(){
+    return "function(response){\r\nreturn response.myEndBoolean;\r\n}";
+}
+
+function DefaultTransformFunc(){
+    return "function (response, args) {\r\nreturn [];\r\n}";
+}
+
+function DefaultReplaceFunc(){
+    return "function(requestFragment, workData){\r\nreturn requestFragment;\r\n}";
+}
+
+function DefaultSaveFunct(){
+    return "function(response){\r\nreturn [\r\n\n{\r\n\n\nkey : '__mykey__', value : response.myvalue, isDynamic : false\r\n\n\n}\r\n\n];\r\n}";
+}
+
 
 function DefaultControls(template) {
     return new Controls({});

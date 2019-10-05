@@ -164,6 +164,10 @@ function Service(url, method, data, preproc, postproc) {
     };
 };
 
+function Callback(url, method, data, preproc, postproc) {
+    return new Service(url, method, data, preproc, postproc);
+};
+
 function SimpleQuery(inputtype, service) {
     return {
         inputtype: inputtype,
@@ -172,12 +176,6 @@ function SimpleQuery(inputtype, service) {
             service: service
         }
     };
-};
-
-function Paging() {
-    return {
-
-    }
 };
 
 function AsyncQuery(inputtype, mainservice, callback) {
