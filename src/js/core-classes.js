@@ -8,14 +8,18 @@ function Dashboard(widgets, title, state) {
     };
 }
 
-function Widget(widgetid, bstwidth, wrefresh, dstate) {
+function Widget(widgetid, wstate, dstate) {
     return {
         oid: widgetid,
-        wstate: {
-            widgetwidth: bstwidth,
-            autorefresh: wrefresh
-        },
+        wstate: wstate,
         state: dstate
+    };
+};
+
+function WidgetState(bstwidth, wrefresh){
+    return {
+        widgetwidth: bstwidth,
+        autorefresh: wrefresh
     };
 };
 
@@ -207,8 +211,7 @@ function Placeholder(key, value, isdynamic) {
     };
 }
 
-//Used when loading only template (via GUI)
-function Template(name, placeholders, payloadTemplate, paramsTemplate, query) {
+function TemplatePreset(name, placeholders, payloadTemplate, paramsTemplate, query) {
     return {
         name: name,
         placeholders: placeholders,

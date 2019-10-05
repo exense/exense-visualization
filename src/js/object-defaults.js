@@ -132,11 +132,14 @@ function ExplorationDashletState() {
 function DefaultWidget() {
     return new Widget(
         getUniqueId(),
-        'col-md-6',
-        false,
+        new DefaultWidgetState(),
         new DefaultDashletState()
     );
 };
+
+function DefaultWidgetState(){
+    return new WidgetState('col-md-6', false);
+}
 
 function DefaultPaging() {
     return new Paging('Off', {}, {});
