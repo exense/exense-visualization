@@ -45,7 +45,7 @@ function DefaultCallback() {
 };
 
 function DefaultPreproc() {
-    return new Preproc("data", DefaultReplaceFunc());
+    return new Preproc(DefaultReplaceFunc());
 };
 
 function DefaultPostproc() {
@@ -58,19 +58,19 @@ function DefaultPostproc() {
 };
 
 function DefaultAsyncEndFunc(){
-    return "function(response){\r\nreturn response.myEndBoolean;\r\n}";
+    return "function(response){\r\treturn response.myEndBoolean;\r}";
 }
 
 function DefaultTransformFunc(){
-    return "function (response, args) {\r\nreturn [];\r\n}";
+    return "function (response, args) {\r\treturn [];\r}";
 }
 
 function DefaultReplaceFunc(){
-    return "function(requestFragment, workData){\r\nreturn requestFragment;\r\n}";
+    return "function(requestFragment, workData){\r\tfor(i=0;i<workData.length;i++){\r\t\trequestFragment = requestFragment.replace(workData[i].key, workData[i].value);\r\t}\r\treturn requestFragment;\r}";
 }
 
 function DefaultSaveFunct(){
-    return "function(response){\r\nreturn [\r\n\n{\r\n\n\nkey : '__mykey__', value : response.myvalue, isDynamic : false\r\n\n\n}\r\n\n];\r\n}";
+    return "function(response){\r\treturn [\r\t\t{\r\t\t\tkey : '__mykey__', value : response.myvalue, isDynamic : false\r\t\t}\r\t];\r}";
 }
 
 

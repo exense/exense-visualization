@@ -121,10 +121,9 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
     };
 };
 
-function Preproc(replacetarget, replacefunc) {
+function Preproc(replacefunc) {
     return {
         replace: {
-            target: replacetarget,
             function: replacefunc
         }
     };

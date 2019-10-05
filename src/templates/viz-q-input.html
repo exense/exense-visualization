@@ -6,7 +6,8 @@
                     <label>Input type</label>
                     <div class="btn-group viz-btn-group form-radio">
                         <label class="btn btn-primary viz-btn-primary" ng-model="state.query.inputtype" uib-btn-radio="'Raw'">Raw</label>
-                        <label class="btn btn-primary viz-btn-primary" ng-model="state.query.inputtype" uib-btn-radio="'Controls'"  ng-click="initControls()">Controls</label>
+                        <label class="btn btn-primary viz-btn-primary" ng-model="state.query.inputtype" uib-btn-radio="'Controls'"
+                            ng-click="initControls()">Controls</label>
                     </div>
                 </div>
                 <div ng-if="state.query.inputtype == 'Raw'">
@@ -59,7 +60,7 @@
                             <div class="btn-group viz-btn-group">
                                 <textarea ng-model="state.query.controls.template.templatedPayload" class="form-control"
                                     ng-change="change()" />
-                            </div>
+                                </div>
                         </div>
                         <div class="col-md-6 colcontain-grid">
                             <label>Template Url</label>
@@ -119,12 +120,17 @@
                 </div>
             </div>
             <div ng-if="state.query.type == 'Async'">
-                <div class="col-md-12 colcontain-grid">
+                <div class="col-md-6 colcontain-grid">
                     <label>Callback Payload</label>
                     <div class="btn-group viz-btn-group">
                         <textarea  type="text" ng-model="state.query.datasource.callback.data" class="form-control" />
                     </div>
                 </div>
+                <div class="col-md-6 colcontain-grid">
+                    <label>Callback Url params</label>
+                    <div class="btn-group viz-btn-group">
+                        <textarea type="text" ng-model="state.query.datasource.callback.params" class="form-control" />
+                    </div>
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@ registerScript();
 
 angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
     .directive('vizDashlet', function () {
-        
+
         var controllerScript = 'viz-dashlet.js';
         var aggTemplateUrl = resolveTemplateURL(controllerScript, 'viz-dashlet-aggregated.html');
         var expTemplateUrl = resolveTemplateURL(controllerScript, 'viz-dashlet-exploded.html');
@@ -28,7 +28,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     else {
                         if ($scope.displaytype === 'exploded') {
                             return expTemplateUrl;
-                        }else{
+                        } else {
                             return errorTemplateUrl;
                         }
                     }
@@ -73,6 +73,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         if (!srv.params) {
                             srv.params = ""; // prevent "undefined" string from being concatenated
                         }
+
+                        //Done out of the box via templace
+                        //$scope.executeReplace(srv);
+
                         $scope.state.http.servicesent = 'url :' + JSON.stringify(srv.url + srv.params) + '; payload:' + JSON.stringify(srv.data);
                         $scope.executeHttp(srv.method, srv.url + srv.params, srv.data, $scope.dispatchSuccessResponse, srv, $scope.dispatchErrorResponse);
                     } catch (e) {
@@ -103,17 +107,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             if ($scope.state.query.datasource.service.postproc.save) {
                                 $scope.state.data.state = runResponseProc($scope.state.query.datasource.service.postproc.save.function, null, response);
                             }
-                            var datatosend = scallback.data;
-                            var urltosend = scallback.url;
-                            if (scallback.preproc.replace) {
-                                if (scallback.preproc.replace.target === 'data') {
-                                    datatosend = JSON.parse(runRequestProc(scallback.preproc.replace.function, datatosend, $scope.state.data.state));
-                                } else {
-                                    if (scallback.preproc.replace.target === 'url') {
-                                        urltosend = JSON.parse(runRequestProc(scallback.preproc.replace.function, urltosend, $scope.state.data.state));
-                                    }
-                                }
-                            }
+
+                            $scope.executeReplace(scallback);
 
                             $scope.state.http.callbacksent = 'url :' + JSON.stringify(urltosend) + '; payload:' + JSON.stringify(datatosend);
                             var executionFunction = function () {
@@ -127,6 +122,30 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         $scope.isOngoingQuery = false;
                     }
                 };
+
+                $scope.executeReplace = function (service) {
+                    var datatosend = service.data;
+                    var urltosend = service.url;
+                    if (service.preproc.replace && service.preproc.replace.function) {
+                        var replaced;
+                        if (datatosend) {
+                            try {
+                                replaced = runRequestProc(service.preproc.replace.function, datatosend, $scope.state.data.state);
+                                datatosend = JSON.parse(replaced);
+                            } catch (e) {
+                                console.log('An issue occured while replacing payload data: ' + e);
+                            }
+                        }
+                        if (urltosend) {
+                            try {
+                                replaced = runRequestProc(service.preproc.replace.function, urltosend, $scope.state.data.state);
+                                urltosend = replaced;
+                            } catch (e) {
+                                console.log('An issue occured while replacing url params: ' + e);
+                            }
+                        }
+                    }
+                }
 
                 $scope.setAsyncInterval = function (callback) {
                     $scope.clearAsync();
@@ -166,7 +185,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 $scope.clearAsync();
                             }
                         }
-                        $scope.state.http.rawcallbackresponse = response;
+                        $scope.state.http.rawcallbackresponse = JSON.stringify(response);
                     }
                     $scope.state.data.rawresponse = { dashdata: response };
                 };

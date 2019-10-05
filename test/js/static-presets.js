@@ -70,7 +70,6 @@ function StaticPresets() {
                             "data": "{\"streamedSessionId\": \"__streamedSessionId__\"}",
                             "preproc": {
                                 "replace": {
-                                    "target": "data",
                                     "function": "function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}",
                                 }
                             },
@@ -112,7 +111,6 @@ function StaticPresets() {
                             "data": "{\"streamedSessionId\": \"__streamedSessionId__\"}",
                             "preproc": {
                                 "replace": {
-                                    "target": "data",
                                     "function": "function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}",
                                 }
                             },
@@ -148,7 +146,6 @@ function StaticPresets() {
                                 "params": "",
                                 "preproc": {
                                     "replace": {
-                                        "target": "data",
                                         "function": "function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}",
                                     }
                                 },
