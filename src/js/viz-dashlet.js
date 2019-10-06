@@ -42,7 +42,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     return tabIndex === $scope.state.tabindex;
                 };
 
-                $scope.messageBoxClick = function(){
+                $scope.messageBoxClick = function () {
                     $scope.$broadcast('clearmessages');
                 };
 
@@ -63,10 +63,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 }
 
-                $scope.cleanupState = function(){
+                $scope.cleanupState = function () {
                     $scope.state.info.http.asynccheckpoint = false;
                     $scope.clearAsync();
                     $scope.$broadcast('cleanup-info');
+                    $scope.isRawDisplay = $scope.state.info.showraw === 'On';
                 };
 
                 // init
@@ -85,8 +86,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                         //Done out of the box via templace
                         //$scope.executeReplace(srv);
-
-                        $scope.state.info.http.servicesent = 'url :' + JSON.stringify(srv.url + srv.params) + '; payload:' + JSON.stringify(srv.data);
+                        if ($scope.isRawDisplay) {
+                            $scope.state.info.http.servicesent = 'url :' + JSON.stringify(srv.url + srv.params) + '; payload:' + JSON.stringify(srv.data);
+                        }
                         $scope.executeHttp(srv.method, srv.url + srv.params, srv.data, $scope.dispatchSuccessResponse, srv, $scope.dispatchErrorResponse);
                     } catch (e) {
                         console.log('exception thrown while firing query: ' + e);
@@ -120,7 +122,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             var srv = $scope.state.query.datasource.service;
                             var scallback = $scope.state.query.datasource.callback;
                             //$scope.state.data.serviceraw = response;
-                            if ($scope.state.info.showraw === 'On') {
+                            if ($scope.isRawDisplay) {
                                 $scope.state.info.http.rawserviceresponse = JSON.stringify(response);
                             }
                             if ($scope.state.query.datasource.service.postproc.save) {
@@ -129,7 +131,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                             var input = $scope.executeReplace(scallback, $scope.state.data.placeholdersstate);
 
-                            $scope.state.info.http.callbacksent = 'url :' + JSON.stringify(input.url) + '; payload:' + JSON.stringify(input.data);
+                            if ($scope.isRawDisplay) {
+                                $scope.state.info.http.callbacksent = 'url :' + JSON.stringify(input.url) + '; payload:' + JSON.stringify(input.data);
+                            }
                             var executionFunction = function () {
                                 $scope.executeHttp(scallback.method, input.url, input.data, $scope.loadData, scallback, $scope.dispatchErrorResponse)
                             };
@@ -172,7 +176,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         }
                     }
 
-                    return {data: datatosend, url: urltosend};
+                    return { data: datatosend, url: urltosend };
                 }
 
                 $scope.setAsyncInterval = function (callback) {
@@ -194,7 +198,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 $scope.loadData = function (response, proctarget) {
                     if ($scope.state.query.type === 'Simple') {
-                        if ($scope.state.info.showraw === 'On') {
+                        if ($scope.isRawDisplay) {
                             $scope.state.info.http.rawserviceresponse = JSON.stringify(response);
                         }
                         $scope.isOngoingQuery = false;
@@ -215,7 +219,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 $scope.clearAsync();
                             }
                         }
-                        if ($scope.state.info.showraw === 'On') {
+                        if ($scope.isRawDisplay) {
                             $scope.state.info.http.rawcallbackresponse = JSON.stringify(response);
                         }
                     }
