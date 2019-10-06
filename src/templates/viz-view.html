@@ -8,7 +8,7 @@
             <tr>
                 <th>xAxis</th>
                 <th ng-repeat="z in tableData.zlist">
-                <label class="label label-success" ng-style="{ 'background-color': stringToColour(z)}" style="color: white;">{{z}}</label>
+                    <label class="label label-success" ng-style="{ 'background-color': stringToColour(z)}" style="color: white;">{{z}}</label>
                 </th>
             </tr>
         </thead>
@@ -23,7 +23,13 @@
     </table>
 </div>
 
-<div ng-if="state.options.chart.type.endsWith('Chart')" class="chartcontainer">
-    <nvd3 options="state.options" api="indirection.api" data="chartData" config="{refreshDataOnly: false, deepWatchDataDepth: 0}"
-        style="text-align: center; justify-content: center;"></nvd3>
+<div ng-if="state.options.chart.type.endsWith('Chart')">
+    <div ng-if="state.options.chart.type.endsWith('scatterChart')" class="chartcontainer">
+        <nvd3 options="state.options" api="indirection.api" data="chartData" config="{refreshDataOnly: false, deepWatchDataDepth: 0}"
+            style="text-align: center; justify-content: center;"></nvd3>
+    </div>
+    <div ng-if="!state.options.chart.type.endsWith('scatterChart')" class="chartcontainer">
+        <nvd3 options="state.options" api="indirection.api" data="chartData" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"
+            style="text-align: center; justify-content: center;"></nvd3>
+    </div>
 </div>
