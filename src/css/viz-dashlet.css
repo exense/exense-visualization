@@ -48,6 +48,20 @@ div.dashboardtab > div > * > uib-accordion > div.panel-group > div.panel-default
     text-decoration: none;
 }
 
+div.dashboardtab > div > div > div > * > uib-accordion > div.panel-group > div.panel-default > div > h4{
+    background-color: #929292;
+    text-align: center;
+}
+
+div.dashboardtab > div > div > div >  * > uib-accordion > div.panel-group > div.panel-default > div > h4:hover{
+    background-color: #474747;;
+}
+
+div.dashboardtab > div > div > div >  * > uib-accordion > div.panel-group > div.panel-default > div > h4 > a{
+    color:  white;
+    text-decoration: none;
+}
+
 hr.viz-hr{
     margin: 8px;
 }
