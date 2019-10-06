@@ -31,8 +31,21 @@ div.panel-default.viz-panel-default > * > div.panel-body{
     margin-right: 3px;
 }
 
-viz-query > * > div.panel-group{
-    margin: 2px;
+div.dashboardtab > div > * > uib-accordion > div.panel-group{
+    margin: 4px;
+}
+
+div.dashboardtab > div > * > uib-accordion > div.panel-group > div.panel-default > div > h4{
+    background-color: #929292;
+}
+
+div.dashboardtab > div > * > uib-accordion > div.panel-group > div.panel-default > div > h4:hover{
+    background-color: #474747;;
+}
+
+div.dashboardtab > div > * > uib-accordion > div.panel-group > div.panel-default > div > h4 > a{
+    color:  white;
+    text-decoration: none;
 }
 
 hr.viz-hr{

@@ -43,7 +43,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 };
 
                 $scope.messageBoxClick = function () {
-                    $scope.$broadcast('clearmessages');
+                    $scope.toggleBarchevronToConf();
+                    $scope.selectTab(3);
+                    $scope.state.gui.status.info = true;
                 };
 
                 $scope.toggleBarchevronToConf = function () {
