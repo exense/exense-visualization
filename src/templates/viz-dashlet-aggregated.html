@@ -29,7 +29,7 @@
                 </div>
             </li>
         </ul>
-        <ul class="nav nav-tabs" style="float: right !important; border: none;">
+        <ul class="nav nav-tabs" style="position: absolute; top: 30px; right: 15px; float: right !important; border: none;">
             <li ng-show="state.info.alert.counter > 0" ng-if="!state.viewtoggle" style="border: none !important;">
                 <div class="btn-container">
                     <button class="btn btn-danger viz-btn-primary" style="padding: 0px 8px;" uib-tooltip="{{state.info.alert.message}}" ng-click="messageBoxClick()">

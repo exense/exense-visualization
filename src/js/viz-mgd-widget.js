@@ -49,8 +49,9 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     return $element[0].children[0].children[0].offsetWidth;
                 }
 
-                $scope.updateSize = function (newWidth) {
+                $scope.updateSize = function () {
                     $scope.computeHeights();
+                    var newWidth = 0.9 * $scope.getActualDashletWidth();
                     var options = $scope.state.options;
                     options.chart.width = newWidth;
                     options.innercontainer.width = newWidth - 50;
@@ -111,7 +112,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 };
 
                 $scope.resize = function () {
-                    $scope.updateSize(0.8 * $scope.getActualDashletWidth());
+                    $scope.updateSize();
                     forceRedraw($scope);
                 };
 
