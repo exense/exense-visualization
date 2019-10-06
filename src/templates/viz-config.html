@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="colmdstyle col-md-12 colcontain-contents">
                             <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="state.gui.status.loadconfig">
-                                <button id="load-config" type="button" class="btn btn-primary viz-btn-primary"
+                                <button id="load-config" type="button" class="btn btn-success viz-btn-success"
                                     uib-dropdown-toggle ng-disabled="disabled">
                                     Load config... <span class="caret"></span>
                                 </button>
@@ -32,35 +32,35 @@
                         <div class="colmdstyle col-md-2 colcontain-grid">
                             <label>Show legend</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.showLegend"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.options.chart.showLegend"
                                     uib-btn-radio="true">On</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.showLegend"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.options.chart.showLegend"
                                     uib-btn-radio="false">Off</label>
                             </div>
                         </div>
                         <div class="colmdstyle col-md-10 colcontain-grid">
                             <label>Viz type</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.options.chart.type"
                                     uib-btn-radio="'table'">table</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.options.chart.type"
                                     uib-btn-radio="'lineChart'">lineChart</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.options.chart.type"
                                     uib-btn-radio="'multiBarChart'">multiBarChart</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.options.chart.type"
                                     uib-btn-radio="'scatterChart'">scatterChart</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.options.chart.type"
                                     uib-btn-radio="'discreteBarChart'">discreteBarChart</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.options.chart.type"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.options.chart.type"
                                     uib-btn-radio="'stackedAreaChart'">stackedAreaChart</label>
                             </div>
                         </div>
                         <div class="colmdstyle col-md-3 colcontain-grid" ng-show="false">
                             <label>Autorefresh</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.config.autorefresh"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.config.autorefresh"
                                     uib-btn-radio="'On'">On</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.config.autorefresh"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.config.autorefresh"
                                     uib-btn-radio="'Off'">Off</label>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                         <div class="colmdstyle col-md-3 colcontain-grid">
                             <label>Master control</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <span class="key-val-collection btn btn-primary viz-btn-primary">
+                                <span class="key-val-collection btn btn-success viz-btn-success">
                                     <input type="checkbox" class="form-control" ng-model="state.config.master" style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;"
                                         ng-click="$emit('isMaster-changed', state.config.master)" />
                                 </span>
@@ -96,7 +96,7 @@
                         <div class="colmdstyle col-md-3 colcontain-grid">
                             <label>Slave control</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <span class="key-val-collection btn btn-primary viz-btn-primary">
+                                <span class="key-val-collection btn btn-success viz-btn-success">
                                     <input type="checkbox" class="form-control" ng-model="state.config.slave" style="width: 15px; height: 15px; padding: 0px; margin-top: 2px; margin-bottom: 2px;" />
                                 </span>
                                 <label class="viz-label" ng-class="{active: state.config.slave}">Make slave</label>
@@ -105,7 +105,7 @@
                         <div ng-if="state.config.slave" class="col-md-3 colcontain-grid">
                             <label>Subscribe to</label>
                             <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="state.gui.status.subscribeto">
-                                <button id="load-master" type="button" class="btn btn-primary viz-btn-primary"
+                                <button id="load-master" type="button" class="btn btn-success viz-btn-success"
                                     uib-dropdown-toggle ng-disabled="disabled">
                                     Choose master... <span class="caret"></span>
                                 </button>
@@ -118,9 +118,9 @@
                         <div ng-if="state.config.slave" class="col-md-3 colcontain-grid">
                             <label>Data target</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.config.target"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.config.target"
                                     uib-btn-radio="'state.data.rawresponse'">Raw</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.config.target"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.config.target"
                                     uib-btn-radio="'state.data.transformed'">Transformed</label>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                         <div class="colmdstyle col-md-2 colcontain-grid">
                             <label>Reset</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-label" ng-click="$emit('coms-reset')">Reset</span>
+                                <label class="btn btn-success viz-label" ng-click="$emit('coms-reset')">Reset</span>
                             </div>
                         </div>
                         <div class="colmdstyle col-md-10 colcontain-grid">

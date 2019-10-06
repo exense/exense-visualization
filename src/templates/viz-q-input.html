@@ -5,8 +5,8 @@
                 <div class="col-md-4 colcontain-grid">
                     <label>Input type</label>
                     <div class="btn-group viz-btn-group form-radio">
-                        <label class="btn btn-primary viz-btn-primary" ng-model="state.query.inputtype" uib-btn-radio="'Raw'">Raw</label>
-                        <label class="btn btn-primary viz-btn-primary" ng-model="state.query.inputtype" uib-btn-radio="'Controls'"
+                        <label class="btn btn-success viz-btn-success" ng-model="state.query.inputtype" uib-btn-radio="'Raw'">Raw</label>
+                        <label class="btn btn-success viz-btn-success" ng-model="state.query.inputtype" uib-btn-radio="'Controls'"
                             ng-click="initControls()">Controls</label>
                     </div>
                 </div>
@@ -14,7 +14,7 @@
                     <div class="col-md-4 colcontain-grid">
                         <label>Preset</label>
                         <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="state.gui.status.presetquery">
-                            <button id="load-query" type="button" class="btn btn-primary viz-btn-primary"
+                            <button id="load-query" type="button" class="btn btn-success viz-btn-success"
                                 uib-dropdown-toggle ng-disabled="disabled">
                                 Load query... <span class="caret"></span>
                             </button>
@@ -28,18 +28,18 @@
                     <div class="col-md-4 colcontain-grid">
                         <label>Control type</label>
                         <div class="btn-group viz-btn-group form-radio">
-                            <label class="btn btn-primary viz-btn-primary" ng-click="initTemplate()" ng-model="state.query.controltype"
+                            <label class="btn btn-success viz-btn-success" ng-click="initTemplate()" ng-model="state.query.controltype"
                                 uib-btn-radio="'Template'">Template</label>
-                            <label class="btn btn-primary viz-btn-primary" ng-model="state.query.controltype"
+                            <label class="btn btn-success viz-btn-success" ng-model="state.query.controltype"
                                 uib-btn-radio="'RTM'">RTM</label>
-                            <label class="btn btn-primary viz-btn-primary" ng-model="state.query.controltype"
+                            <label class="btn btn-success viz-btn-success" ng-model="state.query.controltype"
                                 uib-btn-radio="'STEP'">STEP</label>
                         </div>
                     </div>
                     <div class="col-md-4 colcontain-grid">
                         <label>Preset</label>
                         <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="state.gui.status.presetcontrols">
-                            <button id="load-controls" type="button" class="btn btn-primary viz-btn-primary"
+                            <button id="load-controls" type="button" class="btn btn-success viz-btn-success"
                                 uib-dropdown-toggle ng-disabled="disabled">
                                 Load controls... <span class="caret"></span>
                             </button>
@@ -73,9 +73,9 @@
                             <div class="colmdstyle col-md-12 colcontain-grid">
                             <label>Paging</label>
                                 <div class="btn-group viz-btn-group form-radio">
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.query.paged.ispaged"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.query.paged.ispaged"
                                 ng-change="change()" uib-btn-radio="'On'">On</label>
-                                <label class="btn btn-primary viz-btn-primary" ng-model="state.query.paged.ispaged"
+                                <label class="btn btn-success viz-btn-success" ng-model="state.query.paged.ispaged"
                                 ng-change="change()" uib-btn-radio="'Off'">Off</label>
                                 </div>
                             </div>

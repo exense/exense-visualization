@@ -3,7 +3,7 @@
                 <ul class="ul-control ul-control-alt">
                         <li class="li-title" style="display: inline-flex;">
                                 <div ng-if="wstate.chevron" class="btn-container">
-                                        <button class="btn btn-primary viz-btn-primary" ng-click="toggleChevron()"
+                                        <button class="btn btn-success viz-btn-success" ng-click="toggleChevron()"
                                                 style="margin: 0px; padding: 0px;" uib-tooltip="Collapse dashlet"
                                                 tooltip-placement="right">
                                                 <span class="title glyphicon glyphicon-chevron-down glyphicon-control"
@@ -11,7 +11,7 @@
                                         </button>
                                 </div>
                                 <div ng-if="!wstate.chevron" class="btn-container">
-                                        <button class="btn btn-primary viz-btn-primary" ng-click="toggleChevron()"
+                                        <button class="btn btn-success viz-btn-success" ng-click="toggleChevron()"
                                                 style="margin: 0px; padding: 0px;" uib-tooltip="Expand dashlet"
                                                 tooltip-placement="right">
                                                 <span class="title glyphicon glyphicon-chevron-right glyphicon-control"
@@ -25,7 +25,7 @@
 
                         <li class="li-control li-control-alt" ng-show="displaymode === 'managed'">
                                 <div class="btn-container">
-                                        <button class="btn btn-primary viz-btn-primary" ng-click="removeWidget()"
+                                        <button class="btn btn-success viz-btn-success" ng-click="removeWidget()"
                                                 uib-tooltip="Delete dashlet">
                                                 <span class="title glyphicon glyphicon-remove glyphicon-control"></span>
                                         </button>
@@ -34,7 +34,7 @@
                         <div ng-if="wstate.widgetwidth == 'col-md-6'">
                                 <li class="li-control li-control-alt">
                                         <div class="btn-container">
-                                                <button class="btn btn-primary viz-btn-primary" ng-click="extend()"
+                                                <button class="btn btn-success viz-btn-success" ng-click="extend()"
                                                         uib-tooltip="Maximize">
                                                         <span class="title glyphicon glyphicon-resize-full glyphicon-control"></span>
                                                 </button>
@@ -44,7 +44,7 @@
                         <div ng-if="wstate.widgetwidth == 'col-md-12'">
                                 <li class="li-control li-control-alt">
                                         <div class="btn-container">
-                                                <button class="btn btn-primary viz-btn-primary" ng-click="reduce()"
+                                                <button class="btn btn-success viz-btn-success" ng-click="reduce()"
                                                         uib-tooltip="Minimize">
                                                         <span class="title glyphicon glyphicon-resize-small glyphicon-control"></span>
                                                 </button>
@@ -54,7 +54,7 @@
                         <div ng-if="wstate.widgetwidth == 'col-md-6'">
                                 <li class="li-control li-control-alt">
                                         <div class="btn-container">
-                                                <button class="btn btn-primary viz-btn-primary" ng-click="toggleAutorefresh()"
+                                                <button class="btn btn-success viz-btn-success" ng-click="toggleAutorefresh()"
                                                         uib-tooltip="Turn on autorefresh" ng-class="{active : wstate.autorefresh}">
                                                         <span class="title glyphicon glyphicon-refresh glyphicon-control"></span>
                                                 </button>
@@ -63,7 +63,7 @@
                         </div>
                         <li class="li-control li-control-alt">
                                 <div class="btn-container">
-                                        <button class="btn btn-primary viz-btn-primary" ng-click="$emit('mgdwidget-moveRight', {wid: widgetid})"
+                                        <button class="btn btn-success viz-btn-success" ng-click="$emit('mgdwidget-moveRight', {wid: widgetid})"
                                                 uib-tooltip="Shift right">
                                                 <span class="title glyphicon glyphicon-arrow-right glyphicon-control"></span>
                                         </button>
@@ -71,7 +71,7 @@
                         </li>
                         <li class="li-control li-control-alt">
                                 <div class="btn-container">
-                                        <button class="btn btn-primary viz-btn-primary" ng-click="$emit('mgdwidget-moveLeft', {wid: widgetid})"
+                                        <button class="btn btn-success viz-btn-success" ng-click="$emit('mgdwidget-moveLeft', {wid: widgetid})"
                                                 uib-tooltip="Shift left">
                                                 <span class="title glyphicon glyphicon-arrow-left glyphicon-control"></span>
                                         </button>
@@ -79,7 +79,7 @@
                         </li>
                         <li class="li-control li-control-alt" ng-show="displaymode === 'managed'">
                                 <div class="btn-container">
-                                        <button class="btn btn-primary viz-btn-primary" ng-click="$emit('mgdwidget-duplicate', {wid: widgetid})"
+                                        <button class="btn btn-success viz-btn-success" ng-click="$emit('mgdwidget-duplicate', {wid: widgetid})"
                                                 uib-tooltip="Clone">
                                                 <span class="title glyphicon glyphicon-duplicate glyphicon-control"></span>
                                         </button>
