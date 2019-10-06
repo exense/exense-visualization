@@ -14,6 +14,20 @@ var registerScript = function () {
 };
 registerScript();
 
+var forceRedraw = function (scope) {
+    var phase = scope.$root.$$phase;
+    if (phase == '$apply' || phase == '$digest') {
+        scope.$eval(function () {
+            self.value = 0;
+        });
+    }
+    else {
+        scope.$apply(function () {
+            self.value = 0;
+        });
+    }
+};
+
 var resolveTemplateURL = function (containername, componentname) {
     if (productionmode === false) {
         templateUrl = vizScripts[containername].replace(devJSFolder, devTemplateFolder)
@@ -29,9 +43,9 @@ var resolveTemplateURL = function (containername, componentname) {
 var setIntervalDefault = 3000;
 var setIntervalAsyncDefault = 500;
 
-var keyvalarrayToIndex = function(array, keyKey, valKey){
+var keyvalarrayToIndex = function (array, keyKey, valKey) {
     var index = {};
-    $.each(array, function(idx, e){
+    $.each(array, function (idx, e) {
         index[e[keyKey]] = e[valKey];
     });
     return index;
@@ -81,19 +95,19 @@ var jsoncopy = function (obj) {
     return JSON.parse(JSON.stringify(obj));
 }
 
-var formatPotentialTimestamp = function(d){
-	var value;
-	if((typeof d) === "string"){
-		value = parseInt(d);
-	}else{
-		value = d;
-	}
-	if (value > 1000000000 && value < 2000000000) {
-		value = value * 1000;
-	}
-	if(d >= 1000000000000 && d <= 2000000000000){
-		return d3.time.format("%H:%M:%S")(new Date(value));
-	} else {
-		return d;
-	}
+var formatPotentialTimestamp = function (d) {
+    var value;
+    if ((typeof d) === "string") {
+        value = parseInt(d);
+    } else {
+        value = d;
+    }
+    if (value >= 1000000000 && value < 2000000000) {
+        value = value * 1000;
+    }
+    if (value >= 1000000000000 && value < 2000000000000) {
+        return d3.time.format("%H:%M:%S")(new Date(value));
+    } else {
+        return d;
+    }
 };

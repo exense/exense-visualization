@@ -33,20 +33,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     return $element[0].children[0].children[0].offsetWidth;
                 }
 
-                $scope.forceRedraw = function (fn) {
-                    var phase = $scope.$root.$$phase;
-                    if (phase == '$apply' || phase == '$digest') {
-                        $scope.$eval(function () {
-                            self.value = 0;
-                        });
-                    }
-                    else {
-                        $scope.$apply(function () {
-                            self.value = 0;
-                        });
-                    }
-                };
-
                 $scope.updateSize = function (newWidth) {
                     //should only be done once at manager level
                     $scope.computeHeights();
@@ -120,7 +106,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                 $scope.resize = function () {
                     $scope.updateSize(0.8 * $scope.getActualDashletWidth());
-                    $scope.forceRedraw();
+                    forceRedraw($scope);
                 };
 
                 $scope.extend = function () {
