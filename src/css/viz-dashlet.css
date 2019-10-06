@@ -50,6 +50,7 @@ hr.viz-hr{
     vertical-align: middle !important;
     justify-content: center !important;
     text-align: center !important;
+    overflow-y: auto !important;
 }
 
 .chartcontainer{
