@@ -33,16 +33,31 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                             $scope.tableData = $scope.toTable(newvalue.dashdata);
                         }
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
+                            // quickfix for tooltip on refresh, not needed since no more full chart update
+                            /*
+                            if ($scope.state.options.chart.type === 'stackedAreaChart') {
+                                $scope.cleanupTooltips();
+                            }
+                            */
                             $scope.chartData = $scope.toChart(newvalue.dashdata);
                         }
                     }
                 }));
 
+                //unused as of right now
+                $scope.$on('cleanup-view', function () {
+                    $scope.cleanupTooltips();
+                });
+
+                $scope.cleanupTooltips = function () {
+                    $("div.nvtooltip").remove();
+                };
+
                 $scope.formatPotentialTimestamp = function (value) {
                     return formatPotentialTimestamp(value);
                 };
 
-                $scope.stringToColour = function(str){
+                $scope.stringToColour = function (str) {
                     return stringToColour(str);
                 };
 
@@ -316,7 +331,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.info.alert.message = arg + "\n\n" + $scope.state.info.alert.message;
                     $scope.state.info.alert.counter++;
                 });
-                
+
                 $scope.$on('clearmessages', function () {
                     $scope.clearMessages();
                 });

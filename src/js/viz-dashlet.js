@@ -74,6 +74,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.state.info.http.asynccheckpoint = false;
                     $scope.clearAsync();
                     $scope.$broadcast('cleanup-info');
+                    //$scope.$broadcast('cleanup-view');
                     $scope.isRawDisplay = $scope.state.info.showraw === 'On';
                 };
 
@@ -82,8 +83,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.autorefreshInterval = undefined;
 
                 $scope.fireQuery = function () {
-                    //in case any async query already ongoing
-                    //console.log('['+$scope.widgetid+']Firing query.');
+                    $scope.cleanupState();
                     try {
                         $scope.isOngoingQuery = true;
                         var srv = $scope.state.query.datasource.service;
