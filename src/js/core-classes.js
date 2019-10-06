@@ -16,10 +16,11 @@ function Widget(widgetid, wstate, dstate) {
     };
 };
 
-function WidgetState(bstwidth, wrefresh){
+function WidgetState(bstwidth, wrefresh, chevron){
     return {
         widgetwidth: bstwidth,
-        autorefresh: wrefresh
+        autorefresh: wrefresh,
+        chevron: chevron
     };
 };
 
