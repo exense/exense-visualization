@@ -62,9 +62,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     //Also not firing if autorefresh is on
                     if (!$scope.state.config.slave && ($scope.state.config.autorefresh !== 'On')) {
                         $scope.fireQuery();
-                    }else{
-                        var saved = JSON.parse(angular.toJson($scope.state.data.rawresponse));
-                        $scope.state.data.rawresponse = saved;
+                    } else {
+                        if ($scope.state.data.rawresponse) {
+                            var saved = JSON.parse(angular.toJson($scope.state.data.rawresponse));
+                            $scope.state.data.rawresponse = saved;
+                        }
                     }
                 }
 
@@ -154,11 +156,18 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 //TODO: this should be scoped inside viz-query (inputs) and triggered via events
                 $scope.executeReplace = function (service, mergedplaceholders) {
                     var mergedstate;
-                    if (mergedplaceholders) {
-                        mergedstate = $scope.state.data.state.concat(mergedplaceholders);
-                    } else {
-                        mergedstate = $scope.state.data.state;
+
+                    if(mergedplaceholders && $scope.state.data.state){
+                        mergedstate = mergedplaceholders.concat($scope.state.data.state);
+                    }else{
+                        if(mergedplaceholders){
+                            mergedstate = mergedplaceholders;
+                        }
+                        if($scope.state.data.state){
+                            mergedstate = $scope.state.data.state;
+                        }
                     }
+
                     var datatosend = service.data;
                     var urltosend = service.url;
                     if (service.preproc.replace && service.preproc.replace.function) {

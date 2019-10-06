@@ -16,7 +16,7 @@ function Widget(widgetid, wstate, dstate) {
     };
 };
 
-function WidgetState(bstwidth, wrefresh, chevron){
+function WidgetState(bstwidth, wrefresh, chevron) {
     return {
         widgetwidth: bstwidth,
         autorefresh: wrefresh,
@@ -24,12 +24,12 @@ function WidgetState(bstwidth, wrefresh, chevron){
     };
 };
 
-function Info(showraw){
+function Info(showraw) {
     return {
         showraw: showraw,
         alert: {
-            message : "",
-            counter : 0,
+            message: "",
+            counter: 0,
         },
         http: {}
     };
@@ -73,7 +73,7 @@ function DashletState(title, viewtoggle, tabindex, data, chartoptions, config, q
         config: config,
         global: {},
         info: info,
-        gui : gui,
+        gui: gui,
         query: query
     };
 }
@@ -108,6 +108,29 @@ function MgrState(gsettings, gautorefresh, gchevron, title, autorefreshduration)
 }
 
 function ChartOptions(chartType, useInteractiveGuideline, stacked) {
+    var zoom = {};
+    if (stacked) {
+        zoom = {
+            enabled: true,
+            scale: 1,
+            scaleExtent: [1, 10],
+            translate: [0, 0],
+            useFixedDomain: false,
+            useNiceScale: false,
+            horizontalOff: false,
+            verticalOff: false,
+            zoomed: function (xDomain, yDomain) {
+                var domains = { x1: 0, x2: 0, y1: 1, y2: 1 };
+                return domains;
+            },
+            unzoomed: function (xDomain, yDomain) {
+                var domains = { x1: 0, x2: 0, y1: 0, y2: 0 };
+                return domains;
+            },
+            unzoomEventType: 'dblclick.zoom'
+        }
+    }
+
     return {
         type: chartType,
         height: 0, // all derived dynamically
@@ -118,8 +141,8 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
             bottom: 50,
             left: 55
         },
-        stacked : stacked,
-        useInteractiveGuideline : useInteractiveGuideline,
+        stacked: stacked,
+        useInteractiveGuideline: useInteractiveGuideline,
         x: function (d) { return d.x; },
         y: function (d) { return d.y; },
         showLegend: false,
@@ -133,7 +156,8 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
                 return formatPotentialTimestamp(d);
             },
             rotateLabels: -25
-        }
+        },
+        zoom: zoom
     };
 };
 
