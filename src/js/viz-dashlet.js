@@ -63,14 +63,18 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 }
 
+                $scope.cleanupState = function(){
+                    $scope.state.info.http.asynccheckpoint = false;
+                    $scope.clearAsync();
+                    $scope.$broadcast('cleanup-info');
+                };
+
                 // init
                 $scope.isOngoingQuery = false;
                 $scope.autorefreshInterval = undefined;
 
                 $scope.fireQuery = function () {
                     //in case any async query already ongoing
-                    $scope.clearAsync();
-                    $scope.$broadcast('cleanup-info');
                     //console.log('['+$scope.widgetid+']Firing query.');
                     try {
                         $scope.isOngoingQuery = true;
@@ -112,6 +116,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             $scope.loadData(response, successTarget);
                         }
                         if ($scope.state.query.type === 'Async') {
+                            $scope.state.info.http.asynccheckpoint = true;
                             var srv = $scope.state.query.datasource.service;
                             var scallback = $scope.state.query.datasource.callback;
                             //$scope.state.data.serviceraw = response;
@@ -122,11 +127,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 $scope.state.data.state = runResponseProc(srv.postproc.save.function, null, response);
                             }
 
-                            $scope.executeReplace(scallback, $scope.state.data.placeholdersstate);
+                            var input = $scope.executeReplace(scallback, $scope.state.data.placeholdersstate);
 
-                            $scope.state.info.http.callbacksent = 'url :' + JSON.stringify(scallback.url) + '; payload:' + JSON.stringify(scallback.data);
+                            $scope.state.info.http.callbacksent = 'url :' + JSON.stringify(input.url) + '; payload:' + JSON.stringify(input.data);
                             var executionFunction = function () {
-                                $scope.executeHttp(scallback.method, scallback.url, scallback.data, $scope.loadData, scallback, $scope.dispatchErrorResponse)
+                                $scope.executeHttp(scallback.method, input.url, input.data, $scope.loadData, scallback, $scope.dispatchErrorResponse)
                             };
                             $scope.setAsyncInterval(executionFunction);
                         }
@@ -166,6 +171,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             }
                         }
                     }
+
+                    return {data: datatosend, url: urltosend};
                 }
 
                 $scope.setAsyncInterval = function (callback) {

@@ -316,6 +316,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.$on('cleanup-info', function () {
                     $scope.state.info.http.rawserviceresponse = "";
                     $scope.state.info.http.rawcallbackresponse = "";
+                    $scope.state.info.http.callbacksent = "";
+                    $scope.state.info.http.servicesent = "";
                 });
 
                 $scope.$on('errormessage', function (event, arg) {
