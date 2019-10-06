@@ -78,8 +78,11 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                 $scope.onstartup();
                 
                 $scope.$watch('dashboards', function(newvalue){
-                	console.log('dashboards changed, new size= ' + newvalue.length);
                 	$scope.onstartup();
+                });
+
+                $scope.$watch('displaymode', function(newvalue){
+                    $scope.$broadcast('resize-widget');
                 });
             }
         };
