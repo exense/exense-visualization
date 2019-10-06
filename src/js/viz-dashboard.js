@@ -110,7 +110,6 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 $scope.onstartup();
                 
                 $scope.$watch('dashboard.widgets', function(newvalue){
-                	console.log('dashboard.widgets changed, new widget size= ' + newvalue.length);
                 	$scope.onstartup();
                 });
 

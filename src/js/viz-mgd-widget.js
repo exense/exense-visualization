@@ -83,8 +83,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     $scope.state.savedHeight = $scope.state.options.innercontainer.height;
                     $scope.state.options.innercontainer.offset = 50;
                     $scope.dashlettitle = $scope.state.title;
-                    $scope.savedchevron = $scope.wstate.chevron;
-                    $scope.wstate.chevron = true;
                 };
 
                 $scope.startup();

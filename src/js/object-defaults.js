@@ -138,7 +138,7 @@ function DefaultWidget() {
 };
 
 function DefaultWidgetState(){
-    return new WidgetState('col-md-6', false, false);
+    return new WidgetState('col-md-6', false, true);
 }
 
 function DefaultPaging() {
