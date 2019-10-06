@@ -46,12 +46,17 @@ hr.viz-hr{
     text-align: center;
 }
 
+.viewcontainer {
+    vertical-align: middle !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
 .chartcontainer{
-display: table-cell;
 vertical-align: middle;
 text-align: center;
-margin-top: 20px;
-overflow-y: auto;
+margin-top: 10px;
+overflow-y: hidden;
 overflow-wrap: break-word;
 }
 

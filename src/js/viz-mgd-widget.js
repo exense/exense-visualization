@@ -18,13 +18,26 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
             controller: function ($scope, $element) {
 
                 $scope.computeHeights = function () {
+                    //Local Defaults in case nothing provided (designed to fil 4 reduced dashlets on standard)    
+                    if (!$scope.headersheightinput) {
+                        $scope.headersheight = window.innerHeight / 4 + 30;
+                    } else {
+                        $scope.headersheight = $scope.headersheightinput;
+                    }
+
+                    if (!$scope.charttocontainerinput) {
+                        $scope.charttocontainer = 0;
+                    } else {
+                        $scope.charttocontainer = $scope.charttocontainerinput;
+                    }
+                    
                     var sHeight = window.innerHeight;
-                    $scope.chartHeightSmall = (sHeight - $scope.headersheight) / 2 - $scope.charttocontainer;
-                    $scope.chartHeightBig = sHeight - ($scope.headersheight - 80) - $scope.charttocontainer;
+                    $scope.chartHeightSmall = (sHeight - $scope.headersheight) / 2.2 - $scope.charttocontainer;
+                    $scope.chartHeightBig = (sHeight - $scope.headersheight) / 1.1 - $scope.charttocontainer;
                     $scope.chartWidthSmall = 0;
                     $scope.chartWidthBig = 0;
-                    $scope.innerContainerHeightSmall = (sHeight - $scope.headersheight) / 2;
-                    $scope.innerContainerHeightBig = sHeight - ($scope.headersheight - 80);
+                    $scope.innerContainerHeightSmall = (sHeight - $scope.headersheight) / 2.2;
+                    $scope.innerContainerHeightBig = (sHeight - $scope.headersheight) / 1.0;
                     $scope.innerContainerWidthSmall = 0;
                     $scope.innerContainerWidthBig = 0;
                 };
@@ -34,7 +47,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 }
 
                 $scope.updateSize = function (newWidth) {
-                    //should only be done once at manager level
                     $scope.computeHeights();
                     var options = $scope.state.options;
                     options.chart.width = newWidth;
@@ -48,26 +60,21 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                         options.chart.height = $scope.chartHeightBig;
                         options.innercontainer.height = $scope.innerContainerHeightBig;
                     }
+
+                    console.log('[' + $scope.widgetid + ']' + $scope.state.options.innercontainer.height + '; ' + $scope.headersheight);
                 };
 
                 $scope.startup = function () {
-                    //Local Defaults in case nothing provided (designed to fil 4 reduced dashlets on standard)    
-                    if (!$scope.headersheightinput) {
-                        $scope.headersheight = window.innerHeight / 4 + 30;
+                    if (!$scope.state.options.innercontainer.height || $scope.state.options.innercontainer.height === 0) {
+                        $(document).ready(function () {
+                            $scope.resize();
+                        });
                     } else {
-                        $scope.headersheight = $scope.headersheightinput;
+                        console.log('[' + $scope.widgetid + ']' + $scope.state.options.innercontainer.height + '; ' + $scope.headersheight);
                     }
-
-                    if (!$scope.charttocontainerinput) {
-                        $scope.charttocontainer = 35;
-                    } else {
-                        $scope.charttocontainer = $scope.charttocontainerinput;
-                    }
-
-                    $scope.updateSize(0.8 * $scope.getActualDashletWidth());
 
                     $scope.state.savedHeight = $scope.state.options.innercontainer.height;
-                    $scope.state.options.innercontainer.offset = 50;
+                    $scope.state.options.innercontainer.offset = 30;
                     $scope.dashlettitle = $scope.state.title;
                 };
 

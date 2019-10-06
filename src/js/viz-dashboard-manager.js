@@ -1,7 +1,7 @@
 registerScript();
 
-angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashletcomssrv'])   
-.directive('vizDashboardManager', function () {
+angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashletcomssrv'])
+    .directive('vizDashboardManager', function () {
         return {
             restrict: 'E',
             scope: {
@@ -24,7 +24,7 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                     return tabIndex === $scope.mgrtabstate;
                 };
 
-                $scope.removeDashboard = function(dashboardid) {
+                $scope.removeDashboard = function (dashboardid) {
                     //If the currently opened tab is killed
                     if ($scope.mgrtabstate === dashboardid) {
                         // if has previous, open previous
@@ -60,14 +60,14 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
 
                 //multiplexing multiple events
                 $scope.$on('dashletinput-initialized', function () {
-                    if(!$scope.init){
-                    $scope.init = true;
-                    $scope.$broadcast('resize-widget');
-                    $scope.$emit('manager-fully-loaded');
-                }
+                    if (!$scope.init) {
+                        $scope.init = true;
+                        //$scope.$broadcast('resize-widget');
+                        $scope.$emit('manager-fully-loaded');
+                    }
                 });
 
-                $scope.onstartup = function(){
+                $scope.onstartup = function () {
                     $scope.dwrap = new IdIndexArray($scope.dashboards);
                     if ($scope.dashboards.length > 0 && $scope.dashboards[0] && $scope.dashboards[0].oid) {
                         $scope.mgrtabstate = $scope.dashboards[0].oid;
@@ -76,12 +76,12 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                 }
 
                 $scope.onstartup();
-                
-                $scope.$watch('dashboards', function(newvalue){
-                	$scope.onstartup();
+
+                $scope.$watch('dashboards', function (newvalue) {
+                    $scope.onstartup();
                 });
 
-                $scope.$watch('displaymode', function(newvalue){
+                $scope.$watch('displaymode', function (newvalue) {
                     $scope.$broadcast('resize-widget');
                 });
             }
