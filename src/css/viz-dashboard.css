@@ -106,7 +106,7 @@ span.text-g{
 
 
 li.li-control > * > button{
-  padding: 1px 3px;
+  padding: 0px 5px;
   margin-top: 2px;
   margin-right: 2px;
 }
@@ -115,4 +115,19 @@ li.li-control > * > button{
   float: left !important;
   margin: 0px !important;
   padding: 0px !important;
+}
+
+.viz-chevron-button {
+	height: 16px !important;
+	text-align: center;
+	vertical-align: middle !important;
+	justify-content: center;
+	display: ruby-text;
+}
+
+.viz-chevron-span {
+	text-align: center;
+	vertical-align: middle !important;
+	justify-content: center;
+	display: table-caption;
 }

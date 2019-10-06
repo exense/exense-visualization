@@ -23,7 +23,9 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                     //Local Defaults in case nothing provided (designed to fil 4 reduced dashlets on standard)    
                     if (!$scope.headersheightinput) {
-                        $scope.headersheight = $element[0].parentNode.offsetTop;
+                        $scope.headersheight = $element[0].getBoundingClientRect().top;
+                        //console.log($element[0].getBoundingClientRect().top);
+                        //console.log($element[0].offsetTop);
                     } else {
                         $scope.headersheight = $scope.headersheightinput;
                     }

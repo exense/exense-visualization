@@ -132,7 +132,7 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
                 //interpret these ranges as timestamp for now
                 return formatPotentialTimestamp(d);
             },
-            rotateLabels: -30
+            rotateLabels: -15
         }
     };
 };

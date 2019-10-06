@@ -3,18 +3,18 @@
                 <ul class="ul-control ul-control-alt">
                         <li class="li-title" style="display: inline-flex;">
                                 <div ng-if="wstate.chevron" class="btn-container">
-                                        <button class="btn btn-success viz-btn-success" ng-click="toggleChevron()"
+                                        <button class="btn btn-success viz-btn-success viz-chevron-button" ng-click="toggleChevron()"
                                                 style="margin: 0px; padding: 0px;" uib-tooltip="Collapse dashlet"
                                                 tooltip-placement="right">
-                                                <span class="title glyphicon glyphicon-chevron-down glyphicon-control"
+                                                <span class="title glyphicon glyphicon-chevron-down glyphicon-control viz-chevron-span"
                                                         style="margin: 0px;"></span>
                                         </button>
                                 </div>
                                 <div ng-if="!wstate.chevron" class="btn-container">
-                                        <button class="btn btn-success viz-btn-success" ng-click="toggleChevron()"
+                                        <button class="btn btn-success viz-btn-success viz-chevron-button" ng-click="toggleChevron()"
                                                 style="margin: 0px; padding: 0px;" uib-tooltip="Expand dashlet"
                                                 tooltip-placement="right">
-                                                <span class="title glyphicon glyphicon-chevron-right glyphicon-control"
+                                                <span class="title glyphicon glyphicon-chevron-right glyphicon-control viz-chevron-span"
                                                         style="margin: 0px;"></span>
                                         </button>
                                 </div>
