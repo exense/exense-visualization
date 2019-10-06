@@ -51,19 +51,26 @@ var keyvalarrayToIndex = function (array, keyKey, valKey) {
     return index;
 };
 
-String.prototype.hashCode = function () {
+var stringToColour = function (str) {
+    if (str) {
+        return intToColour(hashCode(str.toString()));
+    }else{
+        return "rgb(0,0,0)";
+    }
+}
+
+var hashCode = function (mystr) {
     var hash = 0, i, chr;
-    if (this.length === 0) return hash;
-    for (i = 0; i < this.length; i++) {
-        chr = this.charCodeAt(i);
+    if (mystr.length === 0) return hash;
+    for (i = 0; i < mystr.length; i++) {
+        chr = mystr.charCodeAt(i);
         hash = ((hash << 5) - hash) + chr;
         hash |= 0; // Convert to 32bit integer
     }
     return hash;
 };
 
-
-var stringToColour = function (i) {
+var intToColour = function (i) {
     var num = (i + 1) * 500000;
     if ((i % 2) == 0) {
         num = num * 100;

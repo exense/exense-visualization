@@ -41,6 +41,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     $scope.chartHeightBig = (sHeight - $scope.headersheight- $scope.generalThicknessOffset) / 1 - $scope.charttocontainer;
                     $scope.chartWidthSmall = 0;
                     $scope.chartWidthBig = 0;
+                    
                     $scope.innerContainerHeightSmall = (sHeight - $scope.headersheight - $scope.generalThicknessOffset) / 2;
                     $scope.innerContainerHeightBig = (sHeight - $scope.headersheight - $scope.generalThicknessOffset) / 1;
                     $scope.innerContainerWidthSmall = 0;

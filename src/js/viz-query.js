@@ -42,6 +42,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     return formatPotentialTimestamp(value);
                 };
 
+                $scope.stringToColour = function(str){
+                    return stringToColour(str);
+                };
+
                 $scope.isPagingOff = function () {
                     if ($scope.state.query.controls
                         && $scope.state.query.controls.template
@@ -63,7 +67,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                             retData.push({
                                 values: [],
                                 key: curSeries,
-                                color: stringToColour(curSeries.hashCode()),
+                                color: $scope.stringToColour(curSeries),
                                 strokeWidth: 3,
                                 classed: 'dashed'
                             });

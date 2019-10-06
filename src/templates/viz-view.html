@@ -7,7 +7,9 @@
         <thead>
             <tr>
                 <th>xAxis</th>
-                <th ng-repeat="z in tableData.zlist">{{z}}</th>
+                <th ng-repeat="z in tableData.zlist">
+                <label class="label label-success" ng-style="{ 'background-color': stringToColour(z)}" style="color: white;">{{z}}</label>
+                </th>
             </tr>
         </thead>
         <tbody>

@@ -2,7 +2,7 @@
     <div class="form-group center-block">
         <div class="container innerformcontainer">
             <div class="row">
-                <div class="col-md-2 colcontain-grid">
+                <div class="col-md-3 colcontain-grid">
                     <label>Input type</label>
                     <div class="btn-group viz-btn-group form-radio">
                         <label class="btn btn-success viz-btn-success" ng-model="state.query.inputtype" uib-btn-radio="'Raw'">Raw</label>
@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <div ng-if="state.query.inputtype == 'Raw'">
-                    <div class="col-md-2 colcontain-grid">
+                    <div class="col-md-3 colcontain-grid">
                         <label>Preset</label>
                         <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="state.gui.status.presetquery">
                             <button id="load-query" type="button" class="btn btn-success viz-btn-success"
