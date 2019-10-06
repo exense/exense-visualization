@@ -18,9 +18,12 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
             controller: function ($scope, $element) {
 
                 $scope.computeHeights = function () {
+
+                    $scope.generalThicknessOffset = 100;
+
                     //Local Defaults in case nothing provided (designed to fil 4 reduced dashlets on standard)    
                     if (!$scope.headersheightinput) {
-                        $scope.headersheight = window.innerHeight / 4 + 30;
+                        $scope.headersheight = $element[0].parentNode.offsetTop;
                     } else {
                         $scope.headersheight = $scope.headersheightinput;
                     }
@@ -30,14 +33,14 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     } else {
                         $scope.charttocontainer = $scope.charttocontainerinput;
                     }
-                    
+
                     var sHeight = window.innerHeight;
-                    $scope.chartHeightSmall = (sHeight - $scope.headersheight) / 2.2 - $scope.charttocontainer;
-                    $scope.chartHeightBig = (sHeight - $scope.headersheight) / 1.1 - $scope.charttocontainer;
+                    $scope.chartHeightSmall = (sHeight - $scope.headersheight - $scope.generalThicknessOffset) / 2 - $scope.charttocontainer;
+                    $scope.chartHeightBig = (sHeight - $scope.headersheight- $scope.generalThicknessOffset) / 1 - $scope.charttocontainer;
                     $scope.chartWidthSmall = 0;
                     $scope.chartWidthBig = 0;
-                    $scope.innerContainerHeightSmall = (sHeight - $scope.headersheight) / 2.2;
-                    $scope.innerContainerHeightBig = (sHeight - $scope.headersheight) / 1.0;
+                    $scope.innerContainerHeightSmall = (sHeight - $scope.headersheight - $scope.generalThicknessOffset) / 2;
+                    $scope.innerContainerHeightBig = (sHeight - $scope.headersheight - $scope.generalThicknessOffset) / 1;
                     $scope.innerContainerWidthSmall = 0;
                     $scope.innerContainerWidthBig = 0;
                 };
@@ -61,7 +64,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                         options.innercontainer.height = $scope.innerContainerHeightBig;
                     }
 
-                    console.log('[' + $scope.widgetid + ']' + $scope.state.options.innercontainer.height + '; ' + $scope.headersheight);
+                    $scope.state.savedHeight = $scope.state.options.innercontainer.height;
                 };
 
                 $scope.startup = function () {
@@ -70,11 +73,10 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                             $scope.resize();
                         });
                     } else {
-                        console.log('[' + $scope.widgetid + ']' + $scope.state.options.innercontainer.height + '; ' + $scope.headersheight);
+                        //console.log('[' + $scope.widgetid + ']' + $scope.state.options.innercontainer.height + '; ' + $scope.headersheight);
                     }
 
                     $scope.state.savedHeight = $scope.state.options.innercontainer.height;
-                    $scope.state.options.innercontainer.offset = 30;
                     $scope.dashlettitle = $scope.state.title;
                 };
 
@@ -96,19 +98,16 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                 $scope.saveDimensions = function () {
                     $scope.state.savedHeight = $scope.state.options.innercontainer.height;
-                    $scope.state.savedOffset = $scope.state.options.innercontainer.offset;
                 }
 
                 $scope.collapse = function () {
                     $scope.saveDimensions();
 
                     $scope.state.options.innercontainer.height = 30;
-                    $scope.state.options.innercontainer.offset = 0;
                 };
 
                 $scope.restore = function () {
                     $scope.state.options.innercontainer.height = $scope.state.savedHeight;
-                    $scope.state.options.innercontainer.offset = $scope.state.savedOffset;
                 };
 
                 $scope.resize = function () {
