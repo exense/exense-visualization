@@ -51,6 +51,30 @@ var keyvalarrayToIndex = function (array, keyKey, valKey) {
     return index;
 };
 
+String.prototype.hashCode = function () {
+    var hash = 0, i, chr;
+    if (this.length === 0) return hash;
+    for (i = 0; i < this.length; i++) {
+        chr = this.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+};
+
+
+var stringToColour = function (i) {
+    var num = (i + 1) * 500000;
+    if ((i % 2) == 0) {
+        num = num * 100;
+    }
+    num >>>= 0;
+    var b = num & 0xFF,
+        g = (num & 0xFF00) >>> 8 % 255,
+        r = (num & 0xFF0000) >>> 16 % 255;
+    return "rgb(" + [r, g, b].join(",") + ")";
+};
+
 var runResponseProc = function (postProc, args, response) {
     return eval('(' + postProc + ')(response, args)');
 };

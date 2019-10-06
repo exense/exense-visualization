@@ -52,18 +52,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     }
                 }
 
-                $scope.stringToColour = function (i) {
-                    var num = (i + 1) * 500000;
-                    if ((i % 2) == 0) {
-                        num = num * 100;
-                    }
-                    num >>>= 0;
-                    var b = num & 0xFF,
-                        g = (num & 0xFF00) >>> 8 % 255,
-                        r = (num & 0xFF0000) >>> 16 % 255;
-                    return "rgb(" + [r, g, b].join(",") + ")";
-                }
-
                 $scope.toChart = function (data) {
                     var x = 'x', y = 'y', z = 'z';//begin,value,name
                     var retData = [];
@@ -75,7 +63,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                             retData.push({
                                 values: [],
                                 key: curSeries,
-                                color: $scope.stringToColour(i),
+                                color: stringToColour(curSeries.hashCode()),
                                 strokeWidth: 3,
                                 classed: 'dashed'
                             });
