@@ -108,57 +108,69 @@ function MgrState(gsettings, gautorefresh, gchevron, title, autorefreshduration)
 }
 
 function ChartOptions(chartType, useInteractiveGuideline, stacked) {
-    var zoom = {};
-    if (stacked) {
-        zoom = {
-            enabled: true,
-            scale: 1,
-            scaleExtent: [1, 10],
-            translate: [0, 0],
-            useFixedDomain: false,
-            useNiceScale: false,
-            horizontalOff: false,
-            verticalOff: false,
-            zoomed: function (xDomain, yDomain) {
-                var domains = { x1: 0, x2: 0, y1: 1, y2: 1 };
-                return domains;
-            },
-            unzoomed: function (xDomain, yDomain) {
-                var domains = { x1: 0, x2: 0, y1: 0, y2: 0 };
-                return domains;
-            },
-            unzoomEventType: 'dblclick.zoom'
-        }
-    }
-
-    return {
-        type: chartType,
-        height: 0, // all derived dynamically
-        width: 0, // all derived dynamically
-        margin: {
-            top: 20,
-            right: 20,
-            bottom: 50,
-            left: 55
-        },
-        stacked: stacked,
-        useInteractiveGuideline: useInteractiveGuideline,
-        x: function (d) { return d.x; },
-        y: function (d) { return d.y; },
-        showLegend: false,
-        scatter: {
-            onlyCircles: false
-        },
-        forceY: 0,
-        xAxis: {
-            tickFormat: function (d) {
-                //interpret these ranges as timestamp for now
-                return formatPotentialTimestamp(d);
-            },
-            rotateLabels: -25
-        },
-        zoom: zoom
-    };
+	if(chartType === 'stackedAreaChart'){
+		return {
+				type: "stackedAreaChart",
+				height: 0, // all derived dynamically
+				width: 0, // all derived dynamically
+				margin: {
+					top: 20,
+					right: 20,
+					bottom: 50,
+					left: 55
+				},
+				useVoronoi: false,
+				showControls: false,
+				clipEdge: true,
+				duration: 0,
+				useInteractiveGuideline: true,
+				showLegend: false,
+				xAxis: {
+					showMaxMin: false
+				},
+				yAxis: {},
+				zoom: {
+					enabled: true,
+					scaleExtent: [
+						1,
+						10
+						],
+						useFixedDomain: false,
+						useNiceScale: false,
+						horizontalOff: true,
+						verticalOff: true,
+						unzoomEventType: "dblclick.zoom"
+				}
+			};
+	}else{
+		return {
+			type: chartType,
+			height: 0, // all derived dynamically
+			width: 0, // all derived dynamically
+			margin: {
+				top: 20,
+				right: 20,
+				bottom: 50,
+				left: 55
+			},
+			stacked: stacked,
+			useInteractiveGuideline: useInteractiveGuideline,
+			x: function (d) { return d.x; },
+			y: function (d) { return d.y; },
+			showLegend: false,
+			scatter: {
+				onlyCircles: false
+			},
+			forceY: 0,
+			xAxis: {
+				tickFormat: function (d) {
+					//interpret these ranges as timestamp for now
+					return formatPotentialTimestamp(d);
+				},
+				rotateLabels: -25
+			}
+		};
+	}
 };
 
 function Preproc(replacefunc) {
