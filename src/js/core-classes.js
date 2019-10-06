@@ -126,8 +126,14 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
 				useInteractiveGuideline: true,
 				showLegend: false,
 				xAxis: {
-					showMaxMin: false
-				},
+                    showMaxMin: false,
+                    tickFormat: function (d) {
+                        //interpret these ranges as timestamp for now
+                        return formatPotentialTimestamp(d);
+                    },
+                },
+                forceY: 0,
+				rotateLabels: -25,
 				yAxis: {},
 				zoom: {
 					enabled: true,
