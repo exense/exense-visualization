@@ -38,7 +38,7 @@ div.dashboardtab > ul > li{
   border-top: 1px solid #333333 !important;
 }
 
-div.dashboardtab > * > li > a, div.dashboardtab > * > li > * > li > * > span {
+div.dashboardtab > * > li > a, div.dashboardtab > * > li > * > li> a > span {
   padding-top: 5px !important;
   padding-left: 5px !important;
   padding-bottom: 0px!important;
@@ -130,4 +130,11 @@ li.li-control > * > button{
 	vertical-align: middle !important;
 	justify-content: center;
 	display: table-caption;
+}
+div.dashboardtab > * > li > a:hover, div.dashboardtab > * > li > a:focus,
+div.dashboardtab > * > li > * > li> a:hover > span, div.dashboardtab > * > li > * > li> a:focus > span {
+  color: #474747;
+}
+div.dashboardtab > * > li > a, div.dashboardtab > * > li > * > li> a > span {
+  color: #929292;
 }
