@@ -62,6 +62,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     //Also not firing if autorefresh is on
                     if (!$scope.state.config.slave && ($scope.state.config.autorefresh !== 'On')) {
                         $scope.fireQuery();
+                    }else{
+                        var saved = JSON.parse(angular.toJson($scope.state.data.rawresponse));
+                        $scope.state.data.rawresponse = saved;
                     }
                 }
 
