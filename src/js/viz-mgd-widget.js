@@ -125,22 +125,16 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                 $scope.extend = function () {
                     $scope.wstate.widgetwidth = 'col-md-12';
-                    var options = $scope.state.options;
-                    options.chart.height = $scope.chartHeightBig;
-                    options.chart.width = $scope.chartWidthBig;
-                    options.innercontainer.height = $scope.innerContainerHeightBig;
-                    options.innercontainer.width = $scope.innerContainerWidthBig;
-                    $scope.resize();
+                    $(document).ready(function () {
+                        $scope.resize();
+                    });
                 };
 
                 $scope.reduce = function () {
                     $scope.wstate.widgetwidth = 'col-md-6';
-                    var options = $scope.state.options;
-                    options.chart.height = $scope.chartHeightSmall;
-                    options.chart.width = $scope.chartWidthSmall;
-                    options.innercontainer.height = $scope.innerContainerHeightSmall;
-                    options.innercontainer.width = $scope.innerContainerWidthSmall;
-                    $scope.resize();
+                    $(document).ready(function () {
+                        $scope.resize();
+                    });
                 };
 
                 $scope.removeWidget = function () {
