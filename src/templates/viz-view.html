@@ -6,8 +6,8 @@
     <table class="table" ng-style="{width:state.options.chart.width + 'px'}">
         <thead>
             <tr>
-                <th><label style="opacity: 0;">xAxis</label></th>
-                <th ng-repeat="z in tableData.zlist">
+                <th><label style="opacity: 0;" class="viz-cell">xAxis</label></th>
+                <th ng-repeat="z in tableData.zlist" class="viz-cell">
                     <label class="label label-success" ng-style="{ 'background-color': stringToColour(z)}" style="color: white;">{{z}}</label>
                 </th>
             </tr>
@@ -15,7 +15,7 @@
         <tbody>
             <tr ng-repeat="row in tableData.data">
                 <td><label data-ng-bind="formatPotentialTimestamp(row.x)" /></td>
-                <td ng-repeat="series in tableData.zlist" style="text-align: center;">
+                <td ng-repeat="series in tableData.zlist" class="viz-cell">
                     {{row['values'][series]}}
                 </td>
             </tr>

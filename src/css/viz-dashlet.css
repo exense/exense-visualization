@@ -208,3 +208,7 @@ div.form-radio > label.btn, div.form-radio > button{
     margin-top: 5px !important;
     display: block !important;
 }
+
+.viz-cell{
+    text-align: center;
+}
