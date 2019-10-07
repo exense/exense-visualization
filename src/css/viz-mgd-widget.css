@@ -1,5 +1,6 @@
 .dashletcontainer {
     border: 1px solid #ddd !important;
+    overflow: hidden !important
 }
 
 .colmdclass{

@@ -6,7 +6,7 @@
     <table class="table" ng-style="{width:state.options.chart.width + 'px'}">
         <thead>
             <tr>
-                <th>xAxis</th>
+                <th ng-show="false">xAxis</th>
                 <th ng-repeat="z in tableData.zlist">
                     <label class="label label-success" ng-style="{ 'background-color': stringToColour(z)}" style="color: white;">{{z}}</label>
                 </th>
