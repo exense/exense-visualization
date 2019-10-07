@@ -20,7 +20,8 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $scope.computeHeights = function () {
 
                     $scope.generalThicknessOffset = 100;
-
+                    $scope.headersheight = $scope.headersheightinput;
+                    /* mendatory now
                     //Local Defaults in case nothing provided (designed to fil 4 reduced dashlets on standard)    
                     if (!$scope.headersheightinput) {
                         $scope.headersheight = $element[0].getBoundingClientRect().top;
@@ -30,6 +31,10 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                         $scope.headersheight = $scope.headersheightinput;
                     }
 
+                    console.log('['+$scope.widgetid+'] headersheight: ' + $scope.headersheight);
+
+                    */
+
                     if (!$scope.charttocontainerinput) {
                         $scope.charttocontainer = 25;
                     } else {
@@ -38,10 +43,10 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                     var sHeight = window.innerHeight;
                     $scope.chartHeightSmall = (sHeight - $scope.headersheight - $scope.generalThicknessOffset) / 2 - $scope.charttocontainer;
-                    $scope.chartHeightBig = (sHeight - $scope.headersheight- $scope.generalThicknessOffset) / 1 - $scope.charttocontainer;
+                    $scope.chartHeightBig = (sHeight - $scope.headersheight - $scope.generalThicknessOffset) / 1 - $scope.charttocontainer;
                     $scope.chartWidthSmall = 0;
                     $scope.chartWidthBig = 0;
-                    
+
                     $scope.innerContainerHeightSmall = (sHeight - $scope.headersheight - $scope.generalThicknessOffset) / 2;
                     $scope.innerContainerHeightBig = (sHeight - $scope.headersheight - $scope.generalThicknessOffset) / 1;
                     $scope.innerContainerWidthSmall = 0;
@@ -130,6 +135,11 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     $scope.wstate.widgetwidth = 'col-md-6';
                     $(document).ready(function () {
                         $scope.resize();
+                        setTimeout(function () {
+                            $scope.$apply(function () {
+                                self.value = 0;
+                            });
+                        }, 100);
                     });
                 };
 
