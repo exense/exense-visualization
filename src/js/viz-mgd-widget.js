@@ -131,21 +131,34 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     });
                 };
 
+                $scope.moveLeft = function () {
+                    $scope.$emit('mgdwidget-moveLeft', { wid: $scope.widgetid });
+                    console.log('[' + $scope.widgetid + '] moveLeft');
+                };
+
+                $scope.moveRight = function () {
+                    $scope.$emit('mgdwidget-moveRight', { wid: $scope.widgetid })
+                    console.log('[' + $scope.widgetid + '] moveRight');
+                };
+
                 $scope.reduce = function () {
                     $scope.wstate.widgetwidth = 'col-md-6';
                     $(document).ready(function () {
                         $scope.resize();
-                        setTimeout(function () {
-                            $scope.$apply(function () {
-                                self.value = 0;
-                            });
-                        }, 100);
+                        $scope.agressiveRefresh();
                     });
+                };
+
+                $scope.agressiveRefresh = function () {
+                    $scope.moveLeft();
+                    forceRedraw($scope);
+                    $scope.moveRight();
+                    forceRedraw($scope);
                 };
 
                 $scope.removeWidget = function () {
                     $scope.$emit('mgdwidget-remove', { wid: $scope.widgetid });
-                }
+                };
 
                 $scope.$on('resize-widget', function () {
                     $scope.resize();
