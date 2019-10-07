@@ -131,9 +131,9 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
                         //interpret these ranges as timestamp for now
                         return formatPotentialTimestamp(d);
                     },
+                    rotateLabels: -25
                 },
                 forceY: 0,
-				rotateLabels: -25,
 				yAxis: {},
 				zoom: {
 					enabled: true,
