@@ -62,7 +62,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 $scope.$on('mgdwidget-remove', function (event, arg) {
                     $scope.wwrap.removeById(arg.wid);
                 });
-                
+
                 $scope.$on('mgdwidget-moveLeft', function (event, arg) {
                     var widgetIndex = $scope.wwrap.getIndexById(arg.wid);
                     if (widgetIndex > 0) {
@@ -87,36 +87,44 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
 
                 $scope.$on('addwidget', function (event, arg) {
                     if ($scope.dashboardid === arg.dashboardid) {
-                        var newWidgetId = $scope.wwrap.addNew(new DefaultWidget());
-                        console.log('[d:' + $scope.dashboardid + '] adding widget: [' + newWidgetId + ']');
+                        $scope.addWidget(arg);
                     }
                 });
+
+                $scope.addWidget = function (arg) {
+                    var widget;
+                    if (!arg) {
+                        widget = new DefaultWidget();
+                    }
+                    var newWidgetId = $scope.wwrap.addNew(widget);
+                    console.log('[d:' + $scope.dashboardid + '] adding widget: [' + newWidgetId + ']');
+                };
 
                 $(window).on('resize', function () {
                     $scope.$broadcast('resize-widget');
                 });
 
-                $scope.onstartup = function(){
+                $scope.onstartup = function () {
                     $scope.wwrap = $scope.dashboard.widgets;
 
                     $scope.gsautorefreshInterval = null;
-  
+
                     if ($scope.mgrstate.globalsettingsautorefresh) {
                         $scope.toggleAutorefresh();
                     }
 
                     $scope.$broadcast('resize-widget');
-                    
+
                     $scope.$emit('dashboard-ready');
                 }
 
                 $scope.onstartup();
-                
-                $scope.$watch('dashboard.widgets', function(newvalue){
-                	$scope.onstartup();
+
+                $scope.$watch('dashboard.widgets', function (newvalue) {
+                    $scope.onstartup();
                 });
 
-                $scope.$on('$destroy', function(){
+                $scope.$on('$destroy', function () {
                     $scope.removeInterval();
                 });
             }

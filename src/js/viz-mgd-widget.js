@@ -21,17 +21,8 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                     $scope.generalThicknessOffset = 100;
                     $scope.headersheight = $scope.headersheightinput;
-                    /* mendatory now
-                    //Local Defaults in case nothing provided (designed to fil 4 reduced dashlets on standard)    
-                    if (!$scope.headersheightinput) {
-                        $scope.headersheight = $element[0].getBoundingClientRect().top;
-                        //console.log($element[0].getBoundingClientRect().top);
-                        //console.log($element[0].offsetTop);
-                    } else {
-                        $scope.headersheight = $scope.headersheightinput;
-                    }
-                    */
-                    console.log('[' + $scope.widgetid + '] headersheight: ' + $scope.headersheight);
+
+                    //console.log('[' + $scope.widgetid + '] headersheight: ' + $scope.headersheight);
 
 
                     if (!$scope.charttocontainerinput) {
@@ -51,7 +42,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     $scope.innerContainerWidthSmall = 0;
                     $scope.innerContainerWidthBig = 0;
 
-                    console.log('[' + $scope.widgetid + '] innerContainerHeightSmall: ' + $scope.innerContainerHeightSmall);
+                    //console.log('[' + $scope.widgetid + '] innerContainerHeightSmall: ' + $scope.innerContainerHeightSmall);
 
                 };
 

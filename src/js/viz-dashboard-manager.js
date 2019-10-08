@@ -12,10 +12,6 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard-manager.html'),
             controller: function ($scope, $element) {
                 $scope.topmargin = $element[0].getBoundingClientRect().top;
-                console.log('dm topmargin');
-                console.log($element[0]);
-                console.log($scope.topmargin)
-
                 $scope.init = false;
 
                 $scope.selectTab = function (tabIndex) {
@@ -48,7 +44,7 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                     var newdashboardid;
                     if (arg.displaytype = 'exploded') {
                         newdashboardid = $scope.dwrap.addNew(new DefaultExplorationDashboard());
-                    }else{
+                    } else {
                         newdashboardid = $scope.dwrap.addNew(new DefaultDashboard());
                     }
                     $scope.mgrtabstate = newdashboardid;
@@ -59,8 +55,10 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                 });
 
                 $scope.$on('dashboard-current-addWidget', function () {
-                    $scope.$broadcast('addwidget', { dashboardid: $scope.mgrtabstate });
+                    //$scope.$broadcast('addwidget', { dashboardid: $scope.mgrtabstate });
+                    $scope.dwrap.getById($scope.mgrtabstate).widgets.addNew();
                 });
+
                 $scope.$on('dashboard-current-clearWidgets', function () {
                     $scope.$broadcast('clearwidgets', { dashboardid: $scope.mgrtabstate });
                 });
@@ -75,6 +73,17 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                 });
 
                 $scope.$on('dashlet-copy', function (event, arg) {
+                    $scope.clipboard = arg;
+                });
+
+                $scope.$on('dashlet-paste', function (event) {
+                    if ($scope.clipboard) {
+                        var newwidget = new Widget(getUniqueId(), new DefaultWidgetState(), jsoncopy($scope.clipboard.state));
+                        $scope.dwrap.getById($scope.mgrtabstate).widgets.addNew(newwidget);
+                    }
+                });
+
+                $scope.$on('dashlet-paste', function (event, arg) {
                     $scope.clipboard = arg;
                 });
 
