@@ -5,12 +5,11 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
         return {
             restrict: 'E',
             scope: {
-                dashboard: '=',
                 dashboardid: '=',
+                dstate: '=',
                 displaymode: '=',
                 displaytype: '=',
                 presets: '=',
-                mgrstate: '=',
                 topmargin: '='
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
@@ -18,25 +17,25 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 $scope.topmargin += 50; //(dashboard headers/settings)
 
                 $scope.toggleAutorefresh = function () {
-                    $scope.mgrstate.globalsettingsautorefresh = !$scope.mgrstate.globalsettingsautorefresh;
-                    if ($scope.mgrstate.globalsettingsautorefresh) {
+                    $scope.dstate.globalsettings.autorefresh = !$scope.dstate.globalsettings.autorefresh;
+                    if ($scope.dstate.globalsettings.autorefresh) {
                         $scope.addInterval();
                     } else {
                         $scope.removeInterval();
                     }
-                    $scope.$broadcast('globalsettings-refreshToggle', { 'new': $scope.mgrstate.globalsettingsautorefresh })
+                    $scope.$broadcast('globalsettings-refreshToggle', { 'new': $scope.dstate.globalsettings.autorefresh })
                 };
 
                 $scope.addInterval = function () {
 
                     var duration = setIntervalDefault;
-                    if ($scope.mgrstate.gsautorefreshIntervalDuration) {
-                        duration = $scope.mgrstate.gsautorefreshIntervalDuration;
+                    if ($scope.dstate.globalsettings.intervalduration) {
+                        duration = $scope.dstate.globalsettings.intervalduration;
                     }
 
                     $scope.removeInterval();
                     $scope.gsautorefreshInterval = setInterval(function () {
-                        $scope.$broadcast('globalsettings-change', { 'collection': $scope.mgrstate.globalsettings, async: true });
+                        $scope.$broadcast('globalsettings-change', { 'collection': $scope.dstate.globalsettings, async: true });
                     }, duration);
                 }
 
@@ -52,11 +51,11 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 });
 
                 $scope.$on('dashletinput-ready', function () {
-                    $scope.$broadcast('globalsettings-change-init', { 'collection': $scope.mgrstate.globalsettings });
+                    $scope.$broadcast('globalsettings-change-init', { 'collection': $scope.dstate.globalsettings });
                 });
 
                 $scope.toggleChevron = function () {
-                    $scope.mgrstate.globalsettingschevron = !$scope.mgrstate.globalsettingschevron;
+                    $scope.dstate.globalsettings.chevron = !$scope.dstate.globalsettings.chevron;
                 };
 
                 $scope.$on('mgdwidget-remove', function (event, arg) {
@@ -105,22 +104,19 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 });
 
                 $scope.onstartup = function () {
-                    $scope.wwrap = $scope.dashboard.widgets;
-
+                    $scope.wwrap = $scope.dstate.widgets;
                     $scope.gsautorefreshInterval = null;
 
-                    if ($scope.mgrstate.globalsettingsautorefresh) {
+                    if ($scope.dstate.globalsettings.autorefresh) {
                         $scope.toggleAutorefresh();
                     }
-
                     $scope.$broadcast('resize-widget');
-
                     $scope.$emit('dashboard-ready');
                 }
 
                 $scope.onstartup();
 
-                $scope.$watch('dashboard.widgets', function (newvalue) {
+                $scope.$watch('dstate.widgets', function (newvalue) {
                     $scope.onstartup();
                 });
 

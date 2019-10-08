@@ -1,20 +1,53 @@
 function DefaultGlobalSettings() {
-    return [{ "key": "__eId__", "value": ".*", "isDynamic": false }];
+    return new GlobalSettings(
+        [{ "key": "__eId__", "value": ".*", "isDynamic": false }],
+        false,
+        false,
+        'Global Settings',
+        3000
+    );
 };
 
-function DefaultDashboardState() {
-    return new DashboardState(new DefaultGlobalSettings(), false, false, "Global Settings");
+function DefaultDashboardState(widgets) {
+    if (!widgets) {
+        widgets = [];
+    }
+    return new DashboardState(
+        new DefaultGlobalSettings(),
+        new IdIndexArray(widgets, function (oid) {
+            console.log('[widgets] ' + oid + '--default removal--');
+        }),
+        'Viz Dashboard',
+        'aggregated',
+        new DefaultDashboardGui()
+    );
 };
 
 function DefaultDashboard(widgets) {
     return new Dashboard(
         getUniqueId(),
-        widgets,
-        'Viz Dashboard',
-        new DefaultDashboardState(),
-        'aggregated'
+        new DefaultDashboardState(widgets)
     );
 };
+
+function DefaultExplorationDashboard() {
+    return new Dashboard(
+        getUniqueId(),
+        new DashboardState(
+            new DefaultGlobalSettings(),
+            new IdIndexArray([new ExplorationDashlet()], function (oid) {
+                console.log('[widgets] ' + oid + '--default removal--');
+            }),
+            'Explore Dashboard',
+            'exploded',
+            new DefaultDashboardGui()
+        )
+    );
+};
+
+function DefaultDashboardGui() {
+    return new DashboardGui(true);
+}
 
 function DefaultConfig() {
     return new Config('Off', false, false, '');
@@ -143,15 +176,6 @@ function DefaultWidget() {
         new DefaultDashletState()
     );
 };
-
-function DefaultExplorationDashboard() {
-    return new Dashboard(
-        getUniqueId(),
-        [new ExplorationDashlet()],
-        'Explore Dashboard',
-        new DefaultDashboardState(),
-        'exploded')
-}
 
 function DefaultWidgetState() {
     return new WidgetState('col-md-6', false, true);

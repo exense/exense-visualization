@@ -2,13 +2,13 @@
     <div class="row" ng-show="displaymode === 'managed'">
         <ul class="ul-control ul-control-alt">
             <li class="li-title" style="display: inline-flex;">
-                <div class="btn-container" ng-show="mgrstate.globalsettingschevron">
+                <div class="btn-container" ng-show="dstate.globalsettings.chevron">
                     <button class="btn btn-success viz-btn-success" ng-click="toggleChevron()" style="margin: 0px; padding: 0px;"
                         uib-tooltip="Collapse settings" tooltip-placement="right">
                         <span class="title glyphicon glyphicon-chevron-down glyphicon-control viz-chevron-span"></span>
                     </button>
                 </div>
-                <div class="btn-container" ng-show="!mgrstate.globalsettingschevron">
+                <div class="btn-container" ng-show="!dstate.globalsettings.chevron">
                     <button class="btn btn-success viz-btn-success viz-chevron-button" ng-click="toggleChevron()" style="margin: 0px; padding: 0px;"
                         uib-tooltip="Expand settings" tooltip-placement="right">
                         <span class="title glyphicon glyphicon-chevron-right glyphicon-control viz-chevron-span"></span>
@@ -20,7 +20,7 @@
             </li>
             <li class="li-control li-control-alt" style="margin-right: 3px;">
                 <div class="btn-container">
-                    <button class="btn btn-success viz-btn-success" ng-click="toggleAutorefresh()" ng-class="{active : mgrstate.globalsettingsautorefresh}"><span
+                    <button class="btn btn-success viz-btn-success" ng-click="toggleAutorefresh()" ng-class="{active : dstate.globalsettings.autorefresh}"><span
                             class="glyphicon glyphicon-refresh" uib-tooltip="Turn on autorefresh"></span></button>
                 </div>
             </li>
@@ -29,7 +29,7 @@
             <div class="form-group left-block">
                 <div class="container settingsformcontainer">
                     <div class="dashboardtab">
-                        <div ng-show="mgrstate.globalsettingschevron">
+                        <div ng-show="dstate.globalsettings.chevron">
                             <div>
                                 <uib-accordion>
                                     <div uib-accordion-group class="panel-default viz-panel-default" heading="Manage"
@@ -68,15 +68,14 @@
                             </div>
                             <div>
                                 <uib-accordion>
-                                    <div uib-accordion-group class="panel-default viz-panel-default" heading="Inputs"
-                                        is-open="state.gui.status.open.info" is-disabled="infoalert.status.isFirstDisabled">
+                                    <div uib-accordion-group class="panel-default viz-panel-default" heading="Input" is-open="state.gui.status.open.info">
                                         <div class="form-wrapper">
                                             <div class="form-group center-block">
                                                 <div class="container innerformcontainer">
                                                     <div class="row">
                                                         <div class="colmdstyle col-md-12 colcontain-grid">
-                                                            <key-val-collection ng-show="mgrstate.globalsettingschevron"
-                                                                collection="mgrstate.globalsettings" collectionname="mgrstate.globalsettingsname"></key-val-collection>
+                                                            <key-val-collection ng-show="dstate.globalsettings.chevron"
+                                                                collection="dstate.globalsettings.placeholders" collectionname="dstate.globalsettings.name"></key-val-collection>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -93,9 +92,9 @@
     </div>
     <div class="row">
         <div ng-repeat="o in wwrap.getAsArray() track by o.oid">
-            <viz-mgd-widget ng-if="displaytype !== 'exploded'" displaymode="displaymode" state="o.state" wstate="o.wstate"
+            <viz-mgd-widget ng-if="dstate.displaytype !== 'exploded'" displaymode="displaymode" state="o.state" wstate="o.wstate"
                 widgetid="o.oid" headersheightinput="topmargin" charttocontainerinput="" presets="presets"></viz-mgd-widget>
-            <viz-dashlet ng-if="displaytype === 'exploded'" state="o.state" widgetid="'explorationDashlet'" displaytype="'exploded'"
+            <viz-dashlet ng-if="dstate.displaytype === 'exploded'" state="o.state" widgetid="'explorationDashlet'" displaytype="'exploded'"
                 displaymode="exploration" presets="presets"></viz-dashlet>
         </div>
     </div>

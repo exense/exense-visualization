@@ -16,6 +16,7 @@ angular.module('viz', ['viz-dashboard-manager'])
                 $scope.$on('top.dashboard-new', function (event, arg) {
                     $scope.$broadcast('dashboard-new', arg);
                 });
+                
                 $scope.$on('top.dashboard-clear', function () {
                     $scope.$broadcast('dashboard-clear');
                 });

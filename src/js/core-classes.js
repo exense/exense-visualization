@@ -1,12 +1,7 @@
-function Dashboard(dashboardid, widgets, title, state, displaytype) {
+function Dashboard(dashboardid, dstate) {
     return {
         oid: dashboardid,
-        title: title,
-        widgets: new IdIndexArray(widgets, function (oid) {
-            console.log('[widgets] ' + oid + '--default removal--');
-        }),
-        mgrstate: state,
-        displaytype: displaytype
+        dstate: dstate
     };
 }
 
@@ -112,14 +107,31 @@ function Config(autorefresh, master, slave, target, autorefreshduration, asyncre
     };
 }
 
-function DashboardState(gsettings, gautorefresh, gchevron, title, autorefreshduration) {
+function DashboardState(globalsettings, widgets, title, displaytype, dashboardgui) {
     return {
-        globalsettings: gsettings,
-        globalsettingsautorefresh: gautorefresh,
-        globalsettingschevron: gchevron,
-        globalsettingsname: title,
-        gsautorefreshIntervalDuration: autorefreshduration
+        globalsettings: globalsettings,
+        widgets: widgets,
+        title: title,
+        displaytype: displaytype,
+        dashboardgui: dashboardgui
+    };
+}
+
+function DashboardGui(inputopen) {
+    return {
+        inputopen: inputopen
     }
+}
+
+//gsettings
+function GlobalSettings(placeholders, gautorefresh, gchevron, title, autorefreshduration) {
+    return {
+        placeholders: placeholders,
+        autorefresh: gautorefresh,
+        chevron: gchevron,
+        name: title,
+        intervalduration: autorefreshduration
+    };
 }
 
 function ChartOptions(chartType, useInteractiveGuideline, stacked) {
