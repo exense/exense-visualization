@@ -1,10 +1,12 @@
-function Dashboard(widgets, title, state) {
+function Dashboard(dashboardid, widgets, title, state, displaytype) {
     return {
+        oid: dashboardid,
         title: title,
         widgets: new IdIndexArray(widgets, function (oid) {
             console.log('[widgets] ' + oid + '--default removal--');
         }),
-        mgrstate: state
+        mgrstate: state,
+        displaytype: displaytype
     };
 }
 
@@ -12,6 +14,13 @@ function Widget(widgetid, wstate, dstate) {
     return {
         oid: widgetid,
         wstate: wstate,
+        state: dstate
+    };
+};
+
+function Dashlet(dashletid, dstate) {
+    return {
+        oid: dashletid,
         state: dstate
     };
 };

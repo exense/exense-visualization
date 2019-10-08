@@ -43,7 +43,12 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                 };
 
                 $scope.$on('dashboard-new', function (event, arg) {
-                    var newdashboardid = $scope.dwrap.addNew(new DefaultDashboard([]));
+                    var newdashboardid;
+                    if (arg.displaytype = 'exploded') {
+                        newdashboardid = $scope.dwrap.addNew(new DefaultExplorationDashboard());
+                    }else{
+                        newdashboardid = $scope.dwrap.addNew(new DefaultDashboard());
+                    }
                     $scope.mgrtabstate = newdashboardid;
                 });
 

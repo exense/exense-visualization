@@ -7,13 +7,13 @@ function DefaultMgrState() {
 };
 
 function DefaultDashboard(widgets) {
-    return {
-        title: 'New dashboard',
-        widgets: new IdIndexArray(widgets, function (oid) {
-            console.log('[widgets] ' + oid + '--default removal--');
-        }),
-        mgrstate: new DefaultMgrState()
-    };
+    return new Dashboard(
+        getUniqueId(),
+        widgets,
+        'Viz Dashboard',
+        new DefaultMgrState(),
+        'aggregated'
+    );
 };
 
 function DefaultConfig() {
@@ -24,11 +24,11 @@ function DefaultQuery() {
     return new DefaultSimpleQuery();
 };
 
-function DefaultSimpleQuery(){
+function DefaultSimpleQuery() {
     return new SimpleQuery("Raw", new DefaultService());
 };
 
-function DefaultAsyncQuery(){
+function DefaultAsyncQuery() {
     return new AsyncQuery("Raw", new DefaultService(), new DefaultCallback());
 };
 
@@ -57,23 +57,23 @@ function DefaultPostproc() {
         {});
 };
 
-function DefaultAsyncEndFunc(){
+function DefaultAsyncEndFunc() {
     return "function(response){\r\treturn response.myEndBoolean;\r}";
 }
 
-function DefaultTransformFunc(){
+function DefaultTransformFunc() {
     return "function (response, args) {\r\treturn [];\r}";
 }
 
-function DefaultReplaceFunc(){
+function DefaultReplaceFunc() {
     return "function(requestFragment, workData){\r\tfor(i=0;i<workData.length;i++){\r\t\trequestFragment = requestFragment.replace(workData[i].key, workData[i].value);\r\t}\r\treturn requestFragment;\r}";
 }
 
-function DefaultSaveFunct(){
+function DefaultSaveFunct() {
     return "function(response){\r\treturn [\r\t\t{\r\t\t\tkey : '__mykey__', value : response.status, isDynamic : false\r\t\t}\r\t];\r}";
 }
 
-function DefaultInfo(){
+function DefaultInfo() {
     return new Info('Off');
 }
 
@@ -114,19 +114,26 @@ function DefaultDashletState() {
         new DefaultQuery(),
         new DefaultGuiClosed(),
         new DefaultInfo()
-        );
+    );
 };
 
 function ExplorationDashletState() {
     return new DashletState(
-        'New Dashlet', true, 0,
+        'New Exploration Dashlet', true, 0,
         new DefaultDashletData(),
         new DefaultChartOptions(),
         new DefaultConfig(),
         new DefaultQuery(),
         new DefaultGuiOpen(),
         new Info('On')
-        );
+    );
+};
+
+function ExplorationDashlet() {
+    return new Dashlet(
+        getUniqueId(),
+        new ExplorationDashletState()
+    );
 };
 
 function DefaultWidget() {
@@ -137,7 +144,16 @@ function DefaultWidget() {
     );
 };
 
-function DefaultWidgetState(){
+function DefaultExplorationDashboard() {
+    return new Dashboard(
+        getUniqueId(),
+        [new ExplorationDashlet()],
+        'Explore Dashboard',
+        new DefaultMgrState(),
+        'exploded')
+}
+
+function DefaultWidgetState() {
     return new WidgetState('col-md-6', false, true);
 }
 

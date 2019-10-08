@@ -8,6 +8,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 dashboard: '=',
                 dashboardid: '=',
                 displaymode: '=',
+                displaytype: '=',
                 presets: '=',
                 mgrstate: '=',
                 //headersheightinput: '=',

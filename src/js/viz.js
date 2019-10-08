@@ -8,10 +8,10 @@ angular.module('viz', ['viz-dashboard-manager'])
             templateUrl: resolveTemplateURL('viz.js', 'viz.html'),
             controller: function ($scope) {
                 $scope.staticPresetsInstance = new StaticPresets();
-                $scope.dashboardsendpoint = [new DefaultDashboard([new DefaultWidget()])];
+                $scope.dashboardsendpoint = [new DefaultDashboard([new DefaultWidget()]), new DefaultExplorationDashboard()];
 
-                $scope.$on('top.dashboard-new', function () {
-                    $scope.$broadcast('dashboard-new');
+                $scope.$on('top.dashboard-new', function (event, arg) {
+                    $scope.$broadcast('dashboard-new', arg);
                 });
                 $scope.$on('top.dashboard-clear', function () {
                     $scope.$broadcast('dashboard-clear');

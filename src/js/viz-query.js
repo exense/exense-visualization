@@ -33,12 +33,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                             $scope.tableData = $scope.toTable(newvalue.dashdata);
                         }
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
-                            // quickfix for tooltip on refresh, not needed since no more full chart update
-                            /*
-                            if ($scope.state.options.chart.type === 'stackedAreaChart') {
-                                $scope.cleanupTooltips();
-                            }
-                            */
+                            $scope.cleanupTooltips();
                             $scope.chartData = $scope.toChart(newvalue.dashdata);
                         }
                     }
