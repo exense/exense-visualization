@@ -1,5 +1,36 @@
 <uib-accordion>
-    <div uib-accordion-group class="panel-default viz-panel-default" heading="Info" is-open="state.gui.status.info"
+    <div uib-accordion-group class="panel-default viz-panel-default" heading="Manage" is-open="state.gui.status.open.manage"
+        is-disabled="state.gui.status.disabled.manage">
+        <div class="form-wrapper">
+            <div class="form-group center-block">
+                <div class="container innerformcontainer">
+                    <div class="row">
+                        <div class="colmdstyle col-md-2 colcontain-grid">
+                            <label>Save dashlet</label>
+                            <div class="btn-container">
+                                <button class="btn btn-success viz-btn-success" ng-click="sendSaveEvent()" uib-tooltip="Save dashlet state"
+                                    tooltip-placement="right">
+                                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="colmdstyle col-md-2 colcontain-grid">
+                            <label>Copy dashlet</label>
+                            <div class="btn-container">
+                                <button class="btn btn-success viz-btn-success" ng-click="sendCopyEvent()" uib-tooltip="Save dashlet state"
+                                    tooltip-placement="right">
+                                    <span class="glyphicon glyphicon-copy"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</uib-accordion>
+<uib-accordion>
+    <div uib-accordion-group class="panel-default viz-panel-default" heading="Info" is-open="state.gui.status.open.info"
         is-disabled="infoalert.status.isFirstDisabled">
         <div class="form-wrapper">
             <div class="form-group center-block">
@@ -10,13 +41,13 @@
                             <div class="well well-lg innerwell" style="padding: 5px;" ng-style="{ background: errorboxcolor}">
                                 <textarea type="text" ng-model="state.info.alert.message" class="form-control" />
                                 </div>
-                                    </div>
-                                <div class="colmdstyle col-md-2 colcontain-grid">
-                                    <label>Clear messages</label>
-                                    <div class="btn-container">
-                                        <button class="btn btn-success viz-btn-success" ng-click="clearMessages()">
-                                            <span class="glyphicon glyphicon-ok"></span>
-                                        </button>
+                                    <div class="colmdstyle col-md-2 colcontain-grid">
+                                        <label>Clear messages</label>
+                                        <div class="btn-container">
+                                            <button class="btn btn-success viz-btn-success" ng-click="clearMessages()">
+                                                <span class="glyphicon glyphicon-erase"></span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -24,10 +55,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </uib-accordion>
+        </uib-accordion>
 <uib-accordion>
-    <div uib-accordion-group class="panel-default viz-panel-default" heading="Execution" is-open="state.gui.status.execution"
+    <div uib-accordion-group class="panel-default viz-panel-default" heading="Execution" is-open="state.gui.status.open.execution"
         is-disabled="testing.status.isFirstDisabled">
         <div class="form-wrapper">
             <div class="form-group center-block">
@@ -37,7 +67,7 @@
                             <label>Fire query</label>
                             <div class="btn-container">
                                 <button class="btn btn-success viz-btn-success" ng-click="$emit('firequery', {})">
-                                    <span class="glyphicon glyphicon-ok"></span>
+                                    <span class="glyphicon glyphicon-send"></span>
                                 </button>
                             </div>
                         </div>

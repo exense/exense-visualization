@@ -11,12 +11,11 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 displaytype: '=',
                 presets: '=',
                 mgrstate: '=',
-                //headersheightinput: '=',
-                //charttocontainerinput: '='
+                topmargin: '='
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, $element) {
-                $scope.topMargin = $element[0].getBoundingClientRect().top;
+                $scope.topmargin += 50; //(dashboard headers/settings)
 
                 $scope.toggleAutorefresh = function () {
                     $scope.mgrstate.globalsettingsautorefresh = !$scope.mgrstate.globalsettingsautorefresh;
@@ -105,6 +104,8 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     if ($scope.mgrstate.globalsettingsautorefresh) {
                         $scope.toggleAutorefresh();
                     }
+
+                    $scope.$broadcast('resize-widget');
                     
                     $scope.$emit('dashboard-ready');
                 }

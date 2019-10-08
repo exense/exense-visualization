@@ -46,22 +46,28 @@ function Info(showraw) {
 
 function Gui(presets, loadconfig, display, coms, subscribeto,
     execution, info, presetquery, presetcontrols, service,
-    input, preproc, postproc) {
+    input, preproc, postproc, manage) {
     return {
         status: {
-            presets: presets,
-            loadconfig: loadconfig,
-            display: display,
-            coms: coms,
-            subscribeto: subscribeto,
-            execution: execution,
-            info: info,
-            presetquery: presetquery,
-            presetcontrols: presetcontrols,
-            service: service,
-            input: input,
-            preproc: preproc,
-            postproc: postproc
+            open: {
+                presets: presets,
+                loadconfig: loadconfig,
+                display: display,
+                coms: coms,
+                subscribeto: subscribeto,
+                execution: execution,
+                info: info,
+                presetquery: presetquery,
+                presetcontrols: presetcontrols,
+                service: service,
+                input: input,
+                preproc: preproc,
+                postproc: postproc,
+                manage: manage
+            },
+            disabled: {
+                manage: false,
+            }
         }
     };
 }
@@ -117,75 +123,75 @@ function MgrState(gsettings, gautorefresh, gchevron, title, autorefreshduration)
 }
 
 function ChartOptions(chartType, useInteractiveGuideline, stacked) {
-	if(chartType === 'stackedAreaChart'){
-		return {
-				type: "stackedAreaChart",
-				height: 0, // all derived dynamically
-				width: 0, // all derived dynamically
-				margin: {
-					top: 20,
-					right: 20,
-					bottom: 50,
-					left: 55
-				},
-				useVoronoi: false,
-				showControls: false,
-				clipEdge: true,
-				duration: 0,
-				useInteractiveGuideline: true,
-				showLegend: false,
-				xAxis: {
-                    showMaxMin: false,
-                    tickFormat: function (d) {
-                        //interpret these ranges as timestamp for now
-                        return formatPotentialTimestamp(d);
-                    },
-                    rotateLabels: -25
+    if (chartType === 'stackedAreaChart') {
+        return {
+            type: "stackedAreaChart",
+            height: 0, // all derived dynamically
+            width: 0, // all derived dynamically
+            margin: {
+                top: 20,
+                right: 20,
+                bottom: 50,
+                left: 55
+            },
+            useVoronoi: false,
+            showControls: false,
+            clipEdge: true,
+            duration: 0,
+            useInteractiveGuideline: true,
+            showLegend: false,
+            xAxis: {
+                showMaxMin: false,
+                tickFormat: function (d) {
+                    //interpret these ranges as timestamp for now
+                    return formatPotentialTimestamp(d);
                 },
-                forceY: 0,
-				yAxis: {},
-				zoom: {
-					enabled: true,
-					scaleExtent: [
-						1,
-						10
-						],
-						useFixedDomain: false,
-						useNiceScale: false,
-						horizontalOff: true,
-						verticalOff: true,
-						unzoomEventType: "dblclick.zoom"
-				}
-			};
-	}else{
-		return {
-			type: chartType,
-			height: 0, // all derived dynamically
-			width: 0, // all derived dynamically
-			margin: {
-				top: 20,
-				right: 20,
-				bottom: 50,
-				left: 55
-			},
-			stacked: stacked,
-			useInteractiveGuideline: useInteractiveGuideline,
-			x: function (d) { return d.x; },
-			y: function (d) { return d.y; },
-			showLegend: false,
-			scatter: {
-				onlyCircles: false
-			},
-			forceY: 0,
-			xAxis: {
-				tickFormat: function (d) {
-					//interpret these ranges as timestamp for now
-					return formatPotentialTimestamp(d);
-				},
-				rotateLabels: -25
-			}
-		};
-	}
+                rotateLabels: -25
+            },
+            forceY: 0,
+            yAxis: {},
+            zoom: {
+                enabled: true,
+                scaleExtent: [
+                    1,
+                    10
+                ],
+                useFixedDomain: false,
+                useNiceScale: false,
+                horizontalOff: true,
+                verticalOff: true,
+                unzoomEventType: "dblclick.zoom"
+            }
+        };
+    } else {
+        return {
+            type: chartType,
+            height: 0, // all derived dynamically
+            width: 0, // all derived dynamically
+            margin: {
+                top: 20,
+                right: 20,
+                bottom: 50,
+                left: 55
+            },
+            stacked: stacked,
+            useInteractiveGuideline: useInteractiveGuideline,
+            x: function (d) { return d.x; },
+            y: function (d) { return d.y; },
+            showLegend: false,
+            scatter: {
+                onlyCircles: false
+            },
+            forceY: 0,
+            xAxis: {
+                tickFormat: function (d) {
+                    //interpret these ranges as timestamp for now
+                    return formatPotentialTimestamp(d);
+                },
+                rotateLabels: -25
+            }
+        };
+    }
 };
 
 function Preproc(replacefunc) {

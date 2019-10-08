@@ -307,6 +307,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
         return {
             restrict: 'E',
             scope: {
+                widgetid: '=',
                 state: '=',
                 presets: '='
             },
@@ -322,6 +323,19 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.info.http.servicesent = "";
                 });
 
+                $scope.sendSaveEvent = function () {
+                    $scope.$emit('dashlet-save', jsoncopy({ oid: $scope.widgetid, state: $scope.state}));
+                };
+
+                $scope.sendCopyEvent = function () {
+                    $scope.$emit('dashlet-copy', jsoncopy({ oid: $scope.widgetid, state: $scope.state}));
+                };
+
+                $scope.clearMessages = function () {
+                    $scope.state.info.alert.message = "";
+                    $scope.state.info.alert.counter = 0;
+                };
+
                 $scope.$on('errormessage', function (event, arg) {
                     $scope.state.info.alert.message = arg + "\n\n" + $scope.state.info.alert.message;
                     $scope.state.info.alert.counter++;
@@ -330,11 +344,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.$on('clearmessages', function () {
                     $scope.clearMessages();
                 });
-
-                $scope.clearMessages = function () {
-                    $scope.state.info.alert.message = "";
-                    $scope.state.info.alert.counter = 0;
-                };
 
                 $scope.$watch('state.info.alert.counter', function (newvalue) {
                     if (newvalue > 0) {

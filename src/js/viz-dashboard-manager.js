@@ -7,12 +7,14 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
             scope: {
                 presets: '=',
                 dashboards: '=',
-                displaymode: '=',
-                headersheightinput: '=',
-                charttocontainerinput: '=',
+                displaymode: '='
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard-manager.html'),
-            controller: function ($scope, dashletcomssrv) {
+            controller: function ($scope, $element) {
+                $scope.topmargin = $element[0].getBoundingClientRect().top;
+                console.log('dm topmargin');
+                console.log($element[0]);
+                console.log($scope.topmargin)
 
                 $scope.init = false;
 
@@ -70,6 +72,10 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                         //$scope.$broadcast('resize-widget');
                         $scope.$emit('manager-fully-loaded');
                     }
+                });
+
+                $scope.$on('dashlet-copy', function (event, arg) {
+                    $scope.clipboard = arg;
                 });
 
                 $scope.onstartup = function () {

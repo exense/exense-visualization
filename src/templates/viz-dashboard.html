@@ -42,7 +42,7 @@
     <div class="row">
         <div ng-repeat="o in wwrap.getAsArray() track by o.oid">
             <viz-mgd-widget ng-if="displaytype !== 'exploded'" displaymode="displaymode" state="o.state" wstate="o.wstate"
-                widgetid="o.oid" headersheightinput="topMargin" charttocontainerinput="" presets="presets"></viz-mgd-widget>
+                widgetid="o.oid" headersheightinput="topmargin" charttocontainerinput="" presets="presets"></viz-mgd-widget>
             <viz-dashlet ng-if="displaytype === 'exploded'" state="o.state" widgetid="'explorationDashlet'" displaytype="'exploded'"
                 displaymode="exploration" presets="presets"></viz-dashlet>
         </div>

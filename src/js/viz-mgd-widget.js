@@ -30,10 +30,9 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     } else {
                         $scope.headersheight = $scope.headersheightinput;
                     }
-
-                    console.log('['+$scope.widgetid+'] headersheight: ' + $scope.headersheight);
-
                     */
+                    console.log('[' + $scope.widgetid + '] headersheight: ' + $scope.headersheight);
+
 
                     if (!$scope.charttocontainerinput) {
                         $scope.charttocontainer = 25;
@@ -51,6 +50,9 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     $scope.innerContainerHeightBig = (sHeight - $scope.headersheight - $scope.generalThicknessOffset) / 1;
                     $scope.innerContainerWidthSmall = 0;
                     $scope.innerContainerWidthBig = 0;
+
+                    console.log('[' + $scope.widgetid + '] innerContainerHeightSmall: ' + $scope.innerContainerHeightSmall);
+
                 };
 
                 $scope.getActualDashletWidth = function () {
@@ -92,9 +94,16 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $scope.startup();
 
                 $scope.toggleAutorefresh = function () {
-                    $scope.wstate.autorefresh = !$scope.wstate.autorefresh;
-                    $scope.$broadcast('globalsettings-refreshToggle', { 'new': $scope.wstate.autorefresh });
+                    $scope.$broadcast('globalsettings-refreshToggle', { 'new': !$scope.wstate.autorefresh });
                 };
+
+                $scope.$watch('state.config.autorefresh', function (newvalue) {
+                    if (newvalue === 'On') {
+                        $scope.wstate.autorefresh = true;
+                    }else{
+                        $scope.wstate.autorefresh = false;
+                    }
+                });
 
                 $scope.toggleChevron = function () {
                     if ($scope.wstate.chevron) {
@@ -143,11 +152,15 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                 $scope.reduce = function () {
                     $scope.wstate.widgetwidth = 'col-md-6';
+                    $scope.aggressiveResize();
+                };
+
+                $scope.aggressiveResize = function () {
                     $(document).ready(function () {
                         $scope.resize();
                         $scope.agressiveRefresh();
                     });
-                };
+                }
 
                 $scope.agressiveRefresh = function () {
                     $scope.moveLeft();
@@ -162,6 +175,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
                 $scope.$on('resize-widget', function () {
                     $scope.resize();
+                    //$scope.aggressiveResize();
                 });
 
                 $scope.$on('dashlettitle-change', function (event, arg) {

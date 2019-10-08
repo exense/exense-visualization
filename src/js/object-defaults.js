@@ -96,13 +96,13 @@ function DefaultDashletData() {
 function DefaultGuiClosed() {
     return new Gui(false, false, false, false, false,
         false, false, false, false, false,
-        false, false, false);
+        false, false, false, false);
 };
 
 function DefaultGuiOpen() {
     return new Gui(true, false, true, true, false,
         true, true, false, false, true,
-        true, true, true);
+        true, true, true, true);
 };
 
 function DefaultDashletState() {
