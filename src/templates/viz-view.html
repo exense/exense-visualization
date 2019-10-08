@@ -24,13 +24,13 @@
 </div>
 
 <div class="row" ng-if="state.options.chart.type === 'singleValueTable'" class="tablecontain" ng-style="{height: state.options.chart.height + 'px'}">
-    <div class="col-md-2" ng-repeat="val in state.data.transformed.dashdata">
-        <div style="display: block;">
+    <div class="col-md-3" style="padding: 0px !important;"ng-repeat="val in state.data.transformed.dashdata">
+        <div style="display: block;" ng-style="{ 'background-color': stringToColour(val.z), color: 'white' }">
             <div>
-                <label style="font-weight: bold; padding: 5px;" ng-style="{ 'background-color': stringToColour(val.z), color: 'white' }" >{{val.z}}</label>
+                <label style="font-weight: bold; padding: 5px; overflow-wrap: hidden" >{{val.z}}</label>
             </div>
             <div>
-                <label style="font-weight: bold;" ng-style="{ 'color': stringToColour(val.z)}">{{val.y}}</label>
+                <label style="font-weight: bold; font-size: 20px;">{{val.y}}</label>
             </div>
         </div>
     </div>
