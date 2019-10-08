@@ -14,9 +14,7 @@ function DefaultDashboardState(widgets) {
     }
     return new DashboardState(
         new DefaultGlobalSettings(),
-        new IdIndexArray(widgets, function (oid) {
-            console.log('[widgets] ' + oid + '--default removal--');
-        }),
+        widgets,
         'Viz Dashboard',
         'aggregated',
         new DefaultDashboardGui()
@@ -35,9 +33,7 @@ function DefaultExplorationDashboard() {
         getUniqueId(),
         new DashboardState(
             new DefaultGlobalSettings(),
-            new IdIndexArray([new ExplorationDashlet()], function (oid) {
-                console.log('[widgets] ' + oid + '--default removal--');
-            }),
+            [new ExplorationDashlet()],
             'Explore Dashboard',
             'exploded',
             new DefaultDashboardGui()

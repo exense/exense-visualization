@@ -91,7 +91,7 @@
         </div>
     </div>
     <div class="row">
-        <div ng-repeat="o in wwrap.getAsArray() track by o.oid">
+        <div ng-repeat="o in dstate.widgets track by o.oid">
             <viz-mgd-widget ng-if="dstate.displaytype !== 'exploded'" displaymode="displaymode" state="o.state" wstate="o.wstate"
                 widgetid="o.oid" headersheightinput="topmargin" charttocontainerinput="" presets="presets"></viz-mgd-widget>
             <viz-dashlet ng-if="dstate.displaytype === 'exploded'" state="o.state" widgetid="'explorationDashlet'" displaytype="'exploded'"
