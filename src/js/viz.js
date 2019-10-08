@@ -9,7 +9,7 @@ angular.module('viz', ['viz-dashboard-manager'])
             controller: function ($scope) {
                 $scope.staticPresetsInstance = new StaticPresets();
                 $scope.dashboardsendpoint = [
-                    //new DefaultDashboard([new DefaultWidget()]),
+                    new DefaultDashboard([new DefaultWidget()]),
                     new DefaultExplorationDashboard()
                 ];
 

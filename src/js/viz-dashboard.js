@@ -104,7 +104,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 });
 
                 $scope.onstartup = function () {
-                    $scope.wwrap = $scope.dstate.widgets;
+                    $scope.wwrap = new IdIndexArray($scope.dstate.widgets);
                     $scope.gsautorefreshInterval = null;
 
                     if ($scope.dstate.globalsettings.autorefresh) {

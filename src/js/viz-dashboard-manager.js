@@ -79,7 +79,8 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                 $scope.$on('dashlet-paste', function (event) {
                     if ($scope.clipboard) {
                         var newwidget = new Widget(getUniqueId(), new DefaultWidgetState(), jsoncopy($scope.clipboard.state));
-                        $scope.dwrap.getById($scope.mgrtabstate).widgets.addNew(newwidget);
+                        var wwrap = new IdIndexArray($scope.dwrap.getById($scope.mgrtabstate).widgets);
+                        wwrap.addNew(newwidget);
                     }
                 });
 
