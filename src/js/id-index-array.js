@@ -1,6 +1,6 @@
 function IdIndexArray(arrayArg) {
     if (!arrayArg) {
-        throw 'Please provide array ref as argument.';
+        throw new Error('Please provide array ref as argument.');
     }
     return {
         array: arrayArg,

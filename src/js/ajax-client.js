@@ -1,6 +1,6 @@
 function AjaxClient(urlArg, dataArg, methodArg, callbackArg) {
     if (!arrayArg) {
-        throw 'Please provide array ref as argument.';
+        throw new Error('Please provide array ref as argument.');
     }
     return {
         url: urlArg,
@@ -8,6 +8,7 @@ function AjaxClient(urlArg, dataArg, methodArg, callbackArg) {
         method: methodArg,
         callback: callbackArg,
         executeHttp: function () {
+            //TODO
         },
     };
 };
