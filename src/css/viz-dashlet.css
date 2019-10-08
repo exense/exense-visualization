@@ -215,3 +215,19 @@ div.form-radio > label.btn, div.form-radio > button{
 .viz-cell{
     text-align: center;
 }
+
+.innerviewcontainer{
+    text-align: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.singlelabel{
+    font-weight: bold; padding: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.singlevalue{
+    font-weight: bold; font-size: 20px;
+}
