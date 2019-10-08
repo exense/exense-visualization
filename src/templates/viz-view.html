@@ -2,20 +2,20 @@
     style="float: left !important; margin-left: 5px; margin-top: 1px;" ng-click="$emit('fireprevious')"></span>
 <span ng-class="{hide: isPagingOff()}" class="glyphicon glyphicon-menu-right glyphicon-viz paging btn btn-success viz-btn-success"
     style="float: right !important; margin-right: 48px !important; margin-top: 1px;" ng-click="$emit('firenext')"></span>
-<div ng-if="state.options.chart.type === 'table'" class="tablecontain" ng-style="{height: state.options.chart.height + 'px'}">
+<div ng-if="state.options.chart.type === 'seriesTable'" class="tablecontain" ng-style="{height: state.options.chart.height + 'px'}">
     <table class="table" ng-style="{width:state.options.chart.width + 'px'}">
         <thead>
             <tr>
                 <th><label style="opacity: 0;" class="viz-cell">xAxis</label></th>
-                <th ng-repeat="z in tableData.zlist" class="viz-cell">
+                <th ng-repeat="z in state.gui.tabledata.zlist" class="viz-cell">
                     <label class="label label-success" ng-style="{ 'background-color': stringToColour(z)}" style="color: white;">{{z}}</label>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="row in tableData.data">
+            <tr ng-repeat="row in state.gui.tabledata.data">
                 <td><label data-ng-bind="formatPotentialTimestamp(row.x)" /></td>
-                <td ng-repeat="series in tableData.zlist" class="viz-cell">
+                <td ng-repeat="series in state.gui.tabledata.zlist" class="viz-cell">
                     {{row['values'][series]}}
                 </td>
             </tr>
@@ -23,13 +23,27 @@
     </table>
 </div>
 
+<div class="row" ng-if="state.options.chart.type === 'singleValueTable'" class="tablecontain" ng-style="{height: state.options.chart.height + 'px'}">
+    <div class="col-md-2" ng-repeat="val in state.data.transformed.dashdata">
+        <div style="display: block;">
+            <div>
+                <label style="font-weight: bold; padding: 5px;" ng-style="{ 'background-color': stringToColour(val.z), color: 'white' }" >{{val.z}}</label>
+            </div>
+            <div>
+                <label style="font-weight: bold;" ng-style="{ 'color': stringToColour(val.z)}">{{val.y}}</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div ng-if="state.options.chart.type.endsWith('Chart')">
     <div ng-if="state.options.chart.type.endsWith('scatterChart')" class="chartcontainer">
-        <nvd3 options="state.options" api="indirection.api" data="chartData" config="{refreshDataOnly: false, deepWatchDataDepth: 0}"
+        <nvd3 options="state.options" api="indirection.api" data="state.gui.chartdata" config="{refreshDataOnly: false, deepWatchDataDepth: 0}"
             style="text-align: center; justify-content: center;"></nvd3>
     </div>
     <div ng-if="!state.options.chart.type.endsWith('scatterChart')" class="chartcontainer">
-        <nvd3 options="state.options" api="indirection.api" data="chartData" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"
+        <nvd3 options="state.options" api="indirection.api" data="state.gui.chartdata" config="{refreshDataOnly: true, deepWatchDataDepth: 0}"
             style="text-align: center; justify-content: center;"></nvd3>
     </div>
 </div>

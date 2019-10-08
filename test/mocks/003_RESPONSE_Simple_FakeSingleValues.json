@@ -1,0 +1,29 @@
+{
+    "payload": [
+        {
+            "name": "Tokens in use",
+            "begin": 0,
+            "value": 8
+        },
+        {
+            "name": "Max Tokens",
+            "begin": 0,
+            "value": 10
+        },
+        {
+            "name": "Average Agent CPU %",
+            "begin": 0,
+            "value": 48
+        },
+        {
+            "name": "Nb Keywords since start",
+            "begin": 0,
+            "value": 1988
+        },
+        {
+            "name": "Test duration",
+            "begin": 0,
+            "value": 903001
+        }
+    ]
+}

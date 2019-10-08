@@ -2,6 +2,26 @@ function StaticPresets() {
     return {
         queries: [
             {
+                "name": "Fake Single Values",
+                "query": {
+                    "inputtype": "Raw",
+                    "type": "Simple",
+                    "datasource": {
+                        "service": {
+                            "url": "/test/mocks/003_RESPONSE_Simple_FakeSingleValues.json",
+                            "method": "Get",
+                            "postproc": {
+                                "transform": {
+                                    "function": "function (response, args) {\r\n    \r\n    var x = 'begin', y = 'value', z = 'name';\r\n    var retData = [], index = {};\r\n    var payload = response.data.payload;\r\n    for (var i = 0; i < payload.length; i++) {\r\n        retData.push({\r\n            x: payload[i][x],\r\n            y: payload[i][y],\r\n            z: payload[i][z]\r\n        });\r\n    }\r\n    return retData;\r\n}",
+                                    "args" : [],
+                                    "transformations": [{ "path": "timestamp", "function": "function () {Math.random().toString(36).substr(2, 9);}" }]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {
                 "name": "RTM Measurements - File",
                 "query": {
                     "inputtype": "Raw",

@@ -138,8 +138,8 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
     if (chartType === 'stackedAreaChart') {
         return {
             type: "stackedAreaChart",
-            height: 0, // all derived dynamically
-            width: 0, // all derived dynamically
+            height: window.innerHeight / 4, // derived dynamically but defaulting for exploration dashlet
+            width: 0, // derived dynamically but defaulting for exploration dashlet
             margin: {
                 top: 20,
                 right: 20,
@@ -178,8 +178,8 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
     } else {
         return {
             type: chartType,
-            height: 0, // all derived dynamically
-            width: 0, // all derived dynamically
+            height: window.innerHeight / 4, // derived dynamically but defaulting for exploration dashlet
+            width: 0, // derived dynamically but defaulting for exploration dashlet
             margin: {
                 top: 20,
                 right: 20,
