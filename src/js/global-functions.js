@@ -123,7 +123,7 @@ var getUniqueId = function () {
 }
 
 var jsoncopy = function (obj) {
-    return JSON.parse(JSON.stringify(obj));
+    return JSON.parse(angular.toJson(obj));
 }
 
 var formatPotentialTimestamp = function (d) {

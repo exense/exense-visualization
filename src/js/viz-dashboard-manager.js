@@ -83,10 +83,6 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                     }
                 });
 
-                $scope.$on('dashlet-paste', function (event, arg) {
-                    $scope.clipboard = arg;
-                });
-
                 $scope.onstartup = function () {
                     $scope.dwrap = new IdIndexArray($scope.dashboards);
                     if ($scope.dashboards.length > 0 && $scope.dashboards[0] && $scope.dashboards[0].oid) {

@@ -112,7 +112,7 @@ function Config(autorefresh, master, slave, target, autorefreshduration, asyncre
     };
 }
 
-function MgrState(gsettings, gautorefresh, gchevron, title, autorefreshduration) {
+function DashboardState(gsettings, gautorefresh, gchevron, title, autorefreshduration) {
     return {
         globalsettings: gsettings,
         globalsettingsautorefresh: gautorefresh,

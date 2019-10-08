@@ -2,8 +2,8 @@ function DefaultGlobalSettings() {
     return [{ "key": "__eId__", "value": ".*", "isDynamic": false }];
 };
 
-function DefaultMgrState() {
-    return new MgrState(new DefaultGlobalSettings(), false, false, "Global Settings");
+function DefaultDashboardState() {
+    return new DashboardState(new DefaultGlobalSettings(), false, false, "Global Settings");
 };
 
 function DefaultDashboard(widgets) {
@@ -11,7 +11,7 @@ function DefaultDashboard(widgets) {
         getUniqueId(),
         widgets,
         'Viz Dashboard',
-        new DefaultMgrState(),
+        new DefaultDashboardState(),
         'aggregated'
     );
 };
@@ -149,7 +149,7 @@ function DefaultExplorationDashboard() {
         getUniqueId(),
         [new ExplorationDashlet()],
         'Explore Dashboard',
-        new DefaultMgrState(),
+        new DefaultDashboardState(),
         'exploded')
 }
 
