@@ -7,11 +7,16 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
             scope: {
                 presets: '=',
                 dashboards: '=',
-                displaymode: '='
+                displaymode: '=',
+                headermargin: '='
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard-manager.html'),
             controller: function ($scope, $element) {
-                $scope.topmargin = $element[0].getBoundingClientRect().top;
+                if (!$scope.headermargin) {
+                    $scope.topmargin = $element[0].getBoundingClientRect().top;
+                }else{
+                    $scope.topmargin = $scope.headermargin;
+                }
                 $scope.init = false;
 
                 $scope.selectTab = function (tabIndex) {

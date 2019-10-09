@@ -35,7 +35,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
 
                     $scope.removeInterval();
                     $scope.gsautorefreshInterval = setInterval(function () {
-                        $scope.$broadcast('globalsettings-change', { 'collection': $scope.dstate.globalsettings, async: true });
+                        $scope.$broadcast('globalsettings-change', { 'collection': $scope.dstate.globalsettings.placeholders, async: true });
                     }, duration);
                 }
 
@@ -51,7 +51,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 });
 
                 $scope.$on('dashletinput-ready', function () {
-                    $scope.$broadcast('globalsettings-change-init', { 'collection': $scope.dstate.globalsettings });
+                    $scope.$broadcast('globalsettings-change-init', { 'collection': $scope.dstate.globalsettings.placeholders });
                 });
 
                 $scope.toggleChevron = function () {
