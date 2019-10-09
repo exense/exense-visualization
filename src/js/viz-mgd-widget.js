@@ -26,7 +26,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
 
 
                     if (!$scope.charttocontainerinput) {
-                        $scope.charttocontainer = 25;
+                        $scope.charttocontainer = 30;
                     } else {
                         $scope.charttocontainer = $scope.charttocontainerinput;
                     }
