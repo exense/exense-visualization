@@ -154,9 +154,9 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 }
 
                 $scope.agressiveRefresh = function () {
-                    $scope.moveLeft();
-                    forceRedraw($scope);
                     $scope.moveRight();
+                    forceRedraw($scope);
+                    $scope.moveLeft();
                     forceRedraw($scope);
                 };
 

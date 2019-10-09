@@ -42,11 +42,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     }
                 }));
 
-                //unused as of right now
-                $scope.$on('cleanup-view', function () {
-                    $scope.cleanupTooltips();
-                });
-
                 $scope.cleanupTooltips = function () {
                     $("div.nvtooltip").remove();
                 };
