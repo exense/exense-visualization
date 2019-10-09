@@ -14,8 +14,6 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, $element) {
-                $scope.topmargin += 50; //(dashboard headers/settings)
-
                 $scope.toggleAutorefresh = function () {
                     $scope.dstate.globalsettings.autorefresh = !$scope.dstate.globalsettings.autorefresh;
                     if ($scope.dstate.globalsettings.autorefresh) {
