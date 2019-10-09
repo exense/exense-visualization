@@ -121,20 +121,6 @@ li.li-control > * > button{
   padding: 0px !important;
 }
 
-.viz-chevron-button {
-	height: 16px !important;
-	text-align: center;
-	vertical-align: middle !important;
-	justify-content: center;
-	display: ruby-text;
-}
-
-.viz-chevron-span {
-	text-align: center;
-	vertical-align: middle !important;
-	justify-content: center;
-	display: table-caption;
-}
 div.dashboardtab > * > li > a:hover, div.dashboardtab > * > li > a:focus,
 div.dashboardtab > * > li > * > li> a:hover > span, div.dashboardtab > * > li > * > li> a:focus > span {
   color: #474747;
