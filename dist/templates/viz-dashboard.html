@@ -18,7 +18,7 @@
                     <span class="title">Dashboard options</span>
                 </div>
             </li>
-            <li class="li-control li-control-alt" style="float: right;">
+            <li class="li-control li-control-alt" style="margin-right: 3px;">
                 <div class="btn-container">
                     <button class="btn btn-success viz-btn-success" ng-click="toggleAutorefresh()" ng-class="{active : dstate.globalsettings.autorefresh}"><span
                             class="glyphicon glyphicon-refresh" uib-tooltip="Turn on autorefresh"></span></button>
@@ -68,16 +68,14 @@
                             </div>
                             <div>
                                 <uib-accordion>
-                                    <div uib-accordion-group class="panel-default viz-panel-default" heading="Input"
-                                        is-open="state.gui.status.open.info">
+                                    <div uib-accordion-group class="panel-default viz-panel-default" heading="Input" is-open="state.gui.status.open.info">
                                         <div class="form-wrapper">
                                             <div class="form-group center-block">
                                                 <div class="container innerformcontainer">
                                                     <div class="row">
                                                         <div class="colmdstyle col-md-12 colcontain-grid">
                                                             <key-val-collection ng-show="dstate.globalsettings.chevron"
-                                                                collection="dstate.globalsettings.placeholders"
-                                                                collectionname="dstate.globalsettings.name"></key-val-collection>
+                                                                collection="dstate.globalsettings.placeholders" collectionname="dstate.globalsettings.name"></key-val-collection>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -96,8 +94,8 @@
         <div ng-repeat="o in dstate.widgets track by o.oid">
             <viz-mgd-widget ng-if="dstate.displaytype !== 'exploded'" displaymode="displaymode" state="o.state" wstate="o.wstate"
                 widgetid="o.oid" headersheightinput="topmargin + 50" charttocontainerinput="" presets="presets"></viz-mgd-widget>
-            <viz-dashlet ng-if="dstate.displaytype === 'exploded'" state="o.state" widgetid="'explorationDashlet'"
-                displaytype="'exploded'" displaymode="exploration" presets="presets"></viz-dashlet>
+            <viz-dashlet ng-if="dstate.displaytype === 'exploded'" state="o.state" widgetid="'explorationDashlet'" displaytype="'exploded'"
+                displaymode="exploration" presets="presets"></viz-dashlet>
         </div>
     </div>
 </div>

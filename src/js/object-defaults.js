@@ -136,7 +136,7 @@ function DefaultGuiOpen() {
 
 function DefaultDashletState() {
     return new DashletState(
-        'New Dashlet', true, 0,
+        'New Dashlet ----- zzzzzzzzzzzz zzzzzzzzzzz zzzzz zzz z zz z z', true, 0,
         new DefaultDashletData(),
         new DefaultChartOptions(),
         new DefaultConfig(),

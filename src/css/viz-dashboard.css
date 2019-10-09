@@ -99,9 +99,15 @@ span.text-g{
 
 .li-control-alt{
   background-color: #333333;
-  float: right;
 }
 
+.alt-float-right{
+  float: right;
+  position: absolute;
+  top: 0px;
+  right: 15px;
+  display: flex;
+}
 
 li.li-control > * > button{
   padding: 0px 5px;
