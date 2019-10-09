@@ -1,7 +1,6 @@
 
   .mainwell {
-    padding: 2px;
-    margin: 2px;
+    padding: 5px 20px;
     border-color: transparent !important;
     background-color: transparent !important;
     background-image: none;
@@ -67,7 +66,6 @@ ul.ul-control {
   list-style-type: none !important;
   margin: 0 !important;
   padding: 0 !important;
-  overflow: hidden !important;
   height: 30px !important;
   border: none !important;
 }
