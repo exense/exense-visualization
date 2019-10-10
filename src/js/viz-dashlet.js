@@ -98,7 +98,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         }
                         $scope.executeHttp(srv.method, srv.url + srv.params, srv.data, $scope.dispatchSuccessResponse, srv, $scope.dispatchErrorResponse);
                     } catch (e) {
-                        console.log('exception thrown while firing query: ' + e);
+                        $scope.sendErrorMessage('exception thrown while firing query: ' + e);
                     }
                 };
 
@@ -109,10 +109,14 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.query.type === 'Async') {
                         $scope.state.info.http.rawcallbackresponse = JSON.stringify(response);
                     }
-                    $scope.$broadcast('errormessage', 'Query execution failed. Check service response for more details.');
+                    $scope.sendErrorMessage('Query execution failed. Check error in service response for more details.');
                     $scope.clearAsync();
                     $scope.isOngoingQuery = false;
                 };
+
+                $scope.sendErrorMessage = function (msg) {
+                    $scope.$broadcast('errormessage', msg);
+                }
 
                 $scope.executeHttp = function (method, url, payload, successcallback, successTarget, errorcallback) {
                     if (method === 'Get') { $http.get(url).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
@@ -147,7 +151,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             $scope.setAsyncInterval(executionFunction);
                         }
                     } catch (e) {
-                        console.log(e);
+                        $scope.sendErrorMessage('An error occured while processing response:' + e);
                         $scope.clearAsync();
                         $scope.isOngoingQuery = false;
                     }
@@ -157,13 +161,13 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.executeReplace = function (service, mergedplaceholders) {
                     var mergedstate;
 
-                    if(mergedplaceholders && $scope.state.data.state){
+                    if (mergedplaceholders && $scope.state.data.state) {
                         mergedstate = mergedplaceholders.concat($scope.state.data.state);
-                    }else{
-                        if(mergedplaceholders){
+                    } else {
+                        if (mergedplaceholders) {
                             mergedstate = mergedplaceholders;
                         }
-                        if($scope.state.data.state){
+                        if ($scope.state.data.state) {
                             mergedstate = $scope.state.data.state;
                         }
                     }
@@ -177,7 +181,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 replaced = runRequestProc(service.preproc.replace.function, datatosend, mergedstate);
                                 datatosend = JSON.parse(replaced);
                             } catch (e) {
-                                console.log('An issue occured while replacing payload data: ' + e);
+                                $scope.sendErrorMessage('An issue occured while replacing payload data: ' + e);
                             }
                         }
                         if (urltosend) {
@@ -185,7 +189,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 replaced = runRequestProc(service.preproc.replace.function, urltosend, mergedstate);
                                 urltosend = replaced;
                             } catch (e) {
-                                console.log('An issue occured while replacing url params: ' + e);
+                                $scope.sendErrorMessage('An issue occured while replacing url params: ' + e);
                             }
                         }
                     }
@@ -229,7 +233,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                     //console.log('Stream incomplete -> ' + JSON.stringify(response));
                                 }
                             } catch (e) {
-                                console.log(e);
+                                $scope.sendErrorMessage('An error occured while checking async response completeness' + e);
                                 $scope.clearAsync();
                             }
                         }
@@ -250,9 +254,13 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                     if (proctarget && proctarget.postproc && newValue && newValue.dashdata) { // due to watch init
                         if (proctarget.postproc.transform.function && proctarget.postproc.transform.function.length > 0) {
-                            $scope.state.data.transformed = { dashdata: runResponseProc(proctarget.postproc.transform.function, keyvalarrayToIndex(evalDynamic(proctarget.postproc.transform.args), 'key', 'value'), newValue.dashdata) };
+                            try {
+                                $scope.state.data.transformed = { dashdata: runResponseProc(proctarget.postproc.transform.function, keyvalarrayToIndex(evalDynamic(proctarget.postproc.transform.args), 'key', 'value'), newValue.dashdata) };
+                            } catch (e) {
+                                $scope.sendErrorMessage('An error occured while performan transformation:' + e);
+                            }
                         } else {
-                            console.log('Warning: a new raw value was read by widget with id : ' + $scope.widgetid + ' but no transform function was provided');
+                            $scope.sendErrorMessage('Warning: a new raw value was read by widget with id : ' + $scope.widgetid + ' but no transform function was provided');
                         }
                     }
                 }));
@@ -282,7 +290,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Firing.");
                                 $scope.fireQuery();
                             } catch (e) {
-                                console.log('[Autorefresh] unable to refresh due to error: ' + e + "; Starting new query.");
+                                $scope.sendErrorMessage('[Autorefresh] unable to refresh due to error: ' + e + "; Starting new query.");
                                 // agressive
                                 $scope.isOngoingQuery = false;
                             }

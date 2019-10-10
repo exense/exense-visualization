@@ -94,7 +94,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                         widget = new DefaultWidget();
                     }
                     var newWidgetId = $scope.wwrap.addNew(widget);
-                    console.log('[d:' + $scope.dashboardid + '] adding widget: [' + newWidgetId + ']');
+                    //console.log('[d:' + $scope.dashboardid + '] adding widget: [' + newWidgetId + ']');
                 };
 
                 $(window).on('resize', function () {
