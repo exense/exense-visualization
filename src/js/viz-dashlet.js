@@ -257,7 +257,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             try {
                                 $scope.state.data.transformed = { dashdata: runResponseProc(proctarget.postproc.transform.function, keyvalarrayToIndex(evalDynamic(proctarget.postproc.transform.args), 'key', 'value'), newValue.dashdata) };
                             } catch (e) {
-                                $scope.sendErrorMessage('An error occured while performan transformation:' + e);
+                                $scope.sendErrorMessage('An error occured while performing transformation:' + e);
                             }
                         } else {
                             $scope.sendErrorMessage('Warning: a new raw value was read by widget with id : ' + $scope.widgetid + ' but no transform function was provided');

@@ -281,15 +281,17 @@ function Placeholder(key, value, isdynamic) {
     };
 }
 
+// for compatibility
 function TemplatePreset(name, placeholders, payloadTemplate, paramsTemplate, query) {
+    return new Preset(name, new Template(placeholders, payloadTemplate, paramsTemplate, query));
+}
+
+function Preset(name, preset) {
     return {
         name: name,
-        placeholders: placeholders,
-        templatedPayload: payloadTemplate,
-        templatedParams: paramsTemplate,
-        queryTemplate: query
+        preset: preset
     };
-};
+}
 
 //Used when loading entire templatedQuery state (programmatically)
 function TemplatedQuery(controltype, basequery, paging, controls) {
@@ -329,10 +331,11 @@ function Controls(template) {
     };
 };
 
-function Template(templatedPayload, templatedParams, placeholders) {
+function Template(templatedPayload, templatedParams, placeholders, querytemplate) {
     return {
         templatedPayload: templatedPayload,
         templatedParams: templatedParams,
-        placeholders: placeholders
+        placeholders: placeholders,
+        queryTemplate : querytemplate
     };
 };

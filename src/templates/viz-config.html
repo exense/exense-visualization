@@ -12,7 +12,7 @@
                                     Load config... <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-config">
-                                    <h5 ng-repeat="c in presets.configs" ng-click="loadConfigPreset(c)">{{c.name}}</h5>
+                                    <h5 ng-repeat="c in presets.configs" ng-click="loadConfigPreset(c.preset)">{{c.name}}</h5>
                                 </ul>
                             </div>
                         </div>

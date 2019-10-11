@@ -146,8 +146,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 });
 
                 $scope.loadConfigPreset = function (preset) {
-                    $scope.currentconfig = preset;
-                    $scope.state.config = $scurrentconfig;
+                    $scope.state.config = jsoncopy(preset);
                 };
 
                 $scope.loadMaster = function (m) {
@@ -408,7 +407,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.query.controls.template = new DefaultTemplate();
                 }
 
-                $scope.loadQueryPreset = function (querypreset) {
+                $scope.loadQueryPreset = function (querypresetArg) {
+                    var querypreset = jsoncopy(querypresetArg);
                     $scope.state.query = querypreset.query;
                 }
 
@@ -479,7 +479,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     return gscopy.concat(phcopy).concat(pagingph); // global settings dominate local placeholders
                 };
 
-                $scope.loadTemplatePreset = function (template) {
+                $scope.loadTemplatePreset = function (templateArg) {
+                    var template = jsoncopy(templateArg);
                     $scope.state.query = template.queryTemplate;
                     if (!$scope.state.query.controls) {
                         $scope.state.query.controls = { template: {} };
