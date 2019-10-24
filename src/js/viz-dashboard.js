@@ -10,7 +10,8 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 displaymode: '=',
                 displaytype: '=',
                 presets: '=',
-                topmargin: '='
+                topmargin: '=',
+                restprefix: '='
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, $element) {

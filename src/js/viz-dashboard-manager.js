@@ -8,7 +8,8 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                 presets: '=',
                 dashboards: '=',
                 displaymode: '=',
-                headermargin: '='
+                headermargin: '=',
+                restprefix: '='
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard-manager.html'),
             controller: function ($scope, $element) {

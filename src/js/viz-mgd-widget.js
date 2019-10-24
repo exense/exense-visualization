@@ -12,7 +12,8 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 state: '=',
                 headersheightinput: '=',
                 charttocontainerinput: '=',
-                presets: '='
+                presets: '=',
+                restprefix: '='
             },
             templateUrl: resolveTemplateURL('viz-mgd-widget.js', 'viz-mgd-widget.html'),
             controller: function ($scope, $element) {

@@ -15,7 +15,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 state: '=',
                 displaytype: '=',
                 displaymode: '=',
-                presets: '='
+                presets: '=',
+                restprefix: '='
             },
             template: '<div ng-include="resolveDynamicTemplate()"></div>',
             controller: function ($scope, $http, dashletcomssrv) {
@@ -119,9 +120,36 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 }
 
                 $scope.executeHttp = function (method, url, payload, successcallback, successTarget, errorcallback) {
+                    var effectiveUrl = url;
+                    var effectivePayload = payload;
+                    var effectiveMethod = method;
+                    if (url) {
+                        if (url.startsWith('http')) { // Proxified case
+                            effectiveUrl = $scope.restprefix + '/viz/proxy';
+                            effectivePayload = $scope.proxify(url, method, payload);
+                            effectiveMethod = 'Post';
+                        }
+                        $scope.doExecuteHttp(effectiveMethod, effectiveUrl, effectivePayload, successcallback, successTarget, errorcallback);
+                    } else {
+                        $scope.sendErrorMessage('Service url is null');
+                    }
+                };
+
+                $scope.proxify = function (url, method, payload){
+                    return {
+                        url: url,
+                        method: method,
+                        data: payload
+                    }
+                };
+
+                $scope.doExecuteHttp = function (method, url, payload, successcallback, successTarget, errorcallback) {
                     if (method === 'Get') { $http.get(url).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
                     if (method === 'Post') { $http.post(url, payload).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
-                };
+                    if (method === 'Delete') { $http.delete(url, payload).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
+                    if (method === 'Put') { $http.put(url, payload).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
+                    if (method === 'Patch') { $http.patch(url, payload).then(function (response) { successcallback(response, successTarget); }, function (response) { errorcallback(response); }); }
+                }
 
                 $scope.dispatchSuccessResponse = function (response, successTarget) {
                     try {
