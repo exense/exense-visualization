@@ -10,7 +10,7 @@ function DefaultGlobalSettings() {
 
 function DefaultDashboardState(widgets) {
     if (!widgets) {
-        widgets = [];
+        widgets = [new DefaultWidget()];
     }
     return new DashboardState(
         new DefaultGlobalSettings(),
