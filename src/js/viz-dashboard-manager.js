@@ -47,7 +47,7 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
 
                 $scope.$on('dashboard-new', function (event, arg) {
                     var newdashboardid;
-                    if (arg.displaytype === 'exploded') {
+                    if (arg && arg.displaytype && arg.displaytype === 'exploded') {
                         newdashboardid = $scope.dwrap.addNew(new DefaultExplorationDashboard());
                     } else {
                         newdashboardid = $scope.dwrap.addNew(new DefaultDashboard());
@@ -60,12 +60,15 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                 });
 
                 $scope.$on('dashboard-current-addWidget', function () {
-                    //$scope.$broadcast('addwidget', { dashboardid: $scope.mgrtabstate });
-                    $scope.dwrap.getById($scope.mgrtabstate).widgets.addNew();
+                	var curDashboard = $scope.dwrap.getById($scope.mgrtabstate);
+                    var wwrap = new IdIndexArray(curDashboard.dstate.widgets);
+                    wwrap.addNew(new DefaultWidget());
                 });
 
                 $scope.$on('dashboard-current-clearWidgets', function () {
-                    $scope.$broadcast('clearwidgets', { dashboardid: $scope.mgrtabstate });
+                    var curDashboard = $scope.dwrap.getById($scope.mgrtabstate);
+                    var wwrap = new IdIndexArray(curDashboard.dstate.widgets);
+                    wwrap.clear();
                 });
 
                 //multiplexing multiple events
