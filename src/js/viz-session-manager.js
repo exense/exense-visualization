@@ -12,7 +12,7 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 restprefix: '='
             },
             templateUrl: resolveTemplateURL('viz-session-manager.js', 'viz-session-manager.html'),
-            controller: function ($scope, $http) {
+            controller: function ($scope, $http, $element, $uibModal) {
                 $scope.sessionName = "New Session";
                 $scope.staticPresets = new StaticPresets();
                 $scope.dashboardsendpoint = [];
@@ -99,57 +99,8 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                         });
 
                 };
-            }
-        };
-    })
-    .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, tableElementParent) {
-        var $ctrl = this;
-        $ctrl.selected = "";
 
-        $(document).ready(function(){
-            $ctrl.tableElement = angular.element(tableElementParent).find('table');
-        /*
-            $ctrl.tableElement.DataTable({
-                data: $ctrl.dataSet,
-                columns: [
-                    { title: "Name" },
-                ]
-            });
-        */
-
-           $ctrl.table = $ctrl.tableElement.DataTable({
-               'ajax' : 'array.txt',
-               'order': [[ 0, "asc" ]]
-           });
-
-           $ctrl.tableElement.on('click', 'tr', function () {
-            $ctrl.selected = $ctrl.table.row( this ).data();
-        } );
-        });
-        
-        $ctrl.dataSet = [
-            ["Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
-            ["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"]
-        ];
-
-        $ctrl.ok = function () {
-            $uibModalInstance.close($ctrl.selected);
-        };
-
-        $ctrl.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-    })
-    .directive('vizToolbar', function () {
-        return {
-            restrict: 'E',
-            scope: {
-                dashboards: '=',
-                restprefix: '='
-            },
-            templateUrl: resolveTemplateURL('viz-session-manager.js', 'viz-toolbar.html'),
-            controller: function ($scope, $element, $http, $uibModal) {
-
+                
                 $scope.popTable = function () {
                     var $ctrl = this;
                     $ctrl.animationsEnabled = true;
@@ -182,6 +133,58 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                         $log.info('Modal dismissed at: ' + new Date());
                       });
                 };
+            }
+        };
+    })
+    .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, tableElementParent) {
+        var $ctrl = this;
+        $ctrl.selected = "";
+
+        $(document).ready(function(){
+            $ctrl.tableElement = angular.element(tableElementParent).find('table');
+        /*
+            $ctrl.tableElement.DataTable({
+                data: $ctrl.dataSet,
+                columns: [
+                    { title: "Name" },
+                ]
+            });
+        */
+
+           $ctrl.table = $ctrl.tableElement.DataTable({
+               ajax : 'array.txt',
+               select : true,
+               order: [[ 0, "asc" ]],
+           });
+
+           $ctrl.tableElement.on('click', 'tr', function () {
+            $ctrl.selected = $ctrl.table.row( this ).data();
+        } );
+        });
+        
+        $ctrl.dataSet = [
+            ["Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
+            ["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"]
+        ];
+
+        $ctrl.ok = function () {
+            $uibModalInstance.close($ctrl.selected);
+        };
+
+        $ctrl.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+    })
+    .directive('vizToolbar', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                dashboards: '=',
+                restprefix: '='
+            },
+            templateUrl: resolveTemplateURL('viz-session-manager.js', 'viz-toolbar.html'),
+            controller: function ($scope) {
+
             }
         };
     })

@@ -1,0 +1,8 @@
+table.dataTable tbody > tr{
+    cursor: pointer;
+}
+
+table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
+    background-color: #337ab7;
+    color: white;
+}
