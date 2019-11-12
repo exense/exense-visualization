@@ -32,6 +32,7 @@
 	<script src="src/js/viz-mgd-widget.js"></script>
 	<script src="src/js/viz-dashboard.js"></script>
 	<script src="src/js/viz-dashboard-manager.js"></script>
+	<script src="src/js/viz-session-manager.js"></script>
 
 	<script src="src/js/viz.js"></script>
 	<script src="src/js/explore.js"></script>
@@ -52,13 +53,14 @@
 	<span>
 		<a href="#!viz"><button class="btn btn-success btn-nav viz-btn-nav"><span class="glyphicon glyphicon-picture glyphicon-app"></span></button></a>
 		<a href="#!explore"><button class="btn btn-success btn-nav viz-btn-nav"><span class="glyphicon glyphicon-search glyphicon-app"></span></button></a>
+		<a href="#!session"><button class="btn btn-success btn-nav viz-btn-nav"><span class="glyphicon glyphicon-blackboard glyphicon-app"></span></button></a>
 	</span>
 
 	<div ng-view></div>
 
 	<script>
 		var initTestDashboard = false;
-		var myApp = angular.module('myApp', ['ngRoute', 'viz', 'explore'])
+		var myApp = angular.module('myApp', ['ngRoute', 'viz', 'explore', 'viz-session-manager'])
 			.config(['$routeProvider',
 				function config($routeProvider) {
 					$routeProvider.
@@ -67,6 +69,9 @@
 						}).
 						when('/explore', {
 							template: '<explore />'
+						}).
+						when('/session', {
+							template: '<viz-session-manager />'
 						}).
 						otherwise('/viz');
 				}
