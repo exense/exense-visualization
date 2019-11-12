@@ -62,7 +62,7 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 $scope.saveSession = function (sessionName) {
                     console.log($scope.dashboardsendpoint);
                     var serialized = angular.toJson({ name: sessionName, state: $scope.dashboardsendpoint });
-                    $http.post('/rest/viz/crud/session?name=' + sessionName, serialized)
+                    $http.post('/rest/viz/crud/sessions?name=' + sessionName, serialized)
                         .then(function (response) {
                             console.log('response')
                             console.log(response)
@@ -73,10 +73,10 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 };
 
                 $scope.loadSession = function (sessionName) {
-                    $http.get('/rest/viz/crud/session?name=' + sessionName)
+                    $http.get('/rest/viz/crud/sessions?name=' + sessionName)
                         .then(function (response) {
-                            if (response && response.data && response.data.state && response.data.state.length > 0) {
-                                $scope.dashboardsendpoint = response.data.state;
+                            if (response && response.data && response.data.object.state && response.data.object.state.length > 0) {
+                                $scope.dashboardsendpoint = response.data.object.state;
                             } else {
                                 $scope.dashboardsendpoint = [];
                             }
@@ -88,7 +88,7 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 };
 
                 $scope.deleteSession = function (sessionName) {
-                    $http.delete('/rest/viz/crud/session?name=' + sessionName)
+                    $http.delete('/rest/viz/crud/sessions?name=' + sessionName)
                         .then(function (response) {
                             console.log('response')
                             console.log(response)
@@ -118,7 +118,7 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                         appendTo: modalParent,
                         resolve: {
                             dataUrl: function () {
-                                return $scope.restprefix + '/data/sessions';
+                                return $scope.restprefix + '/crud/all/sessions';
                             },
 
                             tableElementParent: function () {
