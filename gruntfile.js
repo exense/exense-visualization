@@ -26,7 +26,7 @@ module.exports = function (grunt) {
                 options: {
                     separator: '\n',
                 },
-                src: ['src/css/viz-dashlet.css', 'src/css/viz-mgd-widget.css', 'src/css/viz-dashboard.css', 'src/css/key-val-collection.css'],
+                src: ['src/css/viz-global.css', 'src/css/viz-dashlet.css', 'src/css/viz-mgd-widget.css', 'src/css/viz-dashboard.css', 'src/css/key-val-collection.css'],
                 dest: 'dist/viz.css',
             }
         },
