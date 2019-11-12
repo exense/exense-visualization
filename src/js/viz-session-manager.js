@@ -12,7 +12,7 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 restprefix: '='
             },
             templateUrl: resolveTemplateURL('viz-session-manager.js', 'viz-session-manager.html'),
-            controller: function ($scope) {
+            controller: function ($scope, $http) {
                 $scope.sessionName = "New Session";
                 $scope.staticPresets = new StaticPresets();
                 $scope.dashboardsendpoint = [];
@@ -52,6 +52,11 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 });
                 $scope.$on('sb.deleteSession', function (event) {
                     $scope.deleteSession($scope.sessionName);
+                });
+
+                $scope.$on('sb.sessionSelected', function (event, arg) {
+                    $scope.sessionName = arg;
+                    $scope.loadSession($scope.sessionName);
                 });
 
                 $scope.saveSession = function (sessionName) {
@@ -97,15 +102,86 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
             }
         };
     })
+    .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, tableElementParent) {
+        var $ctrl = this;
+        $ctrl.selected = "";
+
+        $(document).ready(function(){
+            $ctrl.tableElement = angular.element(tableElementParent).find('table');
+        /*
+            $ctrl.tableElement.DataTable({
+                data: $ctrl.dataSet,
+                columns: [
+                    { title: "Name" },
+                ]
+            });
+        */
+
+           $ctrl.table = $ctrl.tableElement.DataTable({
+               'ajax' : 'array.txt',
+               'order': [[ 0, "asc" ]]
+           });
+
+           $ctrl.tableElement.on('click', 'tr', function () {
+            $ctrl.selected = $ctrl.table.row( this ).data();
+        } );
+        });
+        
+        $ctrl.dataSet = [
+            ["Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
+            ["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"]
+        ];
+
+        $ctrl.ok = function () {
+            $uibModalInstance.close($ctrl.selected);
+        };
+
+        $ctrl.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+    })
     .directive('vizToolbar', function () {
         return {
             restrict: 'E',
-            scope:{
-                dashboards: '='
+            scope: {
+                dashboards: '=',
+                restprefix: '='
             },
             templateUrl: resolveTemplateURL('viz-session-manager.js', 'viz-toolbar.html'),
-            controller: function ($scope, $element, $http) {
-    
+            controller: function ($scope, $element, $http, $uibModal) {
+
+                $scope.popTable = function () {
+                    var $ctrl = this;
+                    $ctrl.animationsEnabled = true;
+                    $ctrl.tableElementParent = angular.element($element).find('parent');
+
+                    var modalParent = angular.element($element).find('parent');
+                    var modalInstance = $uibModal.open({
+                        animation: $ctrl.animationsEnabled,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: resolveTemplateURL('viz-session-manager.js', 'tableModal.html'),
+                        controller: 'ModalInstanceCtrl',
+                        controllerAs: '$ctrl',
+                        size: 'lg',
+                        appendTo: modalParent,
+                        resolve: {
+                            dataUrl: function () {
+                                return $scope.restprefix + '/data/sessions';
+                            },
+
+                            tableElementParent: function () {
+                                return $ctrl.tableElementParent;
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function (selectedItem) {
+                       $scope.$emit('sb.sessionSelected', selectedItem[0]);
+                      }, function () {
+                        $log.info('Modal dismissed at: ' + new Date());
+                      });
+                };
             }
         };
     })

@@ -29,6 +29,8 @@
     "d3": "https://github.com/mbostock-bower/d3-bower.git#3.4.4",
     "nvd3": "^1.8.6",
     "angular-bootstrap": "^2.5.0",
-    "bootstrap": "^3.3.4"
+    "bootstrap": "^3.3.4",
+    "datatables.net": "^1.10.15",
+    "datatables.net-bs": "^1.10.15"
   }
 }

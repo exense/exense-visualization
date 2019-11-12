@@ -3,8 +3,7 @@
 	<ul
 		style="list-style-type: none !important; display: inline-flex; padding: 0;">
 		<li>
-			<div class="btn-group" uib-dropdown
-				is-open="state.gui.status.open.presetquery">
+			<div class="btn-group" uib-dropdown>
 				<button id="dashboard-new-btn" type="button"
 					class="btn btn-success btn-nav" uib-dropdown-toggle
 					ng-disabled="disabled" uib-tooltip="New dashboard tab"
@@ -28,6 +27,11 @@
 				</ul>
 			</div>
 		</li>
+		<li><button class="btn btn-success btn-nav"
+			ng-click="popTable()" uib-tooltip="Search session"
+			tooltip-placement="bottom">
+			<span class="glyphicon glyphicon-search glyphicon-app"></span>
+		</button></li>
 		<li><button class="btn btn-success btn-nav"
 				ng-click="$emit('sb.dashboard-clear')" uib-tooltip="Clear all tabs"
 				tooltip-placement="bottom">
@@ -73,4 +77,5 @@
 				<span class="glyphicon glyphicon-question-sign glyphicon-app"></span>
 			</button></li>
 	</ul>
+	<parent toto="tuut"/>
 </div>
