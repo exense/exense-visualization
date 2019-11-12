@@ -100,7 +100,7 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
 
                 };
 
-                
+
                 $scope.popTable = function () {
                     var $ctrl = this;
                     $ctrl.animationsEnabled = true;
@@ -128,44 +128,31 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                     });
 
                     modalInstance.result.then(function (selectedItem) {
-                       $scope.$emit('sb.sessionSelected', selectedItem[0]);
-                      }, function () {
+                        $scope.$emit('sb.sessionSelected', selectedItem[0]);
+                    }, function () {
                         $log.info('Modal dismissed at: ' + new Date());
-                      });
+                    });
                 };
             }
         };
     })
-    .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, tableElementParent) {
+    .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, tableElementParent, dataUrl) {
         var $ctrl = this;
         $ctrl.selected = "";
 
-        $(document).ready(function(){
+        $(document).ready(function () {
             $ctrl.tableElement = angular.element(tableElementParent).find('table');
-        /*
-            $ctrl.tableElement.DataTable({
-                data: $ctrl.dataSet,
-                columns: [
-                    { title: "Name" },
-                ]
+
+            $ctrl.table = $ctrl.tableElement.DataTable({
+                ajax: dataUrl,
+                select: true,
+                order: [[0, "asc"]],
             });
-        */
 
-           $ctrl.table = $ctrl.tableElement.DataTable({
-               ajax : 'array.txt',
-               select : true,
-               order: [[ 0, "asc" ]],
-           });
-
-           $ctrl.tableElement.on('click', 'tr', function () {
-            $ctrl.selected = $ctrl.table.row( this ).data();
-        } );
+            $ctrl.tableElement.on('click', 'tr', function () {
+                $ctrl.selected = $ctrl.table.row(this).data();
+            });
         });
-        
-        $ctrl.dataSet = [
-            ["Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800"],
-            ["Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750"]
-        ];
 
         $ctrl.ok = function () {
             $uibModalInstance.close($ctrl.selected);
@@ -188,3 +175,14 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
             }
         };
     })
+
+// hack to suppress DataTable warning
+// see http://stackoverflow.com/questions/11941876/correctly-suppressing-warnings-in-datatables
+window.alert = (function() {
+    var nativeAlert = window.alert;
+    return function(message) {
+        message.indexOf("DataTables warning") === 0 ?
+            console.warn(message) :
+            nativeAlert(message);
+    }
+})();
