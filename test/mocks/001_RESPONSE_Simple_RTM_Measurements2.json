@@ -4,13 +4,13 @@
             "eId": "JUnit_Dynamic",
             "name": "Transaction_16",
             "begin": 1456789789,
-            "value": 1858
+            "value": 123456
         },
         {
             "eId": "JUnit_Dynamic",
             "name": "Transaction_13",
             "begin": 1789789789,
-            "value": 2638
+            "value": 123457
         }
     ]
 }

@@ -66,6 +66,27 @@
                                     uib-btn-radio="'Off'">Off</label>
                             </div>
                         </div>
+                        <div class="colmdstyle col-md-2 colcontain-grid">
+                            <label>Autorefresh Duration</label>
+                            <div class="btn-group viz-btn-group form-radio">
+                                <input class="form-control" ng-model="state.config.autorefreshduration"/>
+                            </div>
+                        </div>
+                        <div class="colmdstyle col-md-2 colcontain-grid">
+                            <label>Incremental Refresh</label>
+                            <div class="btn-group viz-btn-group form-radio">
+                                <label class="btn btn-success viz-btn-success" ng-model="state.config.incremental"
+                                    uib-btn-radio="'On'">On</label>
+                                <label class="btn btn-success viz-btn-success" ng-model="state.config.incremental"
+                                    uib-btn-radio="'Off'">Off</label>
+                            </div>
+                        </div>
+                        <div class="colmdstyle col-md-2 colcontain-grid">
+                            <label>Incremental Max Dots</label>
+                            <div class="btn-group viz-btn-group form-radio">
+                                <input class="form-control" ng-model="state.config.incmaxdots"/>
+                            </div>
+                        </div>
                         <div class="colmdstyle col-md-10 colcontain-grid">
                             <label>Dashlet title</label>
                             <div class="btn-group viz-btn-group form-radio">

@@ -283,7 +283,27 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if (proctarget && proctarget.postproc && newValue && newValue.dashdata) { // due to watch init
                         if (proctarget.postproc.transform.function && proctarget.postproc.transform.function.length > 0) {
                             try {
-                                $scope.state.data.transformed = { dashdata: runResponseProc(proctarget.postproc.transform.function, keyvalarrayToIndex(evalDynamic(proctarget.postproc.transform.args), 'key', 'value'), newValue.dashdata) };
+                                var newTransformed = {
+                                    dashdata: runResponseProc(
+                                        proctarget.postproc.transform.function,
+                                        keyvalarrayToIndex(
+                                            evalDynamic(proctarget.postproc.transform.args),
+                                            'key',
+                                            'value'),
+                                        newValue.dashdata
+                                    )
+                                };
+                                //incremental refresh mode
+                                if ($scope.state.data.transformed && $scope.state.data.transformed.dashdata  && newTransformed && newTransformed.dashdata && $scope.state.config.incremental === 'On') {
+                                    // new dots don't fit, trim existing array
+                                    if($scope.state.data.transformed.dashdata.length + newTransformed.dashdata.length > $scope.state.config.incmaxdots){
+                                        var overflow = $scope.state.data.transformed.dashdata.length + newTransformed.dashdata.length - $scope.state.config.incmaxdots;
+                                        $scope.state.data.transformed.dashdata = $scope.state.data.transformed.dashdata.splice(overflow, $scope.state.data.transformed.dashdata.length-1);
+                                    }
+                                    $scope.state.data.transformed = { dashdata: $scope.state.data.transformed.dashdata.concat(newTransformed.dashdata)};
+                                } else {
+                                    $scope.state.data.transformed = newTransformed;
+                                }
                             } catch (e) {
                                 $scope.sendErrorMessage('An error occured while performing transformation:' + e);
                             }

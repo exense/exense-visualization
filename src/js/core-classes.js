@@ -96,14 +96,16 @@ function DashletData(transformed, rawresponse, state) {
     };
 };
 
-function Config(autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration) {
+function Config(autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration, incremental, incmaxdots) {
     return {
         autorefresh: autorefresh,
         master: master,
         slave: slave,
         target: target,
         autorefreshduration: autorefreshduration,
-        asyncrefreshduration: asyncrefreshduration
+        asyncrefreshduration: asyncrefreshduration,
+        incremental: incremental,
+        incmaxdots: incmaxdots
     };
 }
 
