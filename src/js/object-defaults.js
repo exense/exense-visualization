@@ -1,6 +1,6 @@
 function DefaultGlobalSettings() {
     return new GlobalSettings(
-        [{ "key": "__eId__", "value": ".*", "isDynamic": false }],
+        [],
         false,
         false,
         'Global Settings',

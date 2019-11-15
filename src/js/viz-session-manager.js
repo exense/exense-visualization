@@ -20,6 +20,11 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 else {
                     $scope.sessionName = "New Session";
                 }
+
+                if (!$scope.dashboards) {
+                    $scope.stdldashboards = [];
+                }
+
                 $scope.staticPresets = new StaticPresets();
 
                 $scope.deriveEventName = function (sbName) {
@@ -63,6 +68,12 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                     $scope.loadSession($scope.sessionName);
                 });
 
+                $scope.$on('sb.sessionName', function (event, arg) {
+                    $scope.sessionName = arg;
+                    $scope.$broadcast('dashboard-new', { displaytype : 'viz'});
+                    $scope.$broadcast('dashboard-new', { displaytype : 'exploded'});
+                });
+
                 $scope.saveSession = function (sessionName) {
                     var serialized = angular.toJson({ name: sessionName, state: $scope.dashboards });
                     $http.post($scope.restprefix + '/viz/crud/sessions?name=' + sessionName, serialized)
@@ -104,22 +115,20 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
 
                 };
 
-
                 $scope.popTable = function () {
                     var $ctrl = this;
                     $ctrl.animationsEnabled = true;
-                    $ctrl.tableElementParent = angular.element($element).find('parent');
+                    $ctrl.tableElementParent = angular.element($element).find('sessionSearchParent');
 
-                    var modalParent = angular.element($element).find('parent');
                     var modalInstance = $uibModal.open({
                         animation: $ctrl.animationsEnabled,
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
                         templateUrl: resolveTemplateURL('viz-session-manager.js', 'tableModal.html'),
-                        controller: 'ModalInstanceCtrl',
+                        controller: 'SessionSearchModal',
                         controllerAs: '$ctrl',
                         size: 'lg',
-                        appendTo: modalParent,
+                        appendTo: $ctrl.tableElementParent,
                         resolve: {
                             dataUrl: function () {
                                 //used for client-side processing
@@ -142,10 +151,50 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                         $log.info('Modal dismissed at: ' + new Date());
                     });
                 };
+
+                $scope.popNewSession = function () {
+                    var $ctrl = this;
+                    $ctrl.animationsEnabled = true;
+                    $ctrl.tableElementParent = angular.element($element).find('sessionNewParent');
+
+                    var modalInstance = $uibModal.open({
+                        animation: $ctrl.animationsEnabled,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: resolveTemplateURL('viz-session-manager.js', 'singleInputModal.html'),
+                        controller: 'SingleInputModal',
+                        controllerAs: '$ctrl',
+                        size: 'sm',
+                        appendTo: $ctrl.tableElementParent,
+                        resolve: {
+                            tableElementParent: function () {
+                                return $ctrl.tableElementParent;
+                            }
+                        }
+                    });
+
+                    modalInstance.result.then(function (selectedItem) {
+                        $scope.$emit('sb.sessionName', selectedItem);
+                    }, function () {
+                        $log.info('Modal dismissed at: ' + new Date());
+                    });
+                };
             }
         };
     })
-    .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, tableElementParent, dataUrl) {
+    .controller('SingleInputModal', function ($scope, $uibModalInstance, tableElementParent) {
+        var $ctrl = this;
+        $ctrl.selected = "";
+
+        $ctrl.ok = function () {
+            $uibModalInstance.close($scope.selected);
+        };
+
+        $ctrl.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+    })
+    .controller('SessionSearchModal', function ($scope, $uibModalInstance, tableElementParent, dataUrl) {
         var $ctrl = this;
         $ctrl.selected = "";
 
