@@ -163,7 +163,11 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
                 rotateLabels: -25
             },
             forceY: 0,
-            yAxis: {},
+            yAxis: {
+                tickFormat: function (d) {
+                   return d.toFixed(2);
+                },
+            },
             zoom: {
                 enabled: true,
                 scaleExtent: [
@@ -203,6 +207,11 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
                     return formatPotentialTimestamp(d);
                 },
                 rotateLabels: -25
+            },
+            yAxis: {
+                tickFormat: function (d) {
+                   return d.toFixed(2);
+                },
             }
         };
     }
