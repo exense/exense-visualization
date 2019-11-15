@@ -9,14 +9,18 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 dashboards: '=',
                 displaymode: '=',
                 headermargin: '=',
-                restprefix: '='
+                restprefix: '=',
+                currentsession: '='
             },
             templateUrl: resolveTemplateURL('viz-session-manager.js', 'viz-session-manager.html'),
             controller: function ($scope, $http, $element, $uibModal) {
-                $scope.sessionName = "New Session";
+                if ($scope.currentsession) {
+                    $scope.sessionName = $scope.currentsession;
+                }
+                else {
+                    $scope.sessionName = "New Session";
+                }
                 $scope.staticPresets = new StaticPresets();
-                $scope.dashboardsendpoint = [];
-                //$scope.dashboardsendpoint.push(new PerformanceDashboard());
 
                 $scope.deriveEventName = function (sbName) {
                     return sbName.split('.')[1];
@@ -60,7 +64,7 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 });
 
                 $scope.saveSession = function (sessionName) {
-                    var serialized = angular.toJson({ name: sessionName, state: $scope.dashboardsendpoint });
+                    var serialized = angular.toJson({ name: sessionName, state: $scope.dashboards });
                     $http.post($scope.restprefix + '/viz/crud/sessions?name=' + sessionName, serialized)
                         .then(function (response) {
                             console.log('response')
@@ -72,12 +76,13 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 };
 
                 $scope.loadSession = function (sessionName) {
+                    $scope.dashboards.length = 0;
                     $http.get($scope.restprefix + '/viz/crud/sessions?name=' + sessionName)
                         .then(function (response) {
                             if (response && response.data && response.data.object.state && response.data.object.state.length > 0) {
-                                $scope.dashboardsendpoint = response.data.object.state;
-                            } else {
-                                $scope.dashboardsendpoint = [];
+                                _.each(response.data.object.state, function (item, index) {
+                                    $scope.dashboards.push(item);
+                                });
                             }
                         }, function (response) {
                             console.log('error response')
@@ -117,7 +122,12 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                         appendTo: modalParent,
                         resolve: {
                             dataUrl: function () {
-                                return $scope.restprefix + '/viz/crud/all/sessions';
+                                //used for client-side processing
+                                //return $scope.restprefix + '/viz/crud/all/sessions';
+                                //testing
+                                //return '/test/mocks/dtbackend.txt';
+                                //prod
+                                return $scope.restprefix + '/viz/crud/paged/sessions';
                             },
 
                             tableElementParent: function () {
@@ -143,7 +153,12 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
             $ctrl.tableElement = angular.element(tableElementParent).find('table');
 
             $ctrl.table = $ctrl.tableElement.DataTable({
-                ajax: dataUrl,
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: dataUrl,
+                    type: 'POST'
+                },
                 select: true,
                 order: [[0, "asc"]],
             });
@@ -177,9 +192,9 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
 
 // hack to suppress DataTable warning
 // see http://stackoverflow.com/questions/11941876/correctly-suppressing-warnings-in-datatables
-window.alert = (function() {
+window.alert = (function () {
     var nativeAlert = window.alert;
-    return function(message) {
+    return function (message) {
         message.indexOf("DataTables warning") === 0 ?
             console.warn(message) :
             nativeAlert(message);

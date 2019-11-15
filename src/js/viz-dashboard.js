@@ -89,6 +89,20 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     }
                 });
 
+                $scope.$on('apply-global-setting', function (event, arg) {
+                    var updated = false;
+                    $.each($scope.dstate.globalsettings.placeholders, function (index, item) {
+                        if (item.key === arg.key) {
+                            $scope.dstate.globalsettings.placeholders[index].value = arg.value;
+                            $scope.dstate.globalsettings.placeholders[index].isDynamic = arg.isDynamic;
+                            updated = true;
+                        }
+                    });
+                    if (!updated) {
+                        $scope.dstate.globalsettings.placeholders.push(new Placeholder(arg.key, arg.value, arg.isDynamic));
+                    }
+                });
+
                 $scope.addWidget = function (arg) {
                     var widget;
                     if (!arg) {

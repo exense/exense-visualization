@@ -77,7 +77,7 @@
 							template: '<explore />'
 						}).
 						when('/session', {
-							template: '<viz-session-manager />'
+							template: '<viz-session-manager restprefix="\'/mocked\'" />'
 						}).
 						otherwise('/viz');
 				}
