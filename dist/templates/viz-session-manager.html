@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="row" style="display: grid; margin-left:0;">
+            <label>Session</label>
+            <ul style="list-style-type: none !important; display: inline-flex; padding: 0;">
+                <li><button class="btn btn-success btn-nav" ng-click="popNewSession()" uib-tooltip="New session"
+                        tooltip-placement="right">
+                        <span class="glyphicon glyphicon-file glyphicon-app"></span>
+                    </button></li>
+                <li><button class="btn btn-success btn-nav" ng-click="popTable()" uib-tooltip="Search session"
+                        tooltip-placement="bottom">
+                        <span class="glyphicon glyphicon-search glyphicon-app"></span>
+                    </button></li>
+                    <li><button class="btn btn-success btn-nav"
+                        ng-click="saveSession(sessionName)" uib-tooltip="Save session"
+                        tooltip-placement="bottom">
+                        <span class="glyphicon glyphicon-floppy-disk glyphicon-app"></span>
+                    </button></li>
+                    <li><button class="btn btn-success btn-nav"
+                        ng-click="deleteSession(sessionName)" uib-tooltip="Delete session"
+                        tooltip-placement="bottom">
+                        <span class="glyphicon glyphicon-remove glyphicon-app"></span>
+                    </button></li>
+                <li>
+                    <span style="display: grid;margin-left: 20px;">
+                        <input class="form-control" disabled ng-model="sessionName" />
+                    </span>
+                    <sessionNewParent />
+                </li>
+            </ul>
+            <span style="display: grid">
+                <label>&nbsp;</label>
+
+            </span>
+            <sessionSearchParent toto="tuut" />
+        </div>
+    </div>
+    <div class="col-md-3">
+        <viz-toolbar dashboards="dashboards"></viz-toolbar>
+    </div>
+</div>
+<viz-dashboard-manager ng-if="dashboards" displaymode="'managed'" presets="staticPresets" dashboards="dashboards" restprefix="'/rest'"></viz-dashboard-manager>
+<viz-dashboard-manager ng-if="!dashboards" displaymode="'managed'" presets="staticPresets" dashboards="stdldashboards" restprefix="'/rest'"></viz-dashboard-manager>
