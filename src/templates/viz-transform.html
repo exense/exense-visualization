@@ -26,6 +26,14 @@
                                 <label>yAxis function</label>
                                 <textarea ng-change="loadTicks()" ng-model="state.options.chart.yAxis.strTickFormat" class="form-control" />
                             </div>
+                            <div class="btn-group viz-btn-group">
+                                <label>xAxis Scale function</label>
+                                <textarea ng-change="loadScales()" ng-model="state.options.chart.xAxis.strScale" class="form-control" />
+                            </div>
+                            <div class="btn-group viz-btn-group">
+                                <label>yAxis Scale function</label>
+                                <textarea ng-change="loadScales()" ng-model="state.options.chart.yAxis.strScale" class="form-control" />
+                            </div>
                         </div>
                     </div>
                 </div>

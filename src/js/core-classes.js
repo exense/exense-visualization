@@ -136,7 +136,7 @@ function GlobalSettings(placeholders, gautorefresh, gchevron, title, autorefresh
     };
 }
 
-function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yAxisTick, distance) {
+function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yAxisTick, xAxisScale, yAxisScale) {
     var options = {
         type: chartType,
         height: window.innerHeight / 4, // derived dynamically but defaulting for exploration dashlet
@@ -152,13 +152,21 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yA
         xAxis: {
             tickFormat: {},
             strTickFormat: xAxisTick,
-            rotateLabels: -23,
+            rotateLabels: -23
         },
         yAxis: {
             tickFormat: {},
             strTickFormat: yAxisTick
         }
     };
+
+    if(xAxisScale){
+        options.xAxis.strScale = xAxisScale;
+    }
+
+    if(yAxisScale){
+        options.yAxis.strScale = yAxisScale;
+    }
 
     if (chartType === 'stackedAreaChart') {
         options.useVoronoi=false;

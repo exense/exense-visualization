@@ -34,8 +34,9 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         }
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
                             $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
-                            //$scope.cleanupTooltips();
+                            $scope.cleanupTooltips();
                             //$scope.applyDynamicChartConfig();
+                            $scope.reapplyScales();
                         }
                     }
                     if ($scope.state.info.showraw === 'On') {
@@ -61,6 +62,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         });
                         */
                     });
+                }
+
+                $scope.reapplyScales = function(){
+                    $scope.state.options.chart.xDomain = eval($scope.state.options.chart.xAxis.strScale);
+                    $scope.state.options.chart.yDomain = eval($scope.state.options.chart.yAxis.strScale);
                 }
 
                 $scope.$on('resized', function () {
@@ -145,6 +151,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.options.chart.xAxis.tickFormat = eval('(' + $scope.state.options.chart.xAxis.strTickFormat + ')');
                     //$scope.state.options.chart.xAxis.tickFormat = function(d){ return 3;};
                     $scope.state.options.chart.yAxis.tickFormat = eval('(' + $scope.state.options.chart.yAxis.strTickFormat + ')');
+                }
+
+                $scope.loadScales = function () {
+                    $scope.state.options.chart.xAxis.scale = eval('(' + $scope.state.options.chart.xAxis.strScale + ')');
+                    $scope.state.options.chart.yAxis.scale = eval('(' + $scope.state.options.chart.yAxis.strScale + ')');
                 }
 
                 $scope.startup = function () {
