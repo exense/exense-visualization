@@ -91,7 +91,7 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                     $http.get($scope.restprefix + '/viz/crud/sessions?name=' + sessionName)
                         .then(function (response) {
                             if (response && response.data && response.data.object.state && response.data.object.state.length > 0) {
-                                _.each(response.data.object.state, function (item, index) {
+                                $.each(response.data.object.state, function (index, item) {
                                     $scope.dashboards.push(item);
                                 });
                             }
