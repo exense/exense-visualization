@@ -35,7 +35,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
                             $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
                             //$scope.cleanupTooltips();
-                            $scope.applyDynamicChartConfig();
+                            //$scope.applyDynamicChartConfig();
                         }
                     }
                     if ($scope.state.info.showraw === 'On') {
@@ -64,7 +64,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
 
                 $scope.$on('resized', function () {
-                    $scope.applyDynamicChartConfig();
+                    //$scope.applyDynamicChartConfig();
                 });
 
                 $scope.formatPotentialTimestamp = function (value) {

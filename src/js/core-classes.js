@@ -145,7 +145,7 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yA
             top: 20,
             right: 20,
             bottom: 55,
-            left: 50
+            left: 60
         },
         showLegend: false,
         forceY: 0,

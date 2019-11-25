@@ -129,7 +129,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
 
                 $scope.onstartup();
 
-                $scope.$watch('dstate.widgets', function (newvalue) {
+                $scope.$watchCollection('dstate.widgets', function (newvalue) {
                     $scope.onstartup();
                 });
 
