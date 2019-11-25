@@ -136,39 +136,38 @@ function GlobalSettings(placeholders, gautorefresh, gchevron, title, autorefresh
     };
 }
 
-function ChartOptions(chartType, useInteractiveGuideline, stacked) {
+function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yAxisTick) {
+    var options = {
+        type: chartType,
+        height: window.innerHeight / 4, // derived dynamically but defaulting for exploration dashlet
+        width: 0, // derived dynamically but defaulting for exploration dashlet
+        margin: {
+            top: 20,
+            right: 20,
+            bottom: 50,
+            left: 65
+        },
+        showLegend: false,
+        forceY: 0,
+        xAxis: {
+            tickFormat: {},
+            strTickFormat: xAxisTick,
+            rotateLabels: -25
+        },
+        yAxis: {
+            tickFormat: {},
+            strTickFormat: yAxisTick
+        }
+    };
+
     if (chartType === 'stackedAreaChart') {
-        return {
-            type: "stackedAreaChart",
-            height: window.innerHeight / 4, // derived dynamically but defaulting for exploration dashlet
-            width: 0, // derived dynamically but defaulting for exploration dashlet
-            margin: {
-                top: 20,
-                right: 20,
-                bottom: 50,
-                left: 55
-            },
-            useVoronoi: false,
-            showControls: false,
-            clipEdge: true,
-            duration: 0,
-            useInteractiveGuideline: true,
-            showLegend: false,
-            xAxis: {
-                showMaxMin: false,
-                tickFormat: function (d) {
-                    //interpret these ranges as timestamp for now
-                    return formatPotentialTimestamp(d);
-                },
-                rotateLabels: -25
-            },
-            forceY: 0,
-            yAxis: {
-                tickFormat: function (d) {
-                   return d.toFixed(2);
-                },
-            },
-            zoom: {
+        options.useVoronoi=false;
+        options.showControls=false;
+        options.clipEdge=true;
+        options.duration=0;
+        options.useInteractiveGuideline=true;
+        options.showLegend=false;
+        options.zoom= {
                 enabled: true,
                 scaleExtent: [
                     1,
@@ -179,42 +178,18 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked) {
                 horizontalOff: true,
                 verticalOff: true,
                 unzoomEventType: "dblclick.zoom"
-            }
-        };
+            };
     } else {
-        return {
-            type: chartType,
-            height: window.innerHeight / 4, // derived dynamically but defaulting for exploration dashlet
-            width: 0, // derived dynamically but defaulting for exploration dashlet
-            margin: {
-                top: 20,
-                right: 20,
-                bottom: 50,
-                left: 55
-            },
-            stacked: stacked,
-            useInteractiveGuideline: useInteractiveGuideline,
-            x: function (d) { return d.x; },
-            y: function (d) { return d.y; },
-            showLegend: false,
-            scatter: {
+        options.stacked=stacked;
+        options.useInteractiveGuideline=useInteractiveGuideline;
+        options.x=function (d) { return d.x; };
+        options.y=function (d) { return d.y; };
+        options.showLegend=false;
+        options.scatter={
                 onlyCircles: false
-            },
-            forceY: 0,
-            xAxis: {
-                tickFormat: function (d) {
-                    //interpret these ranges as timestamp for now
-                    return formatPotentialTimestamp(d);
-                },
-                rotateLabels: -25
-            },
-            yAxis: {
-                tickFormat: function (d) {
-                   return d.toFixed(2);
-                },
-            }
-        };
+            };
     }
+    return options;
 };
 
 function Preproc(replacefunc) {
@@ -347,6 +322,6 @@ function Template(templatedPayload, templatedParams, placeholders, querytemplate
         templatedPayload: templatedPayload,
         templatedParams: templatedParams,
         placeholders: placeholders,
-        queryTemplate : querytemplate
+        queryTemplate: querytemplate
     };
 };

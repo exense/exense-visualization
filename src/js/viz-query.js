@@ -120,7 +120,17 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-transform.html'),
             controller: function ($scope) {
+                $scope.loadTicks = function(){
+                    $scope.state.options.chart.xAxis.tickFormat = eval('('+$scope.state.options.chart.xAxis.strTickFormat+')');
+                    //$scope.state.options.chart.xAxis.tickFormat = function(d){ return 3;};
+                    $scope.state.options.chart.yAxis.tickFormat = eval('('+$scope.state.options.chart.yAxis.strTickFormat+')');
+                }
+                
+                $scope.startup = function(){
+                    $scope.loadTicks();
+                };
 
+                $scope.startup();
             }
         };
     })
@@ -362,6 +372,23 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
                 function out(data) {
                     return JSON.stringify(data);
+                }
+                ngModel.$parsers.push(into);
+                ngModel.$formatters.push(out);
+            }
+        };
+    })
+    .directive('evalString', function () {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, element, attr, ngModel) {
+                console.log('evalString!!')
+                function into(input) {
+                    return (function(d){ return 1;});
+                }
+                function out(data) {
+                    return data.toString();
                 }
                 ngModel.$parsers.push(into);
                 ngModel.$formatters.push(out);

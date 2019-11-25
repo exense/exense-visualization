@@ -115,7 +115,9 @@ function DefaultTemplate(templatedPayload, templatedParams, placeholders) {
 };
 
 function DefaultChartOptions() {
-    return new ChartOptions("lineChart", false, false);
+    return new ChartOptions("lineChart", false, false,
+    'function (d) { return formatPotentialTimestamp(d); }', 
+    'function (d) { return d.toFixed(2); }');
 };
 
 function DefaultDashletData() {
