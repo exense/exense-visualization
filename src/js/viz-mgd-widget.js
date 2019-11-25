@@ -123,6 +123,7 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $scope.resize = function () {
                     $scope.updateSize();
                     forceRedraw($scope);
+                    $scope.$broadcast('resized');
                 };
 
                 $scope.extend = function () {

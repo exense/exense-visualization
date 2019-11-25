@@ -15,7 +15,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="row in state.gui.tabledata.data">
-                    <td><label data-ng-bind="formatPotentialTimestamp(row.x)" /></td>
+                    <td><label data-ng-bind="state.options.chart.xAxis.tickFormat(row.x)" /></td>
                     <td ng-repeat="series in state.gui.tabledata.zlist" class="viz-cell">
                         {{row['values'][series]}}
                     </td>

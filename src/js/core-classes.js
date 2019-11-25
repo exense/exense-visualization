@@ -136,7 +136,7 @@ function GlobalSettings(placeholders, gautorefresh, gchevron, title, autorefresh
     };
 }
 
-function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yAxisTick) {
+function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yAxisTick, distance) {
     var options = {
         type: chartType,
         height: window.innerHeight / 4, // derived dynamically but defaulting for exploration dashlet
@@ -144,15 +144,15 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yA
         margin: {
             top: 20,
             right: 20,
-            bottom: 50,
-            left: 65
+            bottom: 55,
+            left: 50
         },
         showLegend: false,
         forceY: 0,
         xAxis: {
             tickFormat: {},
             strTickFormat: xAxisTick,
-            rotateLabels: -25
+            rotateLabels: -23,
         },
         yAxis: {
             tickFormat: {},

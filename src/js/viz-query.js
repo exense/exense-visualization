@@ -33,8 +33,9 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                             $scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
                         }
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
-                            //$scope.cleanupTooltips();
                             $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
+                            //$scope.cleanupTooltips();
+                            $scope.applyDynamicChartConfig();
                         }
                     }
                     if ($scope.state.info.showraw === 'On') {
@@ -45,6 +46,26 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.cleanupTooltips = function () {
                     $("div.nvtooltip").remove();
                 };
+
+                $scope.applyDynamicChartConfig = function () {
+                    $(document).ready(function () {
+                        var size = $(".nv-axisMax-y text").text().length;
+                        $scope.state.options.chart.margin.left = 35 + 5 * size;
+
+                        // race condition with margin refresh (or any other dynamic update of the chart's config)
+                        // need to find a way to fix rotateYLabel issue in nvd3
+                        /*
+                        $(document).ready(function () {
+                            $(".nv-y .tick text").attr("transform", "rotate(-40 0,14)");
+                            $(".nv-axisMaxMin-y text").attr("transform", "rotate(-40 0,14)");
+                        });
+                        */
+                    });
+                }
+
+                $scope.$on('resized', function () {
+                    $scope.applyDynamicChartConfig();
+                });
 
                 $scope.formatPotentialTimestamp = function (value) {
                     return formatPotentialTimestamp(value);
@@ -120,13 +141,13 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-transform.html'),
             controller: function ($scope) {
-                $scope.loadTicks = function(){
-                    $scope.state.options.chart.xAxis.tickFormat = eval('('+$scope.state.options.chart.xAxis.strTickFormat+')');
+                $scope.loadTicks = function () {
+                    $scope.state.options.chart.xAxis.tickFormat = eval('(' + $scope.state.options.chart.xAxis.strTickFormat + ')');
                     //$scope.state.options.chart.xAxis.tickFormat = function(d){ return 3;};
-                    $scope.state.options.chart.yAxis.tickFormat = eval('('+$scope.state.options.chart.yAxis.strTickFormat+')');
+                    $scope.state.options.chart.yAxis.tickFormat = eval('(' + $scope.state.options.chart.yAxis.strTickFormat + ')');
                 }
-                
-                $scope.startup = function(){
+
+                $scope.startup = function () {
                     $scope.loadTicks();
                 };
 
@@ -331,11 +352,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 });
 
                 $scope.sendSaveEvent = function () {
-                    $scope.$emit('dashlet-save', jsoncopy({ oid: $scope.widgetid, state: $scope.state}));
+                    $scope.$emit('dashlet-save', jsoncopy({ oid: $scope.widgetid, state: $scope.state }));
                 };
 
                 $scope.sendCopyEvent = function () {
-                    $scope.$emit('dashlet-copy', jsoncopy({ oid: $scope.widgetid, state: $scope.state}));
+                    $scope.$emit('dashlet-copy', jsoncopy({ oid: $scope.widgetid, state: $scope.state }));
                 };
 
                 $scope.clearMessages = function () {
@@ -385,7 +406,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             link: function (scope, element, attr, ngModel) {
                 console.log('evalString!!')
                 function into(input) {
-                    return (function(d){ return 1;});
+                    return (function (d) { return 1; });
                 }
                 function out(data) {
                     return data.toString();
