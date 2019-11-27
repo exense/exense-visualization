@@ -103,6 +103,10 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     }
                 });
 
+                $scope.$on('globalsettings-globalRefreshToggle', function (event, arg) {
+                    $scope.toggleAutorefresh();
+                });
+
                 $scope.addWidget = function (arg) {
                     var widget;
                     if (!arg) {

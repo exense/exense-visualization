@@ -33,8 +33,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                             $scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
                         }
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
-                            $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
                             $scope.cleanupTooltips();
+                            $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
                             //$scope.applyDynamicChartConfig();
                             $scope.reapplyScales();
                         }
