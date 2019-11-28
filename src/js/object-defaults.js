@@ -4,7 +4,7 @@ function DefaultGlobalSettings() {
         false,
         false,
         'Global Settings',
-        3000
+        5000
     );
 };
 
@@ -46,7 +46,7 @@ function DefaultDashboardGui() {
 }
 
 function DefaultConfig() {
-    return new Config('Off', false, false, '', 3000, 500, 'Off', 8);
+    return new Config('Off', false, false, '', 5000, 1000, 'Off', 8);
 };
 
 function DefaultQuery() {

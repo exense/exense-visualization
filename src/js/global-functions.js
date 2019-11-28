@@ -40,7 +40,7 @@ var resolveTemplateURL = function (containername, componentname) {
     return templateUrl;
 }
 
-var setIntervalDefault = 3000;
+var setIntervalDefault = 5000;
 var setIntervalAsyncDefault = 500;
 
 var keyvalarrayToIndex = function (array, keyKey, valKey) {
