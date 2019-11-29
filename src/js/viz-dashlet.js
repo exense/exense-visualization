@@ -375,6 +375,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.$on('template-updated', function () {
                     $scope.fireQuery();
                 });
+                
+                $scope.$on('dashboard-data-clear', function () {
+                    $scope.state.data = new DefaultDashletData();
+                });
 
                 $scope.initPaging = function () {
                     var paged = $scope.state.query.paged;
