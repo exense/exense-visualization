@@ -25,8 +25,8 @@
         <table ng-if="state.config.transposetable === 'On'" class="table" ng-style="{width:state.options.chart.width -30 + 'px'}">
                 <thead>
                     <tr>
-                        <th style="text-align: center;"><label style="opacity: 0;" class="viz-cell">&nbsp;</label></th>
-                        <th ng-repeat="row in state.gui.tabledata.data">
+                        <th><label style="opacity: 0;" class="viz-cell">&nbsp;</label></th>
+                        <th style="text-align: center;" ng-repeat="row in state.gui.tabledata.data">
                             <label data-ng-bind="state.options.chart.xAxis.tickFormat(row.x)" />
                         </th>
                     </tr>
