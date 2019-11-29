@@ -14,13 +14,6 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
             },
             templateUrl: resolveTemplateURL('viz-session-manager.js', 'viz-session-manager.html'),
             controller: function ($scope, $http, $element, $uibModal) {
-                if ($scope.currentsession) {
-                    $scope.sessionName = $scope.currentsession;
-                }
-                else {
-                    $scope.sessionName = "New Session";
-                }
-
                 if (!$scope.dashboards) {
                     $scope.stdldashboards = [];
                 }
@@ -54,22 +47,22 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                     $scope.$broadcast($scope.deriveEventName(event.name))
                 });
                 $scope.$on('sb.saveSession', function (event) {
-                    $scope.saveSession($scope.sessionName);
+                    $scope.saveSession($scope.currentsession);
                 });
                 $scope.$on('sb.loadSession', function (event) {
-                    $scope.loadSession($scope.sessionName);
+                    $scope.loadSession($scope.currentsession);
                 });
                 $scope.$on('sb.deleteSession', function (event) {
-                    $scope.deleteSession($scope.sessionName);
+                    $scope.deleteSession($scope.currentsession);
                 });
 
                 $scope.$on('sb.sessionSelected', function (event, arg) {
-                    $scope.sessionName = arg;
-                    $scope.loadSession($scope.sessionName);
+                    $scope.currentsession = arg;
+                    $scope.loadSession($scope.currentsession);
                 });
 
-                $scope.$on('sb.sessionName', function (event, arg) {
-                    $scope.sessionName = arg;
+                $scope.$on('sb.freshSession', function (event, arg) {
+                    $scope.currentsession = arg;
                     $scope.dashboards = [new DefaultDashboard()];
                 });
 
@@ -173,7 +166,7 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                     });
 
                     modalInstance.result.then(function (selectedItem) {
-                        $scope.$emit('sb.sessionName', selectedItem);
+                        $scope.$emit('sb.freshSession', selectedItem);
                     }, function () {
                     });
                 };

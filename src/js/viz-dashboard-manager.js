@@ -106,7 +106,7 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
 
                 $scope.$watchCollection('dashboards', function (newvalue, oldvalue) {
                     $scope.onstartup();
-                }, true);
+                });
 
                 $scope.$watch('displaymode', function (newvalue) {
                     $scope.$broadcast('resize-widget');
