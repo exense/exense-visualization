@@ -70,8 +70,7 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
 
                 $scope.$on('sb.sessionName', function (event, arg) {
                     $scope.sessionName = arg;
-                    $scope.$broadcast('dashboard-new', { displaytype : 'viz'});
-                    $scope.$broadcast('dashboard-new', { displaytype : 'exploded'});
+                    $scope.dashboards = [new DefaultDashboard()];
                 });
 
                 $scope.saveSession = function (sessionName) {
@@ -176,7 +175,6 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                     modalInstance.result.then(function (selectedItem) {
                         $scope.$emit('sb.sessionName', selectedItem);
                     }, function () {
-                        $log.info('Modal dismissed at: ' + new Date());
                     });
                 };
             }
