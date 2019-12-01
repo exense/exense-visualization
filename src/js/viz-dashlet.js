@@ -352,6 +352,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.fireQuery();
                 });
 
+                $scope.$on('fireQueryDependingOnContext', function () {
+                    $scope.fireQueryDependingOnContext();
+                });
+
                 // Paging
 
                 // also initPaging() on viewtoggle (back to config)?
@@ -423,7 +427,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 if (!$scope.state.viewtoggle) {
                     $scope.$on('dashletinput-initialized', function () {
-                        $scope.fireQueryDependingOnContext();
+                        //$scope.fireQueryDependingOnContext();
                     });
                 }
 

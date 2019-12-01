@@ -105,7 +105,9 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     if (!updated) {
                         $scope.dstate.globalsettings.placeholders.push(new Placeholder(arg.key, arg.value, arg.isDynamic));
                     }
-                    //??//$scope.$broadcast('update-template');
+                    $(document).ready(function(){
+                        $scope.$broadcast('fireQueryDependingOnContext');
+                    });
                 });
 
                 $scope.$on('globalsettings-globalRefreshToggle', function (event, arg) {
