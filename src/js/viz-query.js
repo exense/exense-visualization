@@ -29,11 +29,13 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 $scope.state.unwatchers.push($scope.$watch('state.data.transformed', function (newvalue) {
                     if (newvalue && newvalue.dashdata) {
+                        if ($scope.state.options.chart.type.endsWith('stackedAreaChart')) {
+                            $scope.cleanupTooltips();
+                        }
                         if ($scope.state.options.chart.type.endsWith('seriesTable')) {
                             $scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
                         }
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
-                            $scope.cleanupTooltips();
                             $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
                             //$scope.applyDynamicChartConfig();
                             $scope.reapplyScales();

@@ -331,7 +331,6 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.config.autorefreshduration) {
                         duration = $scope.state.config.autorefreshduration;
                     }
-
                     $scope.autorefreshInterval = setInterval(function () {
                         if (!$scope.isOngoingQuery) {
                             try {
