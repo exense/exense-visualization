@@ -43,11 +43,15 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                         clearInterval($scope.gsautorefreshInterval);
                     }
                 }
-
-                $scope.$on('key-val-collection-change-Global Settings', function (event, arg) {
-                    arg.async = false;
-                    $scope.$broadcast('globalsettings-change', arg);
-                });
+                /*
+                                $scope.$on('key-val-collection-change-Global Settings', function (event, arg) {
+                                    arg.async = false;
+                                    $scope.$broadcast('globalsettings-change', arg);
+                                });
+                */
+                $scope.$watch('dstate.globalsettings.placeholders', function (newValue, oldValue) {
+                    $scope.$broadcast('globalsettings-change', { collection: $scope.dstate.globalsettings.placeholders });
+                }, true);
 
                 $scope.$on('dashletinput-ready', function () {
                     $scope.$broadcast('globalsettings-change-init', { 'collection': $scope.dstate.globalsettings.placeholders });
@@ -101,6 +105,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     if (!updated) {
                         $scope.dstate.globalsettings.placeholders.push(new Placeholder(arg.key, arg.value, arg.isDynamic));
                     }
+                    //??//$scope.$broadcast('update-template');
                 });
 
                 $scope.$on('globalsettings-globalRefreshToggle', function (event, arg) {

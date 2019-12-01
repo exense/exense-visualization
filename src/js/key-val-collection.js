@@ -24,8 +24,8 @@ angular.module('key-val-collection', ['ui.bootstrap'])
                     $scope.changed();
                 };
 
-                $scope.changed = function(element, elementType){
-                    $scope.$emit('key-val-collection-change-' + $scope.collectionname, { type: elementType, element: element, collection: $scope.collection });
+                $scope.changed = function(){
+                    $scope.$emit('key-val-collection-change-' + $scope.collectionname, { collection: $scope.collection });
                 }
 
                 // unused - will probably be discarded in the future, doesn't seem like clean design
