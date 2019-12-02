@@ -129,19 +129,19 @@ function DefaultChartOptions() {
 };
 
 function DefaultDashletData() {
-    return new DashletData([], {}, {})
+    return new DashletData(null, null, null)
 };
 
 function DefaultGuiClosed() {
     return new Gui(false, false, false, false, false,
         false, false, false, false, false,
-        false, false, false, false);
+        false, false, false, false, null, null);
 };
 
 function DefaultGuiOpen() {
     return new Gui(true, false, true, true, false,
         true, true, false, false, true,
-        true, true, true, true);
+        true, true, true, true, null, null);
 };
 
 function DefaultDashletState() {

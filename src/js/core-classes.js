@@ -41,7 +41,7 @@ function Info(showraw) {
 
 function Gui(presets, loadconfig, display, coms, subscribeto,
     execution, info, presetquery, presetcontrols, service,
-    input, preproc, postproc, manage) {
+    input, preproc, postproc, manage, chartdata, tabledata) {
     return {
         status: {
             open: {
@@ -62,7 +62,9 @@ function Gui(presets, loadconfig, display, coms, subscribeto,
             },
             disabled: {
                 manage: false,
-            }
+            },
+            chartdata: chartdata,
+            tabledata: tabledata
         }
     };
 }
@@ -160,42 +162,42 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yA
         }
     };
 
-    if(xAxisScale){
+    if (xAxisScale) {
         options.xAxis.strScale = xAxisScale;
     }
 
-    if(yAxisScale){
+    if (yAxisScale) {
         options.yAxis.strScale = yAxisScale;
     }
 
     if (chartType === 'stackedAreaChart') {
-        options.useVoronoi=false;
-        options.showControls=false;
-        options.clipEdge=true;
-        options.duration=0;
-        options.useInteractiveGuideline=true;
-        options.showLegend=false;
-        options.zoom= {
-                enabled: true,
-                scaleExtent: [
-                    1,
-                    10
-                ],
-                useFixedDomain: false,
-                useNiceScale: false,
-                horizontalOff: true,
-                verticalOff: true,
-                unzoomEventType: "dblclick.zoom"
-            };
+        options.useVoronoi = false;
+        options.showControls = false;
+        options.clipEdge = true;
+        options.duration = 0;
+        options.useInteractiveGuideline = true;
+        options.showLegend = false;
+        options.zoom = {
+            enabled: true,
+            scaleExtent: [
+                1,
+                10
+            ],
+            useFixedDomain: false,
+            useNiceScale: false,
+            horizontalOff: true,
+            verticalOff: true,
+            unzoomEventType: "dblclick.zoom"
+        };
     } else {
-        options.stacked=stacked;
-        options.useInteractiveGuideline=useInteractiveGuideline;
-        options.x=function (d) { return d.x; };
-        options.y=function (d) { return d.y; };
-        options.showLegend=false;
-        options.scatter={
-                onlyCircles: false
-            };
+        options.stacked = stacked;
+        options.useInteractiveGuideline = useInteractiveGuideline;
+        options.x = function (d) { return d.x; };
+        options.y = function (d) { return d.y; };
+        options.showLegend = false;
+        options.scatter = {
+            onlyCircles: false
+        };
     }
     return options;
 };
