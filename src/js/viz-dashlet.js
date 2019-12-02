@@ -22,7 +22,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
             template: '<div ng-include="resolveDynamicTemplate()"></div>',
             controller: function ($scope, $http, dashletcomssrv) {
                 $scope.state.unwatchers = [];
-
+                $scope.loaded = false;
                 $scope.resolveDynamicTemplate = function () {
                     if ($scope.displaytype === 'aggregated') {
                         return aggTemplateUrl;
@@ -281,8 +281,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.query.type === 'Async') {
                         proctarget = $scope.state.query.datasource.callback;
                     }
-                    if (proctarget && proctarget.postproc && newValue && newValue.dashdata) { // due to watch init
-                        if (proctarget.postproc.transform.function && proctarget.postproc.transform.function.length > 0) {
+                    // due to watch init
+                    if (proctarget && proctarget.postproc && newValue && newValue.dashdata) {
+                        //$scope.loaded: do not append at load time (the value has most likely already been added 
+                        if (proctarget.postproc.transform.function && proctarget.postproc.transform.function.length > 0 && $scope.loaded) {
                             try {
                                 var newTransformed = {
                                     dashdata: runResponseProc(
@@ -432,6 +434,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if (!$scope.isAlreadyData()) {
                         $scope.fireQueryDependingOnContext();
                     }
+                    $scope.loaded = true;
                 });
 
                 $scope.isAlreadyData = function () {
