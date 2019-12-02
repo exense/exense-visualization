@@ -290,7 +290,7 @@ function Preset(name, preset) {
 //Used when loading entire templatedQuery state (programmatically)
 function TemplatedQuery(controltype, basequery, paging, controls) {
     return {
-        inputtype: 'Controls',
+        inputtype: 'Template',
         controltype: controltype,
         type: basequery.type,
         datasource: basequery.datasource,

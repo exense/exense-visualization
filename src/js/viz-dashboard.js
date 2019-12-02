@@ -17,45 +17,8 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             controller: function ($scope, $element) {
                 $scope.toggleAutorefresh = function () {
                     $scope.dstate.globalsettings.autorefresh = !$scope.dstate.globalsettings.autorefresh;
-                    if ($scope.dstate.globalsettings.autorefresh) {
-                        $scope.addInterval();
-                    } else {
-                        $scope.removeInterval();
-                    }
                     $scope.$broadcast('globalsettings-refreshToggle', { 'new': $scope.dstate.globalsettings.autorefresh })
                 };
-
-                $scope.addInterval = function () {
-
-                    var duration = setIntervalDefault;
-                    if ($scope.dstate.globalsettings.intervalduration) {
-                        duration = $scope.dstate.globalsettings.intervalduration;
-                    }
-
-                    $scope.removeInterval();
-                    $scope.gsautorefreshInterval = setInterval(function () {
-                        $scope.$broadcast('globalsettings-change', { 'collection': $scope.dstate.globalsettings.placeholders, async: true });
-                    }, duration);
-                }
-
-                $scope.removeInterval = function () {
-                    if ($scope.gsautorefreshInterval) {
-                        clearInterval($scope.gsautorefreshInterval);
-                    }
-                }
-                /*
-                                $scope.$on('key-val-collection-change-Global Settings', function (event, arg) {
-                                    arg.async = false;
-                                    $scope.$broadcast('globalsettings-change', arg);
-                                });
-                */
-                $scope.$watch('dstate.globalsettings.placeholders', function (newValue, oldValue) {
-                    $scope.$broadcast('globalsettings-change', { collection: $scope.dstate.globalsettings.placeholders });
-                }, true);
-
-                $scope.$on('dashletinput-ready', function () {
-                    $scope.$broadcast('globalsettings-change-init', { 'collection': $scope.dstate.globalsettings.placeholders });
-                });
 
                 $scope.toggleChevron = function () {
                     $scope.dstate.globalsettings.chevron = !$scope.dstate.globalsettings.chevron;
@@ -105,7 +68,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     if (!updated) {
                         $scope.dstate.globalsettings.placeholders.push(new Placeholder(arg.key, arg.value, arg.isDynamic));
                     }
-                    $(document).ready(function(){
+                    $(document).ready(function () {
                         $scope.$broadcast('fireQueryDependingOnContext');
                     });
                 });
@@ -131,11 +94,19 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     $scope.wwrap = new IdIndexArray($scope.dstate.widgets);
                     $scope.gsautorefreshInterval = null;
 
-                    if ($scope.dstate.globalsettings.autorefresh) {
-                        $scope.toggleAutorefresh();
-                    }
-                    $scope.$broadcast('resize-widget');
-                    $scope.$emit('dashboard-ready');
+                    $scope.initAuto = false;
+                    $scope.$on('dashletinput-ready', function () {
+                        if (!$scope.initAuto) {
+                            $scope.initAuto = true;
+                            if ($scope.dstate.globalsettings.autorefresh) {
+                                //for compatibility with toggle..
+                                $scope.dstate.globalsettings.autorefresh = false;
+                                $scope.toggleAutorefresh();
+                            }
+
+                            $scope.$emit('dashboard-ready');
+                        }
+                    });
                 }
 
                 $scope.onstartup();

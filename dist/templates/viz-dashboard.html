@@ -103,7 +103,7 @@
     <div class="row">
         <div ng-repeat="o in dstate.widgets track by o.oid">
             <viz-mgd-widget ng-if="dstate.displaytype !== 'exploded'" displaymode="displaymode" state="o.state" wstate="o.wstate"
-                widgetid="o.oid" headersheightinput="topmargin + 50" charttocontainerinput="" presets="presets" restprefix="restprefix" inputsettingscol="dstate.globalsettings.placeholders"></viz-mgd-widget>
+                widgetid="o.oid" headersheightinput="topmargin + 50" charttocontainerinput="" presets="presets" restprefix="restprefix"></viz-mgd-widget>
             <viz-dashlet ng-if="dstate.displaytype === 'exploded'" state="o.state" widgetid="'explorationDashlet'"
                 displaytype="'exploded'" displaymode="exploration" presets="presets" restprefix="restprefix"></viz-dashlet>
         </div>

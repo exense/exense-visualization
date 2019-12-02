@@ -48,22 +48,22 @@
         </ul>
 
         <div ng-show="state.viewtoggle && isTabActive(0)" class="innercontainer" ng-style="{ height: state.options.innercontainer.height+'px'}">
-            <viz-query state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-query>
+            <viz-query state="state" presets="presets"></viz-query>
         </div>
 
         <div ng-show="state.viewtoggle && isTabActive(1)" class="innercontainer" ng-style="{ height: state.options.innercontainer.height+'px'}">
-            <viz-transform state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-transform>
+            <viz-transform state="state" presets="presets"></viz-transform>
         </div>
 
         <div ng-show="state.viewtoggle && isTabActive(2)" class="innercontainer" ng-style="{ height: state.options.innercontainer.height+'px'}">
-            <viz-config state="state" widgetid="widgetid" presets="presets" inputsettingscol="inputsettingscol"></viz-config>
+            <viz-config state="state" widgetid="widgetid" presets="presets"></viz-config>
         </div>
 
         <div ng-show="state.viewtoggle && isTabActive(3)" class="innercontainer" ng-style="{ height: state.options.innercontainer.height+'px'}">
-            <viz-info state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-info>
+            <viz-info state="state" presets="presets"></viz-info>
         </div>
     </div>
     <div ng-show="!state.viewtoggle || displaymode !== 'managed'" class="viewcontainer" ng-style="{ height: state.options.innercontainer.height+'px'}">
-        <viz-view state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-view>
+        <viz-view state="state" presets="presets"></viz-view>
     </div>
 </div>

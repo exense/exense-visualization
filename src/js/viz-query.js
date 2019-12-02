@@ -5,7 +5,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             restrict: 'E',
             scope: {
                 state: '=',
-                presets: '='
+                presets: '=',
+                inputsettingscol: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-query.html'),
             controller: function ($scope) {
@@ -18,7 +19,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             scope: {
                 customheight: '=',
                 state: '=',
-                presets: '='
+                presets: '=',
+                inputsettingscol: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-view.html'),
             controller: function ($scope) {
@@ -66,7 +68,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     });
                 }
 
-                $scope.reapplyScales = function(){
+                $scope.reapplyScales = function () {
                     $scope.state.options.chart.xDomain = eval($scope.state.options.chart.xAxis.strScale);
                     $scope.state.options.chart.yDomain = eval($scope.state.options.chart.yAxis.strScale);
                 }
@@ -145,7 +147,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             restrict: 'E',
             scope: {
                 state: '=',
-                presets: '='
+                presets: '=',
+                inputsettingscol: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-transform.html'),
             controller: function ($scope) {
@@ -174,7 +177,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             scope: {
                 widgetid: '=',
                 state: '=',
-                presets: '='
+                presets: '=',
+                inputsettingscol: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
             controller: function ($scope) {
@@ -350,7 +354,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             scope: {
                 widgetid: '=',
                 state: '=',
-                presets: '='
+                presets: '=',
+                inputsettingscol: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-info.html'),
             controller: function ($scope) {
@@ -434,7 +439,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             restrict: 'E',
             scope: {
                 state: '=',
-                presets: '='
+                presets: '=',
+                inputsettingscol: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-service.html'),
             controller: function ($scope) {
@@ -451,13 +457,11 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             restrict: 'E',
             scope: {
                 state: '=',
-                presets: '='
+                presets: '=',
+                inputsettingscol: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-input.html'),
             controller: function ($scope) {
-
-                $scope.globalsettings = [];
-                $scope.globalsettingschangeinit = false;
 
                 $scope.initControls = function () {
                     $scope.state.query.controls = new DefaultControls();
@@ -473,62 +477,43 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.query = querypreset.query;
                 }
 
-                $scope.$on('key-val-collection-change-Placeholders', function (event, arg) {
-                    $scope.templateplaceholders = arg.collection;
-                    $scope.change(false);
-                });
+                $scope.$watch('inputsettingscol', function (newValue) {
+                    $scope.change();
+                }, true);
 
-                $scope.processTemplate = function (placeholders) {
-                    var data = "", params = "";
-                    //TODO:replace doesn't really need to be exposed if it's only used as part of the Template control
+                $scope.processTemplate = function () {
+                    if ($scope.state.query && $scope.state.query.controls && $scope.state.query.controls.template) {
+                        var data = "", params = "";
+                        //TODO:replace doesn't really need to be exposed if it's only used as part of the Template control
 
-                    $scope.state.data.placeholdersstate = evalDynamic($scope.mergePlaceholders());
-                    if ($scope.state.query.datasource.service.preproc.replace.function) {
-                        if ($scope.state.query.controls.template.templatedPayload) {
-                            data = runRequestProc(
-                                $scope.state.query.datasource.service.preproc.replace.function,
-                                $scope.state.query.controls.template.templatedPayload,
-                                $scope.state.data.placeholdersstate);
+                        $scope.state.data.placeholdersstate = evalDynamic($scope.mergePlaceholders());
+                        if ($scope.state.query.datasource.service.preproc.replace.function) {
+                            if ($scope.state.query.controls.template.templatedPayload) {
+                                data = runRequestProc(
+                                    $scope.state.query.datasource.service.preproc.replace.function,
+                                    $scope.state.query.controls.template.templatedPayload,
+                                    $scope.state.data.placeholdersstate);
+                            }
+
+                            if ($scope.state.query.controls.template.templatedParams) {
+                                params = runRequestProc(
+                                    $scope.state.query.datasource.service.preproc.replace.function,
+                                    $scope.state.query.controls.template.templatedParams,
+                                    $scope.state.data.placeholdersstate);
+                            }
                         }
-
-                        if ($scope.state.query.controls.template.templatedParams) {
-                            params = runRequestProc(
-                                $scope.state.query.datasource.service.preproc.replace.function,
-                                $scope.state.query.controls.template.templatedParams,
-                                $scope.state.data.placeholdersstate);
-                        }
-                    }
-                    return {
-                        data: data,
-                        params: params
-                    };
-                }
-
-                $scope.updateLocalSettings = function (arg) {
-                    $scope.globalsettings = arg.collection;
-
-                    // when no template has been loaded, just save the data, no need to trigger an update
-                    if ($scope.state.query.controls && $scope.state.query.controls.template) {
-                        $scope.change(arg.async);
+                        return {
+                            data: data,
+                            params: params
+                        };
+                    } else {
+                        return null;
                     }
                 }
-
-                // integration with outer settings via events
-                $scope.$on('globalsettings-change', function (event, arg) {
-                    $scope.updateLocalSettings(arg);
-                });
-
-                $scope.$on('globalsettings-change-init', function (event, arg) {
-                    if (!$scope.globalsettingschangeinit || $scope.globalsettingschangeinit === false) {
-                        $scope.updateLocalSettings(arg);
-                        $scope.$emit('dashletinput-initialized');
-                        $scope.globalsettingschangeinit = true;
-                    }
-                });
 
                 $scope.mergePlaceholders = function (placeholders) {
                     var phcopy = JSON.parse(JSON.stringify($scope.state.query.controls.template.placeholders));
-                    var gscopy = JSON.parse(JSON.stringify($scope.globalsettings));
+                    var gscopy = JSON.parse(JSON.stringify($scope.inputsettingscol));
                     var pagingph = [];
 
                     if ($scope.state.query.controls.template && $scope.state.query.paged.ispaged === 'On') {
@@ -565,10 +550,17 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.$emit('template-updated');
                 });
 
-                $scope.change = function (async) {
+                // query about to fire
+                $scope.$on('cleanup-info', function () {
+                    $scope.change();
+                });
+
+                $scope.change = function () {
                     var appliedTemplate = $scope.processTemplate();
-                    $scope.state.query.datasource.service.data = appliedTemplate.data;
-                    $scope.state.query.datasource.service.params = appliedTemplate.params;
+                    if (appliedTemplate) {
+                        $scope.state.query.datasource.service.data = appliedTemplate.data;
+                        $scope.state.query.datasource.service.params = appliedTemplate.params;
+                    }
                 }
 
                 $scope.$emit('dashletinput-ready');
@@ -580,7 +572,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             restrict: 'E',
             scope: {
                 state: '=',
-                presets: '='
+                presets: '=',
+                inputsettingscol: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-preproc.html'),
             controller: function ($scope) {
@@ -592,7 +585,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             restrict: 'E',
             scope: {
                 state: '=',
-                presets: '='
+                presets: '=',
+                inputsettingscol: '='
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-q-postproc.html'),
             controller: function ($scope) {

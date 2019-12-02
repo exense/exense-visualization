@@ -16,7 +16,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 displaytype: '=',
                 displaymode: '=',
                 presets: '=',
-                restprefix: '='
+                restprefix: '=',
+                inputsettingscol: '='
             },
             template: '<div ng-include="resolveDynamicTemplate()"></div>',
             controller: function ($scope, $http, dashletcomssrv) {
@@ -339,6 +340,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             } catch (e) {
                                 $scope.sendErrorMessage('[Autorefresh] unable to refresh due to error: ' + e + "; Starting new query.");
                                 // agressive
+                                $scope.clearAutorefreshInterval();
                                 $scope.isOngoingQuery = false;
                             }
                         } else {

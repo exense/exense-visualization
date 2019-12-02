@@ -6,8 +6,8 @@
                     <label>Input type</label>
                     <div class="btn-group viz-btn-group form-radio">
                         <label class="btn btn-success viz-btn-success" ng-model="state.query.inputtype" uib-btn-radio="'Raw'">Raw</label>
-                        <label class="btn btn-success viz-btn-success" ng-model="state.query.inputtype" uib-btn-radio="'Template'"
-                    ng-click="initControls()">Template</label>
+                        <label class="btn btn-success viz-btn-success" ng-model="state.query.inputtype" uib-btn-radio="'Controls'"
+                            ng-click="initControls()">Controls</label>
                     </div>
                 </div>
                 <div ng-if="state.query.inputtype == 'Raw'">
@@ -24,13 +24,12 @@
                         </div>
                     </div>
                 </div>
-
-                <div ng-if="state.query.inputtype == 'Template'">
+                <div ng-if="state.query.inputtype == 'Controls'">
                     <div class="col-md-4 colcontain-grid">
                         <label>Control type</label>
                         <div class="btn-group viz-btn-group form-radio">
                             <label class="btn btn-success viz-btn-success" ng-click="initTemplate()" ng-model="state.query.controltype"
-                                uib-btn-radio="'Plain'">Plain</label>
+                                uib-btn-radio="'Template'">Template</label>
                             <label class="btn btn-success viz-btn-success" ng-model="state.query.controltype"
                                 uib-btn-radio="'RTM'">RTM</label>
                             <label class="btn btn-success viz-btn-success" ng-model="state.query.controltype"
@@ -45,13 +44,13 @@
                                 Load controls... <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
-                                <div ng-if="state.query.controltype == 'Plain'">
+                                <div ng-if="state.query.controltype == 'Template'">
                                     <h5 ng-repeat="t in presets.controls.templates" ng-click="loadTemplatePreset(t.preset)">{{t.name}}</h5>
                                 </div>
                             </ul>
                         </div>
                     </div>
-                    <div ng-if="state.query.controltype == 'Plain'">
+                    <div ng-if="state.query.controltype == 'Template'">
                         <hr class="viz-hr" />
                         <div class="col-md-12 colcontain-grid">
                             <key-val-collection collection="state.query.controls.template.placeholders" collectionname="'Placeholders'"></key-val-collection>

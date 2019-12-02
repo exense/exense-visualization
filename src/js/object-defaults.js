@@ -106,12 +106,16 @@ function DefaultInfo() {
     return new Info('Off');
 }
 
-function DefaultControls(template) {
+function DefaultControls() {
     return new Controls({});
 };
 
+function DefaultTemplatedQuery(){
+    return new TemplatedQuery('Plain', new DefaultQuery(), new DefaultPaging(), new DefaultControls());
+};
+
 function DefaultTemplate(templatedPayload, templatedParams, placeholders) {
-    return new Template("", "", []);
+    return new Template("", "", [], new DefaultTemplatedQuery());
 };
 
 function DefaultChartOptions() {
