@@ -114,10 +114,6 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 $scope.$watchCollection('dstate.widgets', function (newvalue) {
                     $scope.onstartup();
                 });
-
-                $scope.$on('$destroy', function () {
-                    $scope.removeInterval();
-                });
             }
         };
     })

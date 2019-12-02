@@ -428,13 +428,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     });
                 };
 
-                if (!$scope.state.viewtoggle) {
-                    $scope.$on('dashletinput-initialized', function () {
-                        if (!$scope.isAlreadyData()) {
-                            $scope.fireQueryDependingOnContext();
-                        }
-                    });
-                }
+                $scope.$on('dashletinput-ready', function () {
+                    if (!$scope.isAlreadyData()) {
+                        $scope.fireQueryDependingOnContext();
+                    }
+                });
 
                 $scope.isAlreadyData = function () {
                     return $scope.state.data.rawresponse
@@ -443,12 +441,22 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         || $scope.state.gui.tableata;
                 };
 
-                $scope.clearData = function(){
+                $scope.clearData = function () {
                     $scope.state.data.rawresponse = null;
                     $scope.state.data.transformed = null;
                     $scope.state.gui.chartdata = null;
                     $scope.state.gui.tableata = null;
                 };
+
+                $scope.$on('globalsettings-refreshToggle', function (event, arg) {
+                    if (arg.new === true) {
+                        if (!$scope.state.config.slave) {
+                            $scope.state.config.autorefresh = 'On';
+                        }
+                    } else {
+                        $scope.state.config.autorefresh = 'Off';
+                    }
+                });
 
                 $scope.$on('$destroy', function () {
                     $scope.terminate();

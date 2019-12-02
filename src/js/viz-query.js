@@ -49,7 +49,9 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }));
 
                 $scope.cleanupTooltips = function () {
-                    $("div.nvtooltip").remove();
+                	while($("div.nvtooltip").length > 1){
+                		$("div.nvtooltip").first().remove();
+                	}
                 };
 
                 $scope.applyDynamicChartConfig = function () {
@@ -182,16 +184,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
             controller: function ($scope) {
-
-                $scope.$on('globalsettings-refreshToggle', function (event, arg) {
-                    if (arg.new) {
-                        if (!$scope.state.config.slave) {
-                            $scope.state.config.autorefresh = 'On';
-                        }
-                    } else {
-                        $scope.state.config.autorefresh = 'Off';
-                    }
-                });
 
                 $scope.loadConfigPreset = function (preset) {
                     $scope.state.config = jsoncopy(preset);
