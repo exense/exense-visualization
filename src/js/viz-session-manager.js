@@ -34,6 +34,9 @@ angular.module('viz-session-manager', ['viz-dashboard-manager', 'ui.bootstrap'])
                 $scope.$on('sb.dashboard-clear', function (event) {
                     $scope.$broadcast($scope.deriveEventName(event.name))
                 });
+                $scope.$on('sb.dashboard-data-clear', function (event) {
+                    $scope.$broadcast($scope.deriveEventName(event.name))
+                });
                 $scope.$on('sb.dashboard-current-addWidget', function (event) {
                     $scope.$broadcast($scope.deriveEventName(event.name))
                 });
