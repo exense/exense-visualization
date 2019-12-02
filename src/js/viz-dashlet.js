@@ -136,7 +136,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 };
 
-                $scope.proxify = function (url, method, payload){
+                $scope.proxify = function (url, method, payload) {
                     return {
                         url: url,
                         method: method,
@@ -295,13 +295,13 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                     )
                                 };
                                 //incremental refresh mode
-                                if ($scope.state.data.transformed && $scope.state.data.transformed.dashdata  && newTransformed && newTransformed.dashdata && $scope.state.config.incremental === 'On') {
+                                if ($scope.state.data.transformed && $scope.state.data.transformed.dashdata && newTransformed && newTransformed.dashdata && $scope.state.config.incremental === 'On') {
                                     // new dots don't fit, trim existing array
-                                    if($scope.state.data.transformed.dashdata.length + newTransformed.dashdata.length > $scope.state.config.incmaxdots){
+                                    if ($scope.state.data.transformed.dashdata.length + newTransformed.dashdata.length > $scope.state.config.incmaxdots) {
                                         var overflow = $scope.state.data.transformed.dashdata.length + newTransformed.dashdata.length - $scope.state.config.incmaxdots;
-                                        $scope.state.data.transformed.dashdata = $scope.state.data.transformed.dashdata.splice(overflow, $scope.state.data.transformed.dashdata.length-1);
+                                        $scope.state.data.transformed.dashdata = $scope.state.data.transformed.dashdata.splice(overflow, $scope.state.data.transformed.dashdata.length - 1);
                                     }
-                                    $scope.state.data.transformed = { dashdata: $scope.state.data.transformed.dashdata.concat(newTransformed.dashdata)};
+                                    $scope.state.data.transformed = { dashdata: $scope.state.data.transformed.dashdata.concat(newTransformed.dashdata) };
                                 } else {
                                     $scope.state.data.transformed = newTransformed;
                                 }
@@ -380,9 +380,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.$on('template-updated', function () {
                     $scope.fireQuery();
                 });
-                
+
                 $scope.$on('dashboard-data-clear', function () {
-                    $scope.state.data = new DefaultDashletData();
+                    console.log('clearing data.');
+                    $scope.clearData();
                 });
 
                 $scope.initPaging = function () {
@@ -429,9 +430,25 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 if (!$scope.state.viewtoggle) {
                     $scope.$on('dashletinput-initialized', function () {
-                        //$scope.fireQueryDependingOnContext();
+                        if (!$scope.isAlreadyData()) {
+                            $scope.fireQueryDependingOnContext();
+                        }
                     });
                 }
+
+                $scope.isAlreadyData = function () {
+                    return $scope.state.data.rawresponse
+                        || $scope.state.data.transformed
+                        || $scope.state.gui.chartdata
+                        || $scope.state.gui.tableata;
+                };
+
+                $scope.clearData = function(){
+                    $scope.state.data.rawresponse = null;
+                    $scope.state.data.transformed = null;
+                    $scope.state.gui.chartdata = null;
+                    $scope.state.gui.tableata = null;
+                };
 
                 $scope.$on('$destroy', function () {
                     $scope.terminate();
