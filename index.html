@@ -71,6 +71,10 @@
 		var myApp = angular.module('myApp', ['ngRoute', 'viz', 'explore', 'viz-session-manager'])
 			.config(['$routeProvider',
 				function config($routeProvider) {
+					
+					var dashboards = [];
+					var currentsession = 'New ';
+
 					$routeProvider.
 						when('/viz', {
 							template: '<viz />'
@@ -79,7 +83,7 @@
 							template: '<explore />'
 						}).
 						when('/session', {
-							template: '<viz-session-manager restprefix="\'/mocked\'" />'
+							template: '<viz-session-manager restprefix="\'/mocked\'" dashboards="dashboards" currentsession="currentsession"/>'
 						}).
 						otherwise('/viz');
 				}
