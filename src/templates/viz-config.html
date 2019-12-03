@@ -38,13 +38,13 @@
                                     uib-btn-radio="false">Off</label>
                             </div>
                         </div>
-                        <div class="colmdstyle col-md-3 colcontain-grid">
+                        <div class="colmdstyle col-md-2 colcontain-grid">
                             <label>Viz type</label>
                             <div class="btn-group viz-btn-group form-radio">
-                                <select ng-model="state.options.chart.type" ng-options="option as option for option in viztypes" class="form-control" />
+                                <select style="font-size: small;" ng-model="state.options.chart.type" ng-options="option as option for option in viztypes" class="form-control" />
                             </div>
                         </div>
-                        <div class="colmdstyle col-md-1 colcontain-grid">
+                        <div class="colmdstyle col-md-2 colcontain-grid">
                             <label>Autorefresh</label>
                             <div class="btn-group viz-btn-group form-radio">
                                 <label class="btn btn-success viz-btn-success" ng-model="state.config.autorefresh"
