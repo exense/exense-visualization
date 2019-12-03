@@ -55,7 +55,15 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 }
 
                 $scope.toggleBarchevronToViz = function () {
-                    $scope.fireQueryDependingOnContext();
+                    if ($scope.state.config.toggleaction === 'Fire') {
+                        $scope.fireQueryDependingOnContext();
+                    }
+                    if ($scope.state.config.toggleaction === 'Draw') {
+                        $scope.state.data.rawresponse = jsoncopy($scope.state.data.rawresponse);
+                    }
+                    if ($scope.state.config.toggleaction === 'None') {
+                        console.log('toggle view action is set to none: doing nothing.');
+                    }
                     $scope.state.viewtoggle = !$scope.state.viewtoggle;
                 }
 

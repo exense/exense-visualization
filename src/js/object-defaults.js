@@ -46,7 +46,7 @@ function DefaultDashboardGui() {
 }
 
 function DefaultConfig() {
-    return new Config('Off', false, false, '', 3000, 1000, 'Off', 8, 'Off');
+    return new Config('Fire','Off', false, false, '', 3000, 1000, 'Off', 8, 'Off');
 };
 
 function DefaultQuery() {

@@ -98,8 +98,9 @@ function DashletData(transformed, rawresponse, state) {
     };
 };
 
-function Config(autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration, incremental, incmaxdots, transposetable) {
+function Config(toggleaction, autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration, incremental, incmaxdots, transposetable) {
     return {
+        toggleaction: toggleaction,
         autorefresh: autorefresh,
         master: master,
         slave: slave,
