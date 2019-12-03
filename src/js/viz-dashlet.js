@@ -448,7 +448,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.isAlreadyData = function () {
                     return $scope.state.data.rawresponse
                         || $scope.state.data.transformed
-                        || $scope.state.gui.chartdata
+                        || ($scope.state.gui.chartdata && $scope.state.gui.chartdata.length > 0)
                         || $scope.state.gui.tableata;
                 };
 

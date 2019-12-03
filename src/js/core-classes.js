@@ -62,10 +62,10 @@ function Gui(presets, loadconfig, display, coms, subscribeto,
             },
             disabled: {
                 manage: false,
-            },
-            chartdata: chartdata,
-            tabledata: tabledata
-        }
+            }
+        },
+        chartdata: chartdata,
+        tabledata: tabledata
     };
 }
 
