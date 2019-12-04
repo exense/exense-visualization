@@ -455,8 +455,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.clearData = function () {
                     $scope.state.data.rawresponse = null;
                     $scope.state.data.transformed = null;
-                    $scope.state.gui.chartdata = null;
-                    $scope.state.gui.tableata = null;
+                    $scope.state.gui.chartdata = [];
+                    $scope.state.gui.tabledata = null;
                 };
 
                 $scope.$on('globalsettings-refreshToggle', function (event, arg) {

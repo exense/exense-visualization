@@ -29,26 +29,25 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.options.chart.height = customheight - 10;
                 }
 
-                $scope.state.unwatchers.push($scope.$watch('state.data.transformed', function (newvalue) {
-                    if (!newvalue || !newvalue.dashdata) {
-                        newvalue = { dashdata: {} };
-                    }
-                    if ($scope.state.options.chart.type.endsWith('stackedAreaChart')) {
-                        $scope.cleanupTooltips();
-                    }
-                    if ($scope.state.options.chart.type.endsWith('seriesTable')) {
-                        $scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
-                    }
-                    if ($scope.state.options.chart.type.endsWith('Chart')) {
-                        $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
-                        //$scope.applyDynamicChartConfig();
-                        $scope.reapplyScales();
-                    }
+                $scope.state.unwatchers.push($scope.$watchCollection('state.data.transformed', function (newvalue) {
+                    if (newvalue && newvalue.dashdata) {
+                        if ($scope.state.options.chart.type.endsWith('stackedAreaChart')) {
+                            $scope.cleanupTooltips();
+                        }
+                        if ($scope.state.options.chart.type.endsWith('seriesTable')) {
+                            $scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
+                        }
+                        if ($scope.state.options.chart.type.endsWith('Chart')) {
+                            $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
+                            //$scope.applyDynamicChartConfig();
+                            $scope.reapplyScales();
+                        }
 
-                    if ($scope.state.info.showraw === 'On') {
-                        $scope.state.info.transformresult = angular.toJson(newvalue.dashdata);
+                        if ($scope.state.info.showraw === 'On') {
+                            $scope.state.info.transformresult = angular.toJson(newvalue.dashdata);
+                        }
                     }
-                }, true));
+                }));
 
                 $scope.cleanupTooltips = function () {
                     while ($("div.nvtooltip").length > 1) {
@@ -239,7 +238,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         dashletcomssrv.registerWidget($scope.widgetid, $scope.state.title);
                         //updating both values upon change on transformed for optimization/simplicity
                         // could be two distinct updates via service
-                        $scope.unwatchMaster = $scope.$watch('state.data.transformed', function (newvalue) {
+                        $scope.unwatchMaster = $scope.$watchCollection('state.data.transformed', function (newvalue) {
                             if (newvalue) {
                                 dashletcomssrv.updateMasterValue($scope.widgetid, { transformed: angular.toJson(newvalue.dashdata), raw: angular.toJson($scope.state.data.rawresponse.dashdata) });
                             } else {
