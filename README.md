@@ -27,8 +27,14 @@ The transform tab is composed of 3 sections : the Pre-processing , Post-processi
 
 #### Pre-processing
 
+The pre-processing function is used to prepare the url and payload data based on the defined templates and place holders. The default function should cover most cases.
+
 #### Post-processing
 
+The post-processing function is used to process the response payload and build up an array of three-dimensional items (x,y,z). Typically for a timechart, you would use:
+*x: timestamp
+*y: value
+*z: serie's name
 
 #### Axes processing
 
