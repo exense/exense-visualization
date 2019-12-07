@@ -17,7 +17,7 @@ You can switch between configuration and visualization mode by clicking either t
 
 ### Query
 
-The query tab is composed of 2 sections : the service definition and the service input.
+The query tab is composed of 2 sections : the service definition and the service input. The query is the entity responsible for accessing a service and retrieving the resulting data. By default, queries will be fired when the user toggles to the visualization pane of the dashlet, when autorefresh is enabled or when application-specific events are broadcast to trigger its execution.
 
 #### Service section
 The service  section is used to define the following settings:
@@ -32,7 +32,7 @@ In the service input section, you can choose between 2 kinds of input:
 
 ### Transform
 
-The transform tab is composed of 3 sections : the Pre-processing , Post-processing and Axes processing function definition.
+The transform tab is composed of 3 sections : the Pre-processing , Post-processing and Axes processing function definition. Transformations occur when a service response is received. The transformation is applied in order to structure the data into an X-Y-Z object array format. X and Y represent the coordinates of the datapoint while Z represents the series (more specifically, its name). It is the user's responsability to parse the service response correctly and turn it into this array by providing a proper javascript function.
 
 #### Pre-processing
 
