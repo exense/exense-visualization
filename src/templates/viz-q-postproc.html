@@ -7,7 +7,11 @@
                         <div ng-if="state.query.type == 'Async'">
                             <label>Save Postproc</label>
                             <textarea ng-model="state.query.datasource.service.postproc.save.function" class="form-control" />
-                            </div>
+                        </div>
+                        <div ng-if="state.query.type == 'Async'">
+                            <label>End condition Postproc</label>
+                            <textarea ng-model="state.query.datasource.callback.postproc.asyncEnd.function" class="form-control" />
+                        </div>
                     </div>
                 </div>
                 <div class="colmdstyle col-md-12 colcontain-grid">
