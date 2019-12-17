@@ -6,11 +6,11 @@ function importTest(name, path) {
 
 describe("top", function () {
     beforeEach(function () {
-       console.log("running something before each test");
+       console.log("starting test run.");
     });
     importTest("service-chain", './suite/service-chain-tests.js');
-    //importTest("b", './b/b');
+    importTest("ajax-client", './suite/ajax-client-tests.js');
     after(function () {
-        console.log("after all tests");
+        console.log("completed test run.");
     });
 });
