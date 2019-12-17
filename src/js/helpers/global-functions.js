@@ -12,7 +12,6 @@ var registerScript = function () {
 
     vizScripts[filename] = scriptUrl;
 };
-registerScript();
 
 var forceRedraw = function (scope) {
     var phase = scope.$root.$$phase;

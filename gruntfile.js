@@ -19,7 +19,7 @@ module.exports = function (grunt) {
                 options: {
                     separator: ';\n',
                 },
-                src: ['src/js/dist-settings-prod.js', 'src/js/global-functions.js', 'src/js/core-classes.js', 'src/js/object-defaults.js', 'src/js/rtm-controls.js', 'src/js/viz-dashlet.js', 'src/js/viz-mgd-widget.js', 'src/js/viz-query.js', 'src/js/viz-dashboard.js', 'src/js/viz-dashboard-manager.js', 'src/js/key-val-collection.js', 'src/js/dashletcomssrv.js', 'src/js/id-index-array.js', 'src/js/explore.js', 'src/js/viz.js', 'src/js/viz-session-manager.js' , 'src/js/polyfill.js'],
+                src: ['src/js/helpers/dist-settings-prod.js', 'src/js/helpers/global-functions.js', 'src/js/models/core-classes.js', 'src/js/models/object-defaults.js', 'src/js/extentions/rtm-controls.js', 'src/js/viz-dashlet.js', 'src/js/viz-mgd-widget.js', 'src/js/viz-query.js', 'src/js/viz-dashboard.js', 'src/js/viz-dashboard-manager.js', 'src/js/components/key-val-collection.js', 'src/js/dashletcomssrv.js', 'src/js/modules/id-index-array.js', 'src/js/app/explore.js', 'src/js/app/viz.js', 'src/js/viz-session-manager.js' , 'src/js/helpers/polyfill.js'],
                 dest: 'dist/viz.js',
             },
             dist2: {
