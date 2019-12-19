@@ -1,8 +1,8 @@
-function ServiceChain(value) {
-    var myValue = value;
+function ServiceChain(services) {
+    var srvDescriptors = services;
     return {
-        getValue : function(){
-            return myValue;
+        getServices : function(){
+            return srvDescriptors;
         }
     };
 }

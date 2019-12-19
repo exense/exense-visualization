@@ -11,7 +11,7 @@ describe('Core', function()
         it('should chain two successful service executions',
             function()
             {
-                assert.equal("foo", new ServiceChain("foo").getValue());
+                assert.equal("foo", new ServiceChain("foo").getServices());
             })
     });
 
