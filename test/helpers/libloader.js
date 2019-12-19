@@ -15,7 +15,7 @@ exports.load = function (paths) {
     paths.push('../../node_modules/jquery/dist/jquery.js');
     paths.push('./commons.js');
 
-    $.each(fileArray, function (idx, itm) {
+    $.each(paths, function (idx, itm) {
         //TODO load in isolated context instead?
         vm.runInThisContext(fs.readFileSync(path.resolve(__dirname, itm)), itm);
     });
