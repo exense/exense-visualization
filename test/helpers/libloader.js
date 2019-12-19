@@ -11,16 +11,13 @@ var fs = require('fs');
 var vm = require('vm');
 const path = require("path");
 
-function getLibraryCode(fileArray){
-    let code = "";
-    $.each(fileArray, function (idx, itm) {
-        code += fs.readFileSync(path.resolve(__dirname, itm)) + '\n';
-    });
-    return code;
-}
-
 exports.load = function (paths) {
     paths.push('../../node_modules/jquery/dist/jquery.js');
     paths.push('./commons.js');
-    vm.runInThisContext(getLibraryCode(paths));
+
+    $.each(fileArray, function (idx, itm) {
+        //TODO load in isolated context instead?
+        vm.runInThisContext(fs.readFileSync(path.resolve(__dirname, itm)), itm);
+    });
+
 }
