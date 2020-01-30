@@ -19,14 +19,14 @@ module.exports = function (grunt) {
                 options: {
                     separator: ';\n',
                 },
-                src: ['src/js/helpers/dist-settings-prod.js', 'src/js/helpers/global-functions.js', 'src/js/models/core-classes.js', 'src/js/models/object-defaults.js', 'src/js/extentions/rtm-controls.js', 'src/js/viz-dashlet.js', 'src/js/viz-mgd-widget.js', 'src/js/viz-query.js', 'src/js/viz-dashboard.js', 'src/js/viz-dashboard-manager.js', 'src/js/components/key-val-collection.js', 'src/js/dashletcomssrv.js', 'src/js/modules/id-index-array.js', 'src/js/app/explore.js', 'src/js/app/viz.js', 'src/js/viz-session-manager.js' , 'src/js/helpers/polyfill.js'],
+                src: ['src/js/helpers/*.js','!src/js/helpers/dist-settings-dev.js', 'src/js/models/*.js', 'src/js/extensions/*.js', 'src/js/*.js', 'src/js/modules/*.js'],
                 dest: 'dist/viz.js',
             },
             dist2: {
                 options: {
                     separator: '\n',
                 },
-                src: ['src/css/viz-global.css', 'src/css/viz-dashlet.css', 'src/css/viz-mgd-widget.css', 'src/css/viz-dashboard.css', 'src/css/key-val-collection.css'],
+                src: ['src/css/*.css'],
                 dest: 'dist/viz.css',
             }
         },

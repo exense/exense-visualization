@@ -1,4 +1,4 @@
-function Processor(name, stage, ) {
+function Processor(name, stage ) {
     return {
         getServices : function(){
             return srvDescriptors;
