@@ -330,11 +330,15 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 }
 
-                $scope.state.unwatchers.push($scope.$watch('state.config.autorefresh', function (newValue) {
+                $scope.restartInterval = function (refreshToggle) {
                     $scope.clearAutorefreshInterval();
-                    if (newValue === 'On') {
+                    if (refreshToggle === 'On') {
                         $scope.setAutorefreshInterval();
                     }
+                }
+  
+                $scope.state.unwatchers.push($scope.$watch('state.config.autorefresh', function (newValue) {
+                    $scope.restartInterval(newValue);
                 }));
 
                 $scope.setAutorefreshInterval = function () {
@@ -467,6 +471,15 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     } else {
                         $scope.state.config.autorefresh = 'Off';
                     }
+                });
+
+                $scope.$on('globalsettings-refreshInterval', function (event, arg) {
+                    if (arg.new > 0) {
+                      if (!$scope.state.config.slave) {
+                        $scope.state.config.autorefreshduration = arg.new;
+                        $scope.restartInterval($scope.state.config.autorefresh);
+                      }
+                    } 
                 });
 
                 $scope.$on('$destroy', function () {

@@ -15,8 +15,12 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             },
             templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, $element) {
-                $scope.toggleAutorefresh = function () {
-                    $scope.dstate.globalsettings.autorefresh = !$scope.dstate.globalsettings.autorefresh;
+                $scope.toggleAutorefresh = function (newValue) {
+                    if (typeof newValue === "undefined") {
+                        $scope.dstate.globalsettings.autorefresh = !$scope.dstate.globalsettings.autorefresh;
+                    } else {
+                      $scope.dstate.globalsettings.autorefresh = newValue;
+                    }
                     $scope.$broadcast('globalsettings-refreshToggle', { 'new': $scope.dstate.globalsettings.autorefresh })
                 };
 
@@ -74,7 +78,11 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 });
 
                 $scope.$on('globalsettings-globalRefreshToggle', function (event, arg) {
-                    $scope.toggleAutorefresh();
+                    if (arg && typeof arg.new !== "undefined") {
+                        $scope.toggleAutorefresh(arg.new);
+                    } else {
+                      $scope.toggleAutorefresh();
+                    }
                 });
 
                 $scope.addWidget = function (arg) {
