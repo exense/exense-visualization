@@ -60,7 +60,7 @@ function DefaultTextFilter() {
 };
 
 function DefaultNumericalFilter() {
-    return new NumericalFilter('', 0, 99999);
+    return new NumericalFilter('value', 0, 1);
 };
 
 function DefaultDateFilter() {
@@ -69,8 +69,8 @@ function DefaultDateFilter() {
 
 function DefaultSelector() {
     return {
-        textFilters: [new TextFilter('abc', 'def', false)],
-        numericalFilters: [new NumericalFilter('time', 0,99999999)]
+        textFilters: [new DefaultTextFilter()],
+        numericalFilters: []
     };
 }
 
@@ -177,9 +177,9 @@ angular.module('rtm-controls', [])
 
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-text-filter.html'),
             controller: function ($scope) {
-                //console.log(angular.toJson($scope.key));
-                //console.log(angular.toJson($scope.value));
-                //console.log(angular.toJson($scope.regex));
+                $scope.setKey = function(key){
+                    $scope.key = key;
+                };
             }
         };
     })
@@ -195,6 +195,9 @@ angular.module('rtm-controls', [])
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-numerical-filter.html'),
             controller: function ($scope) {
 
+                $scope.setKey = function(key){
+                    $scope.key = key;
+                };
             }
         };
     })
@@ -215,6 +218,10 @@ angular.module('rtm-controls', [])
 
                 $scope.setMinDate = function(timestamp){
                     $scope.maxmodel = new Date(timestamp);
+                };
+
+                $scope.setKey = function(key){
+                    $scope.key = key;
                 };
             }
         };
