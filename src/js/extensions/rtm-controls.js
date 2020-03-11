@@ -64,7 +64,7 @@ function DefaultNumericalFilter() {
 };
 
 function DefaultDateFilter() {
-    return new DateFilter('', 0, 1577840400000);
+    return new DateFilter('begin', 0, 1577840400000);
 };
 
 function DefaultSelector() {
@@ -209,7 +209,13 @@ angular.module('rtm-controls', [])
 
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-date-filter.html'),
             controller: function ($scope) {
+                $scope.setMaxDate = function(timestamp){
+                    $scope.maxmodel = new Date(timestamp);
+                };
 
+                $scope.setMinDate = function(timestamp){
+                    $scope.maxmodel = new Date(timestamp);
+                };
             }
         };
     })
