@@ -1,0 +1,51 @@
+<td class="btn-group viz-btn-group form-radio col-md-12">
+
+  <div class="col-md-3" style="display: flex;">
+    <input type="text" class="form-control input-sm" placeholder="key" value="{{key}}">
+    <div class="btn-group" uib-dropdown>
+      <button id="preset-keys-dropdown" type="button" class="btn btn-primary input-sm" uib-dropdown-toggle
+        ng-disabled="disabled">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+        <li role="menuitem"><a href="#">defaultTextKeys[i]</a></li>
+        <li role="menuitem"><a href="#">Another action</a></li>
+        <li role="menuitem"><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li role="menuitem"><a href="#">Separated link</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-1">
+    &nbsp;
+  </div>
+
+  <div class="col-md-3" style="display: flex;">
+    <input type="text" class="form-control input-sm" placeholder="min date" value="{{mindate}}">
+    <div class="btn-group" uib-dropdown>
+      <button id="mindate-dropdown" type="button" class="btn btn-primary input-sm" uib-dropdown-toggle
+        ng-disabled="disabled">
+        <span class="glyphicon glyphicon-th"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="col-md-1">
+    &nbsp;
+  </div>
+
+  <div class="col-md-3" style="display: flex;">
+    <input type="text" class="form-control input-sm" placeholder="max date" value="{{maxdate}}">
+    <div class="btn-group" uib-dropdown>
+      <button id="maxdate-dropdown" type="button" class="btn btn-primary input-sm" uib-dropdown-toggle
+        ng-disabled="disabled">
+        <span class="glyphicon glyphicon-th"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="col-md-1">
+    &nbsp;
+  </div>
+
+</td>

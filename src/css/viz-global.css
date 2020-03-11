@@ -6,3 +6,8 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
     background-color: #337ab7;
     color: white;
 }
+
+.rtm-label {
+    font-weight: normal;
+    font-size: small;
+}

@@ -1,67 +1,82 @@
 <div class="form-wrapper">
     <div class="form-group center-block">
-        <div class="container innerformcontainer">
+        <div class="container innerformcontainer col-md-12">
             <div class="row">
-                <div class="col-md-3 colcontain-grid">
+                <div class="col-md-2 colcontain-grid">
                     <label>Input type</label>
                     <div class="btn-group viz-btn-group form-radio">
-                        <label class="btn btn-success viz-btn-success" ng-model="state.query.inputtype" uib-btn-radio="'Raw'">Raw</label>
-                        <label class="btn btn-success viz-btn-success" ng-model="state.query.inputtype" uib-btn-radio="'Template'"
-                    ng-click="initControls()">Template</label>
-                    </div>
-                </div>
-                <div ng-if="state.query.inputtype == 'Raw'">
-                    <div class="col-md-3 colcontain-grid">
-                        <label>Preset</label>
-                        <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="state.gui.status.open.presetquery">
-                            <button id="load-query" type="button" class="btn btn-success viz-btn-success"
-                                uib-dropdown-toggle ng-disabled="disabled">
-                                Load query... <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
-                                <h5 ng-repeat="qp in presets.queries" ng-click="loadQueryPreset(qp.preset)">{{qp.name}}</h5>
-                            </ul>
-                        </div>
+                        <label class="btn btn-success viz-btn-success" ng-model="state.query.inputtype"
+                            uib-btn-radio="'Raw'">Raw</label>
+                        <label class="btn btn-success viz-btn-success" ng-model="state.query.inputtype"
+                            uib-btn-radio="'Template'" ng-click="initControls()">Template</label>
                     </div>
                 </div>
 
-                <div ng-if="state.query.inputtype == 'Template'">
-                    <div class="col-md-4 colcontain-grid">
-                        <label>Control type</label>
-                        <div class="btn-group viz-btn-group form-radio">
-                            <label class="btn btn-success viz-btn-success" ng-click="initTemplate()" ng-model="state.query.controltype"
-                                uib-btn-radio="'Plain'">Plain</label>
-                            <label class="btn btn-success viz-btn-success" ng-model="state.query.controltype"
-                                uib-btn-radio="'RTM'">RTM</label>
+                <div class="col-md-2 colcontain-grid" ng-if="state.query.inputtype == 'Raw'">
+                    <label>Preset</label>
+                    <div class="btn-group viz-btn-group form-radio" uib-dropdown
+                        is-open="state.gui.status.open.presetquery">
+                        <button id="load-query" type="button" class="btn btn-success viz-btn-success"
+                            uib-dropdown-toggle ng-disabled="disabled">
+                            Load query... <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
+                            <h5 ng-repeat="qp in presets.queries" ng-click="loadQueryPreset(qp.preset)">{{qp.name}}</h5>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-2 colcontain-grid" ng-if="state.query.inputtype == 'Template'">
+                    <label>Control type</label>
+                    <div class="btn-group viz-btn-group form-radio">
+                        <label class="btn btn-success viz-btn-success" ng-click="initTemplate()"
+                            ng-model="state.query.controltype" uib-btn-radio="'Plain'">Plain</label>
+                        <label class="btn btn-success viz-btn-success" ng-click="initRTMControls()"
+                            ng-model="state.query.controltype" uib-btn-radio="'RTM'">RTM</label>
+                        <!--
                             <label class="btn btn-success viz-btn-success" ng-model="state.query.controltype"
                                 uib-btn-radio="'STEP'">STEP</label>
-                        </div>
+                                -->
                     </div>
-                    <div class="col-md-4 colcontain-grid">
-                        <label>Preset</label>
-                        <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="state.gui.status.open.presetcontrols">
-                            <button id="load-controls" type="button" class="btn btn-success viz-btn-success"
-                                uib-dropdown-toggle ng-disabled="disabled">
-                                Load controls... <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
-                                <div ng-if="state.query.controltype == 'Plain'">
-                                    <h5 ng-repeat="t in presets.controls.templates" ng-click="loadTemplatePreset(t.preset)">{{t.name}}</h5>
-                                </div>
-                            </ul>
-                        </div>
+                </div>
+
+                <div class="col-md-2 colcontain-grid">
+                    <label>Preset</label>
+                    <div class="btn-group viz-btn-group form-radio" uib-dropdown
+                        is-open="state.gui.status.open.presetcontrols">
+                        <button id="load-controls" type="button" class="btn btn-success viz-btn-success"
+                            uib-dropdown-toggle ng-disabled="disabled">
+                            Load controls... <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-query">
+                            <div ng-if="state.query.controltype == 'Plain'">
+                                <h5 ng-repeat="t in presets.controls.templates" ng-click="loadTemplatePreset(t.preset)">
+                                    {{t.name}}</h5>
+                            </div>
+                            <div ng-if="state.query.controltype == 'RTM'">
+                                <h5 ng-repeat="t in presets.controls.rtmtemplates"
+                                    ng-click="loadTemplatePreset(t.preset)">{{t.name}}</h5>
+                            </div>
+                        </ul>
                     </div>
-                    <div ng-if="state.query.controltype == 'Plain'">
-                        <hr class="viz-hr" />
-                        <div class="col-md-12 colcontain-grid">
-                            <key-val-collection collection="state.query.controls.template.placeholders" collectionname="'Placeholders'"></key-val-collection>
-                        </div>
-                        <div class="col-md-6 colcontain-grid">
-                            <label>Template Data</label>
-                            <div class="btn-group viz-btn-group">
-                                <textarea ng-model="state.query.controls.template.templatedPayload" class="form-control"
-                                    ng-change="change()" />
-                                </div>
+                </div>
+            </div>
+
+            <hr class="viz-hr" />
+
+            <div class="row">
+
+                <div ng-if="state.query.controltype == 'Plain'">
+                    <div class="col-md-12 colcontain-grid">
+                        <key-val-collection collection="state.query.controls.template.placeholders"
+                            collectionname="'Placeholders'"></key-val-collection>
+                    </div>
+                    <div class="col-md-6 colcontain-grid">
+                        <label>Template Data</label>
+                        <div class="btn-group viz-btn-group">
+                            <textarea ng-model="state.query.controls.template.templatedPayload" class="form-control"
+                                ng-change="change()" />
+                            </div>
                         </div>
                         <div class="col-md-6 colcontain-grid">
                             <label>Template Url</label>
@@ -102,7 +117,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div ng-if="state.query.controltype == 'RTM'">
+                        <div class="col-md-12 colcontain-grid">
+                            <rtm-controls payload="state.query.controls.rtmpayload"/>
+                        </div>
+                    </div>
             </div>
 
             <hr class="viz-hr" />

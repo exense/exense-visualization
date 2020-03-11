@@ -467,6 +467,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.query.controls.template = new DefaultTemplate();
                 }
 
+                $scope.initRTMControls = function () {
+                    $scope.state.query.controls.rtmpayload = new DefaultRTMPayload();
+                }
+
                 $scope.loadQueryPreset = function (querypresetArg) {
                     var querypreset = jsoncopy(querypresetArg);
                     $scope.state.query = querypreset.query;

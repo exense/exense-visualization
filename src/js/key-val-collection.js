@@ -29,9 +29,9 @@ angular.module('key-val-collection', ['ui.bootstrap'])
                 }
 
                 // unused - will probably be discarded in the future, doesn't seem like clean design
-                $scope.$on('force-update-' + $scope.collectionname, function(event, arg){
+                /*$scope.$on('force-update-' + $scope.collectionname, function(event, arg){
                     $scope.$emit('key-val-collection-change-' + $scope.collectionname, { type: 'forced', element: null, collection: $scope.collection });
-                });
+                });*/
             }
         }
     })
