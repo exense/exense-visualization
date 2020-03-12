@@ -26,7 +26,13 @@
 }
 
 .rtm-li-inactive a {
-    background-color: white; color: #337AB7 !important;
+    background-color: rgb(235, 235, 235);
+    color: #337AB7;
+}
+
+.rtm-li-inactive a:hover, .rtm-li-active a:hover{
+    background-color: rgb(200, 200, 200);
+    color: #337AB7;
 }
 
 .rtm-li-active a {
@@ -40,4 +46,49 @@ a:hover {
 .rtm-dropdown{
     margin-top: 0px !important;
     display: block !important;
+}
+
+.multiselect-parent.viz-btn-group{
+    margin-top: 5px !important;
+    display: block !important;
+}
+
+.multiselect-parent button {
+    font-weight: bold;
+    padding: 5px;
+    margin: 0;
+}
+
+.multiselect-parent span {
+    background-color: #337AB7; color: white !important;
+}
+
+.multiselect-parent li {
+    height: 22px;
+    margin: 0;
+    padding: 0;
+}
+
+.multiselect-parent input {
+    height: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.multiselect-parent label {
+    height: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.multiselect-parent a {
+    height: 24px;
+    margin: 0;
+    padding: 0;
+}
+
+.multiselect-parent .checkbox{
+height: 18px;
+margin: 0;
+padding: 0;
 }
