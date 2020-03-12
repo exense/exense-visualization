@@ -110,6 +110,9 @@
     <div class="row">
         <div ng-attr-class="colmdclass col-md-12">
             <div class="headercontainer">
+                <button class="btn btn-success btn-nav" ng-click="broadcastQueryFire()" uib-tooltip="Fire query" tooltip-placement="bottom">
+                    <span class="glyphicon glyphicon-flash glyphicon-app"></span>
+                </button>
                 <rtm-controls payload="dstate.widgets[0].state.query.controls.rtmpayload" orientation="'horizontal'"/>
             </div>
         </div>
@@ -130,12 +133,12 @@
     <div class="row">
         <div ng-attr-class="colmdclass col-md-6">
             <div class="headercontainer">
-                <viz-config state="dstate.widgets[0].state" widgetid="widgetid" presets="presets" />
+                <viz-config state="dstate.widgets[0].state" widgetid="dstate.widgets[0].oid" presets="presets" showcoms="false" />
             </div>
         </div>
         <div ng-attr-class="colmdclass col-md-6">
             <div class="headercontainer">
-                <viz-config state="dstate.widgets[0].state" widgetid="widgetid" presets="presets" />
+                <viz-config state="dstate.widgets[1].state" widgetid="dstate.widgets[1].oid" presets="presets" showcoms="false" />
             </div>
         </div>
     </div>

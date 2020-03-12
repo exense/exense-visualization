@@ -34,6 +34,10 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     }
                 };
 
+                $scope.broadcastQueryFire = function(){
+                    $scope.$broadcast('fireQueryDependingOnContext');
+                };
+
                 $scope.toggleAutorefresh = function (newValue) {
                     if (typeof newValue === "undefined") {
                         $scope.dstate.globalsettings.autorefresh = !$scope.dstate.globalsettings.autorefresh;

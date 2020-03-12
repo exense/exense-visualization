@@ -96,26 +96,12 @@ function DefaultRTMPayload() {
     return new RTMPayload([new DefaultSelector()], new DefaultServiceParams());
 }
 
-function RTMMasterWidget() {
-    return new Widget(
-        getUniqueId(),
-        new DefaultWidgetState(),
-        new RTMDashletState()
-    );
-};
-
-function RTMSlaveWidget() {
-    return new Widget(
-        getUniqueId(),
-        new DefaultWidgetState(),
-        new RTMDashletState()
-    );
-};
 
 function RTMQuery() {
     var query = new DefaultAsyncQuery();
     query.controls = new DefaultControls();
     query.paged = new DefaultPaging();
+    query.controltype = 'RTM';
 
     var transform = "function (response, args) {\r\n    var metric = args.metric;\r\n    var retData = [], series = {};\r\n\r\n    var payload = response.data.payload.stream.streamData;\r\n    var payloadKeys = Object.keys(payload);\r\n\r\n    for (i = 0; i < payloadKeys.length; i++) {\r\n        var serieskeys = Object.keys(payload[payloadKeys[i]])\r\n        for (j = 0; j < serieskeys.length; j++) {\r\n            retData.push({\r\n                x: payloadKeys[i],\r\n                y: payload[payloadKeys[i]][serieskeys[j]][metric],\r\n                z: serieskeys[j]\r\n            });\r\n        }\r\n    }\r\n    return retData;\r\n}";
     query.type = 'Async';
@@ -136,15 +122,53 @@ function RTMQuery() {
     return query;
 }
 
-function RTMDashletState() {
+
+var RTMmasterId = "RTM-Master-" + getUniqueId();
+
+function RTMMasterState() {
     return new DashletState(
-        'RTM Dashlet', true, 0,
+        'Chart', true, 0,
         new DefaultDashletData(),
         new DefaultChartOptions(),
-        new DefaultConfig(),
+        new Config('Fire','Off', true, false, 'unnecessaryAsMaster'),
+        //(toggleaction, autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration, incremental, incmaxdots, transposetable)
         new RTMQuery(),
         new DefaultGuiClosed(),
         new DefaultInfo()
+    );
+};
+
+function RTMSlaveState() {
+    var slaveConfig = new Config('Fire','Off', false, true, 'state.data.transformed');
+    slaveConfig.currentmaster = {
+        oid: RTMmasterId,
+        title: 'Chart'
+    };
+
+    return new DashletState(
+        'Table', true, 0,
+        new DefaultDashletData(),
+        new DefaultChartOptions(),
+        slaveConfig,
+        new RTMQuery(),
+        new DefaultGuiClosed(),
+        new DefaultInfo()
+    );
+};
+
+function RTMMasterWidget() {
+    return new Widget(
+        RTMmasterId,
+        new DefaultWidgetState(),
+        new RTMMasterState()
+    );
+};
+
+function RTMSlaveWidget() {
+    return new Widget(
+        "RTM-Slave-"+getUniqueId(),
+        new DefaultWidgetState(),
+        new RTMSlaveState()
     );
 };
 
@@ -207,7 +231,6 @@ function RTMserialize(guiPayload) {
 
     });
 
-    console.log(angular.toJson(copy))
     return angular.toJson(copy);
 }
 

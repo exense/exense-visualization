@@ -1,28 +1,4 @@
 <uib-accordion>
-    <div uib-accordion-group class="panel-default viz-panel-default" heading="Presets" is-open="state.gui.status.open.presets"
-        is-disabled="status.isFirstDisabled">
-        <div class="form-wrapper">
-            <div class="form-group center-block">
-                <div class="container innerformcontainer">
-                    <div class="row">
-                        <div class="colmdstyle col-md-12 colcontain-contents">
-                            <div class="btn-group viz-btn-group form-radio" uib-dropdown is-open="state.gui.status.open.loadconfig">
-                                <button id="load-config" type="button" class="btn btn-success viz-btn-success"
-                                    uib-dropdown-toggle ng-disabled="disabled">
-                                    Load config... <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="load-config">
-                                    <h5 ng-repeat="c in presets.configs" ng-click="loadConfigPreset(c.preset)">{{c.name}}</h5>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</uib-accordion>
-<uib-accordion>
     <div uib-accordion-group class="panel-default viz-panel-default" heading="Display" is-open="state.gui.status.open.display"
         is-disabled="config.status.isFirstDisabled">
         <div class="form-wrapper">
@@ -106,7 +82,7 @@
         </div>
     </div>
 </uib-accordion>
-<uib-accordion>
+<uib-accordion ng-show="showcoms">
     <div uib-accordion-group class="panel-default viz-panel-default" heading="Coms" is-open="state.gui.status.open.coms"
         is-disabled="config.status.isFirstDisabled">
         <div class="form-wrapper">

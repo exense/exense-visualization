@@ -181,7 +181,8 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 widgetid: '=',
                 state: '=',
                 presets: '=',
-                inputsettingscol: '='
+                inputsettingscol: '=',
+                showcoms: '=?'
             },
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
             controller: function ($scope) {
