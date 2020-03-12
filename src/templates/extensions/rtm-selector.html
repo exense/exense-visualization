@@ -1,13 +1,12 @@
+<div class="row">
+</div>
+
 <div class="row" style="background-color: antiquewhite;">
   <div class="col-md-1">
     <label style="text-align : left; padding: 5px;">OR</label>
   </div>
 
-  <div class="col-md-1">
-    <label style="text-align : left; padding: 5px;">&nbsp;</label>
-  </div>
-
-  <div class="col-md-8">
+  <div class="col-md-10">
     <span class="btn-group-xs"><button type="submit" class="btn btn-warning" ng-click="addTextFilter()">Add Text
         Filter</button></span>
     <span class="btn-group-xs"><button type="submit" class="btn btn-warning" ng-click="addNumericalFilter()">Add
@@ -15,6 +14,7 @@
     <span class="btn-group-xs"><button type="submit" class="btn btn-warning" ng-click="addDateFilter()">Add Date
         Filter</button></span>
   </div>
+
   <div class="col-md-1">
     <label style="text-align : left; padding: 5px;">&nbsp;</label>
   </div>
@@ -22,30 +22,21 @@
 
 <div class="row" ng-repeat="filter in textfilters" class="col-md-12" style="background-color:gainsboro">
   <div class="col-md-1">
-    <label style="text-align : left; padding: 5px;">&nbsp;</label>
+    <label style="float : right; padding: 5px;">AND</label>
   </div>
-  <div class="col-md-1">
-    <label style="text-align : right; padding: 5px;">AND</label>
-  </div>
-  <div class="col-md-8">
+  <div class="col-md-10">
     <rtm-text-filter key="filter.key" value="filter.value" regex="filter.regex" />
   </div>
   <div class="col-md-1">
     <span class="btn-group-xs"><button type="submit" class="btn btn-danger viz-btn-success" ng-click="removeTextfilter($index)">X</button></span></th>
   </div>
-  <div class="col-md-1">
-    <label style="text-align : left; padding: 5px;">&nbsp;</label>
-  </div>
 </div>
 
 <div class="row" ng-repeat="filter in numericalfilters" class=" col-md-12" style="background-color:gainsboro">
   <div class="col-md-1">
-    <label style="text-align : left; padding: 5px;">&nbsp;</label>
+    <label style="float : right; padding: 5px;">AND</label>
   </div>
-  <div class="col-md-1">
-    <label style="text-align : right; padding: 5px;">AND</label>
-  </div>
-  <div class="col-md-8">
+  <div class="col-md-10">
     <rtm-numerical-filter ng-if="filter.type === 'numerical'" key="filter.key" minvalue="filter.minValue"
       maxvalue="filter.maxValue" />
     <rtm-date-filter ng-if="filter.type === 'date'" key="filter.key" mindate="filter.minDate"
@@ -54,9 +45,6 @@
   </div>
   <div class="col-md-1">
     <span class="btn-group-xs"><button type="submit" class="btn btn-danger viz-btn-success" ng-click="removeNumericalfilter($index)">X</button></span></th>
-  </div>
-  <div class="col-md-1">
-    <label style="text-align : left; padding: 5px;">&nbsp;</label>
   </div>
 </div>
 </table>

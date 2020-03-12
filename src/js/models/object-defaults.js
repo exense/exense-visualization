@@ -24,7 +24,8 @@ function DefaultDashboardState(widgets) {
 function DefaultDashboard(widgets) {
     return new Dashboard(
         getUniqueId(),
-        new DefaultDashboardState(widgets)
+        new DefaultDashboardState(widgets),
+        'viz'
     );
 };
 
@@ -37,7 +38,8 @@ function DefaultExplorationDashboard() {
             'Explore Dashboard',
             'exploded',
             new DefaultDashboardGui()
-        )
+        ),
+        'viz'
     );
 };
 

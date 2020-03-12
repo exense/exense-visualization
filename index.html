@@ -41,6 +41,7 @@
 
 	<script src="src/js/viz.js"></script>
 	<script src="src/js/explore.js"></script>
+	<script src="src/js/rtm.js"></script>
 
 	<script src="test/static/static-presets.js"></script>
 
@@ -66,13 +67,14 @@
 		<a href="#!viz"><button class="btn btn-success btn-nav viz-btn-nav"><span class="glyphicon glyphicon-picture glyphicon-app"></span></button></a>
 		<a href="#!explore"><button class="btn btn-success btn-nav viz-btn-nav"><span class="glyphicon glyphicon-search glyphicon-app"></span></button></a>
 		<a href="#!session"><button class="btn btn-success btn-nav viz-btn-nav"><span class="glyphicon glyphicon-blackboard glyphicon-app"></span></button></a>
+		<a href="#!rtm"><button class="btn btn-success btn-nav viz-btn-nav"><span class="glyphicon glyphicon-stats glyphicon-app"></span></button></a>
 	</span>
 
 	<div ng-view></div>
 
 	<script>
 		var initTestDashboard = false;
-		var myApp = angular.module('myApp', ['ngRoute', 'viz', 'explore', 'viz-session-manager'])
+		var myApp = angular.module('myApp', ['ngRoute', 'viz', 'explore', 'rtm', 'viz-session-manager'])
 			.config(['$routeProvider',
 				function config($routeProvider) {
 					
@@ -88,6 +90,9 @@
 						}).
 						when('/session', {
 							template: '<viz-session-manager restprefix="\'/mocked\'" dashboards="dashboards" currentsession="currentsession"/>'
+						}).
+						when('/rtm', {
+							template: '<rtm />'
 						}).
 						otherwise('/viz');
 				}

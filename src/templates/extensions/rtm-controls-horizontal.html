@@ -1,0 +1,27 @@
+<label class="col-md-12" style="background-color: #337AB7; color: white; text-align: center;">RTM Controls</label>
+<div class="row">
+    <div class="col-md-6 colcontain-grid" style="height: calc(30vh - 40px); overflow-y: auto; display: block;">
+        <div class="btn-group viz-btn-group form-radio">
+            <div>
+                <label>Selectors</label>
+            </div>
+            <button class="btn btn-success viz-btn-success" ng-click="addSelector()">Add Selector</button>
+            <button class="btn btn-danger viz-btn-success" ng-click="clearAll()">Clear All</button>
+        </div>
+
+        <div class="btn-group viz-btn-group form-radio">
+            <div ng-repeat="selector in payload.selectors1" style="padding: 10px; margin: 10px; position: relative; display: inline-flex">
+                <!--  style="position: absolute; top: 10px; right: 0px;" -->
+                <rtm-selector textfilters="selector.textFilters" numericalfilters="selector.numericalFilters" />
+                <span class="btn-group-xs" style="position: absolute; right: 0;">
+                    <button type="submit" class="btn btn-danger viz-btn-success"
+                        ng-click="removeSelector($index)">X</button>
+                </span>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 colcontain-grid" style="height: calc(30vh - 40px); overflow-y: auto; display: block;">
+        <rtm-service-params params="payload.serviceParams" style="padding: 10px; margin: 10px">
+    </div>
+</div>

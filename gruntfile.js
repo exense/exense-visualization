@@ -33,8 +33,8 @@ module.exports = function (grunt) {
         copy: {
             main: {
                 files: [
-                    { expand: true, cwd: 'src/templates', src: ['**'], dest: 'dist/templates' }
-                    { expand: true, cwd: 'src/templates/extensions', src: ['**'], dest: 'dist/templates' },
+                    { expand: true, cwd: 'src/templates', src: ['**.html'], dest: 'dist/templates' },
+                    { expand: true, cwd: 'src/templates/extensions', src: ['**'], dest: 'dist/templates' }
                 ]
             }
         },

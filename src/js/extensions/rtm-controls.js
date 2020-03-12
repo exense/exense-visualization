@@ -96,9 +96,80 @@ function DefaultRTMPayload() {
     return new RTMPayload([new DefaultSelector()], new DefaultServiceParams());
 }
 
+function RTMMasterWidget() {
+    return new Widget(
+        getUniqueId(),
+        new DefaultWidgetState(),
+        new RTMDashletState()
+    );
+};
+
+function RTMSlaveWidget() {
+    return new Widget(
+        getUniqueId(),
+        new DefaultWidgetState(),
+        new RTMDashletState()
+    );
+};
+
+function RTMQuery() {
+    var query = new DefaultAsyncQuery();
+    query.controls = new DefaultControls();
+    query.paged = new DefaultPaging();
+
+    var transform = "function (response, args) {\r\n    var metric = args.metric;\r\n    var retData = [], series = {};\r\n\r\n    var payload = response.data.payload.stream.streamData;\r\n    var payloadKeys = Object.keys(payload);\r\n\r\n    for (i = 0; i < payloadKeys.length; i++) {\r\n        var serieskeys = Object.keys(payload[payloadKeys[i]])\r\n        for (j = 0; j < serieskeys.length; j++) {\r\n            retData.push({\r\n                x: payloadKeys[i],\r\n                y: payload[payloadKeys[i]][serieskeys[j]][metric],\r\n                z: serieskeys[j]\r\n            });\r\n        }\r\n    }\r\n    return retData;\r\n}";
+    query.type = 'Async';
+    query.datasource = {
+        service: new Service(//service
+            "/rtm/rest/aggregate/get", "Post",
+            "",//templated
+            new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}"),
+            new Postproc("", "", [], "function(response){if(!response.data.payload){console.log('No payload ->' + JSON.stringify(response)); return null;}return [{ placeholder : '__streamedSessionId__', value : response.data.payload.streamedSessionId, isDynamic : false }];}", "")),
+        callback: new Service(//callback
+            "/rtm/rest/aggregate/refresh", "Post",
+            "{\"streamedSessionId\": \"__streamedSessionId__\"}",
+            new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].placeholder, workData[i].value);}return newRequestFragment;}"),
+            new Postproc("function(response){return response.data.payload.stream.complete;}", transform, [{ "key": "metric", "value": "cnt", "isDynamic": false }], {}, ""))
+    };
+
+    query.controls.rtmpayload = new DefaultRTMPayload();
+    return query;
+}
+
+function RTMDashletState() {
+    return new DashletState(
+        'RTM Dashlet', true, 0,
+        new DefaultDashletData(),
+        new DefaultChartOptions(),
+        new DefaultConfig(),
+        new RTMQuery(),
+        new DefaultGuiClosed(),
+        new DefaultInfo()
+    );
+};
+
+function RTMDashboardState() {
+
+    return new DashboardState(
+        new DefaultGlobalSettings(),
+        [new RTMMasterWidget(), new RTMSlaveWidget()],
+        'RTM Dashboard',
+        'aggregated',
+        new DefaultDashboardGui()
+    );
+};
+
+function RTMDashboard() {
+    return new Dashboard(
+        getUniqueId(),
+        new RTMDashboardState(),
+        'rtm'
+    );
+};
+
 function RTMserialize(guiPayload) {
-    if(!guiPayload){
-        throw new Error ('guiPayload is null or undefined');
+    if (!guiPayload) {
+        throw new Error('guiPayload is null or undefined');
     }
 
     var copy = JSON.parse(angular.toJson(guiPayload));
@@ -136,7 +207,7 @@ function RTMserialize(guiPayload) {
 
     });
 
-    console.log( angular.toJson(copy))
+    console.log(angular.toJson(copy))
     return angular.toJson(copy);
 }
 
@@ -144,14 +215,30 @@ function RTMserialize(guiPayload) {
 angular.module('rtm-controls', [])
 
     .directive('rtmControls', function () {
+
+        var controllerScript = 'rtm-controls.js';
+        var horizontal = resolveTemplateURL(controllerScript, 'rtm-controls-horizontal.html');
+        var vertical = resolveTemplateURL(controllerScript, 'rtm-controls-vertical.html');
+
         return {
             restrict: 'E',
             scope: {
-                payload: '='
+                payload: '=',
+                orientation: '=?'
             },
 
-            templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-controls.html'),
+            template: '<div ng-include="resolveDynamicTemplate()"></div>',
             controller: function ($scope) {
+                
+                /* Dynamic template impl*/
+                $scope.resolveDynamicTemplate = function () {
+                    if ($scope.orientation === 'horizontal') {
+                        return horizontal;
+                    }
+                    else {
+                        return vertical;
+                    }
+                };
 
                 $scope.addSelector = function () {
                     $scope.payload.selectors1.push(new DefaultSelector());

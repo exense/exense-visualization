@@ -2,6 +2,12 @@ registerScript();
 
 angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomssrv'])
     .directive('vizDashboard', function () {
+
+        var controllerScript = 'viz-dashboard.js';
+        var rtmTemplateUrl = resolveTemplateURL(controllerScript, 'viz-rtm-dashboard.html');
+        var vizTemplateUrl = resolveTemplateURL(controllerScript, 'viz-dashboard.html');
+        var errorTemplateUrl = resolveTemplateURL(controllerScript, 'error-template.html');
+
         return {
             restrict: 'E',
             scope: {
@@ -11,15 +17,28 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 displaytype: '=',
                 presets: '=',
                 topmargin: '=',
-                restprefix: '='
+                restprefix: '=',
+                templatetype: '=?'
             },
-            templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
+            template: '<div ng-include="resolveDynamicTemplate()"></div>',
+            //templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, $element) {
+
+                /* Dynamic template impl*/
+                $scope.resolveDynamicTemplate = function () {
+                    if ($scope.templatetype === 'rtm') {
+                        return rtmTemplateUrl;
+                    }
+                    else {
+                        return vizTemplateUrl;
+                    }
+                };
+
                 $scope.toggleAutorefresh = function (newValue) {
                     if (typeof newValue === "undefined") {
                         $scope.dstate.globalsettings.autorefresh = !$scope.dstate.globalsettings.autorefresh;
                     } else {
-                      $scope.dstate.globalsettings.autorefresh = newValue;
+                        $scope.dstate.globalsettings.autorefresh = newValue;
                     }
                     $scope.$broadcast('globalsettings-refreshToggle', { 'new': $scope.dstate.globalsettings.autorefresh })
                 };
@@ -81,7 +100,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     if (arg && typeof arg.new !== "undefined") {
                         $scope.toggleAutorefresh(arg.new);
                     } else {
-                      $scope.toggleAutorefresh();
+                        $scope.toggleAutorefresh();
                     }
                 });
 
@@ -125,4 +144,3 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             }
         };
     })
-

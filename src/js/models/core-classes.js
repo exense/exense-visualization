@@ -1,7 +1,8 @@
-function Dashboard(dashboardid, dstate) {
+function Dashboard(dashboardid, dstate, type) {
     return {
         oid: dashboardid,
-        dstate: dstate
+        dstate: dstate,
+        type: type
     };
 }
 
