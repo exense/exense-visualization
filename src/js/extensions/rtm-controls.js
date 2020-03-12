@@ -100,7 +100,7 @@ function RTMserialize(guiPayload) {
     if(!guiPayload){
         throw new Error ('guiPayload is null or undefined');
     }
-    
+
     var copy = JSON.parse(angular.toJson(guiPayload));
 
     $.each(guiPayload.selectors1, function (selIdx, selector) {
@@ -111,7 +111,7 @@ function RTMserialize(guiPayload) {
             if (filter.type === 'date') {
                 newNumericals.push(
                     new NumericalFilter(
-                        'numerical',
+                        filter.key,
                         filter.minDate.getTime(),
                         filter.maxDate.getTime()
                     )
@@ -119,23 +119,24 @@ function RTMserialize(guiPayload) {
             } else {
                 newNumericals.push(filter);
             }
-
-            copy.selectors1[selIdx].numericalFilters[filIdx] = newNumericals;
         });
+
+        copy.selectors1[selIdx].numericalFilters = newNumericals;
     });
 
     $.each(copy.selectors1, function (selIdx, selector) {
         // Remove type info (unknown to backend)
-        $.each(selector.textFilters, function (index, filter) {
+        $.each(selector.textFilters, function (filIdx, filter) {
             filter.type = undefined;
         });
 
-        $.each(selector.numericalFilters, function (index, filter) {
+        $.each(selector.numericalFilters, function (filIdx, filter) {
             filter.type = undefined;
         });
 
     });
 
+    console.log( angular.toJson(copy))
     return angular.toJson(copy);
 }
 
