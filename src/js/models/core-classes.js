@@ -337,7 +337,3 @@ function Template(templatedPayload, templatedParams, placeholders, querytemplate
         queryTemplate: querytemplate
     };
 };
-
-function RTMTemplate() {
-    return "abc";
-};
