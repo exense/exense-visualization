@@ -35,7 +35,7 @@ function Selector(textFilters, numericalFilters) {
     };
 }
 
-function ServiceParams(cpu, granularity, groupby, partition, sessionId, timeout, nextFactor) {
+function ServiceParams(cpu, granularity, groupby, partition, sessionId, timeout, nextFactor, timeField, timeFormat, valueField) {
     return {
         "aggregateService.cpu": cpu,
         "aggregateService.granularity": granularity,
@@ -43,7 +43,10 @@ function ServiceParams(cpu, granularity, groupby, partition, sessionId, timeout,
         "aggregateService.partition": partition,
         "aggregateService.sessionId": sessionId,
         "aggregateService.timeout": timeout,
-        "measurementService.nextFactor": nextFactor
+        "measurementService.nextFactor": nextFactor,
+        "aggregateService.timeField": timeField,
+        "aggregateService.timeFormat": timeFormat,
+        "aggregateService.valueField": valueField
     };
 }
 
@@ -82,7 +85,11 @@ function DefaultServiceParams() {
     /* "aggregateService.partition": */ "8",
     /* "aggregateService.sessionId": */ "defaultSid",
     /* "aggregateService.timeout": */ "600",
-    /* "measurementService.nextFactor": */ "0");
+    /* "measurementService.nextFactor": */ "0",
+    /*"aggregateService.timeField": */ "begin",
+    /*"aggregateService.timeFormat": */ "long",
+    /*"aggregateService.valueField": */ "value"
+    );
 }
 
 function DefaultRTMPayload() {
@@ -157,11 +164,23 @@ angular.module('rtm-controls', [])
         return {
             restrict: 'E',
             scope: {
-                filter: '='
+                params: '='
             },
 
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-service-params.html'),
             controller: function ($scope) {
+
+                $scope.tabIndex = 0;
+
+                $scope.selectTab = function (tabIndex) {
+                    $scope.tabIndex = tabIndex;
+                };
+
+                $scope.isTabActive = function (tabIndex) {
+                    return tabIndex === $scope.tabIndex;
+                };
+
+                console.log($scope.params);
 
             }
         };

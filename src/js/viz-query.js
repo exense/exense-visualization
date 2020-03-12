@@ -461,6 +461,9 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 $scope.initControls = function () {
                     $scope.state.query.controls = new DefaultControls();
                     $scope.state.query.paged = new DefaultPaging();
+
+                    $scope.state.query.controls.unwatchers = [];
+                    //watch state.query.controltype, cleanup existing watchers, invoke proper control init
                 }
 
                 $scope.initTemplate = function () {
@@ -469,6 +472,15 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 $scope.initRTMControls = function () {
                     $scope.state.query.controls.rtmpayload = new DefaultRTMPayload();
+
+                    $scope.state.query.controls.unwatchers.push(
+                        $scope.$watch('state.query.controls.rtmpayload', function (newValue) {
+                            console.log('change detected : ' + angular.toJson(newValue));
+
+                            // serialize and set into                     "$scope.state.query.datasource.service.data"
+                        }, true) // deep watching changes in the RTM models
+                    );
+
                 }
 
                 $scope.loadQueryPreset = function (querypresetArg) {

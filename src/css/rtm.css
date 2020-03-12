@@ -1,0 +1,38 @@
+
+.rtm-label {
+    font-weight: normal;
+    font-size: small;
+}
+
+.rtm-input {
+    height: 22px;
+    font-weight: normal;
+    font-size: small;
+}
+
+.rtm-ul, .rtm-li, .rtm-li a{
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+    margin: 0px !important;
+    font-weight: normal;
+    font-size: small;
+}
+
+.rtm-li span{
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.rtm-li-inactive a {
+    background-color: white; color: #337AB7 !important;
+}
+
+.rtm-li-active a {
+    background-color: #337AB7; color: white !important;
+}
+
+a:hover {
+    cursor: pointer;
+}

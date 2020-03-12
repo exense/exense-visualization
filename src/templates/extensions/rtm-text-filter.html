@@ -1,7 +1,7 @@
 <td class="btn-group viz-btn-group form-radio col-md-12">
 
   <div class="col-md-3" style="display: flex;">
-    <input type="text" class="form-control input-sm" placeholder="key" value="{{key}}">
+    <input type="text" class="form-control input-sm" placeholder="key" ng-model="key">
     <div class="btn-group" uib-dropdown is-open="status.isopen">
       <button id="single-button" type="button" class="btn btn-primary input-sm" uib-dropdown-toggle ng-disabled="disabled">
         <span class="caret"></span>
@@ -24,7 +24,7 @@
   </div>
 
   <div class="col-md-4">
-    <input type="text" class="form-control input-sm" placeholder="value" value="{{value}}">
+    <input type="text" class="form-control input-sm" placeholder="value" ng-model="value">
   </div>
 
   <div ng-if="filter.regex == true" class="col-md-2">
