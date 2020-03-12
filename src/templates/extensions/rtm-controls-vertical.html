@@ -14,7 +14,7 @@
     <div class="col-md-12 colcontain-grid" ng-repeat="selector in payload.selectors1">
         <rtm-selector textfilters="selector.textFilters" numericalfilters="selector.numericalFilters" />
         <span class="btn-group-xs" style="position: absolute; right: 0;"><button type="submit"
-                class="btn btn-danger viz-btn-success" ng-click="removeSelector($index)">X</button></span></th>
+                class="btn btn-danger viz-btn-success" ng-click="removeSelector($index)"><span style="padding: 0; margin: 0; font-size: 10px !important;" class="glyphicon glyphicon-remove glyphicon-app"></span></button></span></th>
     </div>
     <div class="col-md-12 colcontain-grid">
         <rtm-service-params params="payload.serviceParams">
