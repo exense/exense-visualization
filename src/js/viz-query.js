@@ -471,13 +471,29 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
 
                 $scope.initRTMControls = function () {
+
+                    var transform = "function (response, args) {\r\n    var metric = args.metric;\r\n    var retData = [], series = {};\r\n\r\n    var payload = response.data.payload.stream.streamData;\r\n    var payloadKeys = Object.keys(payload);\r\n\r\n    for (i = 0; i < payloadKeys.length; i++) {\r\n        var serieskeys = Object.keys(payload[payloadKeys[i]])\r\n        for (j = 0; j < serieskeys.length; j++) {\r\n            retData.push({\r\n                x: payloadKeys[i],\r\n                y: payload[payloadKeys[i]][serieskeys[j]][metric],\r\n                z: serieskeys[j]\r\n            });\r\n        }\r\n    }\r\n    return retData;\r\n}";
+
+                    $scope.state.query.type = 'Async';
+                    $scope.state.query.datasource = {
+                        service: new Service(//service
+                            "/rtm/rest/aggregate/get", "Post",
+                            "",//templated
+                            new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}"),
+                            new Postproc("", "", [], "function(response){if(!response.data.payload){console.log('No payload ->' + JSON.stringify(response)); return null;}return [{ placeholder : '__streamedSessionId__', value : response.data.payload.streamedSessionId, isDynamic : false }];}", "")),
+                        callback: new Service(//callback
+                            "/rtm/rest/aggregate/refresh", "Post",
+                            "{\"streamedSessionId\": \"__streamedSessionId__\"}",
+                            new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].placeholder, workData[i].value);}return newRequestFragment;}"),
+                            new Postproc("function(response){return response.data.payload.stream.complete;}", transform, [{ "key": "metric", "value": "cnt", "isDynamic": false }], {}, ""))
+                    };
+
                     $scope.state.query.controls.rtmpayload = new DefaultRTMPayload();
 
                     $scope.state.query.controls.unwatchers.push(
                         $scope.$watch('state.query.controls.rtmpayload', function (newValue) {
-                            console.log('change detected : ' + angular.toJson(newValue));
-
-                            // serialize and set into                     "$scope.state.query.datasource.service.data"
+                            //console.log('to backend: ' + RTMserialize(newValue));
+                            $scope.state.query.datasource.service.data = RTMserialize(newValue);
                         }, true) // deep watching changes in the RTM models
                     );
 
@@ -489,7 +505,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
 
                 $scope.$watch('inputsettingscol', function (newValue) {
-                    $scope.change();
+                    $scope.templateChange();
                 }, true);
 
                 $scope.processTemplate = function () {
@@ -523,9 +539,16 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
 
                 $scope.mergePlaceholders = function (placeholders) {
-                    var phcopy = JSON.parse(JSON.stringify($scope.state.query.controls.template.placeholders));
-                    var gscopy = JSON.parse(JSON.stringify($scope.inputsettingscol));
+                    var phcopy = "";
+                    var gscopy = "";
                     var pagingph = [];
+
+                    if ($scope.state.query.controls.template && $scope.state.query.controls.template.placeholders) {
+                        phcopy = JSON.parse(JSON.stringify($scope.state.query.controls.template.placeholders));
+                    }
+                    if ($scope.inputsettingscol) {
+                        gscopy = JSON.parse(JSON.stringify($scope.inputsettingscol));
+                    }
 
                     if ($scope.state.query.controls.template && $scope.state.query.paged.ispaged === 'On') {
                         pagingph.push({ key: $scope.state.query.paged.offsets.first.vid, value: $scope.state.query.paged.offsets.first.state });
@@ -553,20 +576,27 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 };
 
                 $scope.$on('update-template-nofire', function () {
-                    $scope.change();
+                    $scope.templateChange();
                 });
 
                 $scope.$on('update-template', function () {
-                    $scope.change();
+                    $scope.templateChange();
                     $scope.$emit('template-updated');
                 });
 
                 // query about to fire
                 $scope.$on('cleanup-info', function () {
-                    $scope.change();
+
+                    //if RTM
+                    if ($scope.state.query.controltype && $scope.state.query.controltype === 'RTM')
+                        // probably useless since we've initialized a deep watcher to keep the model in sync with the view'
+                        $scope.state.query.datasource.service.data = RTMserialize($scope.state.query.controls.rtmpayload);
+                    else {//if template
+                        $scope.templateChange();
+                    }
                 });
 
-                $scope.change = function () {
+                $scope.templateChange = function () {
                     var appliedTemplate = $scope.processTemplate();
                     if (appliedTemplate) {
                         $scope.state.query.datasource.service.data = appliedTemplate.data;

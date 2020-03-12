@@ -57,7 +57,6 @@ function RTMPayload(selectorCollection, serviceParams) {
     };
 }
 
-
 function DefaultTextFilter() {
     return new TextFilter('', '', false);
 };
@@ -67,13 +66,14 @@ function DefaultNumericalFilter() {
 };
 
 function DefaultDateFilter() {
-    return new DateFilter('begin', 0, 1577840400000);
+    return new DateFilter('begin', new Date(0), new Date(1577840400000));
 };
 
 function DefaultSelector() {
     return {
-        textFilters: [new DefaultTextFilter()],
-        numericalFilters: []
+        //textFilters: [new DefaultTextFilter()],
+        textFilters: [],
+        numericalFilters: [new DefaultDateFilter()]
     };
 }
 
@@ -96,6 +96,49 @@ function DefaultRTMPayload() {
     return new RTMPayload([new DefaultSelector()], new DefaultServiceParams());
 }
 
+function RTMserialize(guiPayload) {
+    if(!guiPayload){
+        throw new Error ('guiPayload is null or undefined');
+    }
+    
+    var copy = JSON.parse(angular.toJson(guiPayload));
+
+    $.each(guiPayload.selectors1, function (selIdx, selector) {
+
+        var newNumericals = [];
+        // Convert date filters into numerical filters
+        $.each(selector.numericalFilters, function (filIdx, filter) {
+            if (filter.type === 'date') {
+                newNumericals.push(
+                    new NumericalFilter(
+                        'numerical',
+                        filter.minDate.getTime(),
+                        filter.maxDate.getTime()
+                    )
+                );
+            } else {
+                newNumericals.push(filter);
+            }
+
+            copy.selectors1[selIdx].numericalFilters[filIdx] = newNumericals;
+        });
+    });
+
+    $.each(copy.selectors1, function (selIdx, selector) {
+        // Remove type info (unknown to backend)
+        $.each(selector.textFilters, function (index, filter) {
+            filter.type = undefined;
+        });
+
+        $.each(selector.numericalFilters, function (index, filter) {
+            filter.type = undefined;
+        });
+
+    });
+
+    return angular.toJson(copy);
+}
+
 
 angular.module('rtm-controls', [])
 
@@ -109,15 +152,15 @@ angular.module('rtm-controls', [])
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-controls.html'),
             controller: function ($scope) {
 
-                $scope.addSelector = function(){
+                $scope.addSelector = function () {
                     $scope.payload.selectors1.push(new DefaultSelector());
                 };
 
-                $scope.clearAll = function(){
+                $scope.clearAll = function () {
                     $scope.payload.selectors1.length = 0;
                 };
 
-                $scope.removeSelector = function(idx){
+                $scope.removeSelector = function (idx) {
                     $scope.payload.selectors1.splice(idx, 1);
                 };
 
@@ -137,24 +180,24 @@ angular.module('rtm-controls', [])
                 //console.log(angular.toJson($scope.textfilters));
                 //console.log(angular.toJson($scope.numericalfilters));
 
-                $scope.addTextFilter = function(){
+                $scope.addTextFilter = function () {
                     $scope.textfilters.push(new DefaultTextFilter());
                 };
 
-                $scope.addNumericalFilter = function(){
+                $scope.addNumericalFilter = function () {
                     $scope.numericalfilters.push(new DefaultNumericalFilter());
                 };
 
-                $scope.addDateFilter = function(){
+                $scope.addDateFilter = function () {
                     $scope.numericalfilters.push(new DefaultDateFilter());
                 };
 
-                
-                $scope.removeTextfilter = function(idx){
+
+                $scope.removeTextfilter = function (idx) {
                     $scope.textfilters.splice(idx, 1);
                 };
 
-                $scope.removeNumericalfilter = function(idx){
+                $scope.removeNumericalfilter = function (idx) {
                     $scope.numericalfilters.splice(idx, 1);
                 };
             }
@@ -180,8 +223,6 @@ angular.module('rtm-controls', [])
                     return tabIndex === $scope.tabIndex;
                 };
 
-                console.log($scope.params);
-
             }
         };
     })
@@ -196,7 +237,7 @@ angular.module('rtm-controls', [])
 
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-text-filter.html'),
             controller: function ($scope) {
-                $scope.setKey = function(key){
+                $scope.setKey = function (key) {
                     $scope.key = key;
                 };
             }
@@ -214,7 +255,7 @@ angular.module('rtm-controls', [])
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-numerical-filter.html'),
             controller: function ($scope) {
 
-                $scope.setKey = function(key){
+                $scope.setKey = function (key) {
                     $scope.key = key;
                 };
             }
@@ -231,18 +272,10 @@ angular.module('rtm-controls', [])
 
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-date-filter.html'),
             controller: function ($scope) {
-                $scope.setMaxDate = function(timestamp){
-                    $scope.maxmodel = new Date(timestamp);
-                };
 
-                $scope.setMinDate = function(timestamp){
-                    $scope.maxmodel = new Date(timestamp);
-                };
-
-                $scope.setKey = function(key){
+                $scope.setKey = function (key) {
                     $scope.key = key;
                 };
             }
         };
     })
-   
