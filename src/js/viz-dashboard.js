@@ -34,6 +34,10 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                     }
                 };
 
+                $scope.$on('broadcastQueryFire', function (event, arg) {
+                    $scope.broadcastQueryFire();
+                });
+
                 $scope.broadcastQueryFire = function(){
                     $scope.$broadcast('fireQueryDependingOnContext');
                 };

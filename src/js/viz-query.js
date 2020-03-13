@@ -256,11 +256,13 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.makeMaster(newValue);
                 });
 
-                $scope.state.unwatchers.push($scope.$watch('state.title', function (newValue) {
-                    if ($scope.state.config.master) {
-                        dashletcomssrv.udpdateTitle($scope.widgetid, newValue);
-                    }
-                }));
+
+                !$scope.state.unwatchers ? $scope.state.unwatchers = [] :
+                    $scope.state.unwatchers.push($scope.$watch('state.title', function (newValue) {
+                        if ($scope.state.config.master) {
+                            dashletcomssrv.udpdateTitle($scope.widgetid, newValue);
+                        }
+                    }));
 
                 $scope.unwatchSlave = '';
 
@@ -463,7 +465,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     $scope.state.query.controls = new DefaultControls();
                     $scope.state.query.paged = new DefaultPaging();
 
-                    $scope.state.query.controls.unwatchers = [];
                     //watch state.query.controltype, cleanup existing watchers, invoke proper control init
                 }
 
@@ -472,33 +473,38 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
 
                 $scope.initRTMControls = function () {
+                    $scope.state.query = new RTMAggregatesQuery();
 
-                    var transform = "function (response, args) {\r\n    var metric = args.metric;\r\n    var retData = [], series = {};\r\n\r\n    var payload = response.data.payload.stream.streamData;\r\n    var payloadKeys = Object.keys(payload);\r\n\r\n    for (i = 0; i < payloadKeys.length; i++) {\r\n        var serieskeys = Object.keys(payload[payloadKeys[i]])\r\n        for (j = 0; j < serieskeys.length; j++) {\r\n            retData.push({\r\n                x: payloadKeys[i],\r\n                y: payload[payloadKeys[i]][serieskeys[j]][metric],\r\n                z: serieskeys[j]\r\n            });\r\n        }\r\n    }\r\n    return retData;\r\n}";
+                    !$scope.state.unwatchers ? $scope.state.unwatchers = [] :
+                        $scope.state.unwatchers.push(
+                            $scope.$watch('state.query.controls.rtmpayload', function (newValue) {
+                                console.log('new value!');
+                                console.log(angular.toJson(newValue));
 
-                    $scope.state.query.type = 'Async';
-                    $scope.state.query.datasource = {
-                        service: new Service(//service
-                            "/rtm/rest/aggregate/get", "Post",
-                            "",//templated
-                            new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}"),
-                            new Postproc("", "", [], "function(response){if(!response.data.payload){console.log('No payload ->' + JSON.stringify(response)); return null;}return [{ placeholder : '__streamedSessionId__', value : response.data.payload.streamedSessionId, isDynamic : false }];}", "")),
-                        callback: new Service(//callback
-                            "/rtm/rest/aggregate/refresh", "Post",
-                            "{\"streamedSessionId\": \"__streamedSessionId__\"}",
-                            new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].placeholder, workData[i].value);}return newRequestFragment;}"),
-                            new Postproc("function(response){return response.data.payload.stream.complete;}", transform, [{ "key": "metric", "value": "cnt", "isDynamic": false }], {}, ""))
-                    };
+                                console.log('serialized:');
+                                var newPayload = RTMserialize(newValue);
+                                console.log(newPayload);
 
-                    $scope.state.query.controls.rtmpayload = new DefaultRTMPayload();
+                                console.log('to template:');
+                                $scope.state.query.controls.template =
+                                    new Template(newPayload, "", [], new RTMAggregatesQuery()); //just the base query here
 
-                    $scope.state.query.controls.unwatchers.push(
-                        $scope.$watch('state.query.controls.rtmpayload', function (newValue) {
-                            //console.log('to backend: ' + RTMserialize(newValue));
-                            $scope.state.query.datasource.service.data = RTMserialize(newValue);
-                        }, true) // deep watching changes in the RTM models
-                    );
+                                console.log($scope.state.query.controls.template);
 
+                            }, true) // deep watching changes in the RTM models
+                        );
                 }
+
+
+                // watch controltype button to init proper controls when switching
+                $scope.$watch('state.query.controltype', function (newValue) {
+                    if (newValue === 'Plain') {
+                        $scope.initTemplate();
+                    }
+                    if (newValue === 'RTM') {
+                        $scope.initRTMControls();
+                    }
+                });
 
                 $scope.loadQueryPreset = function (querypresetArg) {
                     var querypreset = jsoncopy(querypresetArg);
@@ -587,14 +593,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                 // query about to fire
                 $scope.$on('cleanup-info', function () {
-
-                    //if RTM
-                    if ($scope.state.query.controltype && $scope.state.query.controltype === 'RTM')
-                        // probably useless since we've initialized a deep watcher to keep the model in sync with the view'
-                        $scope.state.query.datasource.service.data = RTMserialize($scope.state.query.controls.rtmpayload);
-                    else {//if template
-                        $scope.templateChange();
-                    }
+                    $scope.templateChange();
                 });
 
                 $scope.templateChange = function () {

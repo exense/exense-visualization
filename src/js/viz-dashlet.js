@@ -93,6 +93,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.autorefreshInterval = undefined;
 
                 $scope.fireQuery = function () {
+
                     $scope.cleanupState();
                     try {
                         $scope.isOngoingQuery = true;
