@@ -97,11 +97,12 @@ function DefaultRTMPayload() {
 }
 
 
-function RTMQuery() {
+function RTMAggregatesQuery() {
     var query = new DefaultAsyncQuery();
     query.controls = new DefaultControls();
     query.paged = new DefaultPaging();
     query.controltype = 'RTM';
+    query.controls.querytype = 'aggregates';
 
     var transform = "function (response, args) {\r\n    var metric = args.metric;\r\n    var retData = [], series = {};\r\n\r\n    var payload = response.data.payload.stream.streamData;\r\n    var payloadKeys = Object.keys(payload);\r\n\r\n    for (i = 0; i < payloadKeys.length; i++) {\r\n        var serieskeys = Object.keys(payload[payloadKeys[i]])\r\n        for (j = 0; j < serieskeys.length; j++) {\r\n            retData.push({\r\n                x: payloadKeys[i],\r\n                y: payload[payloadKeys[i]][serieskeys[j]][metric],\r\n                z: serieskeys[j]\r\n            });\r\n        }\r\n    }\r\n    return retData;\r\n}";
     query.type = 'Async';
@@ -123,6 +124,32 @@ function RTMQuery() {
 }
 
 
+function RTMRawValuesQuery() {
+    var query = new DefaultAsyncQuery();
+    query.controls = new DefaultControls();
+    query.paged = new DefaultPaging();
+    query.controltype = 'RTM';
+    query.controls.querytype = 'aggregates';
+
+    var transform = "function (response, args) {\r\n    var metric = args.metric;\r\n    var retData = [], series = {};\r\n\r\n    var payload = response.data.payload.stream.streamData;\r\n    var payloadKeys = Object.keys(payload);\r\n\r\n    for (i = 0; i < payloadKeys.length; i++) {\r\n        var serieskeys = Object.keys(payload[payloadKeys[i]])\r\n        for (j = 0; j < serieskeys.length; j++) {\r\n            retData.push({\r\n                x: payloadKeys[i],\r\n                y: payload[payloadKeys[i]][serieskeys[j]][metric],\r\n                z: serieskeys[j]\r\n            });\r\n        }\r\n    }\r\n    return retData;\r\n}";
+    query.type = 'Async';
+    query.datasource = {
+        service: new Service(//service
+            "/rtm/rest/aggregate/get", "Post",
+            "",//templated
+            new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}"),
+            new Postproc("", "", [], "function(response){if(!response.data.payload){console.log('No payload ->' + JSON.stringify(response)); return null;}return [{ placeholder : '__streamedSessionId__', value : response.data.payload.streamedSessionId, isDynamic : false }];}", "")),
+        callback: new Service(//callback
+            "/rtm/rest/aggregate/refresh", "Post",
+            "{\"streamedSessionId\": \"__streamedSessionId__\"}",
+            new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].placeholder, workData[i].value);}return newRequestFragment;}"),
+            new Postproc("function(response){return response.data.payload.stream.complete;}", transform, [{ "key": "metric", "value": "cnt", "isDynamic": false }], {}, ""))
+    };
+
+    query.controls.rtmpayload = new DefaultRTMPayload();
+    return query;
+}
+
 var RTMmasterId = "RTM-Master-" + getUniqueId();
 
 function RTMMasterState() {
@@ -132,7 +159,7 @@ function RTMMasterState() {
         new DefaultChartOptions(),
         new Config('Fire','Off', true, false, 'unnecessaryAsMaster'),
         //(toggleaction, autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration, incremental, incmaxdots, transposetable)
-        new RTMQuery(),
+        new RTMAggregatesQuery(),
         new DefaultGuiClosed(),
         new DefaultInfo()
     );
@@ -150,7 +177,7 @@ function RTMSlaveState() {
         new DefaultDashletData(),
         new DefaultChartOptions(),
         slaveConfig,
-        new RTMQuery(),
+        new RTMAggregatesQuery(),
         new DefaultGuiClosed(),
         new DefaultInfo()
     );
@@ -247,6 +274,7 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
             restrict: 'E',
             scope: {
                 payload: '=',
+                query: '=',
                 orientation: '=?'
             },
 
@@ -318,11 +346,13 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
         return {
             restrict: 'E',
             scope: {
-                params: '='
+                params: '=',
+                query: '='
             },
 
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-service-params.html'),
             controller: function ($scope) {
+
                 $scope.example14data = [{
                     "label": "count",
                         "id": "cnt"
