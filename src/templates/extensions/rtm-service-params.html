@@ -17,23 +17,23 @@
         <div class="col-md-4" style="display: block;">
           <label class="rtm-label">Chart metric</label>
           <div style="display: flex;">
-            <input type="text" class="form-control rtm-input" ng-model="chartmetric">
+            <input type="text" class="form-control rtm-input" ng-model="query.datasource.callback.postproc.transform.args[0].value">
             <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="chart-metrics.status.isopen">
               <button id="chart-metrics" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
                 ng-disabled="disabled">
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="chart-metrics">
-                <li role="menuitem" ng-click="setKey('cnt')"><a>count</a></li>
-                <li role="menuitem" ng-click="setKey('avg')"><a>average</a></li>
-                <li role="menuitem" ng-click="setKey('min')"><a>min</a></li>
-                <li role="menuitem" ng-click="setKey('max')"><a>max</a></li>
-                <li role="menuitem" ng-click="setKey('pcl50')"><a>median</a></li>
-                <li role="menuitem" ng-click="setKey('tps')"><a>count / sec</a></li>
-                <li role="menuitem" ng-click="setKey('tpm')"><a>count / min</a></li>
-                <li role="menuitem" ng-click="setKey('pcl80')"><a>80th pcl</a></li>
-                <li role="menuitem" ng-click="setKey('pcl90')"><a>90th pcl</a></li>
-                <li role="menuitem" ng-click="setKey('pcl99')"><a>99th pcl</a></li>
+                <li role="menuitem" ng-click="setChartMetric('cnt')"><a>count</a></li>
+                <li role="menuitem" ng-click="setChartMetric('avg')"><a>average</a></li>
+                <li role="menuitem" ng-click="setChartMetric('min')"><a>min</a></li>
+                <li role="menuitem" ng-click="setChartMetric('max')"><a>max</a></li>
+                <li role="menuitem" ng-click="setChartMetric('pcl50')"><a>median</a></li>
+                <li role="menuitem" ng-click="setChartMetric('tps')"><a>count / sec</a></li>
+                <li role="menuitem" ng-click="setChartMetric('tpm')"><a>count / min</a></li>
+                <li role="menuitem" ng-click="setChartMetric('pcl80')"><a>80th pcl</a></li>
+                <li role="menuitem" ng-click="setChartMetric('pcl90')"><a>90th pcl</a></li>
+                <li role="menuitem" ng-click="setChartMetric('pcl99')"><a>99th pcl</a></li>
               </ul>
             </div>
           </div>

@@ -299,7 +299,8 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
             scope: {
                 payload: '=',
                 query: '=',
-                orientation: '=?'
+                orientation: '=?',
+                state: '='
             },
 
             template: '<div ng-include="resolveDynamicTemplate()"></div>',
@@ -386,11 +387,19 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
             restrict: 'E',
             scope: {
                 params: '=',
-                query: '='
+                query: '=',
+                state: '='
             },
 
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-service-params.html'),
             controller: function ($scope) {
+
+                $scope.setChartMetric = function(metric){
+                    $scope.query.datasource.callback.postproc.transform.args[0].value = metric;
+                    // force reload for metric update
+                    $scope.state.data.transformed.touch = getUniqueId();
+                    $scope.$apply();
+                };
 
                 $scope.rawvaluemetrics = [];
 
