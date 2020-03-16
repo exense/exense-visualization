@@ -392,7 +392,9 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-service-params.html'),
             controller: function ($scope) {
 
-                $scope.example14data = [{
+                $scope.rawvaluemetrics = [];
+
+                $scope.aggregatemetrics = [{
                     "label": "count",
                     "id": "cnt"
                 }, {

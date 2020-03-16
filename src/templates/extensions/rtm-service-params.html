@@ -1,12 +1,13 @@
-<div class="col-md-10 colcontain-grid">
+<div class="col-md-12 colcontain-grid">
   <div class="row" style="display: block; text-align: left;">
 
-    <div class="col-md-6 colcontain-grid">
+    <div class="col-md-4 colcontain-grid">
       <label>Query type</label>
       <div class="btn-group viz-btn-group form-radio">
         <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'rawvalues'">Raw values</label>
         <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'aggregates'">Aggregates</label>
-        <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'lastn'">Last N values</label>
+        <!-- todo -->
+        <!--<label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'lastn'">Last N values</label>-->
       </div>
     </div>
 
@@ -40,15 +41,12 @@
 
         <div class="col-md-4" style="display: block;">
           <label class="rtm-label">Table metrics</label>
-          <div ng-dropdown-multiselect="" options="example14data" selected-model="example14model" checkboxes="true"
+          <div ng-dropdown-multiselect="" options="aggregatemetrics" selected-model="example14model" checkboxes="true"
             extra-settings="example14settings"></div>
         </div>
       </div>
     </div>
 
-  </div>
-  <div class="row" style="display: block; text-align: left;">
-    &nbsp;
   </div>
 
   <div class="row" style="display: block; text-align: left;">

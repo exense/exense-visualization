@@ -1,9 +1,9 @@
-<label class="col-md-12" style="background-color: #337AB7; color: white; text-align: center;">RTM Controls</label>
+
 <div class="row">
-    <div class="col-md-6 colcontain-grid" style="height: calc(30vh - 40px); overflow-y: auto; display: block; text-align: left;">
-        <label>Selectors</label>
-        <div class="row" style="padding-left: 5px; padding-right: 10px; margin-left: 5px; margin-right: 10px;">
-            <div class="btn-group viz-btn-group form-radio">
+    <div class="col-md-6 colcontain-grid" style="height: calc(40vh - 40px); overflow-y: auto; display: block; text-align: left; padding-left: 40px; padding-right: 40px;">
+        <label class="col-md-12" style="background-color: #337AB7; color: white; text-align: center;">Measurement selectors</label>
+        <div class="row" style="padding-left: 5px; padding-right: 10px; margin-left: 5px; margin-right: 10px; margin-top: 20px;">
+            <div class="btn-group viz-btn-group form-radio" style="margin-top: 20px;">
                 <button class="btn btn-warning viz-btn-success" ng-click="addSelector()">Add Selector</button>
                 <button class="btn btn-danger viz-btn-success" ng-click="clearAll()">Clear All</button>
                 <button class="btn btn-success viz-btn-success" ng-click="$emit('broadcastQueryFire')" uib-tooltip="Fire query"
@@ -27,7 +27,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 colcontain-grid" style="height: calc(30vh - 40px); overflow-y: auto; display: block;">
+    <div class="col-md-6 colcontain-grid" style="height: calc(40vh - 40px); overflow-y: auto; display: block; padding-left: 40px; padding-right: 40px;">
+        <label class="col-md-12" style="background-color: #337AB7; color: white; text-align: center;">Service Parameters</label>
         <rtm-service-params params="payload.serviceParams" query="query" style="padding: 10px; margin: 10px">
     </div>
 </div>
