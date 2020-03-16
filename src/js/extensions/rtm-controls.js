@@ -397,8 +397,7 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 $scope.setChartMetric = function(metric){
                     $scope.query.datasource.callback.postproc.transform.args[0].value = metric;
                     // force reload for metric update
-                    $scope.state.data.transformed.touch = getUniqueId();
-                    $scope.$apply();
+                    $scope.state.data.rawresponse = JSON.parse(angular.toJson($scope.state.data.rawresponse));
                 };
 
                 $scope.rawvaluemetrics = [];
