@@ -94,22 +94,26 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 $scope.fireQuery = function () {
 
-                    $scope.cleanupState();
-                    try {
-                        $scope.isOngoingQuery = true;
-                        var srv = $scope.state.query.datasource.service;
-                        if (!srv.params) {
-                            srv.params = ""; // prevent "undefined" string from being concatenated
-                        }
+                    if (!$scope.isOngoingQuery) {
+                        $scope.cleanupState();
+                        if ($scope.state.query && $scope.state.query.controls && $scope.state.query.controls.template && $scope.state.query.controls.template.templatedPayload) {
+                            try {
+                                $scope.isOngoingQuery = true;
+                                var srv = $scope.state.query.datasource.service;
+                                if (!srv.params) {
+                                    srv.params = ""; // prevent "undefined" string from being concatenated
+                                }
 
-                        //Done out of the box via templace
-                        //$scope.executeReplace(srv);
-                        if ($scope.isRawDisplay) {
-                            $scope.state.info.http.servicesent = 'url :' + JSON.stringify(srv.url + srv.params) + '; payload:' + JSON.stringify(srv.data);
+                                //Done out of the box via templace
+                                //$scope.executeReplace(srv);
+                                if ($scope.isRawDisplay) {
+                                    $scope.state.info.http.servicesent = 'url :' + JSON.stringify(srv.url + srv.params) + '; payload:' + JSON.stringify(srv.data);
+                                }
+                                $scope.executeHttp(srv.method, srv.url + srv.params, srv.data, $scope.dispatchSuccessResponse, srv, $scope.dispatchErrorResponse);
+                            } catch (e) {
+                                $scope.sendErrorMessage('exception thrown while firing query: ' + e);
+                            }
                         }
-                        $scope.executeHttp(srv.method, srv.url + srv.params, srv.data, $scope.dispatchSuccessResponse, srv, $scope.dispatchErrorResponse);
-                    } catch (e) {
-                        $scope.sendErrorMessage('exception thrown while firing query: ' + e);
                     }
                 };
 

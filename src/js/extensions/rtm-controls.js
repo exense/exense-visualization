@@ -76,6 +76,13 @@ function DefaultSelector() {
     };
 }
 
+function EidSelector(eId) {
+    return {
+        textFilters: [new TextFilter('eId', eId, false)],
+        numericalFilters: []
+    };
+}
+
 function DefaultServiceParams() {
     return new ServiceParams(
     /* "aggregateService.cpu": */ "1",
@@ -93,6 +100,10 @@ function DefaultServiceParams() {
 
 function DefaultRTMPayload() {
     return new RTMPayload([new DefaultSelector()], new DefaultServiceParams());
+}
+
+function StepRTMPayload() {
+    return new RTMPayload([new EidSelector()], new DefaultServiceParams());
 }
 
 
@@ -309,6 +320,19 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 $scope.removeSelector = function (idx) {
                     $scope.payload.selectors1.splice(idx, 1);
                 };
+
+                // Very temporary intg with step (need to implement pre-tmplt update from controls)
+                $scope.$on('apply-global-setting', function (event, arg) {
+                    var split = arg.value.split(',');
+                    var type = split[0];
+                    var key = split[1];
+                    var value1 = split[2];
+                    var value2 = split[3];
+
+                    if(type === 'text'){
+                        $scope.payload.selectors1[0].textFilters.push(new TextFilter(key, value1,value2));
+                    }
+                });
 
             }
         };

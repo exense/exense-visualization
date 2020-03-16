@@ -476,26 +476,37 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     !$scope.state.controlsunwatchers ? $scope.state.controlsunwatchers = [] : $.each($scope.state.controlsunwatchers, function (idx, unwatcher) { unwatcher(); });
 
                     $scope.state.controlsunwatchers.push(
-                        $scope.$watch('state.query.controls.querytype', function (newValue) {
+                        $scope.$watch('state.query.controls.querytype', function (newValue, oldvalue) {
 
 
                             //preserve model in the event of a service switch (1)
-                            var saved = $scope.state.query.controls.template.templatedPayload;
+                            var savedControl = $scope.state.query.controls.rtmpayload;
+                            var savedPayload = $scope.state.query.controls.template.templatedPayload;
 
-                            if (newValue === 'aggregates') {
-                                $scope.state.query = new RTMAggregatesQuery();
-                            } else {
-                                if (newValue === 'rawvalues') {
-                                    $scope.state.query = new RTMRawValuesQuery();
-                                    $scope.$emit('init-paging');
+                            if ($scope.state.query
+                                && $scope.state.query.controls
+                                && $scope.state.query.controls.querytype
+                                && oldvalue !== newValue) {
+
+                                if (newValue === 'aggregates') {
+                                    $scope.state.query = new RTMAggregatesQuery();
                                 } else {
-                                    console.log("unsupported RTM service: " + newValue);
+                                    if (newValue === 'rawvalues') {
+                                        $scope.state.query = new RTMRawValuesQuery();
+                                        $scope.$emit('init-paging');
+                                    } else {
+                                        console.log("unsupported RTM service: " + newValue);
+                                    }
                                 }
-                            }
 
-                            //preserve model in the event of a service switch (2)
-                            if (saved) {
-                                $scope.state.query.controls.template.templatedPayload = saved;
+                                //preserve model in the event of a service switch (2)
+                                if (savedControl) {
+                                    $scope.state.query.controls.rtmpayload = savedControl;
+                                }
+
+                                if(savedPayload){
+                                    $scope.state.query.controls.template.templatedPayload = savedPayload;
+                                }
                             }
                         })
                     );
