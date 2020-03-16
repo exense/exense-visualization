@@ -243,7 +243,7 @@ function RTMserialize(guiPayload) {
 
     var copy = JSON.parse(angular.toJson(guiPayload));
 
-    $.each(guiPayload.selectors1, function (selIdx, selector) {
+    $.each(copy.selectors1, function (selIdx, selector) {
 
         var newNumericals = [];
         // Convert date filters into numerical filters
@@ -252,8 +252,8 @@ function RTMserialize(guiPayload) {
                 newNumericals.push(
                     new NumericalFilter(
                         filter.key,
-                        filter.minDate.getTime(),
-                        filter.maxDate.getTime()
+                        Date.parse(filter.minDate),
+                        Date.parse(filter.maxDate)
                     )
                 );
             } else {

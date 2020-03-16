@@ -513,13 +513,13 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                     $scope.state.controlsunwatchers.push(
                         $scope.$watch('state.query.controls.rtmmodel', function (newValue, oldValue) {
-                            if (angular.toJson(newValue) !== angular.toJson(oldValue)) {
+                            //if (angular.toJson(newValue) !== angular.toJson(oldValue)) {
                                 var newPayload = RTMserialize(newValue);
 
                                 if (newPayload) {
                                     $scope.state.query.controls.template.templatedPayload = newPayload;
                                 }
-                            }
+                            //}
                         }, true) // deep watching changes in the RTM models
                     );
                 }
