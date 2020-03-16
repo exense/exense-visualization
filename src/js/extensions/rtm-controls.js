@@ -58,7 +58,7 @@ function RTMPayload(selectorCollection, serviceParams) {
 }
 
 function DefaultTextFilter() {
-    return new TextFilter('', '', 'Off');
+    return new TextFilter('eId', '', 'Off');
 };
 
 function DefaultNumericalFilter() {
@@ -66,7 +66,7 @@ function DefaultNumericalFilter() {
 };
 
 function DefaultDateFilter() {
-    return new DateFilter('begin', new Date(0), new Date(1577840400000));
+    return new DateFilter('begin', new Date(new Date().getTime() - 3600000), new Date());
 };
 
 function DefaultSelector() {
@@ -268,6 +268,12 @@ function RTMserialize(guiPayload) {
         // Remove type info (unknown to backend)
         $.each(selector.textFilters, function (filIdx, filter) {
             filter.type = undefined;
+
+            if(filter.regex === 'On'){
+                filter.regex = true;
+            }else{
+                filter.regex = false;
+            }
         });
 
         $.each(selector.numericalFilters, function (filIdx, filter) {
