@@ -480,7 +480,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
 
                             //preserve model in the event of a service switch (1)
-                            var savedControl = $scope.state.query.controls.rtmpayload;
+                            var savedControl = $scope.state.query.controls.rtmmodel;
                             var savedPayload = $scope.state.query.controls.template.templatedPayload;
 
                             if ($scope.state.query
@@ -501,10 +501,10 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
 
                                 //preserve model in the event of a service switch (2)
                                 if (savedControl) {
-                                    $scope.state.query.controls.rtmpayload = savedControl;
+                                    $scope.state.query.controls.rtmmodel = savedControl;
                                 }
 
-                                if(savedPayload){
+                                if (savedPayload) {
                                     $scope.state.query.controls.template.templatedPayload = savedPayload;
                                 }
                             }
@@ -512,19 +512,14 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     );
 
                     $scope.state.controlsunwatchers.push(
-                        $scope.$watch('state.query.controls.rtmpayload', function (newValue) {
-                            console.log('new payload!');
-                            //console.log(angular.toJson(newValue));
-                            var newPayload = RTMserialize(newValue);
+                        $scope.$watch('state.query.controls.rtmmodel', function (newValue, oldValue) {
+                            if (newValue = !oldValue) {
+                                var newPayload = RTMserialize(newValue);
 
-                            if (newPayload) {
-                                $scope.state.query.controls.template.templatedPayload = newPayload;
+                                if (newPayload) {
+                                    $scope.state.query.controls.template.templatedPayload = newPayload;
+                                }
                             }
-
-                            //incorrect
-                            //$scope.state.query.controls.template = 
-                            // new Template(newPayload, "", [], new RTMAggregatesQuery()); //just the base query here
-
                         }, true) // deep watching changes in the RTM models
                     );
                 }

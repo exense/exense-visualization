@@ -1,9 +1,10 @@
 <td class="btn-group viz-btn-group form-radio col-md-12">
 
   <div class="col-md-3" style="display: flex;">
-    <input type="text" class="form-control input-sm" placeholder="key" ng-model="key">
+    <input type="text" class="form-control input-sm rtm-input-sm" placeholder="key" ng-model="key">
     <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="status.isopen">
-      <button id="single-button" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle ng-disabled="disabled">
+      <button id="single-button" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
+        ng-disabled="disabled">
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
@@ -24,13 +25,17 @@
   </div>
 
   <div class="col-md-4">
-    <input type="text" class="form-control input-sm" placeholder="value" ng-model="value">
+    <input type="text" class="form-control input-sm rtm-input-sm" placeholder="value" ng-model="value">
   </div>
 
-  <div ng-if="filter.regex == true" class="col-md-2">
-    <input type="checkbox" checked="checked"><label>regex</label>
-  </div>
-  <div ng-if="filter.regex !== true" class="col-md-2">
-    <input type="checkbox" checked="checked"><label>regex</label>
+
+  <div class="col-md-3" style="display: flex;">
+    <span  style="padding: 0px; margin: 0px;">regex</span>
+    <span>
+      <div class="btn-group viz-btn-group form-radio" style="margin-top: 0px !important; margin-left: 5px; padding: 0px;">
+        <label class="btn btn-success viz-btn-success" ng-model="regex" uib-btn-radio="'On'">On</label>
+        <label class="btn btn-success viz-btn-success" ng-model="regex" uib-btn-radio="'Off'">Off</label>
+      </div>
+    </span>
   </div>
 </td>

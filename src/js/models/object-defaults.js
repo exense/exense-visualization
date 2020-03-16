@@ -116,7 +116,7 @@ function DefaultTemplatedQuery(){
     return new TemplatedQuery('Plain', new DefaultQuery(), new DefaultPaging(), new DefaultControls());
 };
 
-function DefaultTemplate(templatedPayload, templatedParams, placeholders) {
+function DefaultTemplate() {
     return new Template("", "", [], new DefaultTemplatedQuery());
 };
 

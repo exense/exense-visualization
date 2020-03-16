@@ -1,7 +1,7 @@
 <td class="btn-group viz-btn-group form-radio col-md-12">
 
   <div class="col-md-3" style="display: flex;">
-    <input type="text" class="form-control input-sm" placeholder="key" ng-model="key">
+    <input type="text" class="form-control input-sm rtm-input-sm" placeholder="key" ng-model="key">
     <div class="btn-group rtm-dropdown form-radio" uib-dropdown>
       <button id="preset-keys-dropdown" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
         ng-disabled="disabled">
@@ -18,7 +18,7 @@
   </div>
 
   <div class="col-md-3" style="display: flex;">
-    <input type="text" class="form-control input-sm" uib-datepicker-popup="dd.MM.yyyy HH:mm:ss" ng-model="mindate" is-open="minopen" ng-required="true" close-text="Close" ng-change="onEnter()" ng-keypress="($event.which === 13)?onEnter():0" placeholder="max date" value="{{mindate}}" />
+    <input type="text" class="form-control input-sm rtm-input-sm" uib-datepicker-popup="dd.MM.yyyy HH:mm:ss" ng-model="mindate" is-open="minopen" ng-required="true" close-text="Close" ng-change="onEnter()" ng-keypress="($event.which === 13)?onEnter():0" placeholder="max date" value="{{mindate}}" />
     <div class="btn-group rtm-dropdown form-radio" uib-dropdown>
         <button id="mindate-cal" type="button" class="btn btn-primary viz-btn-success" ng-click="minopen=!minopen"><i class="glyphicon glyphicon-calendar"></i></button>
     </div>
@@ -29,7 +29,7 @@
   </div>
 
   <div class="col-md-3" style="display: flex;">
-    <input type="text" class="form-control input-sm" uib-datepicker-popup="dd.MM.yyyy HH:mm:ss" ng-model="maxdate" is-open="maxopen" ng-required="true" close-text="Close" ng-change="onEnter()" ng-keypress="($event.which === 13)?onEnter():0" placeholder="max date" value="{{maxdate}}" />
+    <input type="text" class="form-control input-sm rtm-input-sm" uib-datepicker-popup="dd.MM.yyyy HH:mm:ss" ng-model="maxdate" is-open="maxopen" ng-required="true" close-text="Close" ng-change="onEnter()" ng-keypress="($event.which === 13)?onEnter():0" placeholder="max date" value="{{maxdate}}" />
     <div class="btn-group rtm-dropdown form-radio" uib-dropdown>
         <button id="maxdate-cal" type="button" class="btn btn-primary viz-btn-success" ng-click="maxopen=!maxopen"><i class="glyphicon glyphicon-calendar"></i></button>
     </div>

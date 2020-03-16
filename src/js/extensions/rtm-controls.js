@@ -58,7 +58,7 @@ function RTMPayload(selectorCollection, serviceParams) {
 }
 
 function DefaultTextFilter() {
-    return new TextFilter('', '', false);
+    return new TextFilter('', '', 'Off');
 };
 
 function DefaultNumericalFilter() {
@@ -129,7 +129,7 @@ function RTMAggregatesQuery() {
             new Postproc("function(response){return response.data.payload.stream.complete;}", transform, [{ "key": "metric", "value": "cnt", "isDynamic": false }], {}, ""))
     };
 
-    query.controls.rtmpayload = new DefaultRTMPayload();
+    query.controls.rtmmodel = new DefaultRTMPayload();
     return query;
 }
 
@@ -159,7 +159,7 @@ function RTMRawValuesQuery() {
 
     query.controltype = 'RTM';
     query.controls.querytype = 'rawvalues';
-    query.controls.rtmpayload = new DefaultRTMPayload();
+    query.controls.rtmmodel = new DefaultRTMPayload();
     return query;
 }
 
@@ -355,7 +355,9 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 };
 
                 $scope.addNumericalFilter = function () {
+                    console.log( $scope.numericalfilters)
                     $scope.numericalfilters.push(new DefaultNumericalFilter());
+                    console.log( $scope.numericalfilters)
                 };
 
                 $scope.addDateFilter = function () {
