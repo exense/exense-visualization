@@ -473,26 +473,49 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
 
                 $scope.initRTMControls = function () {
-                    $scope.state.query = new RTMAggregatesQuery();
+                    !$scope.state.controlsunwatchers ? $scope.state.controlsunwatchers = [] : $.each($scope.state.controlsunwatchers, function (idx, unwatcher) { unwatcher(); });
 
-                    !$scope.state.unwatchers ? $scope.state.unwatchers = [] :
-                        $scope.state.unwatchers.push(
-                            $scope.$watch('state.query.controls.rtmpayload', function (newValue) {
-                                console.log('new value!');
-                                console.log(angular.toJson(newValue));
+                    $scope.state.controlsunwatchers.push(
+                        $scope.$watch('state.query.controls.querytype', function (newValue) {
 
-                                console.log('serialized:');
-                                var newPayload = RTMserialize(newValue);
-                                console.log(newPayload);
 
-                                console.log('to template:');
-                                $scope.state.query.controls.template =
-                                    new Template(newPayload, "", [], new RTMAggregatesQuery()); //just the base query here
+                            //preserve model in the event of a service switch (1)
+                            var saved = $scope.state.query.controls.template.templatedPayload;
 
-                                console.log($scope.state.query.controls.template);
+                            if (newValue === 'aggregates') {
+                                $scope.state.query = new RTMAggregatesQuery();
+                            } else {
+                                if (newValue === 'rawvalues') {
+                                    $scope.state.query = new RTMRawValuesQuery();
+                                    $scope.$emit('init-paging');
+                                } else {
+                                    console.log("unsupported RTM service: " + newValue);
+                                }
+                            }
 
-                            }, true) // deep watching changes in the RTM models
-                        );
+                            //preserve model in the event of a service switch (2)
+                            if (saved) {
+                                $scope.state.query.controls.template.templatedPayload = saved;
+                            }
+                        })
+                    );
+
+                    $scope.state.controlsunwatchers.push(
+                        $scope.$watch('state.query.controls.rtmpayload', function (newValue) {
+                            console.log('new payload!');
+                            //console.log(angular.toJson(newValue));
+                            var newPayload = RTMserialize(newValue);
+
+                            if (newPayload) {
+                                $scope.state.query.controls.template.templatedPayload = newPayload;
+                            }
+
+                            //incorrect
+                            //$scope.state.query.controls.template = 
+                            // new Template(newPayload, "", [], new RTMAggregatesQuery()); //just the base query here
+
+                        }, true) // deep watching changes in the RTM models
+                    );
                 }
 
 

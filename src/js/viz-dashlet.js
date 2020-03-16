@@ -337,7 +337,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         $scope.setAutorefreshInterval();
                     }
                 }
-  
+
                 $scope.state.unwatchers.push($scope.$watch('state.config.autorefresh', function (newValue) {
                     $scope.restartInterval(newValue);
                 }));
@@ -384,6 +384,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 });
 
+                $scope.$on('init-paging', function () {
+                    $scope.initPaging();
+                });
+
                 $scope.$on('firenext', function () {
                     $scope.nextPaging();
                 });
@@ -415,14 +419,18 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.nextPaging = function () {
                     var paged = $scope.state.query.paged;
                     paged.offsets.first.state = runValueFunction(paged.offsets.first.next, paged.offsets.first.state);
-                    paged.offsets.second.state = runValueFunction(paged.offsets.second.next, paged.offsets.second.state);
+                    if (paged.offsets.second) {
+                        paged.offsets.second.state = runValueFunction(paged.offsets.second.next, paged.offsets.second.state);
+                    }
                     $scope.$broadcast('update-template');
                 }
 
                 $scope.previousPaging = function () {
                     var paged = $scope.state.query.paged;
                     paged.offsets.first.state = runValueFunction(paged.offsets.first.previous, paged.offsets.first.state);
-                    paged.offsets.second.state = runValueFunction(paged.offsets.second.previous, paged.offsets.second.state);
+                    if (paged.offsets.second) {
+                        paged.offsets.second.state = runValueFunction(paged.offsets.second.previous, paged.offsets.second.state);
+                    }
                     $scope.$broadcast('update-template');
                 };
 
@@ -476,11 +484,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 $scope.$on('globalsettings-refreshInterval', function (event, arg) {
                     if (arg.new > 0) {
-                      if (!$scope.state.config.slave) {
-                        $scope.state.config.autorefreshduration = arg.new;
-                        $scope.restartInterval($scope.state.config.autorefresh);
-                      }
-                    } 
+                        if (!$scope.state.config.slave) {
+                            $scope.state.config.autorefreshduration = arg.new;
+                            $scope.restartInterval($scope.state.config.autorefresh);
+                        }
+                    }
                 });
 
                 $scope.$on('$destroy', function () {
