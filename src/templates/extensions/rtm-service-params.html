@@ -65,14 +65,41 @@
       </ul>
 
       <div class="row" ng-show="isTabActive(1)">
+
         <div class="col-md-2" style="display: block;">
-          <label class="rtm-label">interval</label>
-          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.granularity']">
+          <label class="rtm-label">interval size (ms)</label>
+          <div style="display: flex;">
+            <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.granularity']">
+            <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="status.isopen.interval">
+              <button id="interval-input" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
+                ng-disabled="disabled">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="interval-input">
+                <li role="menuitem" ng-click="setParam('aggregateService.granularity', 'auto')"><a>auto</a></li>
+                <li role="menuitem" ng-click="setParam('aggregateService.granularity','max')"><a>max</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <div class="col-md-2" style="display: block;">
-          <label class="rtm-label">groupby</label>
-          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.groupby']">
+          <label class="rtm-label">split attribute(s)</label>
+          <div style="display: flex;">
+            <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.groupby']">
+            <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="status.isopen.groupby">
+              <button id="groupby-input" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
+                ng-disabled="disabled">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="groupby-input">
+                <li role="menuitem" ng-click="setParam('aggregateService.groupby', 'name')"><a>name</a></li>
+                <li role="menuitem" ng-click="setParam('aggregateService.groupby','rnStatus')"><a>status</a></li>
+                <li role="menuitem" ng-click="setParam('aggregateService.groupby','name;rnStatus')"><a>name & status</a></li>
+                <li role="menuitem" ng-click="setParam('aggregateService.groupby', '')"><a>none (merge all)</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row" ng-show="isTabActive(2)">

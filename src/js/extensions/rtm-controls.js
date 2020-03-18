@@ -394,9 +394,27 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-service-params.html'),
             controller: function ($scope) {
 
+                $scope.setParam = function(pName, newGran){
+                    $scope.params[pName] = newGran;
+                    $scope.forceReloadQuery();
+                };
+
                 $scope.setChartMetric = function(metric){
                     $scope.query.datasource.callback.postproc.transform.args[0].value = metric;
-                    // force reload for metric update
+                    $scope.forceReloadTransform();
+                };
+
+                $scope.forceReloadQuery = function(){
+                    // force reload entire query for data update
+                    forceRedraw($scope);
+                    // need to force an angular cycle for the model change to be taken in account
+                    setTimeout(function(){$scope.$emit('broadcastQueryFire');}, 100);
+                    
+                };
+
+
+                $scope.forceReloadTransform = function(){
+                    // force transform reload for metric/visualization update
                     $scope.state.data.rawresponse = JSON.parse(angular.toJson($scope.state.data.rawresponse));
                 };
 
