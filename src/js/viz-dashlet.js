@@ -379,7 +379,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                 // Paging
 
-                // also initPaging() on viewtoggle (back to config)?
+                // On Template Preset loaded - also initPaging() on viewtoggle (back to config)?
                 $scope.$on('templateph-loaded', function () {
                     if ($scope.state.query.controls
                         && $scope.state.query.controls.template
@@ -388,8 +388,10 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     }
                 });
 
-                $scope.$on('init-paging', function () {
-                    $scope.initPaging();
+                $scope.$watch('state.query.paged.ispaged', function (newValue) {
+                    if (newValue === 'On') {
+                        $scope.initPaging();
+                    }
                 });
 
                 $scope.$on('firenext', function () {

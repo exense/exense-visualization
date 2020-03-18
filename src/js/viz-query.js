@@ -473,55 +473,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                 }
 
                 $scope.initRTMControls = function () {
-                    !$scope.state.controlsunwatchers ? $scope.state.controlsunwatchers = [] : $.each($scope.state.controlsunwatchers, function (idx, unwatcher) { unwatcher(); });
-
-                    $scope.state.controlsunwatchers.push(
-                        $scope.$watch('state.query.controls.querytype', function (newValue, oldvalue) {
-
-
-                            //preserve model in the event of a service switch (1)
-                            var savedControl = $scope.state.query.controls.rtmmodel;
-                            var savedPayload = $scope.state.query.controls.template.templatedPayload;
-
-                            if ($scope.state.query
-                                && $scope.state.query.controls
-                                && $scope.state.query.controls.querytype
-                                && oldvalue !== newValue) {
-
-                                if (newValue === 'aggregates') {
-                                    $scope.state.query = new RTMAggregatesQuery();
-                                } else {
-                                    if (newValue === 'rawvalues') {
-                                        $scope.state.query = new RTMRawValuesQuery();
-                                        $scope.$emit('init-paging');
-                                    } else {
-                                        console.log("unsupported RTM service: " + newValue);
-                                    }
-                                }
-
-                                //preserve model in the event of a service switch (2)
-                                if (savedControl) {
-                                    $scope.state.query.controls.rtmmodel = savedControl;
-                                }
-
-                                if (savedPayload) {
-                                    $scope.state.query.controls.template.templatedPayload = savedPayload;
-                                }
-                            }
-                        })
-                    );
-
-                    $scope.state.controlsunwatchers.push(
-                        $scope.$watch('state.query.controls.rtmmodel', function (newValue, oldValue) {
-                            //if (angular.toJson(newValue) !== angular.toJson(oldValue)) {
-                                var newPayload = RTMserialize(newValue);
-
-                                if (newPayload) {
-                                    $scope.state.query.controls.template.templatedPayload = newPayload;
-                                }
-                            //}
-                        }, true) // deep watching changes in the RTM models
-                    );
+                    $scope.$emit('init-rtm', $scope.state.query.controls);
                 }
 
 

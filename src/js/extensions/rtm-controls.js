@@ -114,7 +114,26 @@ function RTMAggregatesQuery() {
     query.controltype = 'RTM';
     query.controls.querytype = 'aggregates';
 
-    var transform = "function (response, args) {\r\n    var metric = args.metric;\r\n    var retData = [], series = {};\r\n\r\n    var payload = response.data.payload.stream.streamData;\r\n    var payloadKeys = Object.keys(payload);\r\n\r\n    for (i = 0; i < payloadKeys.length; i++) {\r\n        var serieskeys = Object.keys(payload[payloadKeys[i]])\r\n        for (j = 0; j < serieskeys.length; j++) {\r\n            retData.push({\r\n                x: payloadKeys[i],\r\n                y: payload[payloadKeys[i]][serieskeys[j]][metric],\r\n                z: serieskeys[j]\r\n            });\r\n        }\r\n    }\r\n    return retData;\r\n}";
+    var tFunc = function (response, args) {
+        var metric = args.metric;
+        var metricSplit = args.metric.split(';');
+        var retData = [], series = {};
+        var payload = response.data.payload.stream.streamData;
+        var payloadKeys = Object.keys(payload);
+        for (i = 0; i < payloadKeys.length; i++) {
+            var serieskeys = Object.keys(payload[payloadKeys[i]])
+            for (j = 0; j < serieskeys.length; j++) {
+                $.each(metricSplit, function (idx, m) {
+                    if (m && payload[payloadKeys[i]][serieskeys[j]][m]) {
+                        retData.push({ x: payloadKeys[i], y: payload[payloadKeys[i]][serieskeys[j]][m], z: serieskeys[j] });
+                    }
+                });
+            }
+        }
+        return retData;
+    };
+    var transform = tFunc.toString();
+
     query.type = 'Async';
     query.datasource = {
         service: new Service(//service
@@ -130,6 +149,48 @@ function RTMAggregatesQuery() {
     };
 
     query.controls.rtmmodel = new DefaultRTMPayload();
+    return query;
+}
+
+function RTMAggregatesMasterQuery() {
+    return new RTMAggregatesQuery();
+}
+
+function RTMAggregatesSlaveQuery() {
+    var query = new RTMAggregatesQuery();
+
+    var tFunc = function (response) {
+
+        var metric = args.metric;
+        var metrics = args.metric.split(';');
+
+        var retData = [], series = {};
+        var payload = response.data.payload.stream.streamData;
+        var payloadKeys = Object.keys(payload);
+        if (payload && payloadKeys.length > 0) {
+            var serieskeys = Object.keys(payload[payloadKeys[0]])
+            for (j = 0; j < serieskeys.length; j++) {
+                for (i = 0; i < metrics.length; i++) {
+                    if (metric) {
+                        var metric = metrics[i];
+                        if (payload[payloadKeys[0]][serieskeys[j]][metric]) {
+                            retData.push({
+                                x: metric,
+                                y: Math.round(payload[payloadKeys[0]][serieskeys[j]][metric]),
+                                z: serieskeys[j]
+                            });
+                        } else {
+                            retData.push({ x: metric, y: 0, z: serieskeys[j] });
+                        }
+                    }
+                }
+            }
+        }
+        return retData;
+    };
+
+    // set different transform for table
+    query.datasource.callback.postproc.transform = tFunc.toString();
     return query;
 }
 
@@ -269,9 +330,9 @@ function RTMserialize(guiPayload) {
         $.each(selector.textFilters, function (filIdx, filter) {
             filter.type = undefined;
 
-            if(filter.regex === 'On'){
+            if (filter.regex === 'On') {
                 filter.regex = true;
-            }else{
+            } else {
                 filter.regex = false;
             }
         });
@@ -300,11 +361,90 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 payload: '=',
                 query: '=',
                 orientation: '=?',
-                state: '='
+                slavestate: '=',
+                masterstate: '='
             },
 
             template: '<div ng-include="resolveDynamicTemplate()"></div>',
             controller: function ($scope) {
+
+                $scope.unwatchers = [];
+                
+                $scope.forceReloadQuery = function () {
+                    // force reload entire query for data update
+                    forceRedraw($scope);
+                    // need to force an angular cycle for the model change to be taken in account
+                    setTimeout(function () { $scope.$emit('broadcastQueryFire'); }, 100);
+
+                };
+
+                $scope.forceReloadTransform = function () {
+                    // force transform reload for metric/visualization update
+                    $scope.masterstate.data.rawresponse = JSON.parse(angular.toJson($scope.masterstate.data.rawresponse));
+                };
+
+                $scope.$on('forceReloadTransform', function (event, arg) {
+                    $scope.forceReloadTransform();
+                });
+
+                $scope.$on('forceReloadQuery', function (event, arg) {
+                    $scope.forceReloadQuery();
+                });
+
+                $scope.init = function () {
+
+                    if ($scope.masterstate) {
+
+                        $scope.unwatchers.push(
+                            $scope.$watch('masterstate.query.controls.querytype', function (newValue, oldvalue) {
+
+                                //preserve model in the event of a service switch (1)
+                                var savedControl = $scope.masterstate.query.controls.rtmmodel;
+                                var savedPayload = $scope.masterstate.query.controls.template.templatedPayload;
+
+                                if ($scope.masterstate.query
+                                    && $scope.masterstate.query.controls
+                                    && $scope.masterstate.query.controls.querytype
+                                    && oldvalue !== newValue) {
+
+                                    if (newValue === 'aggregates') {
+                                        $scope.masterstate.query = new RTMAggregatesMasterQuery();
+                                    } else {
+                                        if (newValue === 'rawvalues') {
+                                            $scope.masterstate.query = new RTMRawValuesQuery();
+                                        } else {
+                                            console.log("unsupported RTM service: " + newValue);
+                                        }
+                                    }
+
+                                    //preserve model in the event of a service switch (2)
+                                    if (savedControl) {
+                                        $scope.masterstate.query.controls.rtmmodel = savedControl;
+                                    }
+
+                                    if (savedPayload) {
+                                        $scope.masterstate.query.controls.template.templatedPayload = savedPayload;
+                                    }
+
+                                    $scope.forceReloadQuery();
+                                }
+                            })
+                        );
+
+                        $scope.unwatchers.push(
+                            $scope.$watch('masterstate.query.controls.rtmmodel', function (newValue, oldValue) {
+                                console.log(newValue)
+                                //if (angular.toJson(newValue) !== angular.toJson(oldValue)) {
+                                var newPayload = RTMserialize(newValue);
+
+                                if (newPayload) {
+                                    $scope.masterstate.query.controls.template.templatedPayload = newPayload;
+                                }
+                                //}
+                            }, true) // deep watching changes in the RTM models
+                        );
+                    }
+                }
 
                 /* Dynamic template impl*/
                 $scope.resolveDynamicTemplate = function () {
@@ -336,10 +476,12 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     var value1 = split[2];
                     var value2 = split[3];
 
-                    if(type === 'text'){
-                        $scope.payload.selectors1[0].textFilters.push(new TextFilter(key, value1,value2));
+                    if (type === 'text') {
+                        $scope.payload.selectors1[0].textFilters.push(new TextFilter(key, value1, value2));
                     }
                 });
+
+                $scope.init();
 
             }
         };
@@ -362,9 +504,9 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 };
 
                 $scope.addNumericalFilter = function () {
-                    console.log( $scope.numericalfilters)
+                    console.log($scope.numericalfilters)
                     $scope.numericalfilters.push(new DefaultNumericalFilter());
-                    console.log( $scope.numericalfilters)
+                    console.log($scope.numericalfilters)
                 };
 
                 $scope.addDateFilter = function () {
@@ -388,37 +530,59 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
             scope: {
                 params: '=',
                 query: '=',
-                state: '='
+                masterstate: '=',
+                slavestate: '='
             },
 
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-service-params.html'),
             controller: function ($scope) {
 
-                $scope.setParam = function(pName, newGran){
+                $scope.setParam = function (pName, newGran) {
                     $scope.params[pName] = newGran;
                     $scope.forceReloadQuery();
                 };
 
-                $scope.setChartMetric = function(metric){
+                $scope.setChartMetric = function (metric) {
                     $scope.query.datasource.callback.postproc.transform.args[0].value = metric;
                     $scope.forceReloadTransform();
                 };
 
-                $scope.forceReloadQuery = function(){
-                    // force reload entire query for data update
-                    forceRedraw($scope);
-                    // need to force an angular cycle for the model change to be taken in account
-                    setTimeout(function(){$scope.$emit('broadcastQueryFire');}, 100);
-                    
+                $scope.forceReloadQuery = function () {
+                    $scope.$emit('forceReloadQuery');
                 };
 
-
-                $scope.forceReloadTransform = function(){
-                    // force transform reload for metric/visualization update
-                    $scope.state.data.rawresponse = JSON.parse(angular.toJson($scope.state.data.rawresponse));
+                $scope.forceReloadTransform = function () {
+                    $scope.$emit('forceReloadTransform');
                 };
 
-                $scope.rawvaluemetrics = [];
+                $scope.retrieveRawvalueMetrics = function () {
+
+                };
+
+                $scope.updateTableMetrics = function (metricList) {
+                    if (metricList && metricList.length > 0
+                        && $scope.slavestate && $scope.slavestate.query && $scope.slavestate.query.datasource && $scope.slavestate.query.datasource.callback
+                        && $scope.slavestate.query.datasource.callback.postproc && $scope.slavestate.query.datasource.callback.postproc.transform
+                        && $scope.slavestate.query.datasource.callback.postproc.transform.args && $scope.slavestate.query.datasource.callback.postproc.transform.args[0]
+                        && $scope.slavestate.query.datasource.callback.postproc.transform.args[0].value) {
+                        console.log('previous')
+                        console.log($scope.slavestate.query.datasource.callback.postproc.transform.args[0].value);
+                        console.log(metricList);
+                        $scope.slavestate.query.datasource.callback.postproc.transform.args[0].value = metricList;
+
+                    }
+                };
+
+                $scope.$watchCollection('selectedMetrics', function (newValue) {
+                    var list = "";
+                    $.each(newValue, function (idx, value) {
+                        console.log(value);
+                        if (value) {
+                            list += value.id + ";";
+                        }
+                    });
+                    $scope.updateTableMetrics(list);
+                });
 
                 $scope.aggregatemetrics = [{
                     "label": "count",
@@ -451,8 +615,8 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     "label": "99th pcl",
                     "id": "99th pcl"
                 }];
-                $scope.example14model = [];
-                $scope.example14settings = {
+                $scope.selectedMetrics = [];
+                $scope.metricSearchSettings = {
                     scrollableHeight: '200px',
                     scrollable: true,
                     enableSearch: true

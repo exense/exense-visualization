@@ -40,9 +40,9 @@
         </div>
 
         <div class="col-md-4" style="display: block;">
-          <label class="rtm-label">Table metrics</label>
-          <div ng-dropdown-multiselect="" options="aggregatemetrics" selected-model="example14model" checkboxes="true"
-            extra-settings="example14settings"></div>
+          <label class="rtm-label">Table metrics   {{selectedMetrics}}</label>
+          <div ng-dropdown-multiselect="" options="aggregatemetrics" selected-model="selectedMetrics" checkboxes="true"
+            extra-settings="metricSearchSettings"></div>
         </div>
       </div>
     </div>
