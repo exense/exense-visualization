@@ -416,7 +416,7 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     "id": "max"
                 }, {
                     "label": "median",
-                    "id": "pcl50"
+                    "id": "50th pcl"
                 }, {
                     "label": "count / sec",
                     "id": "tps"
@@ -425,13 +425,13 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     "id": "tpm"
                 }, {
                     "label": "80th pcl",
-                    "id": "pcl90"
+                    "id": "80th pcl"
                 }, {
                     "label": "90th pcl",
-                    "id": "pcl90"
+                    "id": "90th pcl"
                 }, {
                     "label": "99th pcl",
-                    "id": "pcl99"
+                    "id": "99th pcl"
                 }];
                 $scope.example14model = [];
                 $scope.example14settings = {
