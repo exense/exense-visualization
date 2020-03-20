@@ -20,22 +20,22 @@ describe('Transformations', function () {
 
         it('should return an understandable xz-organized object',
             function () {
-                assert.equal('[["","cnt","avg"],["1584373648355","OpenChrome",2,251],["1584373648355","OpenChrome",2,251],["1584373648355","Search",10,2800],["1584373648355","Search",10,2800],["1584373649320","OpenChrome",8,320],["1584373649320","OpenChrome",8,320],["1584373649320","Search",17,1956],["1584373649320","Search",17,1956]]',
+                assert.equal('[["1584373648355","OpenChrome",2,251],["1584373648355","OpenChrome",2,251],["1584373648355","Search",10,2800],["1584373648355","Search",10,2800],["1584373649320","OpenChrome",8,320],["1584373649320","OpenChrome",8,320],["1584373649320","Search",17,1956],["1584373649320","Search",17,1956]]',
                     JSON.stringify(
-                        vizmdTransformation.toTable(
+                        vizmdTransformation.toPlainTable(
                             vizmdTransformation.toDualGrouping(testInput, 'x', 'z')
-                        )
+                        ).data
                     )
                 )
             });
 
             it('should return an understandable zx-organized object',
             function () {
-                assert.equal('[["","cnt","avg"],["OpenChrome","1584373648355",2,251],["OpenChrome","1584373648355",2,251],["OpenChrome","1584373649320",8,320],["OpenChrome","1584373649320",8,320],["Search","1584373648355",10,2800],["Search","1584373648355",10,2800],["Search","1584373649320",17,1956],["Search","1584373649320",17,1956]]',
+                assert.equal('[["OpenChrome","1584373648355",2,251],["OpenChrome","1584373648355",2,251],["OpenChrome","1584373649320",8,320],["OpenChrome","1584373649320",8,320],["Search","1584373648355",10,2800],["Search","1584373648355",10,2800],["Search","1584373649320",17,1956],["Search","1584373649320",17,1956]]',
                     JSON.stringify(
-                        vizmdTransformation.toTable(
+                        vizmdTransformation.toPlainTable(
                             vizmdTransformation.toDualGrouping(testInput, 'z', 'x')
-                        )
+                        ).data
                     )
                 )
             });

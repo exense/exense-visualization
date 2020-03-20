@@ -63,15 +63,12 @@ vizmdTransformation.toDualGrouping = function (xyzmFormat, topGroupKey, subGroup
     };
 };
 
-vizmdTransformation.toTable = function (twolvlgroups) {
+vizmdTransformation.toPlainTable = function (twolvlgroups, h1, h2) {
     var multiArray = [];
 
     var headers = [];
-    multiArray.push(headers);
-
     // empty corner
-    headers.push('');
-
+    headers.push(h1, h2);
     $.each(twolvlgroups.mList, function (idx, m) {
         headers.push(m);
     });
@@ -90,5 +87,5 @@ vizmdTransformation.toTable = function (twolvlgroups) {
 
         });
     });
-    return multiArray;
+    return { data: multiArray, headers: headers};
 };
