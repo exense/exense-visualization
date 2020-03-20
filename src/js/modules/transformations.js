@@ -15,7 +15,7 @@ function Transformation(name, actualFunction) {
 }
 
 //2-level grouping - could be generalized to n-grouping (via recursion / nesting)
-vizmdTransformation.toDualTable = function (xyzmFormat, topGroupKey, subGroupKey, inputMKey) {
+vizmdTransformation.toDualGrouping = function (xyzmFormat, topGroupKey, subGroupKey, inputMKey) {
 
     var zxIndex = new IdIndexArray([]);
     var valueKeys = [];
@@ -32,15 +32,8 @@ vizmdTransformation.toDualTable = function (xyzmFormat, topGroupKey, subGroupKey
         mKey = 'm';
     }
 
-    // get all non-grouping-involved keys
+    // build metric list
     $.each(xyzmFormat, function (idx, datapoint) {
-        $.each(Object.keys(datapoint), function (idx2, datapointKey) {
-            if (datapointKey !== topGroupKey && datapointKey !== subGroupKey) {
-                if (!valueKeys.includes(datapointKey)) {
-                    valueKeys.push(datapointKey);
-                }
-            }
-        });
         if (!mList.includes(datapoint[mKey])) {
             mList.push(datapoint[mKey]);
         }
@@ -54,21 +47,48 @@ vizmdTransformation.toDualTable = function (xyzmFormat, topGroupKey, subGroupKey
 
         var currentTop = zxIndex.getById(datapoint[topGroupKey]);
         if (!currentTop.hasById(datapoint[subGroupKey])) {
-            currentTop.addNewWithId({values : {}}, datapoint[subGroupKey])
+            currentTop.addNewWithId({ values: {} }, datapoint[subGroupKey])
             xList.push(datapoint[subGroupKey]);
-
-            // add all non-grouping involved values to the grouping
-            $.each(valueKeys, function (idx2, valueKey) {
-                var currentSub = currentTop.getById(datapoint[subGroupKey]);
-                currentSub.values[valueKey] = datapoint[valueKey];
-            });
         }
+
+        var currentSub = currentTop.getById(datapoint[subGroupKey]);
+        currentSub.values[datapoint.m] = datapoint.y;
     });
 
     return {
-        data: zxIndex,
+        data: JSON.parse(JSON.stringify(zxIndex)),
         zList: zList,
         xList: xList,
         mList: mList
     };
-}
+};
+
+vizmdTransformation.toTable = function (twolvlgroups) {
+    var multiArray = [];
+
+    var headers = [];
+    multiArray.push(headers);
+
+    // empty corner
+    headers.push('');
+
+    $.each(twolvlgroups.mList, function (idx, m) {
+        headers.push(m);
+    });
+
+    $.each(twolvlgroups.data.array, function (idx, top) {
+        $.each(top.array, function (idx1, sub) {
+            var row = [];
+            row.push(top.oid);
+            row.push(sub.oid);
+            $.each(twolvlgroups.mList, function (idx1, m) {
+                if (sub.values && sub.values[m]){
+                    row.push(sub.values[m]);
+                }
+                multiArray.push(row);
+            });
+
+        });
+    });
+    return multiArray;
+};

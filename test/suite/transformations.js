@@ -20,16 +20,25 @@ describe('Transformations', function () {
 
         it('should return an understandable xz-organized object',
             function () {
-                assert.equal('{"data":{"array":[{"array":[{"values":{"m":"cnt","y":2},"oid":"OpenChrome"},{"values":{"m":"cnt","y":10},"oid":"Search"}],"oid":"1584373648355"},{"array":[{"values":{"m":"cnt","y":8},"oid":"OpenChrome"},{"values":{"m":"cnt","y":17},"oid":"Search"}],"oid":"1584373649320"}]},"zList":["1584373648355","1584373649320"],"xList":["OpenChrome","OpenChrome","Search","Search"],"mList":["cnt","avg"]}',
-                    JSON.stringify(vizmdTransformation.toDualTable(testInput, 'x', 'z')));
+                assert.equal('[["","cnt","avg"],["1584373648355","OpenChrome",2,251],["1584373648355","OpenChrome",2,251],["1584373648355","Search",10,2800],["1584373648355","Search",10,2800],["1584373649320","OpenChrome",8,320],["1584373649320","OpenChrome",8,320],["1584373649320","Search",17,1956],["1584373649320","Search",17,1956]]',
+                    JSON.stringify(
+                        vizmdTransformation.toTable(
+                            vizmdTransformation.toDualGrouping(testInput, 'x', 'z')
+                        )
+                    )
+                )
             });
 
-        it('should return an understandable zx-organized object',
+            it('should return an understandable zx-organized object',
             function () {
-                assert.equal('{"data":{"array":[{"array":[{"values":{"m":"cnt","y":2},"oid":"1584373648355"},{"values":{"m":"cnt","y":8},"oid":"1584373649320"}],"oid":"OpenChrome"},{"array":[{"values":{"m":"cnt","y":10},"oid":"1584373648355"},{"values":{"m":"cnt","y":17},"oid":"1584373649320"}],"oid":"Search"}]},"zList":["OpenChrome","Search"],"xList":["1584373648355","1584373649320","1584373648355","1584373649320"],"mList":["cnt","avg"]}',
-                    JSON.stringify(vizmdTransformation.toDualTable(testInput, 'z', 'x')));
+                assert.equal('[["","cnt","avg"],["OpenChrome","1584373648355",2,251],["OpenChrome","1584373648355",2,251],["OpenChrome","1584373649320",8,320],["OpenChrome","1584373649320",8,320],["Search","1584373648355",10,2800],["Search","1584373648355",10,2800],["Search","1584373649320",17,1956],["Search","1584373649320",17,1956]]',
+                    JSON.stringify(
+                        vizmdTransformation.toTable(
+                            vizmdTransformation.toDualGrouping(testInput, 'z', 'x')
+                        )
+                    )
+                )
             });
-
     });
 
 });
