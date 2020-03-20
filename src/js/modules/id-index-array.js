@@ -7,6 +7,11 @@ function IdIndexArray(arrayArg) {
         getId: function (obj) {
             return obj['oid'];
         },
+        addNewWithId: function (obj, id) {
+            obj['oid'] = id;
+            this.array.push(obj);
+            return id;
+        },
         addNew: function (obj) {
             var newId = getUniqueId();
             obj['oid'] = newId;
@@ -22,9 +27,16 @@ function IdIndexArray(arrayArg) {
         getById: function (oid) {
             var index = this.getIndexById(oid);
             if (index === -1) {
-                throw 'No object found with Id:' + oid;
+                return -1;
             }
             return this.array[index];
+        },
+        hasById: function (oid) {
+            if(this.getById(oid) !== -1){
+                return true;
+            }else{
+                return false;
+            }
         },
         getByIndex: function (idx) {
             return this.array[idx];

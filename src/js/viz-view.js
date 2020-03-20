@@ -153,6 +153,10 @@ angular.module('viz-view', ['nvd3'])
         templateUrl: resolveTemplateURL('viz-view.js', 'viz-v-seriestable.html'),
         controller: function ($scope) {
 
+            $scope.stringToColour = function (str) {
+                return stringToColour(str);
+            };
+
         }
     };
 })
@@ -167,6 +171,10 @@ angular.module('viz-view', ['nvd3'])
         },
         templateUrl: resolveTemplateURL('viz-view.js', 'viz-v-dualtable.html'),
         controller: function ($scope) {
+
+            $scope.stringToColour = function (str) {
+                return stringToColour(str);
+            };
 
         }
     };
@@ -183,6 +191,10 @@ angular.module('viz-view', ['nvd3'])
         templateUrl: resolveTemplateURL('viz-view.js', 'viz-v-singlevaluetable.html'),
         controller: function ($scope) {
 
+            $scope.stringToColour = function (str) {
+                return stringToColour(str);
+            };
+
         }
     };
 })
@@ -198,6 +210,10 @@ angular.module('viz-view', ['nvd3'])
         templateUrl: resolveTemplateURL('viz-view.js', 'viz-v-singlevaluefulltext.html'),
         controller: function ($scope) {
 
+            $scope.stringToColour = function (str) {
+                return stringToColour(str);
+            };
+
         }
     };
 })
@@ -212,6 +228,10 @@ angular.module('viz-view', ['nvd3'])
         },
         templateUrl: resolveTemplateURL('viz-view.js', 'viz-v-chart.html'),
         controller: function ($scope) {
+
+            $scope.stringToColour = function (str) {
+                return stringToColour(str);
+            };
 
         }
     };

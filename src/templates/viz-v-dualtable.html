@@ -1,3 +1,28 @@
 <div class="tablecontain" ng-style="{height: state.options.chart.height -30 + 'px'}">
-    {{state.gui.tabledata}}
-</div>
+    <table class="table" ng-style="{width:state.options.chart.width -30 + 'px'}">
+        <thead>
+            <tr>
+                <th><label style="opacity: 0;" class="viz-cell">&nbsp;</label></th>
+                <th ng-repeat="m in state.gui.tabledata.mList" class="viz-cell">
+                    <label class="label label-success">{{m}}</label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in state.gui.tabledata.data">
+                <td>
+                    <label class="label label-success" ng-style="{ 'background-color': stringToColour(row.z)}" style="color: white;"></label>{{row.z}}</label>
+                    <label data-ng-bind="state.options.chart.xAxis.tickFormat(row.x)" /></td>
+                <td ng-repeat="series in state.gui.tabledata.zList" class="viz-cell">
+                    {{row['values'][series]}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {{state.gui.tabledata.zList}}
+    {{state.gui.tabledata.xList}}
+    {{state.gui.tabledata.mList}}
+    
+    
+    {{state.gui.tabledata.data}}
+    </div>
