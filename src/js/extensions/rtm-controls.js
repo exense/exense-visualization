@@ -279,7 +279,7 @@ function RTMSlaveState() {
     return new DashletState(
         'Table', true, 0,
         new DefaultDashletData(),
-        new ChartOptions('seriesTable', false, false,
+        new ChartOptions('dualTable', false, false,
             'function (d) {\r\n    var value;\r\n    if ((typeof d) === \"string\") {\r\n        value = parseInt(d);\r\n    } else {\r\n        value = d;\r\n    }\r\n\r\n    return d3.time.format(\"%H:%M:%S\")(new Date(value));\r\n}',
             'function (d) { return d.toFixed(1); }',
             null,

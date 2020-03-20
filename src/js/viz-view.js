@@ -24,6 +24,9 @@ angular.module('viz-view', ['nvd3'])
                     if ($scope.state.options.chart.type.endsWith('seriesTable')) {
                         $scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
                     }
+                    if ($scope.state.options.chart.type.endsWith('dualTable')) {
+                        $scope.state.gui.tabledata = vizmdTransformation.toDualTable(newvalue.dashdata);
+                    }
                     if ($scope.state.options.chart.type.endsWith('Chart')) {
                         $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
                         //$scope.applyDynamicChartConfig();
@@ -148,6 +151,21 @@ angular.module('viz-view', ['nvd3'])
             inputsettingscol: '='
         },
         templateUrl: resolveTemplateURL('viz-view.js', 'viz-v-seriestable.html'),
+        controller: function ($scope) {
+
+        }
+    };
+})
+.directive('vizVDualtable', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            customheight: '=',
+            state: '=',
+            presets: '=',
+            inputsettingscol: '='
+        },
+        templateUrl: resolveTemplateURL('viz-view.js', 'viz-v-dualtable.html'),
         controller: function ($scope) {
 
         }
