@@ -82,9 +82,8 @@ vizmdTransformation.toPlainTable = function (twolvlgroups, h1, h2) {
                 if (sub.values && sub.values[m]){
                     row.push(sub.values[m]);
                 }
-                multiArray.push(row);
             });
-
+            multiArray.push(row);
         });
     });
     return { data: multiArray, headers: headers};
