@@ -162,7 +162,7 @@ function RTMAggregatesSlaveQuery() {
     query.controls.querytype = 'aggregates';
 
     var tFunc = function (response, args) {
-    	
+
         console.log('slave!')
         var metric = args.metric;
         var metricSplit = args.metric.split(';');
@@ -171,18 +171,18 @@ function RTMAggregatesSlaveQuery() {
         console.log(payload)
         var payloadKeys = Object.keys(payload);
         $.each(payloadKeys, function (idx1, time) {
-        	console.log(time)
-        	var serieskeys = Object.keys(payload[time]);
+            console.log(time)
+            var serieskeys = Object.keys(payload[time]);
             $.each(serieskeys, function (idx2, group) {
-            	console.log(serieskeys)
-            	$.each(metricSplit, function (idx3, m) {
-					if (m && payload[time][group][m]) {
-						retData.push({ 'x': time, 'y': payload[time][group][m], 'z': group, 'm': m });
-					}
-    			});
+                console.log(serieskeys)
+                $.each(metricSplit, function (idx3, m) {
+                    if (m && payload[time][group][m]) {
+                        retData.push({ 'x': time, 'y': payload[time][group][m], 'z': group, 'm': m });
+                    }
+                });
             });
         });
-        
+
         return retData;
     };
     var transform = tFunc.toString();
@@ -399,7 +399,7 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
             controller: function ($scope) {
 
                 $scope.unwatchers = [];
-                
+
                 $scope.forceReloadQuery = function () {
                     // force reload entire query for data update
                     forceRedraw($scope);
@@ -410,7 +410,9 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
 
                 $scope.forceReloadTransform = function () {
                     // force transform reload for metric/visualization update
-                    $scope.masterstate.data.rawresponse = JSON.parse(angular.toJson($scope.masterstate.data.rawresponse));
+                    if ($scope.masterstate) {
+                        $scope.masterstate.data.rawresponse = JSON.parse(angular.toJson($scope.masterstate.data.rawresponse));
+                    }
                 };
 
                 $scope.$on('forceReloadTransform', function (event, arg) {
