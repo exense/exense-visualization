@@ -4,8 +4,8 @@
     <span ng-class="{hide: isPagingOff()}" class="glyphicon glyphicon-menu-right glyphicon-viz paging btn btn-success viz-btn-success"
     style="position: absolute; right: 45px; top: 45px;" ng-click="$emit('firenext')"></span>
 
-    <viz-v-seriestable ng-if="state.options.chart.type === 'seriesTable'"></viz-v-seriestable>
-    <viz-v-singlevaluetable ng-if="state.options.chart.type === 'singleValueTable'"></viz-v-singlevaluetable>
-    <viz-v-valuefulltext ng-if="state.options.chart.type === 'singleValueFullText'"></viz-v-valuefulltext>
-    <viz-v-chart ng-if="state.options.chart.type.endsWith('Chart')"></viz-v-chart>
+    <viz-v-seriestable ng-if="state.options.chart.type === 'seriesTable'" state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-v-seriestable>
+    <viz-v-singlevaluetable ng-if="state.options.chart.type === 'singleValueTable'" state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-v-singlevaluetable>
+    <viz-v-valuefulltext ng-if="state.options.chart.type === 'singleValueFullText'" state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-v-valuefulltext>
+    <viz-v-chart ng-if="state.options.chart.type.endsWith('Chart')" state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-v-chart>
 </div>

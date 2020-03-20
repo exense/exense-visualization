@@ -168,13 +168,13 @@ function RTMAggregatesSlaveQuery() {
         var metricSplit = args.metric.split(';');
         var retData = [], series = {};
         var payload = response.data.payload.stream.streamData;
-        console.log(payload)
+
         var payloadKeys = Object.keys(payload);
         $.each(payloadKeys, function (idx1, time) {
-            console.log(time)
+
             var serieskeys = Object.keys(payload[time]);
             $.each(serieskeys, function (idx2, group) {
-                console.log(serieskeys)
+
                 $.each(metricSplit, function (idx3, m) {
                     if (m && payload[time][group][m]) {
                         retData.push({ 'x': time, 'y': payload[time][group][m], 'z': group, 'm': m });
