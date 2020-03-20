@@ -25,7 +25,7 @@ angular.module('viz-view', ['nvd3'])
                         $scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
                     }
                     if ($scope.state.options.chart.type.endsWith('dualTable')) {
-                        $scope.state.gui.tabledata = vizmdTransformation.toDualTable(newvalue.dashdata);
+                        $scope.state.gui.tabledata = vizmdTransformation.toDualTable(newvalue.dashdata, 'z', 'x');
                     }
                     if ($scope.state.options.chart.type.endsWith('Chart')) {
                         $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);

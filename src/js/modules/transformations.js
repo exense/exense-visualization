@@ -24,7 +24,7 @@ vizmdTransformation.toDualTable = function(xyzmFormat, topGroupKey, subGroupKey)
     var xList = [];
 
     // get all non-grouping-involved keys
-    $.each(xyzmFormat.data, function(idx, datapoint){
+    $.each(xyzmFormat, function(idx, datapoint){
         $.each(Object.keys(datapoint), function(idx2, datapointKey){
             if(datapointKey !== topGroupKey && datapointKey !== subGroupKey){
                 if(!valueKeys.includes(datapointKey)){
@@ -34,7 +34,7 @@ vizmdTransformation.toDualTable = function(xyzmFormat, topGroupKey, subGroupKey)
         });
     });
 
-    $.each(xyzmFormat.data, function(idx, datapoint){
+    $.each(xyzmFormat, function(idx, datapoint){
         if(!Object.keys(zxIndex).includes(datapoint[topGroupKey])){
             zxIndex[datapoint[topGroupKey]] = {};
             zList.push(datapoint[topGroupKey]);

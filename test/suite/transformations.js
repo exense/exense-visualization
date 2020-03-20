@@ -6,8 +6,7 @@ libloader.load(libs);
 
 describe('Transformations', function () {
     describe('to4DimTableFormat', function () {
-        var testInput = {
-            data: [
+        var testInput = [
                 { 'm': 'cnt', 'y': 2, 'z': 'OpenChrome', 'x': '1584373648355' },
                 { 'm': 'avg', 'y': 251, 'z': 'OpenChrome', 'x': '1584373648355' },
                 { 'm': 'cnt', 'y': 8, 'z': 'OpenChrome', 'x': '1584373649320' },
@@ -16,8 +15,7 @@ describe('Transformations', function () {
                 { 'm': 'avg', 'y': 2800, 'z': 'Search', 'x': '1584373648355' },
                 { 'm': 'cnt', 'y': 17, 'z': 'Search', 'x': '1584373649320' },
                 { 'm': 'avg', 'y': 1956, 'z': 'Search', 'x': '1584373649320' }
-            ]
-        };
+            ];
 
         it('should return an understandable xz-organized object',
             function () {
