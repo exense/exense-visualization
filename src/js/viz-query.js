@@ -37,9 +37,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                         if ($scope.state.options.chart.type.endsWith('seriesTable')) {
                         	$scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
                         }
-                        if ($scope.state.options.chart.type.endsWith('bicolumnTable')) {
-                            $scope.state.gui.tabledata = $scope.toBicolumnTable(newvalue.dashdata);
-                        }
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
                             $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
                             //$scope.applyDynamicChartConfig();
@@ -126,21 +123,6 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
                     return retData;
                 };
 
-                $scope.toBicolumnTable = function (data) {
-                    var x = 'x', y = 'y', z = 'z';//begin,value,name
-                   var retData = []; var index = {}; zlist = [];
-                    var index = {};
-                    var payload = data;
-                    
-                    retData = data;
-                    for (var i = 0; i < payload.length; i++) {
-                        if (!zlist.includes(payload[i][z]))
-                            zlist.push(payload[i][z]);
-                    }
-
-                    return { zlist: zlist.sort(), data: retData };
-                };
-
                 $scope.toTable = function (data) {
 
                     var x = 'x', y = 'y', z = 'z';//begin,value,name
@@ -208,7 +190,7 @@ angular.module('viz-query', ['nvd3', 'ui.bootstrap', 'key-val-collection', 'rtm-
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
             controller: function ($scope) {
 
-                $scope.viztypes = ['seriesTable', 'bicolumnTable', 'singleValueTable', 'singleValueFullText', 'lineChart', 'multiBarChart', 'scatterChart', 'discreteBarChart', 'stackedAreaChart'];
+                $scope.viztypes = ['seriesTable', 'singleValueTable', 'singleValueFullText', 'lineChart', 'multiBarChart', 'scatterChart', 'discreteBarChart', 'stackedAreaChart'];
 
                 $scope.loadConfigPreset = function (preset) {
                     $scope.state.config = jsoncopy(preset);

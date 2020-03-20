@@ -3,27 +3,6 @@
         style="position: absolute; left: 45px; top: 45px;" ng-click="$emit('fireprevious')"></span>
     <span ng-class="{hide: isPagingOff()}" class="glyphicon glyphicon-menu-right glyphicon-viz paging btn btn-success viz-btn-success"
         style="position: absolute; right: 45px; top: 45px;" ng-click="$emit('firenext')"></span>
-        <div ng-if="state.options.chart.type === 'bicolumnTable'" class="tablecontain" ng-style="{height: state.options.chart.height -30 + 'px'}">
-            <table ng-if="state.config.transposetable !== 'On'" class="table" ng-style="{width:state.options.chart.width -30 + 'px'}">
-                <thead>
-                    <tr>
-                        <th><label style="opacity: 0;" class="viz-cell">&nbsp;</label></th>
-                        <th ng-repeat="z in state.gui.tabledata.zlist" class="viz-cell">
-                            <label class="label label-success" ng-style="{ 'background-color': stringToColour(z)}" style="color: white;">{{z}}</label>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="row in state.gui.tabledata.data">
-                        <td><label data-ng-bind="state.options.chart.xAxis.tickFormat(row.x)" /></td>
-                        <td ng-repeat="series in state.gui.tabledata.zlist" class="viz-cell">
-                            {{row['values'][series]}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
     <div ng-if="state.options.chart.type === 'seriesTable'" class="tablecontain" ng-style="{height: state.options.chart.height -30 + 'px'}">
         <table ng-if="state.config.transposetable !== 'On'" class="table" ng-style="{width:state.options.chart.width -30 + 'px'}">
             <thead>

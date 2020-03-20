@@ -77,6 +77,9 @@
               </button>
               <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="interval-input">
                 <li role="menuitem" ng-click="setParam('aggregateService.granularity', 'auto')"><a>auto</a></li>
+                <li role="menuitem" ng-click="setParam('aggregateService.granularity','30000')"><a>30 sec</a></li>
+                <li role="menuitem" ng-click="setParam('aggregateService.granularity','3600000')"><a>1 hour</a></li>
+                <li role="menuitem" ng-click="setParam('aggregateService.granularity','86400000')"><a>1 day</a></li>
                 <li role="menuitem" ng-click="setParam('aggregateService.granularity','max')"><a>max</a></li>
               </ul>
             </div>

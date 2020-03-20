@@ -177,10 +177,9 @@ function RTMAggregatesSlaveQuery() {
             	console.log(serieskeys)
             	$.each(metricSplit, function (idx3, m) {
 					if (m && payload[time][group][m]) {
-						retData.push({ x: m, y: payload[time][group][m], z: group });
+						retData.push({ 'x': time, 'y': payload[time][group][m], 'z': group, 'm': m });
 					}
     			});
-            	retData.push({ x: 'x', y: time, z: group });
             });
         });
         
@@ -280,7 +279,7 @@ function RTMSlaveState() {
     return new DashletState(
         'Table', true, 0,
         new DefaultDashletData(),
-        new ChartOptions('bicolumnTable', false, false,
+        new ChartOptions('seriesTable', false, false,
             'function (d) {\r\n    var value;\r\n    if ((typeof d) === \"string\") {\r\n        value = parseInt(d);\r\n    } else {\r\n        value = d;\r\n    }\r\n\r\n    return d3.time.format(\"%H:%M:%S\")(new Date(value));\r\n}',
             'function (d) { return d.toFixed(1); }',
             null,
@@ -611,6 +610,7 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                         }
                     });
                     $scope.updateTableMetrics(list);
+                    $scope.forceReloadTransform();
                 });
 
                 $scope.aggregatemetrics = [{
