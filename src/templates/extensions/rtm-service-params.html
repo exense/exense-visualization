@@ -4,8 +4,10 @@
     <div class="col-md-4 colcontain-grid">
       <label>Query type</label>
       <div class="btn-group viz-btn-group form-radio">
-        <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'rawvalues'">Raw values</label>
-        <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'aggregates'">Aggregates</label>
+        <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
+          uib-btn-radio="'rawvalues'">Raw values</label>
+        <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
+          uib-btn-radio="'aggregates'">Aggregates</label>
         <!-- todo -->
         <!--<label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'lastn'">Last N values</label>-->
       </div>
@@ -17,7 +19,8 @@
         <div class="col-md-4" style="display: block;">
           <label class="rtm-label">Chart metric</label>
           <div style="display: flex;">
-            <input type="text" class="form-control rtm-input" ng-model="query.datasource.callback.postproc.transform.args[0].value">
+            <input type="text" class="form-control rtm-input"
+              ng-model="query.datasource.callback.postproc.transform.args[0].value">
             <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="chart-metrics.status.isopen">
               <button id="chart-metrics" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
                 ng-disabled="disabled">
@@ -40,10 +43,11 @@
         </div>
 
         <div class="col-md-4" style="display: block;">
-          <label class="rtm-label">Table metrics   {{selectedMetrics}}</label>
+          <label class="rtm-label">Table metrics</label>
           <div ng-dropdown-multiselect="" options="aggregatemetrics" selected-model="selectedMetrics" checkboxes="true"
             extra-settings="metricSearchSettings"></div>
         </div>
+        <label ng-repeat="m in selectedMetrics" class="rtm-label">{{m.id}},</label>
       </div>
     </div>
 
@@ -98,7 +102,8 @@
               <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="groupby-input">
                 <li role="menuitem" ng-click="setParam('aggregateService.groupby', 'name')"><a>name</a></li>
                 <li role="menuitem" ng-click="setParam('aggregateService.groupby','rnStatus')"><a>status</a></li>
-                <li role="menuitem" ng-click="setParam('aggregateService.groupby','name;rnStatus')"><a>name & status</a></li>
+                <li role="menuitem" ng-click="setParam('aggregateService.groupby','name;rnStatus')"><a>name & status</a>
+                </li>
                 <li role="menuitem" ng-click="setParam('aggregateService.groupby', '')"><a>none (merge all)</a></li>
               </ul>
             </div>

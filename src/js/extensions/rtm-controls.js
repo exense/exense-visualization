@@ -270,7 +270,7 @@ function RTMMasterState() {
 };
 
 function RTMSlaveState() {
-    var slaveConfig = new Config('Fire', 'Off', false, true, 'state.data.rawresponse', null, null, null, null, 'Off');
+    var slaveConfig = new Config('Fire', 'Off', false, true, 'state.data.rawresponse', null, null, null, null, 'On');
     slaveConfig.currentmaster = {
         oid: RTMmasterId,
         title: 'Chart'
