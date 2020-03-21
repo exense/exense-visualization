@@ -24,10 +24,14 @@ angular.module('viz-query', ['viz-view', 'ui.bootstrap', 'key-val-collection', '
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-transform.html'),
             controller: function ($scope) {
                 $scope.loadTicks = function () {
-                    $scope.state.options.chart.xAxis.tickFormat = eval('(' + $scope.state.options.chart.xAxis.strTickFormat + ')');
-                    //$scope.state.options.chart.xAxis.tickFormat = function(d){ return 3;};
-                    $scope.state.options.chart.yAxis.tickFormat = eval('(' + $scope.state.options.chart.yAxis.strTickFormat + ')');
-                }
+                    if ($scope.state.options.chart.xAxis) {
+                        $scope.state.options.chart.xAxis.tickFormat = eval('(' + $scope.state.options.chart.xAxis.strTickFormat + ')');
+                        //$scope.state.options.chart.xAxis.tickFormat = function(d){ return 3;};
+                    }
+                    if ($scope.state.options.chart.yAxis) {
+                        $scope.state.options.chart.yAxis.tickFormat = eval('(' + $scope.state.options.chart.yAxis.strTickFormat + ')');
+                    }
+                };
 
                 $scope.loadScales = function () {
                     $scope.state.options.chart.xAxis.scale = eval('(' + $scope.state.options.chart.xAxis.strScale + ')');

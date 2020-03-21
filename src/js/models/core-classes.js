@@ -164,7 +164,7 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yA
             strTickFormat: yAxisTick
         }
     };
-
+    
     if (xAxisScale) {
         options.xAxis.strScale = xAxisScale;
     }
