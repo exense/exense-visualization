@@ -254,8 +254,6 @@ function RTMRawValuesSlaveQuery() {
     return query;
 }
 
-var RTMmasterId = "RTM-Master-" + getUniqueId();
-
 function RTMMasterState() {
     return new DashletState(
         'Chart', true, 0,
@@ -269,7 +267,7 @@ function RTMMasterState() {
     );
 };
 
-function RTMSlaveState() {
+function RTMSlaveState(RTMmasterId) {
     var slaveConfig = new Config('Fire', 'Off', false, true, 'state.data.rawresponse', null, null, null, null, 'On');
     slaveConfig.currentmaster = {
         oid: RTMmasterId,
@@ -292,7 +290,7 @@ function RTMSlaveState() {
     );
 };
 
-function RTMMasterWidget() {
+function RTMMasterWidget(RTMmasterId) {
     return new Widget(
         RTMmasterId,
         new DefaultWidgetState(),
@@ -300,19 +298,20 @@ function RTMMasterWidget() {
     );
 };
 
-function RTMSlaveWidget() {
+function RTMSlaveWidget(RTMmasterId) {
     return new Widget(
         "RTM-Slave-" + getUniqueId(),
         new DefaultWidgetState(),
-        new RTMSlaveState()
+        new RTMSlaveState(RTMmasterId)
     );
 };
 
 function RTMDashboardState() {
-
+    var RTMmasterId = "RTM-Master-" + getUniqueId();
+    
     return new DashboardState(
         new DefaultGlobalSettings(),
-        [new RTMMasterWidget(), new RTMSlaveWidget()],
+        [new RTMMasterWidget(RTMmasterId), new RTMSlaveWidget(RTMmasterId)],
         'RTM Dashboard',
         'aggregated',
         new DefaultDashboardGui()
