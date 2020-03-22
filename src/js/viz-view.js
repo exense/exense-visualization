@@ -12,6 +12,13 @@ angular.module('viz-view', ['nvd3'])
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-view.html'),
             controller: function ($scope) {
 
+                // default
+                $scope.colorFunction = stringToColour;
+
+                if($scope.state.options.chart.colorFunction){
+                    $scope.colorFunction = $scope.state.options.colorFunction;
+                }
+
                 if ($scope.customheight) {
                     $scope.state.options.chart.height = customheight - 10;
                 }
@@ -107,7 +114,7 @@ angular.module('viz-view', ['nvd3'])
                             retData.push({
                                 values: [],
                                 key: curSeries,
-                                color: $scope.stringToColour(curSeries),
+                                color: $scope.colorFunction(curSeries),
                                 strokeWidth: 3,
                                 classed: 'dashed'
                             });

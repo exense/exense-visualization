@@ -126,7 +126,8 @@ function DefaultChartOptions() {
     'function (d) { return d.toFixed(1); }',
     //'[new Date(new Date().getTime() - 120000).getTime(), new Date().getTime()]',
     null,
-    null
+    null,
+    stringToColour
     );
 };
 

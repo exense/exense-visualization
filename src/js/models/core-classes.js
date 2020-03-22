@@ -141,11 +141,12 @@ function GlobalSettings(placeholders, gautorefresh, gchevron, title, autorefresh
     };
 }
 
-function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yAxisTick, xAxisScale, yAxisScale) {
+function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yAxisTick, xAxisScale, yAxisScale, colorFunction) {
     var options = {
         type: chartType,
         height: window.innerHeight / 4, // derived dynamically but defaulting for exploration dashlet
         width: 0, // derived dynamically but defaulting for exploration dashlet
+        colorFunction : colorFunction,
         margin: {
             top: 20,
             right: 20,
