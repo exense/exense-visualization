@@ -16,7 +16,7 @@ angular.module('viz-view', ['nvd3'])
                 $scope.colorFunction = stringToColour;
 
                 if($scope.state.options.chart.colorFunction){
-                    $scope.colorFunction = $scope.state.options.colorFunction;
+                    $scope.colorFunction = $scope.state.options.chart.colorFunction;
                 }
 
                 if ($scope.customheight) {
