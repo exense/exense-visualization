@@ -96,7 +96,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
 
                     if (!$scope.isOngoingQuery) {
                         $scope.cleanupState();
-                        if ($scope.state.query && $scope.state.query.controls && $scope.state.query.controls.template && $scope.state.query.controls.template.templatedPayload) {
+                        if ($scope.state.query && $scope.state.query.controls) {
                             try {
                                 $scope.isOngoingQuery = true;
                                 var srv = $scope.state.query.datasource.service;
@@ -473,7 +473,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     return $scope.state.data.rawresponse
                         || $scope.state.data.transformed
                         || ($scope.state.gui.chartdata && $scope.state.gui.chartdata.length > 0)
-                        || $scope.state.gui.tableata;
+                        || $scope.state.gui.tabledata;
                 };
 
                 $scope.clearData = function () {

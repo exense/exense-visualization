@@ -257,7 +257,7 @@ function RTMRawValuesSlaveQuery() {
 function RTMMasterState() {
     return new DashletState(
         'Chart', true, 0,
-        new DefaultDashletData(),
+        new DashletData({}, [], null),
         new DefaultChartOptions(),
         new Config('Fire', 'Off', true, false, 'unnecessaryAsMaster'),
         //(toggleaction, autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration, incremental, incmaxdots, transposetable)

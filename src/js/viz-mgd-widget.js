@@ -175,8 +175,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $scope.$on('dashlettitle-change', function (event, arg) {
                     $scope.dashlettitle = arg.newValue;
                 });
-
-                $scope.resize();
             }
         };
     });
