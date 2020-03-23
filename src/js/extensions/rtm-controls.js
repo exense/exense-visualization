@@ -240,7 +240,7 @@ function RTMRawValuesSlaveQuery() {
     var query = new TemplatedQuery(
         "Plain",
         new RTMRawValuesBaseQuery("begin", "value", "name"),
-        new Paging("On", new Offset("__FACTOR__", "return 0;", "return value + 1;", "if(value > 0){return value - 1;} else{return 0;}"), null),
+        new DefaultPaging(),
         new Controls(
             new DefaultTemplate(),
             "",
