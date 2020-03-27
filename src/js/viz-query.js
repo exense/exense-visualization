@@ -26,7 +26,6 @@ angular.module('viz-query', ['viz-view', 'ui.bootstrap', 'key-val-collection', '
                 $scope.loadTicks = function () {
                     if ($scope.state.options.chart.xAxis) {
                         $scope.state.options.chart.xAxis.tickFormat = eval('(' + $scope.state.options.chart.xAxis.strTickFormat + ')');
-                        //$scope.state.options.chart.xAxis.tickFormat = function(d){ return 3;};
                     }
                     if ($scope.state.options.chart.yAxis) {
                         $scope.state.options.chart.yAxis.tickFormat = eval('(' + $scope.state.options.chart.yAxis.strTickFormat + ')');
@@ -37,6 +36,20 @@ angular.module('viz-query', ['viz-view', 'ui.bootstrap', 'key-val-collection', '
                     $scope.state.options.chart.xAxis.scale = eval('(' + $scope.state.options.chart.xAxis.strScale + ')');
                     $scope.state.options.chart.yAxis.scale = eval('(' + $scope.state.options.chart.yAxis.strScale + ')');
                 }
+                
+                $scope.$on('reload-scales', function(event, arg){
+                	if(arg){
+                		if(arg.xAxis || arg.xAxis === ''){
+                			$scope.state.options.chart.xAxis.strScale = arg.xAxis;
+                		}
+                		if(arg.yAxis || arg.yAxis === ''){
+                			$scope.state.options.chart.yAxis.strScale = arg.yAxis;
+                		}
+                	}
+                	
+                	$scope.loadScales();
+                	$scope.loadTicks();
+                });
 
                 $scope.startup = function () {
                     $scope.loadTicks();
