@@ -56,6 +56,10 @@ angular.module('viz-view', ['nvd3'])
                     }
                 };
 
+                $scope.$on('$destroy', function(){
+                    $scope.cleanupTooltips();
+                });
+
                 $scope.applyDynamicChartConfig = function () {
                     $(document).ready(function () {
                         var size = $(".nv-axisMax-y text").text().length;

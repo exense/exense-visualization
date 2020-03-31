@@ -246,13 +246,14 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.config.asyncrefreshduration) {
                         duration = $scope.state.config.asyncrefreshduration;
                     }
-
+                    
                     $scope.asyncInterval = setInterval(callback, duration);
                 };
 
                 $scope.clearAsync = function () {
                     if ($scope.asyncInterval) {
                         clearInterval($scope.asyncInterval);
+                        $scope.$emit('async-query-cycle-complete', $scope.state.title);
                     }
                 };
 
