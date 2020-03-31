@@ -8,6 +8,8 @@
 		style="position: absolute; right: 45px; top: 45px;"
 		ng-click="$emit('firenext')"></span>
 
+        <div class="spinningloader" ng-if="$parent.isOngoingQuery"></div>
+
 		<div ng-if="!state.gui.chartdata || (state.gui.chartdata.length == 0)">
 			<div
 				ng-if="!state.gui.tabledata || !state.gui.tabledata.data || (state.gui.tabledata.data.length == 0)">
