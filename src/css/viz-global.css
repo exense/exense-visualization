@@ -8,6 +8,7 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
 }
 
 .spinningloader {
+	position: absolute;
 	border: 8px solid #e0e0e0;
 	border-top: 8px solid #01b7e2;
 	border-bottom: 8px solid #01b7e2;
