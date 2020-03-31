@@ -253,7 +253,11 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 $scope.clearAsync = function () {
                     if ($scope.asyncInterval) {
                         clearInterval($scope.asyncInterval);
-                        $scope.$emit('async-query-cycle-complete', $scope.state.title);
+                        if($scope.state &&  $scope.state.title){
+                            $scope.$emit('async-query-cycle-complete', $scope.state.title);
+                        }else{
+                            console.log('Warning: clearAsync was called while state or state.title was null or undefined.')
+                        }
                     }
                 };
 
