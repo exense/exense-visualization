@@ -6,3 +6,18 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
     background-color: #337ab7;
     color: white;
 }
+
+.spinningloader {
+    position: absolute;
+    top: 20%;
+	left: 50%;
+	border: 8px solid #e0e0e0;
+	border-top: 8px solid #01b7e2;
+	border-bottom: 8px solid #01b7e2;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	animation: spin 2s linear infinite;
+	text-align: center;
+	justify-content: center;
+}

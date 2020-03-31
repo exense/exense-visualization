@@ -8,13 +8,6 @@
 		style="position: absolute; right: 45px; top: 45px;"
 		ng-click="$emit('firenext')"></span>
 
-	<div ng-if="$parent.isOngoingQuery">
-		<text class="nvd3 nv-noData" dy="-.7em" style="text-anchor: middle;">
-		<br />
-		Loading data...</text>
-	</div>
-
-	<div ng-if="!$parent.isOngoingQuery">
 		<div ng-if="!state.gui.chartdata || (state.gui.chartdata.length == 0)">
 			<div
 				ng-if="!state.gui.tabledata || !state.gui.tabledata.data || (state.gui.tabledata.data.length == 0)">
@@ -42,5 +35,4 @@
 			<viz-v-chart ng-if="state.options.chart.type.endsWith('Chart')"
 				state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-v-chart>
 		</div>
-	</div>
 </div>

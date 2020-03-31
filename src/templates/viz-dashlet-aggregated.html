@@ -64,6 +64,7 @@
         </div>
     </div>
     <div ng-show="!state.viewtoggle || displaymode !== 'managed'" class="viewcontainer" ng-style="{ height: state.options.innercontainer.height+'px'}">
-        <viz-view state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-view>
+        <div class="spinningloader" ng-if="isOngoingQuery"></div>
+        <viz-view state="state" presets="presets" inputsettingscol="inputsettingscol" ng-if="!isOngoingQuery"></viz-view>
     </div>
 </div>
