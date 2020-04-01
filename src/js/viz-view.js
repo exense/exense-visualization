@@ -24,10 +24,8 @@ angular.module('viz-view', ['nvd3'])
                 }
 
                 $scope.state.unwatchers.push($scope.$watchCollection('state.data.transformed', function (newvalue) {
+                    $scope.cleanupTooltips();
                     if (newvalue && newvalue.dashdata) {
-                        if ($scope.state.options.chart.type.endsWith('stackedAreaChart')) {
-                            $scope.cleanupTooltips();
-                        }
                         if ($scope.state.options.chart.type.endsWith('seriesTable')) {
                             $scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
                         }
@@ -47,6 +45,10 @@ angular.module('viz-view', ['nvd3'])
                         if ($scope.state.info.showraw === 'On') {
                             $scope.state.info.transformresult = angular.toJson(newvalue.dashdata);
                         }
+
+                        $(document).ready(function(){
+                            $scope.cleanupTooltips();
+                        })
                     }
                 }));
 
@@ -54,6 +56,7 @@ angular.module('viz-view', ['nvd3'])
                     while ($("div.nvtooltip").length > 1) {
                         $("div.nvtooltip").first().remove();
                     }
+                    d3.selectAll('.nvtooltip').style('opacity', '0');
                 };
 
                 $scope.$on('$destroy', function(){
@@ -154,6 +157,10 @@ angular.module('viz-view', ['nvd3'])
 
                     return { zlist: zlist.sort(), data: retData };
                 };
+
+                $scope.$on('$destroy', function () {
+                    $scope.cleanupTooltips();
+                });
             }
         };
     })

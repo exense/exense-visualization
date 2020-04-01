@@ -454,11 +454,6 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.state.data = {};
                     $scope.state = null;
                     console.log('[' + $scope.widgetid + '] termination complete.');
-
-                    //cleaning up any potential tooltips
-                    while ($("div.nvtooltip").length > 1) {
-                        $("div.nvtooltip").first().remove();
-                    }
                 };
 
                 $scope.unwatchAll = function () {
