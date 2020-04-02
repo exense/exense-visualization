@@ -97,3 +97,12 @@ padding: 0;
     height: 22px !important;
     padding: 5px !important;
 }
+
+hr.rtm{
+    border: 0;
+    border-bottom: 1px solid black;
+    clear: both;
+    display: block;
+    height: 0;
+    width: 100%;
+}

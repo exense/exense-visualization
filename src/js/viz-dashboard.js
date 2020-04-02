@@ -37,7 +37,6 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                 if ($scope.templatetype === 'rtm') {
                    $scope.masterWidget = $scope.dstate.widgets[0];
                    $scope.slaveWidget = $scope.dstate.widgets[1];
-                   console.log($scope.masterWidget)
                 }
                 /* */
 

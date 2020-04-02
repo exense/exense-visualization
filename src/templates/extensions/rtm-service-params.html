@@ -1,7 +1,6 @@
 <div class="col-md-12 colcontain-grid">
   <div class="row" style="display: block; text-align: left;">
-
-    <div class="col-md-4 colcontain-grid">
+    <div class="col-md-6 colcontain-grid">
       <label>Query type</label>
       <div class="btn-group viz-btn-group form-radio">
         <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
@@ -14,14 +13,68 @@
     </div>
 
     <div class="col-md-6 colcontain-grid">
-      <label>Metrics</label>
-      <div class="row">
-        <div class="col-md-4" style="display: block;">
+      <label>Global parameters</label>
+      <ul class="nav nav-tabs .rtm-ul">
+        <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(0,0), 'rtm-li-inactive' : !isTabActive(0,0)}"
+          index="0">
+          <a ng-click="selectTab(0,0)"><span style="margin-left: 5px;">Fields</span></a>
+        </li>
+      </ul>
+
+      <div class="row" ng-show="isTabActive(0,0)">
+        <div class="col-md-3" style="display: block;">
+          <label class="rtm-label">time field</label>
+          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeField']">
+        </div>
+
+        <div class=" col-md-3" style="display: block;">
+          <label class="rtm-label">time fmt</label>
+          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeFormat']">
+        </div>
+
+        <div class="col-md-3" style="display: block;">
+          <label class="rtm-label">value fld</label>
+          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.valueField']">
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-group viz-btn-group form-radio">
+      <button class="btn btn-success viz-btn-success" ng-click="$emit('broadcastQueryFire')" uib-tooltip="Fire query"
+        tooltip-placement="bottom" style="position: absolute; right: 0;">
+        <span style="padding: 0; margin: 0; font-size: 10px !important;"
+          class="glyphicon glyphicon-flash glyphicon-app"></span>Search
+      </button>
+    </div>
+
+  </div>
+
+  <hr class="rtm" />
+
+  <div class="row" style="display: block; text-align: left;" ng-if="query.controls.querytype === 'aggregates'">
+    <div class="col-md-8 colcontain-grid">
+      <label>Agg Service parameters</label>
+      <ul class="nav nav-tabs .rtm-ul">
+        <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(1,0), 'rtm-li-inactive' : !isTabActive(1,0)}"
+          index="1">
+          <a ng-click="selectTab(1,0)"><span style="margin-left: 5px;">Metrics</span></a>
+        </li>
+        <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(1,1), 'rtm-li-inactive' : !isTabActive(1,1)}"
+          index="1">
+          <a ng-click="selectTab(1,1)"><span style="margin-left: 5px;">Grouping</span></a>
+        </li>
+        <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(1,2), 'rtm-li-inactive' : !isTabActive(1,2)}"
+          index="0">
+          <a ng-click="selectTab(1,2)"><span style="margin-left: 5px;">Perf</span></a>
+        </li>
+      </ul>
+      <div class="row" ng-show="isTabActive(1,0)">
+        <div class="col-md-3" style="display: block;">
           <label class="rtm-label">Chart metric</label>
           <div style="display: flex;">
             <input type="text" class="form-control rtm-input"
               ng-model="query.datasource.callback.postproc.transform.args[0].value">
-            <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="chart-metrics.status.isopen">
+            <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="agg.chart.metrics.status.isopen">
               <button id="chart-metrics" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
                 ng-disabled="disabled">
                 <span class="caret"></span>
@@ -41,39 +94,19 @@
             </div>
           </div>
         </div>
-
-        <div class="col-md-4" style="display: block;">
+        <div class="col-md-3" style="display: block;">
           <label class="rtm-label">Table metrics</label>
-          <div ng-dropdown-multiselect="" options="aggregatemetrics" selected-model="selectedMetrics" checkboxes="true"
-            extra-settings="metricSearchSettings"></div>
+          <div ng-dropdown-multiselect="" options="aggregatemetrics" selected-model="selectedAggMetrics"
+            checkboxes="true" extra-settings="metricSearchSettings"></div>
         </div>
       </div>
-    </div>
-
-  </div>
-
-  <div class="row" style="display: block; text-align: left;">
-    <div class="col-md-12 colcontain-grid">
-      <label>Service parameters</label>
-      <ul class="nav nav-tabs .rtm-ul">
-        <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(1), 'rtm-li-inactive' : !isTabActive(1)}" index="1">
-          <a ng-click="selectTab(1)"><span style="margin-left: 5px;">Grouping</span></a>
-        </li>
-        <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(2), 'rtm-li-inactive' : !isTabActive(2)}" index="2">
-          <a ng-click="selectTab(2)"><span style="margin-left: 5px;">Fields</span></a>
-        </li>
-        <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(3), 'rtm-li-inactive' : !isTabActive(3)}" index="0">
-          <a ng-click="selectTab(3)"><span style="margin-left: 5px;">Perf</span></a>
-        </li>
-      </ul>
-
-      <div class="row" ng-show="isTabActive(1)">
+      <div class="row" ng-show="isTabActive(1,1)">
 
         <div class="col-md-2" style="display: block;">
           <label class="rtm-label">interval size (ms)</label>
           <div style="display: flex;">
             <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.granularity']">
-            <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="status.isopen.interval">
+            <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="agg.status.interval.isopen">
               <button id="interval-input" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
                 ng-disabled="disabled">
                 <span class="caret"></span>
@@ -109,24 +142,7 @@
           </div>
         </div>
       </div>
-      <div class="row" ng-show="isTabActive(2)">
-        <div class="col-md-2" style="display: block;">
-          <label class="rtm-label">time field</label>
-          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeField']">
-        </div>
-
-        <div class=" col-md-2" style="display: block;">
-          <label class="rtm-label">time fmt</label>
-          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeFormat']">
-        </div>
-
-        <div class="col-md-2" style="display: block;">
-          <label class="rtm-label">value fld</label>
-          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.valueField']">
-        </div>
-      </div>
-
-      <div class="row" ng-show="isTabActive(3)">
+      <div class="row" ng-show="isTabActive(1,2)">
         <div class="col-md-2" style="display: block;">
           <label class="rtm-label">threads</label>
           <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.cpu']">
@@ -150,6 +166,44 @@
         <div class="col-md-2" style="display: block;">
           <label class="rtm-label">hist app</label>
           <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.histApp']">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row" style="display: block; text-align: left;" ng-if="query.controls.querytype === 'rawvalues'">
+    <div class="col-md-8 colcontain-grid">
+      <label>Raw values Service parameters</label>
+      <ul class="nav nav-tabs .rtm-ul">
+        <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(2,0), 'rtm-li-inactive' : !isTabActive(2,0)}"
+          index="1">
+          <a ng-click="selectTab(2,0)"><span style="margin-left: 5px;">Metrics</span></a>
+        </li>
+      </ul>
+      <div class="row" ng-show="isTabActive(2,0)">
+        <div class="col-md-3" style="display: block;">
+          <label class="rtm-label">Chart metric</label>
+          <div style="display: flex;">
+            <input type="text" class="form-control rtm-input"
+              ng-model="query.datasource.callback.postproc.transform.args[0].value">
+            <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="raw.chart.metrics.status.isopen">
+              <button id="chart-metrics" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
+                ng-disabled="disabled">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="chart-metrics">
+                <li role="menuitem" ng-click="setChartMetric('cnt')"><a>begin</a></li>
+                <li role="menuitem" ng-click="setChartMetric('avg')"><a>eId</a></li>
+                <li role="menuitem" ng-click="setChartMetric('min')"><a>rnStatus</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3" style="display: block;">
+          <label class="rtm-label">Table metrics</label>
+          <div ng-dropdown-multiselect="" options="rawmetrics" selected-model="selectedRawMetrics"
+            checkboxes="true" extra-settings="metricSearchSettings"></div>
         </div>
       </div>
     </div>
