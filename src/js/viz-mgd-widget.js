@@ -81,7 +81,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                     }
 
                     $scope.state.savedHeight = $scope.state.options.innercontainer.height;
-                    $scope.dashlettitle = $scope.state.title;
                 };
 
                 $scope.startup();
@@ -170,10 +169,6 @@ angular.module('viz-mgd-widget', ['viz-dashlet'])
                 $scope.$on('resize-widget', function () {
                     $scope.resize();
                     //$scope.aggressiveResize();
-                });
-
-                $scope.$on('dashlettitle-change', function (event, arg) {
-                    $scope.dashlettitle = arg.newValue;
                 });
             }
         };

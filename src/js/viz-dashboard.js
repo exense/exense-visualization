@@ -24,7 +24,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             //templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, $element) {
 
-                /* Dynamic template impl*/
+                /* TODO: externalize specialized behavior in a child component*/
                 $scope.resolveDynamicTemplate = function () {
                     if ($scope.templatetype === 'rtm') {
                         return rtmTemplateUrl;
@@ -33,6 +33,13 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                         return vizTemplateUrl;
                     }
                 };
+
+                if ($scope.templatetype === 'rtm') {
+                   $scope.masterWidget = $scope.dstate.widgets[0];
+                   $scope.slaveWidget = $scope.dstate.widgets[1];
+                   console.log($scope.masterWidget)
+                }
+                /* */
 
                 $scope.$on('broadcastQueryFire', function (event, arg) {
                     $scope.broadcastQueryFire();

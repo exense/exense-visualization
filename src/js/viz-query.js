@@ -82,14 +82,6 @@ angular.module('viz-query', ['viz-view', 'ui.bootstrap', 'key-val-collection', '
                     $scope.$emit('master-loaded', m);
                 };
 
-                $scope.titleChange = function () {
-                    $scope.$emit('dashlettitle-change', { newValue: $scope.state.title })
-                };
-
-                $scope.titleChange();
-
-
-
                 //Master-slave
 
                 $scope.undoMaster = function () {

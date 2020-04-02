@@ -15,7 +15,7 @@ angular.module('viz-view', ['nvd3'])
                 // default
                 $scope.colorFunction = stringToColour;
 
-                if($scope.state.options.chart.colorFunction){
+                if ($scope.state.options.chart.colorFunction) {
                     $scope.colorFunction = $scope.state.options.chart.colorFunction;
                 }
 
@@ -24,7 +24,7 @@ angular.module('viz-view', ['nvd3'])
                 }
 
                 $scope.state.unwatchers.push($scope.$watchCollection('state.data.transformed', function (newvalue) {
-                    $scope.cleanupTooltips();
+                    $scope.cleanupTooltips(true);
                     if (newvalue && newvalue.dashdata) {
                         if ($scope.state.options.chart.type.endsWith('seriesTable')) {
                             $scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
@@ -46,20 +46,24 @@ angular.module('viz-view', ['nvd3'])
                             $scope.state.info.transformresult = angular.toJson(newvalue.dashdata);
                         }
 
-                        $(document).ready(function(){
-                            $scope.cleanupTooltips();
+                        $(document).ready(function () {
+                            $scope.cleanupTooltips(false);
                         })
                     }
                 }));
 
-                $scope.cleanupTooltips = function () {
+                $scope.cleanupTooltips = function (noopacity) {
+                    // clear all but last
                     while ($("div.nvtooltip").length > 1) {
                         $("div.nvtooltip").first().remove();
                     }
-                    d3.selectAll('.nvtooltip').style('opacity', '0');
+                    // if current tooltip leaked, gets hidden
+                    if (noopacity) {
+                        d3.selectAll('.nvtooltip').style('opacity', '0');
+                    }
                 };
 
-                $scope.$on('$destroy', function(){
+                $scope.$on('$destroy', function () {
                     $scope.cleanupTooltips();
                 });
 

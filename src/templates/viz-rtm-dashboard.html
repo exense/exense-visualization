@@ -110,11 +110,10 @@
     <div class="row">
         <div ng-attr-class="colmdclass col-md-12">
             <div class="headercontainer">
-                <rtm-controls masterstate="dstate.widgets[0].state" slavestate="dstate.widgets[1].state" payload="dstate.widgets[0].state.query.controls.rtmmodel" query="dstate.widgets[0].state.query" orientation="'horizontal'"/>
+                <rtm-controls masterstate="masterWidget.state" slavestate="slaveWidget.state" payload="masterWidget.state.query.controls.rtmmodel" query="masterWidget.state.query" orientation="'horizontal'"/>
             </div>
         </div>
     </div>
-
     <div class="row">
         <viz-mgd-widget displaymode="readonly" state="dstate.widgets[0].state" wstate="dstate.widgets[0].wstate"
             widgetid="dstate.widgets[0].oid" headersheightinput="topmargin + 50" charttocontainerinput=""
