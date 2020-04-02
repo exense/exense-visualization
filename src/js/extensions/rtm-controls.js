@@ -587,10 +587,6 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     $scope.$emit('forceReloadTransform');
                 };
 
-                $scope.retrieveRawvalueMetrics = function () {
-
-                };
-
                 $scope.updateTableMetrics = function (metricList) {
                     if (metricList && metricList.length > 0
                         && $scope.slavestate && $scope.slavestate.query && $scope.slavestate.query.datasource && $scope.slavestate.query.datasource.callback
@@ -634,27 +630,33 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     $scope.performMetricUpdate(newValue);
                 });
 
-                $scope.getMetricsList = function () {
+                $scope.getMetricsList = function (payload) {
                     var metricsList = [];
-                    var models = this.collection.models[0].get('payload');
-
+                    var retData = [];
                     //var excludes = this.getExcludeList();
-                    _.each(models, function (model) {
-
+                    _.each(payload, function (model) {
                         for (var prop in model) {
                             if (metricsList.indexOf(prop) < 0) {
                                 metricsList.push(prop);
                             }
                         }
                     });
-                    return metricsList;
+
+                    _.each(metricsList, function (metric) {
+                        retData.push({
+                            "label": metric,
+                            "id": metric
+                        })
+                    });
+
+                    return retData;
                 };
 
-                $scope.$watch('state.data.rawresponse', function (newValue) {
+                $scope.$watch('masterstate.data.rawresponse', function (newValue) {
                     if ($scope.query) {
                         if ($scope.query.controls.querytype === 'rawvalues') {
-                            if (newValue) {
-                                console.log(newValue);
+                            if (newValue && newValue.dashdata && newValue.dashdata.data && newValue.dashdata.data.payload) {
+                                $scope.rawmetrics = $scope.getMetricsList(newValue.dashdata.data.payload);
                             }
                         }
                     }
