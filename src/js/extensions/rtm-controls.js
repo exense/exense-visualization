@@ -634,6 +634,32 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     $scope.performMetricUpdate(newValue);
                 });
 
+                $scope.getMetricsList = function () {
+                    var metricsList = [];
+                    var models = this.collection.models[0].get('payload');
+
+                    //var excludes = this.getExcludeList();
+                    _.each(models, function (model) {
+
+                        for (var prop in model) {
+                            if (metricsList.indexOf(prop) < 0) {
+                                metricsList.push(prop);
+                            }
+                        }
+                    });
+                    return metricsList;
+                };
+
+                $scope.$watch('state.data.rawresponse', function (newValue) {
+                    if ($scope.query) {
+                        if ($scope.query.controls.querytype === 'rawvalues') {
+                            if (newValue) {
+                                console.log(newValue);
+                            }
+                        }
+                    }
+                });
+
                 /* TODO: get dynamically from RTM conf */
                 $scope.aggregatemetrics = [{
                     "label": "count",
@@ -665,6 +691,18 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 }, {
                     "label": "99th pcl",
                     "id": "99th pcl"
+                }];
+
+
+                $scope.rawmetrics = [{
+                    "label": "begin",
+                    "id": "begin"
+                }, {
+                    "label": "eId",
+                    "id": "eId"
+                }, {
+                    "label": "value",
+                    "id": "value"
                 }];
 
                 $scope.selectedAggMetrics = [];

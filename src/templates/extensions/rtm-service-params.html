@@ -1,5 +1,12 @@
 <div class="col-md-12 colcontain-grid">
   <div class="row" style="display: block; text-align: left;">
+    <div class="btn-group viz-btn-group form-radio">
+      <button class="btn btn-success viz-btn-success" ng-click="$emit('broadcastQueryFire')" uib-tooltip="Fire query"
+        tooltip-placement="bottom" style="position: absolute; right: 0;">
+        <span style="padding: 0; margin: 0; font-size: 10px !important;"
+          class="glyphicon glyphicon-flash glyphicon-app"></span>Search
+      </button>
+    </div>
     <div class="col-md-6 colcontain-grid">
       <label>Query type</label>
       <div class="btn-group viz-btn-group form-radio">
@@ -11,49 +18,8 @@
         <!--<label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'lastn'">Last N values</label>-->
       </div>
     </div>
-
-    <div class="col-md-6 colcontain-grid">
-      <label>Global parameters</label>
-      <ul class="nav nav-tabs .rtm-ul">
-        <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(0,0), 'rtm-li-inactive' : !isTabActive(0,0)}"
-          index="0">
-          <a ng-click="selectTab(0,0)"><span style="margin-left: 5px;">Fields</span></a>
-        </li>
-      </ul>
-
-      <div class="row" ng-show="isTabActive(0,0)">
-        <div class="col-md-3" style="display: block;">
-          <label class="rtm-label">time field</label>
-          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeField']">
-        </div>
-
-        <div class=" col-md-3" style="display: block;">
-          <label class="rtm-label">time fmt</label>
-          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeFormat']">
-        </div>
-
-        <div class="col-md-3" style="display: block;">
-          <label class="rtm-label">value fld</label>
-          <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.valueField']">
-        </div>
-      </div>
-    </div>
-
-    <div class="btn-group viz-btn-group form-radio">
-      <button class="btn btn-success viz-btn-success" ng-click="$emit('broadcastQueryFire')" uib-tooltip="Fire query"
-        tooltip-placement="bottom" style="position: absolute; right: 0;">
-        <span style="padding: 0; margin: 0; font-size: 10px !important;"
-          class="glyphicon glyphicon-flash glyphicon-app"></span>Search
-      </button>
-    </div>
-
-  </div>
-
-  <hr class="rtm" />
-
-  <div class="row" style="display: block; text-align: left;" ng-if="query.controls.querytype === 'aggregates'">
-    <div class="col-md-8 colcontain-grid">
-      <label>Agg Service parameters</label>
+    <div class="col-md-6 colcontain-grid" ng-if="query.controls.querytype === 'aggregates'">
+      <label>Aggregation parameters</label>
       <ul class="nav nav-tabs .rtm-ul">
         <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(1,0), 'rtm-li-inactive' : !isTabActive(1,0)}"
           index="1">
@@ -69,7 +35,7 @@
         </li>
       </ul>
       <div class="row" ng-show="isTabActive(1,0)">
-        <div class="col-md-3" style="display: block;">
+        <div class="col-md-4" style="display: block;">
           <label class="rtm-label">Chart metric</label>
           <div style="display: flex;">
             <input type="text" class="form-control rtm-input"
@@ -94,15 +60,14 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3" style="display: block;">
+        <div class="col-md-4" style="display: block;">
           <label class="rtm-label">Table metrics</label>
           <div ng-dropdown-multiselect="" options="aggregatemetrics" selected-model="selectedAggMetrics"
             checkboxes="true" extra-settings="metricSearchSettings"></div>
         </div>
       </div>
       <div class="row" ng-show="isTabActive(1,1)">
-
-        <div class="col-md-2" style="display: block;">
+        <div class="col-md-4" style="display: block;">
           <label class="rtm-label">interval size (ms)</label>
           <div style="display: flex;">
             <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.granularity']">
@@ -121,8 +86,7 @@
             </div>
           </div>
         </div>
-
-        <div class="col-md-2" style="display: block;">
+        <div class="col-md-4" style="display: block;">
           <label class="rtm-label">split attribute(s)</label>
           <div style="display: flex;">
             <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.groupby']">
@@ -143,38 +107,34 @@
         </div>
       </div>
       <div class="row" ng-show="isTabActive(1,2)">
-        <div class="col-md-2" style="display: block;">
+        <div class="col-md-3" style="display: block;">
           <label class="rtm-label">threads</label>
           <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.cpu']">
         </div>
 
-        <div class="col-md-2" style="display: block;">
+        <div class="col-md-3" style="display: block;">
           <label class="rtm-label">tasks</label>
           <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.partition']">
         </div>
 
-        <div class="col-md-2" style="display: block;">
+        <div class="col-md-3" style="display: block;">
           <label class="rtm-label">timeout</label>
           <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeout']">
         </div>
 
-        <div class="col-md-2" style="display: block;">
+        <div class="col-md-3" style="display: block;">
           <label class="rtm-label">hist size</label>
           <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.histSize']">
         </div>
 
-        <div class="col-md-2" style="display: block;">
+        <div class="col-md-3" style="display: block;">
           <label class="rtm-label">hist app</label>
           <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.histApp']">
         </div>
       </div>
     </div>
-  </div>
-
-
-  <div class="row" style="display: block; text-align: left;" ng-if="query.controls.querytype === 'rawvalues'">
-    <div class="col-md-8 colcontain-grid">
-      <label>Raw values Service parameters</label>
+    <div class="col-md-6 colcontain-grid" ng-if="query.controls.querytype === 'rawvalues'">
+      <label>Raw values parameters</label>
       <ul class="nav nav-tabs .rtm-ul">
         <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(2,0), 'rtm-li-inactive' : !isTabActive(2,0)}"
           index="1">
@@ -182,7 +142,7 @@
         </li>
       </ul>
       <div class="row" ng-show="isTabActive(2,0)">
-        <div class="col-md-3" style="display: block;">
+        <div class="col-md-4" style="display: block;">
           <label class="rtm-label">Chart metric</label>
           <div style="display: flex;">
             <input type="text" class="form-control rtm-input"
@@ -200,12 +160,42 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3" style="display: block;">
+        <div class="col-md-4" style="display: block;">
           <label class="rtm-label">Table metrics</label>
-          <div ng-dropdown-multiselect="" options="rawmetrics" selected-model="selectedRawMetrics"
-            checkboxes="true" extra-settings="metricSearchSettings"></div>
+          <div ng-dropdown-multiselect="" options="rawmetrics" selected-model="selectedRawMetrics" checkboxes="true"
+            extra-settings="metricSearchSettings"></div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<hr class="rtm" />
+
+
+<div class="col-md-6 colcontain-grid">
+  <label>Global parameters</label>
+  <ul class="nav nav-tabs .rtm-ul">
+    <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(0,0), 'rtm-li-inactive' : !isTabActive(0,0)}" index="0">
+      <a ng-click="selectTab(0,0)"><span style="margin-left: 5px;">Fields</span></a>
+    </li>
+  </ul>
+
+  <div class="row" ng-show="isTabActive(0,0)">
+    <div class="col-md-3" style="display: block;">
+      <label class="rtm-label">time field</label>
+      <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeField']">
+    </div>
+
+    <div class=" col-md-3" style="display: block;">
+      <label class="rtm-label">time fmt</label>
+      <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeFormat']">
+    </div>
+
+    <div class="col-md-3" style="display: block;">
+      <label class="rtm-label">value fld</label>
+      <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.valueField']">
+    </div>
+  </div>
+</div>
 </div>
