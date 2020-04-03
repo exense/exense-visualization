@@ -142,14 +142,12 @@ var formatPotentialTimestamp = function (d) {
     }
 };
 
-function downloadCSV(args) {  
+function downloadCSV(data) {  
     var data, filename, link;
-    var csv = convertArrayOfObjectsToCSV({
-        data: args.data
-    });
+    var csv = convertArrayOfObjectsToCSV(data);
     if (csv == null) return;
 
-    filename = args.filename || 'export.csv';
+    filename = 'perf-export.csv';
 
      data = encodeURI(csv);
 
@@ -158,7 +156,7 @@ function downloadCSV(args) {
     	var IEwindow = window.open();
     	IEwindow.document.write(csv);
     	IEwindow.document.close();
-    	IEwindow.document.execCommand('SaveAs', true, "rtm-data.csv");
+    	IEwindow.document.execCommand('SaveAs', true, filename);
     	IEwindow.close();
     	
     }else{
@@ -190,27 +188,23 @@ function msieversion() {
 	  return false;
     }
     
-    function convertArrayOfObjectsToCSV(args) {  
-        var result = "Groupby,";
+    function convertArrayOfObjectsToCSV(data) {  
+        var result = "";
     
-        _.each(Object.keys(args.data[0].data[0]), function(key) {
-            result += key + ',';
+        _.each(data.headers, function(header) {
+            result += header + ',';
         });
         
         result = result.substring(0, result.length - 1);
         result += '\n';
         
-        _.each(args.data, function(item) {
-            var series = item.groupby;
-            _.each(item.data, function(ytem) {
-                result += series + ',';
-                _.each(Object.keys(ytem), function(key) {
-                    result += ytem[key];
-                    result += ',';
+        _.each(data.data, function(row) {
+        	_.each(row, function(cell) {
+                    result += cell + ',';
                 });
                 result = result.substring(0, result.length - 1);
                 result += '\n';
             });
-        });
         return result;
-    }
+    };
+    

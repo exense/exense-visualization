@@ -631,6 +631,10 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     $scope[model] = value;
                 };
 
+                $scope.csvExport= function(){
+                    downloadCSV($scope.slavestate.gui.tabledata);
+                };
+
                 $scope.setDualTranspose = function (istransposed) {
                     $scope.slavestate.options.chart.dualtranspose = istransposed;
                 }

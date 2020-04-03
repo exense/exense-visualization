@@ -73,7 +73,9 @@ vizmdTransformation.toPlainTable = function (twolvlgroups, h1, h2) {
 
     var headers = [];
     // empty corner
-    headers.push(h1, h2);
+    headers.push(h1);
+    headers.push(h2);
+    
     $.each(twolvlgroups.mList, function (idx, m) {
         headers.push(m);
     });

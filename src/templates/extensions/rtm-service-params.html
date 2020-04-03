@@ -166,7 +166,7 @@
 
 <div class="col-md-12 colcontain-grid">
   <div class="row" style="display: block; text-align: left;">
-    <div class="col-md-6 colcontain-grid">
+    <div class="col-md-2 colcontain-grid">
       <label>Table sort</label>
       <div class="btn-group viz-btn-group form-radio">
         <label class="btn btn-success viz-btn-success" ng-model="slavestate.options.chart.dualzx" uib-btn-radio="'zx'"
@@ -174,7 +174,16 @@
         <label class="btn btn-success viz-btn-success" ng-model="slavestate.options.chart.dualzx" uib-btn-radio="'xz'"
           ng-click="setDualTranspose(true)">xAxis</label>
       </div>
+    </div> 
+    <div class="col-md-2 colcontain-grid">
+      <label>CSV export</label>
+      <div class="btn-group viz-btn-group form-radio">
+        <label class="btn btn-success viz-btn-success" ng-model="exportModel" uib-btn-radio="'export'"
+          ng-click="csvExport()">export</label>
+      </div>
     </div>
+
+    <div class="col-md-2 colcontain-grid"></div>
 
     <div class="col-md-6 colcontain-grid">
       <label>Global parameters</label>

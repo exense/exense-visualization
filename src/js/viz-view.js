@@ -36,13 +36,13 @@ angular.module('viz-view', ['nvd3'])
                                 $scope.state.gui.tabledata =
                                     vizmdTransformation.toPlainTable(
                                         vizmdTransformation.toDualGrouping(newvalue.dashdata, 'z', 'x'),
-                                        'series', 'xAxis');
+                                        'xAxis', 'series');
                             } else {
                                 //console.log('alt zx (' + zx + ')');
                                 $scope.state.gui.tabledata =
                                     vizmdTransformation.toPlainTable(
                                         vizmdTransformation.toDualGrouping(newvalue.dashdata, zx.substring(0, 1), zx.substring(1, 2)),
-                                        'series', 'xAxis');
+                                        'xAxis', 'series');
                             }
                         }
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
