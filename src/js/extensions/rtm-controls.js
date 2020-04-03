@@ -225,7 +225,6 @@ function RTMRawValuesMasterQuery() {
         var retData = [];
 
         var payload = response.data.payload;
-        console.log(payload)
         $.each(payload, function (idx, dot) {
             //$.each(metricList, function (idx2, metric) {
             retData.push({
@@ -438,7 +437,8 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 query: '=',
                 orientation: '=?',
                 slavestate: '=',
-                masterstate: '='
+                masterstate: '=',
+                inputsettingscol: '='
             },
 
             template: '<div ng-include="resolveDynamicTemplate()"></div>',
@@ -468,6 +468,16 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 $scope.$on('forceReloadQuery', function (event, arg) {
                     $scope.forceReloadQuery();
                 });
+
+                /* Dynamic template impl*/
+                $scope.resolveDynamicTemplate = function () {
+                    if ($scope.orientation === 'horizontal') {
+                        return horizontal;
+                    }
+                    else {
+                        return vertical;
+                    }
+                };
 
                 $scope.init = function () {
 
@@ -522,19 +532,24 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                                 //}
                             }, true) // deep watching changes in the RTM models
                         );
-                    }
-                }
 
-                /* Dynamic template impl*/
-                $scope.resolveDynamicTemplate = function () {
-                    if ($scope.orientation === 'horizontal') {
-                        return horizontal;
-                    }
-                    else {
-                        return vertical;
+                        // Temporary intg with step (need to implement pre-tmplt update from controls)
+                        if ($scope.inputsettingscol && $scope.inputsettingscol.length > 0) {
+                            $.each($scope.inputsettingscol, function (idx, input) {
+                                var split = input.value.split(',');
+                                var type = split[0];
+                                var key = split[1];
+                                var value1 = split[2];
+                                var value2 = split[3];
+
+                                if (type === 'text') {
+                                    $scope.payload.selectors1[0].textFilters.push(new TextFilter(key, value1, value2));
+                                }
+                            });
+                        }
                     }
                 };
-
+                
                 $scope.addSelector = function () {
                     $scope.payload.selectors1.push(new DefaultSelector());
                 };
@@ -545,23 +560,10 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
 
                 $scope.removeSelector = function (idx) {
                     $scope.payload.selectors1.splice(idx, 1);
+
                 };
 
-                // Very temporary intg with step (need to implement pre-tmplt update from controls)
-                $scope.$on('apply-global-setting', function (event, arg) {
-                    var split = arg.value.split(',');
-                    var type = split[0];
-                    var key = split[1];
-                    var value1 = split[2];
-                    var value2 = split[3];
-
-                    if (type === 'text') {
-                        $scope.payload.selectors1[0].textFilters.push(new TextFilter(key, value1, value2));
-                    }
-                });
-
                 $scope.init();
-
             }
         };
     })
@@ -792,7 +794,7 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 $scope.rawmetrics = [{
                     "label": "value",
                     "id": "value"
-                },{
+                }, {
                     "label": "rnStatus",
                     "id": "rnStatus"
                 }];
