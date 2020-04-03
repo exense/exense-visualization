@@ -46,21 +46,26 @@ vizmdTransformation.toDualGrouping = function (xyzmFormat, topGroupKey, subGroup
         }
 
         var currentTop = zxIndex.getById(datapoint[topGroupKey]);
-        if (!currentTop.hasById(datapoint[subGroupKey])) {
-            currentTop.addNewWithId({ values: {} }, datapoint[subGroupKey])
-            xList.push(datapoint[subGroupKey]);
+        var subValue = datapoint[subGroupKey];
+        if (!currentTop.hasById(subValue)) {
+            currentTop.addNewWithId({ values: {} }, subValue)
+            if(!xList.includes(subValue)){
+                xList.push(subValue);
+            }
         }
 
         var currentSub = currentTop.getById(datapoint[subGroupKey]);
         currentSub.values[datapoint.m] = datapoint.y;
     });
 
-    return {
+    var ret = {
         data: JSON.parse(JSON.stringify(zxIndex)),
         zList: zList,
         xList: xList,
         mList: mList
     };
+
+    return ret;
 };
 
 vizmdTransformation.toPlainTable = function (twolvlgroups, h1, h2) {
@@ -83,6 +88,7 @@ vizmdTransformation.toPlainTable = function (twolvlgroups, h1, h2) {
                     row.push(sub.values[m]);
                 }
             });
+            //console.log(row)
             multiArray.push(row);
         });
     });

@@ -141,7 +141,7 @@ function GlobalSettings(placeholders, gautorefresh, gchevron, title, autorefresh
     };
 }
 
-function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yAxisTick, xAxisScale, yAxisScale, colorFunction) {
+function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yAxisTick, xAxisScale, yAxisScale, colorFunction, dualzx, dualtranspose) {
     var options = {
         type: chartType,
         height: window.innerHeight / 4, // derived dynamically but defaulting for exploration dashlet
@@ -163,7 +163,9 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yA
         yAxis: {
             tickFormat: {},
             strTickFormat: yAxisTick
-        }
+        },
+        dualzx : dualzx,
+        dualtranspose : dualtranspose
     };
     
     if (xAxisScale) {

@@ -8,7 +8,7 @@ describe("top", function () {
 
     importTest("abstract-classes", './suite/abstract-classes-tests.js');
     importTest("service-chain", './suite/service-chain-tests.js');
-    importTest("transform", './suite/transformations.js');
+    importTest("transform", './suite/transformations-tests.js');
     //importTest("ajax-client", './suite/ajax-client-tests.js');
 
     before(function () {

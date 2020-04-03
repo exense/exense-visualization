@@ -12,7 +12,7 @@
       <div class="btn-group viz-btn-group form-radio">
         <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
           uib-btn-radio="'aggregates'">Aggregates</label>
-          <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
+        <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
           uib-btn-radio="'rawvalues'">Raw values</label>
         <!-- todo -->
         <!--<label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'lastn'">Last N values</label>-->
@@ -39,15 +39,15 @@
         <div class="col-md-4" style="display: block;">
           <label class="rtm-label">Chart metric</label>
           <div style="display: flex;">
-            <input type="text" class="form-control rtm-input"
-              ng-model="selectedChartAggMetric">
+            <input type="text" class="form-control rtm-input" ng-model="selectedChartAggMetric">
             <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="agg.chart.metrics.status.isopen">
               <button id="agg-chart-metrics" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
                 ng-disabled="disabled">
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="agg-chart-metrics">
-                <li role="menuitem" ng-repeat="o in aggregatemetrics" ng-click="setValue('selectedChartAggMetric', o.id)"><a>{{o.id}}</a></li>
+                <li role="menuitem" ng-repeat="o in aggregatemetrics"
+                  ng-click="setValue('selectedChartAggMetric', o.id)"><a>{{o.id}}</a></li>
               </ul>
             </div>
           </div>
@@ -137,15 +137,15 @@
         <div class="col-md-4" style="display: block;">
           <label class="rtm-label">Chart metric</label>
           <div style="display: flex;">
-            <input type="text" class="form-control rtm-input"
-              ng-model="selectedChartRawMetric">
+            <input type="text" class="form-control rtm-input" ng-model="selectedChartRawMetric">
             <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="raw.chart.metrics.status.isopen">
               <button id="raw-chart-metrics" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
                 ng-disabled="disabled">
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="raw-chart-metrics">
-                <li role="menuitem" ng-repeat="o in rawmetrics" ng-click="setValue('selectedChartRawMetric', o.id)"><a>{{o.id}}</a></li>
+                <li role="menuitem" ng-repeat="o in rawmetrics" ng-click="setValue('selectedChartRawMetric', o.id)">
+                  <a>{{o.id}}</a></li>
               </ul>
             </div>
           </div>
@@ -162,30 +162,41 @@
 
 <hr class="rtm" />
 
-
-<div class="col-md-6 colcontain-grid">
-  <label>Global parameters</label>
-  <ul class="nav nav-tabs .rtm-ul">
-    <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(0,0), 'rtm-li-inactive' : !isTabActive(0,0)}" index="0">
-      <a ng-click="selectTab(0,0)"><span style="margin-left: 5px;">Fields</span></a>
-    </li>
-  </ul>
-
-  <div class="row" ng-show="isTabActive(0,0)">
-    <div class="col-md-3" style="display: block;">
-      <label class="rtm-label">time field</label>
-      <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeField']">
-    </div>
-
-    <div class=" col-md-3" style="display: block;">
-      <label class="rtm-label">time fmt</label>
-      <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeFormat']">
-    </div>
-
-    <div class="col-md-3" style="display: block;">
-      <label class="rtm-label">value fld</label>
-      <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.valueField']">
+<div class="row" style="display: block; text-align: left;">
+  <div class="col-md-6 colcontain-grid">
+    <label>Table sort</label>
+    <div class="btn-group viz-btn-group form-radio">
+      <label class="btn btn-success viz-btn-success" ng-model="slavestate.options.chart.dualzx"
+        uib-btn-radio="'zx'" ng-click="setDualTranspose(false)">series</label>
+        <label class="btn btn-success viz-btn-success" ng-model="slavestate.options.chart.dualzx"
+        uib-btn-radio="'xz'" ng-click="setDualTranspose(true)">xAxis</label>
     </div>
   </div>
-</div>
+
+  <div class="col-md-6 colcontain-grid">
+    <label>Global parameters</label>
+    <ul class="nav nav-tabs .rtm-ul">
+      <li class="rtm-li" ng-class="{'rtm-li-active' : isTabActive(0,0), 'rtm-li-inactive' : !isTabActive(0,0)}"
+        index="0">
+        <a ng-click="selectTab(0,0)"><span style="margin-left: 5px;">Fields</span></a>
+      </li>
+    </ul>
+
+    <div class="row" ng-show="isTabActive(0,0)">
+      <div class="col-md-3" style="display: block;">
+        <label class="rtm-label">time field</label>
+        <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeField']">
+      </div>
+
+      <div class=" col-md-3" style="display: block;">
+        <label class="rtm-label">time fmt</label>
+        <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.timeFormat']">
+      </div>
+
+      <div class="col-md-3" style="display: block;">
+        <label class="rtm-label">value fld</label>
+        <input type="text" class="form-control rtm-input" ng-model="params['aggregateService.valueField']">
+      </div>
+    </div>
+  </div>
 </div>

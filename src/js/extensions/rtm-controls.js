@@ -217,7 +217,7 @@ function RTMRawValuesBaseQuery() {
 function RTMRawValuesMasterQuery() {
 
     var transform = function (response, args) {
-        console.log('raw master transform')
+        //console.log('raw master transform')
         //console.log(args)
         //var metricList = args.split(";");
         //console.log(metricList)
@@ -228,14 +228,10 @@ function RTMRawValuesMasterQuery() {
         $.each(payload, function (idx, dot) {
             //$.each(metricList, function (idx2, metric) {
             retData.push({
-                x: dot['begin'], y: dot['value'], z: 'value'
+                x: dot['begin'], y: dot['value'], z: dot['name']
             });
             //});
         });
-
-        console.log('raw master returned')
-        console.log(retData)
-
         return retData;
     };
 
@@ -270,25 +266,18 @@ function RTMRawValuesMasterQuery() {
 function RTMRawValuesSlaveQuery() {
 
     var transform = function (response, args) {
-        console.log('raw slave transform')
-        //console.log(args)
-        //var metricList = args.split(";");
-        //console.log(metricList)
+        var payload = response.data.payload;
+        args.metric = 'name;value;rnStatus';
+        var metricSplit = args.metric.split(';');
         var retData = [];
 
-        var payload = response.data.payload;
-        console.log(payload)
         $.each(payload, function (idx, dot) {
-            //$.each(metricList, function (idx2, metric) {
-            retData.push({
-                x: dot['begin'], y: dot['value'], z: 'value'
+            $.each(metricSplit, function (idx3, m) {
+                if (m && dot[m]) {
+                    retData.push({ 'x': dot['begin'], 'y': dot[m], 'z': dot['name'], 'm': m });
+                }
             });
-            //});
         });
-
-        console.log('raw slave returned')
-        console.log(retData)
-
         return retData;
     };
 
@@ -340,9 +329,7 @@ function RTMSlaveState(RTMmasterId) {
         new ChartOptions('dualTable', false, false,
             'function (d) {\r\n    var value;\r\n    if ((typeof d) === \"string\") {\r\n        value = parseInt(d);\r\n    } else {\r\n        value = d;\r\n    }\r\n\r\n    return d3.time.format(\"%H:%M:%S\")(new Date(value));\r\n}',
             'function (d) { return d.toFixed(1); }',
-            null,
-            null
-        ),
+            null, null, null, 'xz', true),
         slaveConfig,
         new RTMRawValuesSlaveQuery(),
         new DefaultGuiClosed(),
@@ -637,6 +624,10 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     $scope[model] = value;
                 };
 
+                $scope.setDualTranspose = function (istransposed) {
+                    $scope.slavestate.options.chart.dualtranspose = istransposed;
+                }
+
                 $scope.updateChartMetric = function (srv, metric) {
                     if ($scope.masterstate && $scope.masterstate.query && $scope.masterstate.query.datasource && $scope.masterstate.query.datasource[srv]
                         && $scope.masterstate.query.datasource[srv].postproc && $scope.masterstate.query.datasource[srv].postproc.transform
@@ -709,12 +700,16 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     $scope.performTableMetricUpdate(true);
                 });
 
-                $scope.$watchCollection('selectedChartAggMetric', function (newValue) {
+                $scope.$watch('selectedChartAggMetric', function (newValue) {
                     $scope.performChartMetricUpdate(true);
                 });
 
-                $scope.$watchCollection('selectedChartRawMetric', function (newValue) {
+                $scope.$watch('selectedChartRawMetric', function (newValue) {
                     $scope.performChartMetricUpdate(true);
+                });
+
+                $scope.$watch('slavestate.options.chart.dualzx', function (newValue) {
+                    $scope.forceReloadTransform();
                 });
 
                 $scope.getMetricsList = function (payload) {
@@ -740,8 +735,8 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 };
 
                 $scope.$watch('masterstate.data.rawresponse', function (newValue) {
-                	console.log('master received')
-                	console.log(newValue)
+                    //console.log('master received')
+                    //console.log(newValue)
                     if ($scope.query) {
                         if ($scope.query.controls.querytype === 'rawvalues') {
                             if (newValue && newValue.dashdata && newValue.dashdata.data && newValue.dashdata.data.payload) {
@@ -753,11 +748,12 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                         $scope.performChartMetricUpdate(false);
                     }
                 });
-                
-                $scope.$watch('slavestate.data.rawresponse', function (newValue) {
-                	console.log('slave received')
-                	console.log(newValue)
-                });
+                /*
+                                $scope.$watch('slavestate.data.rawresponse', function (newValue) {
+                                    console.log('slave received')
+                                    console.log(newValue)
+                                });
+                */
 
                 /* TODO: get dynamically from RTM conf */
                 $scope.aggregatemetrics = [{

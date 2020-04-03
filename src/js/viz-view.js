@@ -30,11 +30,22 @@ angular.module('viz-view', ['nvd3'])
                             $scope.state.gui.tabledata = $scope.toTable(newvalue.dashdata);
                         }
                         if ($scope.state.options.chart.type.endsWith('dualTable')) {
-                            $scope.state.gui.tabledata =
-                                vizmdTransformation.toPlainTable(
-                                    vizmdTransformation.toDualGrouping(newvalue.dashdata, 'z', 'x'),
-                                    'series', 'xAxis'
-                                )
+                            console.log(newvalue.dashdata)
+                            var zx = $scope.state.options.chart.dualzx;
+                            if (!zx || zx.length < 2) {
+                                console.log('regular zx (' + zx + ')');
+                                $scope.state.gui.tabledata =
+                                    vizmdTransformation.toPlainTable(
+                                        vizmdTransformation.toDualGrouping(newvalue.dashdata, 'z', 'x'),
+                                        'series', 'xAxis');
+                            } else {
+                                console.log('alt zx (' + zx + ')');
+                                $scope.state.gui.tabledata =
+                                    vizmdTransformation.toPlainTable(
+                                        vizmdTransformation.toDualGrouping(newvalue.dashdata, zx.substring(0, 1), zx.substring(1, 2)),
+                                        'series', 'xAxis');
+                            }
+                            console.log($scope.state.gui.tabledata)
                         }
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
                             $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);
