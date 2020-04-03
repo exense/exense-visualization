@@ -144,7 +144,7 @@ function RTMAggregatesMasterQuery() {
             "/rtm/rest/aggregate/refresh", "Post",
             "{\"streamedSessionId\": \"__streamedSessionId__\"}",
             new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].placeholder, workData[i].value);}return newRequestFragment;}"),
-            new Postproc("function(response){return response.data.payload.stream.complete;}", transform, [{ "key": "metric", "value": "cnt", "isDynamic": false }], {}, ""))
+            new Postproc("function(response){return response.data.payload.stream.complete;}", transform, [{ "key": "metric", "value": "avg", "isDynamic": false }], {}, ""))
     };
 
     query.controls.rtmmodel = new DefaultRTMPayload();
@@ -195,7 +195,7 @@ function RTMAggregatesSlaveQuery() {
             "/rtm/rest/aggregate/refresh", "Post",
             "{\"streamedSessionId\": \"__streamedSessionId__\"}",
             new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].placeholder, workData[i].value);}return newRequestFragment;}"),
-            new Postproc("function(response){return response.data.payload.stream.complete;}", transform, [{ "key": "metric", "value": "cnt", "isDynamic": false }], {}, ""))
+            new Postproc("function(response){return response.data.payload.stream.complete;}", transform, [{ "key": "metric", "value": "avg", "isDynamic": false }], {}, ""))
     };
 
     query.controls.rtmmodel = new DefaultRTMPayload();
@@ -214,6 +214,7 @@ function RTMRawValuesBaseQuery() {
     );
 };
 
+/*TODO: make displayed value configurable (allow display of dimension values*/
 function RTMRawValuesMasterQuery() {
 
     var transform = function (response, args) {
@@ -267,7 +268,6 @@ function RTMRawValuesSlaveQuery() {
 
     var transform = function (response, args) {
         var payload = response.data.payload;
-        args.metric = 'name;value;rnStatus';
         var metricSplit = args.metric.split(';');
         var retData = [];
 
@@ -283,7 +283,7 @@ function RTMRawValuesSlaveQuery() {
 
     var baseQuery = new RTMRawValuesBaseQuery();
     baseQuery.datasource.service.postproc.transform.function = transform.toString();
-    baseQuery.datasource.service.postproc.transform.args = [];
+    baseQuery.datasource.service.postproc.transform.args = [{ "key": "metric", "value": "avg", "isDynamic": false }];
 
     var query = new TemplatedQuery(
         "Plain",
@@ -790,14 +790,11 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
 
 
                 $scope.rawmetrics = [{
-                    "label": "begin",
-                    "id": "begin"
-                }, {
-                    "label": "eId",
-                    "id": "eId"
-                }, {
                     "label": "value",
                     "id": "value"
+                },{
+                    "label": "rnStatus",
+                    "id": "rnStatus"
                 }];
 
                 $scope.selectedAggMetrics = jsoncopy($scope.aggregatemetrics);

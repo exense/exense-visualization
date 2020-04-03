@@ -86,6 +86,8 @@ vizmdTransformation.toPlainTable = function (twolvlgroups, h1, h2) {
             $.each(twolvlgroups.mList, function (idx1, m) {
                 if (sub.values && sub.values[m]){
                     row.push(sub.values[m]);
+                }else{
+                    row.push(null);
                 }
             });
             //console.log(row)
