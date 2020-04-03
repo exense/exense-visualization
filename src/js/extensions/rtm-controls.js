@@ -114,9 +114,6 @@ function RTMAggregatesMasterQuery() {
     query.controls.querytype = 'aggregates';
 
     var tFunc = function (response, args) {
-
-        console.log('master!')
-
         var metric = args.metric;
         var metricSplit = args.metric.split(';');
         var retData = [], series = {};
@@ -163,7 +160,6 @@ function RTMAggregatesSlaveQuery() {
 
     var tFunc = function (response, args) {
 
-        console.log('slave!')
         var metric = args.metric;
         var metricSplit = args.metric.split(';');
         var retData = [], series = {};
@@ -206,22 +202,57 @@ function RTMAggregatesSlaveQuery() {
     return query;
 }
 
-function RTMRawValuesBaseQuery(timeField, valueField, groupby) {
+function RTMRawValuesBaseQuery() {
+
     return new SimpleQuery(
         "Raw", new Service(
             "/rtm/rest/measurement/find", "Post",
             "",
             new Preproc("function(requestFragment, workData){var newRequestFragment = requestFragment;for(i=0;i<workData.length;i++){newRequestFragment = newRequestFragment.replace(workData[i].key, workData[i].value);}return newRequestFragment;}"),
-            new Postproc("", "function (response, args) {\r\n    var x = '" + timeField + "', y = '" + valueField + "', z = '" + groupby + "';\r\n    var retData = [], index = {};\r\n    var payload = response.data.payload;\r\n    for (var i = 0; i < payload.length; i++) {\r\n        retData.push({\r\n            x: payload[i][x],\r\n            y: payload[i][y],\r\n            z: payload[i][z]\r\n        });\r\n    }\r\n    return retData;\r\n}",
-                [], {}, "")
+            new Postproc("", "", [], {}, "")
         )
     );
 };
 
 function RTMRawValuesMasterQuery() {
+
+    var transform = function (response, args) {
+        console.log('raw master transform')
+        //console.log(args)
+        //var metricList = args.split(";");
+        //console.log(metricList)
+        var retData = [];
+
+        var payload = response.data.payload;
+        console.log(payload)
+        $.each(payload, function (idx, dot) {
+            //$.each(metricList, function (idx2, metric) {
+            retData.push({
+                x: dot['begin'], y: dot['value'], z: 'value'
+            });
+            //});
+        });
+
+        console.log('raw master returned')
+        console.log(retData)
+
+        return retData;
+    };
+
+    var baseQuery = new RTMRawValuesBaseQuery();
+    baseQuery.datasource.service.postproc.transform.function = transform.toString();
+    /*TODO: pass default fields from server conf*/
+    var timeField = 'begin';
+    var valueField = 'value';
+    var groupby = 'name';
+    /**/
+    baseQuery.datasource.service.postproc.transform.args =
+        [{ "key": "timeField", "value": timeField, "isDynamic": false },
+        { "key": "valueField", "value": valueField, "isDynamic": false }];
+
     var query = new TemplatedQuery(
         "Plain",
-        new RTMRawValuesBaseQuery("begin", "value", "name"),
+        baseQuery,
         new Paging("On", new Offset("__FACTOR__", "return 0;", "return value + 1;", "if(value > 0){return value - 1;} else{return 0;}"), null),
         new Controls(
             new DefaultTemplate(),
@@ -237,8 +268,37 @@ function RTMRawValuesMasterQuery() {
 }
 
 function RTMRawValuesSlaveQuery() {
+
+    var transform = function (response, args) {
+        console.log('raw slave transform')
+        //console.log(args)
+        //var metricList = args.split(";");
+        //console.log(metricList)
+        var retData = [];
+
+        var payload = response.data.payload;
+        console.log(payload)
+        $.each(payload, function (idx, dot) {
+            //$.each(metricList, function (idx2, metric) {
+            retData.push({
+                x: dot['begin'], y: dot['value'], z: 'value'
+            });
+            //});
+        });
+
+        console.log('raw slave returned')
+        console.log(retData)
+
+        return retData;
+    };
+
+    var baseQuery = new RTMRawValuesBaseQuery();
+    baseQuery.datasource.service.postproc.transform.function = transform.toString();
+    baseQuery.datasource.service.postproc.transform.args = [];
+
     var query = new TemplatedQuery(
         "Plain",
+        baseQuery,
         new RTMRawValuesBaseQuery("begin", "value", "name"),
         new DefaultPaging(),
         new Controls(
@@ -261,7 +321,7 @@ function RTMMasterState() {
         new DefaultChartOptions(),
         new Config('Fire', 'Off', true, false, 'unnecessaryAsMaster'),
         //(toggleaction, autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration, incremental, incmaxdots, transposetable)
-        new RTMAggregatesMasterQuery(),
+        new RTMRawValuesMasterQuery(),
         new DefaultGuiClosed(),
         new DefaultInfo()
     );
@@ -284,7 +344,7 @@ function RTMSlaveState(RTMmasterId) {
             null
         ),
         slaveConfig,
-        new RTMAggregatesSlaveQuery(),
+        new RTMRawValuesSlaveQuery(),
         new DefaultGuiClosed(),
         new DefaultInfo()
     );
@@ -536,9 +596,7 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 };
 
                 $scope.addNumericalFilter = function () {
-                    console.log($scope.numericalfilters)
                     $scope.numericalfilters.push(new DefaultNumericalFilter());
-                    console.log($scope.numericalfilters)
                 };
 
                 $scope.addDateFilter = function () {
@@ -574,9 +632,18 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     $scope.forceReloadQuery();
                 };
 
-                $scope.setChartMetric = function (metric) {
-                    $scope.query.datasource.callback.postproc.transform.args[0].value = metric;
-                    $scope.forceReloadTransform();
+                // TODO: standardize dropdown - text input combo
+                $scope.setValue = function (model, value) {
+                    $scope[model] = value;
+                };
+
+                $scope.updateChartMetric = function (srv, metric) {
+                    if ($scope.masterstate && $scope.masterstate.query && $scope.masterstate.query.datasource && $scope.masterstate.query.datasource[srv]
+                        && $scope.masterstate.query.datasource[srv].postproc && $scope.masterstate.query.datasource[srv].postproc.transform
+                        && $scope.masterstate.query.datasource[srv].postproc.transform.args && $scope.masterstate.query.datasource[srv].postproc.transform.args[0]
+                        && $scope.masterstate.query.datasource[srv].postproc.transform.args[0].value) {
+                        $scope.masterstate.query.datasource[srv].postproc.transform.args[0].value = metric;
+                    }
                 };
 
                 $scope.forceReloadQuery = function () {
@@ -587,13 +654,13 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     $scope.$emit('forceReloadTransform');
                 };
 
-                $scope.updateTableMetrics = function (metricList) {
+                $scope.updateTableMetrics = function (srv, metricList) {
                     if (metricList && metricList.length > 0
-                        && $scope.slavestate && $scope.slavestate.query && $scope.slavestate.query.datasource && $scope.slavestate.query.datasource.callback
-                        && $scope.slavestate.query.datasource.callback.postproc && $scope.slavestate.query.datasource.callback.postproc.transform
-                        && $scope.slavestate.query.datasource.callback.postproc.transform.args && $scope.slavestate.query.datasource.callback.postproc.transform.args[0]
-                        && $scope.slavestate.query.datasource.callback.postproc.transform.args[0].value) {
-                        $scope.slavestate.query.datasource.callback.postproc.transform.args[0].value = metricList;
+                        && $scope.slavestate && $scope.slavestate.query && $scope.slavestate.query.datasource && $scope.slavestate.query.datasource[srv]
+                        && $scope.slavestate.query.datasource[srv].postproc && $scope.slavestate.query.datasource[srv].postproc.transform
+                        && $scope.slavestate.query.datasource[srv].postproc.transform.args && $scope.slavestate.query.datasource[srv].postproc.transform.args[0]
+                        && $scope.slavestate.query.datasource[srv].postproc.transform.args[0].value) {
+                        $scope.slavestate.query.datasource[srv].postproc.transform.args[0].value = metricList;
                     }
                 };
 
@@ -609,7 +676,6 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 $scope.asList = function (selection) {
                     var list = "";
                     $.each(selection, function (idx, value) {
-                        console.log(value);
                         if (value) {
                             list += value.id + ";";
                         }
@@ -617,17 +683,38 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     return list;
                 };
 
-                $scope.performMetricUpdate = function (newValue) {
-                    $scope.updateTableMetrics($scope.asList(newValue));
-                    $scope.forceReloadTransform();
+                $scope.performTableMetricUpdate = function (forceRefresh) {
+                    $scope.updateTableMetrics('callback', $scope.asList($scope.selectedAggMetrics));
+                    $scope.updateTableMetrics('service', $scope.asList($scope.selectedRawMetrics));
+
+                    if (forceRefresh) {
+                        $scope.forceReloadTransform();
+                    }
+                };
+
+                $scope.performChartMetricUpdate = function (forceRefresh) {
+                    $scope.updateChartMetric('callback', $scope.selectedChartAggMetric);
+                    $scope.updateChartMetric('service', $scope.selectedChartRawMetric);
+
+                    if (forceRefresh) {
+                        $scope.forceReloadTransform();
+                    }
                 };
 
                 $scope.$watchCollection('selectedAggMetrics', function (newValue) {
-                    $scope.performMetricUpdate(newValue);
+                    $scope.performTableMetricUpdate(true);
                 });
 
                 $scope.$watchCollection('selectedRawMetrics', function (newValue) {
-                    $scope.performMetricUpdate(newValue);
+                    $scope.performTableMetricUpdate(true);
+                });
+
+                $scope.$watchCollection('selectedChartAggMetric', function (newValue) {
+                    $scope.performChartMetricUpdate(true);
+                });
+
+                $scope.$watchCollection('selectedChartRawMetric', function (newValue) {
+                    $scope.performChartMetricUpdate(true);
                 });
 
                 $scope.getMetricsList = function (payload) {
@@ -653,13 +740,23 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 };
 
                 $scope.$watch('masterstate.data.rawresponse', function (newValue) {
+                	console.log('master received')
+                	console.log(newValue)
                     if ($scope.query) {
                         if ($scope.query.controls.querytype === 'rawvalues') {
                             if (newValue && newValue.dashdata && newValue.dashdata.data && newValue.dashdata.data.payload) {
                                 $scope.rawmetrics = $scope.getMetricsList(newValue.dashdata.data.payload);
                             }
                         }
+
+                        $scope.performTableMetricUpdate(false);
+                        $scope.performChartMetricUpdate(false);
                     }
+                });
+                
+                $scope.$watch('slavestate.data.rawresponse', function (newValue) {
+                	console.log('slave received')
+                	console.log(newValue)
                 });
 
                 /* TODO: get dynamically from RTM conf */
@@ -707,8 +804,11 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     "id": "value"
                 }];
 
-                $scope.selectedAggMetrics = [];
-                $scope.selectedRawMetrics = [];
+                $scope.selectedAggMetrics = jsoncopy($scope.aggregatemetrics);
+                $scope.selectedRawMetrics = jsoncopy($scope.rawmetrics);
+
+                $scope.selectedChartAggMetric = 'avg';
+                $scope.selectedChartRawMetric = 'value';
 
                 $scope.metricSearchSettings = {
                     scrollableHeight: '200px',

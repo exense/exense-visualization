@@ -11,11 +11,12 @@
       <label>Query type</label>
       <div class="btn-group viz-btn-group form-radio">
         <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
-          uib-btn-radio="'rawvalues'">Raw values</label>
-        <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
           uib-btn-radio="'aggregates'">Aggregates</label>
+          <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
+          uib-btn-radio="'rawvalues'">Raw values</label>
         <!-- todo -->
         <!--<label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'lastn'">Last N values</label>-->
+        <!-- compare -->
       </div>
     </div>
     <div class="col-md-6 colcontain-grid" ng-if="query.controls.querytype === 'aggregates'">
@@ -39,23 +40,14 @@
           <label class="rtm-label">Chart metric</label>
           <div style="display: flex;">
             <input type="text" class="form-control rtm-input"
-              ng-model="query.datasource.callback.postproc.transform.args[0].value">
+              ng-model="selectedChartAggMetric">
             <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="agg.chart.metrics.status.isopen">
-              <button id="chart-metrics" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
+              <button id="agg-chart-metrics" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
                 ng-disabled="disabled">
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="chart-metrics">
-                <li role="menuitem" ng-click="setChartMetric('cnt')"><a>count</a></li>
-                <li role="menuitem" ng-click="setChartMetric('avg')"><a>average</a></li>
-                <li role="menuitem" ng-click="setChartMetric('min')"><a>min</a></li>
-                <li role="menuitem" ng-click="setChartMetric('max')"><a>max</a></li>
-                <li role="menuitem" ng-click="setChartMetric('50th pcl')"><a>median</a></li>
-                <li role="menuitem" ng-click="setChartMetric('tps')"><a>count / sec</a></li>
-                <li role="menuitem" ng-click="setChartMetric('tpm')"><a>count / min</a></li>
-                <li role="menuitem" ng-click="setChartMetric('80th pcl')"><a>80th pcl</a></li>
-                <li role="menuitem" ng-click="setChartMetric('90th pcl')"><a>90th pcl</a></li>
-                <li role="menuitem" ng-click="setChartMetric('99th pcl')"><a>99th pcl</a></li>
+              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="agg-chart-metrics">
+                <li role="menuitem" ng-repeat="o in aggregatemetrics" ng-click="setValue('selectedChartAggMetric', o.id)"><a>{{o.id}}</a></li>
               </ul>
             </div>
           </div>
@@ -146,16 +138,14 @@
           <label class="rtm-label">Chart metric</label>
           <div style="display: flex;">
             <input type="text" class="form-control rtm-input"
-              ng-model="query.datasource.callback.postproc.transform.args[0].value">
+              ng-model="selectedChartRawMetric">
             <div class="btn-group rtm-dropdown form-radio" uib-dropdown is-open="raw.chart.metrics.status.isopen">
-              <button id="chart-metrics" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
+              <button id="raw-chart-metrics" type="button" class="btn btn-primary viz-btn-success" uib-dropdown-toggle
                 ng-disabled="disabled">
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="chart-metrics">
-                <li role="menuitem" ng-click="setChartMetric('cnt')"><a>begin</a></li>
-                <li role="menuitem" ng-click="setChartMetric('avg')"><a>eId</a></li>
-                <li role="menuitem" ng-click="setChartMetric('min')"><a>rnStatus</a></li>
+              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="raw-chart-metrics">
+                <li role="menuitem" ng-repeat="o in rawmetrics" ng-click="setValue('selectedChartRawMetric', o.id)"><a>{{o.id}}</a></li>
               </ul>
             </div>
           </div>
