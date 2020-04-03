@@ -99,6 +99,8 @@ padding: 0;
 }
 
 hr.rtm{
+    padding-top: 15px;
+    padding-bottom: 15px;
     border: 0;
     border-bottom: 1px solid black;
     clear: both;
