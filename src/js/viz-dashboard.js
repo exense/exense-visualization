@@ -24,6 +24,8 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
             //templateUrl: resolveTemplateURL('viz-dashboard.js', 'viz-dashboard.html'),
             controller: function ($scope, $element) {
 
+                $scope.initcomplete = false;
+
                 /* TODO: externalize specialized behavior in a child component*/
                 $scope.resolveDynamicTemplate = function () {
                     if ($scope.templatetype === 'rtm') {
@@ -146,6 +148,7 @@ angular.module('viz-dashboard', ['viz-mgd-widget', 'ui.bootstrap', 'dashletcomss
                             }
 
                             $scope.$emit('dashboard-ready');
+                            $scope.initcomplete = true;
                         }
                     });
                 }

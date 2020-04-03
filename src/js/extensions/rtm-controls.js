@@ -305,7 +305,7 @@ function RTMRawValuesSlaveQuery() {
 function RTMMasterState() {
     return new DashletState(
         'Chart', true, 0,
-        new DashletData({}, [], null),
+        new DashletData(null, null, null),
         new DefaultChartOptions(),
         new Config('Fire', 'Off', true, false, 'unnecessaryAsMaster'),
         //(toggleaction, autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration, incremental, incmaxdots, transposetable)
@@ -438,7 +438,8 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 orientation: '=?',
                 slavestate: '=',
                 masterstate: '=',
-                inputsettingscol: '='
+                inputsettingscol: '=',
+                initcomplete: '='
             },
 
             template: '<div ng-include="resolveDynamicTemplate()"></div>',
@@ -457,7 +458,9 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 $scope.forceReloadTransform = function () {
                     // force transform reload for metric/visualization update
                     if ($scope.masterstate) {
-                        $scope.masterstate.data.rawresponse = JSON.parse(angular.toJson($scope.masterstate.data.rawresponse));
+                        if($scope.initcomplete){
+                            $scope.masterstate.data.rawresponse = JSON.parse(angular.toJson($scope.masterstate.data.rawresponse));
+                        }
                     }
                 };
 
@@ -549,7 +552,7 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                         }
                     }
                 };
-                
+
                 $scope.addSelector = function () {
                     $scope.payload.selectors1.push(new DefaultSelector());
                 };
@@ -615,6 +618,8 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
 
             templateUrl: resolveTemplateURL('rtm-controls.js', 'rtm-service-params.html'),
             controller: function ($scope) {
+
+                $scope.initComplete = false;
 
                 $scope.setParam = function (pName, newGran) {
                     $scope.params[pName] = newGran;
