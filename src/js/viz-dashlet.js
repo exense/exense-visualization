@@ -21,7 +21,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
             },
             template: '<div ng-include="resolveDynamicTemplate()"></div>',
             controller: function ($scope, $http, dashletcomssrv) {
-                $scope.state.unwatchers = [];
+                if ($scope.state) {
+                    $scope.state.unwatchers = [];
+                }
                 $scope.loaded = false;
                 $scope.resolveDynamicTemplate = function () {
                     if ($scope.displaytype === 'aggregated') {
@@ -246,16 +248,16 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.config.asyncrefreshduration) {
                         duration = $scope.state.config.asyncrefreshduration;
                     }
-                    
+
                     $scope.asyncInterval = setInterval(callback, duration);
                 };
 
                 $scope.clearAsync = function () {
                     if ($scope.asyncInterval) {
                         clearInterval($scope.asyncInterval);
-                        if($scope.state &&  $scope.state.title){
+                        if ($scope.state && $scope.state.title) {
                             $scope.$emit('async-query-cycle-complete', $scope.state.title);
-                        }else{
+                        } else {
                             console.log('Warning: clearAsync was called while state or state.title was null or undefined.')
                         }
                     }

@@ -22,6 +22,7 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
 
                 $scope.selectTab = function (tabIndex) {
                     $scope.mgrtabstate = tabIndex;
+                    $scope.refreshWidgets();
                 };
 
                 $scope.isTabActive = function (tabIndex) {
@@ -44,6 +45,7 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
                         }
                     }
                     $scope.dwrap.removeById(dashboardid);
+                    $scope.refreshWidgets();
                 };
 
                 $scope.$on('dashboard-new', function (event, arg) {
@@ -106,11 +108,22 @@ angular.module('viz-dashboard-manager', ['viz-dashboard', 'ui.bootstrap', 'dashl
 
                 $scope.$watchCollection('dashboards', function (newvalue, oldvalue) {
                     $scope.onstartup();
+                    var last = $scope.dashboards.length - 1;
+                    if(last >= 0 && $scope.dashboards[last]){
+                        $scope.selectTab($scope.dashboards[last].oid);
+                    }
+                    $scope.refreshWidgets();
                 });
 
                 $scope.$watch('displaymode', function (newvalue) {
-                    $scope.$broadcast('resize-widget');
+                    $scope.refreshWidgets();
                 });
+
+                $scope.refreshWidgets = function(){
+                    $(document).ready(function(){
+                    	$scope.$broadcast('resize-widget');
+                    });
+                };
             }
         };
     })
