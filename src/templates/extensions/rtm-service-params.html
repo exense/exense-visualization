@@ -11,9 +11,9 @@
       <label>Query type</label>
       <div class="btn-group viz-btn-group form-radio">
         <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
-          uib-btn-radio="'aggregates'">Aggregates</label>
+          uib-btn-radio="'aggregates'" uib-tooltip="Perform aggregation">Aggregates</label>
         <label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype"
-          uib-btn-radio="'rawvalues'">Raw values</label>
+          uib-btn-radio="'rawvalues'" uib-tooltip="Browse raw measurements" >Raw values</label>
         <!-- todo -->
         <!--<label class="btn btn-success viz-btn-success" ng-model="query.controls.querytype" uib-btn-radio="'lastn'">Last N values</label>-->
         <!-- compare -->
@@ -170,16 +170,16 @@
       <label>Table sort</label>
       <div class="btn-group viz-btn-group form-radio">
         <label class="btn btn-success viz-btn-success" ng-model="slavestate.options.chart.dualzx" uib-btn-radio="'zx'"
-          ng-click="setDualTranspose(false)">series</label>
+          ng-click="setDualTranspose(false)" uib-tooltip="Sort rows by series">series</label>
         <label class="btn btn-success viz-btn-success" ng-model="slavestate.options.chart.dualzx" uib-btn-radio="'xz'"
-          ng-click="setDualTranspose(true)">xAxis</label>
+          ng-click="setDualTranspose(true)" uib-tooltip="Sort rows by time" >xAxis</label>
       </div>
     </div> 
     <div class="col-md-2 colcontain-grid">
       <label>CSV export</label>
       <div class="btn-group viz-btn-group form-radio">
         <label class="btn btn-success viz-btn-success" ng-model="exportModel" uib-btn-radio="'export'"
-          ng-click="csvExport()">export</label>
+          ng-click="csvExport()" uib-tooltip="Export table data as CSV">export</label>
       </div>
     </div>
 

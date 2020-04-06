@@ -3,8 +3,8 @@
         <label class="col-md-12" style="background-color: #337AB7; color: white; text-align: center;">Measurement Selectors</label>
         <div class="row" style="padding-left: 5px; padding-right: 10px; margin-left: 5px; margin-right: 10px; margin-top: 20px;">
             <div class="btn-group viz-btn-group form-radio" style="margin-top: 20px;">
-                <button class="btn btn-warning viz-btn-success" ng-click="addSelector()">Add Selector</button>
-                <button class="btn btn-danger viz-btn-success" ng-click="clearAll()">Clear All</button>
+                <button class="btn btn-warning viz-btn-success" ng-click="addSelector()" uib-tooltip="Select new group of measurements" tooltip-placement="bottom">Add Selector</button>
+                <button class="btn btn-danger viz-btn-success" ng-click="clearAll()"  uib-tooltip="Remove all selectors" tooltip-placement="bottom">Clear All</button>
                 <button class="btn btn-success viz-btn-success" ng-click="$emit('broadcastQueryFire')" uib-tooltip="Fire query"
                     tooltip-placement="bottom" style="float: right;">
                     <span style="padding: 0; margin: 0; font-size: 10px !important;"
