@@ -351,9 +351,20 @@ angular.module('viz-query', ['viz-view', 'ui.bootstrap', 'key-val-collection', '
                 $scope.initControls = function () {
                     $scope.state.query.controls = new DefaultControls();
                     $scope.state.query.paged = new DefaultPaging();
-
-                    //watch state.query.controltype, cleanup existing watchers, invoke proper control init
                 }
+
+                $scope.$watch('state.query.controltype', function (newValue) {
+                    if(newValue === 'Plain'){
+                        $scope.state.query.controls.template.placeholders = [];
+                        $scope.$watch('state.query.controls.template.placeholders', function (newValue) {
+                            $scope.templateChange();
+                        }, true);
+
+                        $scope.$watch('state.query.controls.template.templatedPayload', function (newValue) {
+                            $scope.templateChange();
+                        }, true);
+                    }
+                });
 
                 $scope.initTemplate = function () {
                     $scope.state.query.controls.template = new DefaultTemplate();
