@@ -113,6 +113,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                 }
                                 $scope.executeHttp(srv.method, srv.url + srv.params, srv.data, $scope.dispatchSuccessResponse, srv, $scope.dispatchErrorResponse);
                             } catch (e) {
+                                $scope.isOngoingQuery = false;
                                 $scope.sendErrorMessage('exception thrown while firing query: ' + e);
                             }
                         }
@@ -126,13 +127,14 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     if ($scope.state.query.type === 'Async') {
                         $scope.state.info.http.rawcallbackresponse = JSON.stringify(response);
                     }
-                    $scope.sendErrorMessage('Query execution failed. Check error in service response for more details.');
                     $scope.clearAsync();
                     $scope.isOngoingQuery = false;
+                    $scope.sendErrorMessage('Query execution failed. Check error in service response for more details.');
                 };
 
                 $scope.sendErrorMessage = function (msg) {
                     $scope.$broadcast('errormessage', msg);
+                    throw new Error(msg);
                 }
 
                 $scope.executeHttp = function (method, url, payload, successcallback, successTarget, errorcallback) {
@@ -147,7 +149,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                         }
                         $scope.doExecuteHttp(effectiveMethod, effectiveUrl, effectivePayload, successcallback, successTarget, errorcallback);
                     } else {
-                        $scope.sendErrorMessage('Service url is null');
+                        throw new Error("service url is null.");
                     }
                 };
 
@@ -195,9 +197,9 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                             $scope.setAsyncInterval(executionFunction);
                         }
                     } catch (e) {
-                        $scope.sendErrorMessage('An error occured while processing response:' + e);
                         $scope.clearAsync();
                         $scope.isOngoingQuery = false;
+                        $scope.sendErrorMessage('An error occured while processing response:' + e);
                     }
                 };
 
@@ -282,8 +284,8 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                                     //console.log('Stream incomplete -> ' + JSON.stringify(response));
                                 }
                             } catch (e) {
-                                $scope.sendErrorMessage('An error occured while checking async response completeness' + e);
                                 $scope.clearAsync();
+                                $scope.sendErrorMessage('An error occured while checking async response completeness' + e);
                             }
                         }
                         if ($scope.isRawDisplay) {
