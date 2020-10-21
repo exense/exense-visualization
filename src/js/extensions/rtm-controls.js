@@ -309,7 +309,7 @@ function RTMMasterState() {
         new DefaultChartOptions(),
         new Config('Fire', 'Off', true, false, 'unnecessaryAsMaster'),
         //(toggleaction, autorefresh, master, slave, target, autorefreshduration, asyncrefreshduration, incremental, incmaxdots, transposetable)
-        new RTMRawValuesMasterQuery(),
+        new RTMAggregatesMasterQuery(),
         new DefaultGuiClosed(),
         new DefaultInfo()
     );
@@ -326,11 +326,11 @@ function RTMSlaveState(RTMmasterId) {
         'Table', true, 0,
         new DefaultDashletData(),
         new ChartOptions('dualTable', false, false,
-            'function (d) {\r\n    var value;\r\n    if ((typeof d) === \"string\") {\r\n        value = parseInt(d);\r\n    } else {\r\n        value = d;\r\n    }\r\n\r\n    return d3.time.format(\"%H:%M:%S\")(new Date(value));\r\n}',
+            'function (d) {\r\n    var value;\r\n    if ((typeof d) === \"string\") {\r\n        value = parseInt(d);\r\n    } else {\r\n        value = d;\r\n    }\r\n\r\n    return d3.time.format(\"%Y.%m.%d %H:%M:%S\")(new Date(value));\r\n}',
             'function (d) { return d.toFixed(1); }',
             null, null, null, 'xz', true),
         slaveConfig,
-        new RTMRawValuesSlaveQuery(),
+        new RTMAggregatesSlaveQuery(),
         new DefaultGuiClosed(),
         new DefaultInfo()
     );

@@ -122,7 +122,7 @@ function DefaultTemplate() {
 
 function DefaultChartOptions() {
     return new ChartOptions("lineChart", false, false,
-    'function (d) {\r\n    var value;\r\n    if ((typeof d) === \"string\") {\r\n        value = parseInt(d);\r\n    } else {\r\n        value = d;\r\n    }\r\n\r\n    return d3.time.format(\"%H:%M:%S\")(new Date(value));\r\n}', 
+    'function (d) {\r\n    var value;\r\n    if ((typeof d) === \"string\") {\r\n        value = parseInt(d);\r\n    } else {\r\n        value = d;\r\n    }\r\n\r\n    return d3.time.format(\"%Y.%m.%d %H:%M:%S\")(new Date(value));\r\n}',
     'function (d) { return d.toFixed(1); }',
     //'[new Date(new Date().getTime() - 120000).getTime(), new Date().getTime()]',
     null,

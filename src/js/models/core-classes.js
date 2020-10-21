@@ -150,7 +150,7 @@ function ChartOptions(chartType, useInteractiveGuideline, stacked, xAxisTick, yA
         margin: {
             top: 20,
             right: 20,
-            bottom: 55,
+            bottom: 75,
             left: 60
         },
         showLegend: false,

@@ -136,7 +136,7 @@ var formatPotentialTimestamp = function (d) {
         value = value * 1000;
     }
     if (value >= 1000000000000 && value < 2000000000000) {
-        return d3.time.format("%H:%M:%S")(new Date(value));
+        return d3.time.format("%Y.%m.%d %H:%M:%S")(new Date(value));
     } else {
         return d;
     }

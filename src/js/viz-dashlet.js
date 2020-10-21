@@ -20,7 +20,7 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                 inputsettingscol: '='
             },
             template: '<div ng-include="resolveDynamicTemplate()"></div>',
-            controller: function ($scope, $http, dashletcomssrv) {
+            controller: function ($scope, $http, dashletcomssrv, $timeout) {
                 if ($scope.state) {
                     $scope.state.unwatchers = [];
                 }
@@ -355,25 +355,30 @@ angular.module('viz-dashlet', ['viz-query', 'dashletcomssrv'])
                     $scope.restartInterval(newValue);
                 }));
 
+                var autoRefreshFunction = function() {
+                    if (!$scope.isOngoingQuery) {
+                        try {
+                            //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Firing.");
+                            $scope.fireQuery();
+                        } catch (e) {
+                            $scope.sendErrorMessage('[Autorefresh] unable to refresh due to error: ' + e + "; Starting new query.");
+                            // agressive
+                            $scope.clearAutorefreshInterval();
+                            $scope.isOngoingQuery = false;
+                        }
+                    } else {
+                        //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Skipping interval.");
+                    }
+                }
+
                 $scope.setAutorefreshInterval = function () {
                     var duration = setIntervalDefault;
                     if ($scope.state.config.autorefreshduration) {
                         duration = $scope.state.config.autorefreshduration;
                     }
+                    $timeout(function() { autoRefreshFunction();});
                     $scope.autorefreshInterval = setInterval(function () {
-                        if (!$scope.isOngoingQuery) {
-                            try {
-                                //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Firing.");
-                                $scope.fireQuery();
-                            } catch (e) {
-                                $scope.sendErrorMessage('[Autorefresh] unable to refresh due to error: ' + e + "; Starting new query.");
-                                // agressive
-                                $scope.clearAutorefreshInterval();
-                                $scope.isOngoingQuery = false;
-                            }
-                        } else {
-                            //console.log('$scope.isOngoingQuery=' + $scope.isOngoingQuery + "; Skipping interval.");
-                        }
+                        autoRefreshFunction();
                     }, duration);
                 }
 

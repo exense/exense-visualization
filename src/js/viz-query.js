@@ -355,7 +355,9 @@ angular.module('viz-query', ['viz-view', 'ui.bootstrap', 'key-val-collection', '
 
                 $scope.$watch('state.query.controltype', function (newValue) {
                     if(newValue === 'Plain'){
-                        $scope.state.query.controls.template.placeholders = [];
+                        if (!$scope.state.query.controls.template.placeholders) {
+                            $scope.state.query.controls.template.placeholders = [];
+                        }
                         $scope.$watch('state.query.controls.template.placeholders', function (newValue) {
                             $scope.templateChange();
                         }, true);
