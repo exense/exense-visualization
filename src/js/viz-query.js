@@ -37,6 +37,32 @@ angular.module('viz-query', ['viz-view', 'ui.bootstrap', 'key-val-collection', '
                     $scope.state.options.chart.yAxis.scale = eval('(' + $scope.state.options.chart.yAxis.strScale + ')');
                 }
 
+                $scope.toDynamicDateFormat = function (value) {
+                    var intervalSize = 0;
+                    var length = 0
+                    if ($scope.state.data.transformed && $scope.state.data.transformed.dashdata) {
+                        length = $scope.state.data.transformed.dashdata.length;
+                    }
+                    if (length>1) {
+                        intervalSize = $scope.state.data.transformed.dashdata[length-1].x -
+                            $scope.state.data.transformed.dashdata[0].x;
+                    }
+                    var dFormat = "%H:%M:%S";
+                    if (intervalSize > (4 * 3600 * 1000)) {
+                        dFormat = "%Y.%m.%d %H:%M"
+                    }
+                    var sValue = d3.time.format(dFormat)(new Date(value));
+                  /*  var bottomMargin = (sValue.length * 10);
+                    var leftMargin = bottomMargin;
+                    if ($scope.state.options.chart.margin.bottom < bottomMargin) {
+                        $scope.state.options.chart.margin.bottom = bottomMargin;
+                    }
+                    if ($scope.state.options.chart.margin.left < leftMargin) {
+                        $scope.state.options.chart.margin.left = leftMargin;
+                    }*/
+                    return sValue;
+                }
+
                 $scope.$on('reload-scales', function (event, arg) {
                     if (arg) {
                         if (arg.xAxis || arg.xAxis === '') {
