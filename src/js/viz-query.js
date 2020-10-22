@@ -33,8 +33,12 @@ angular.module('viz-query', ['viz-view', 'ui.bootstrap', 'key-val-collection', '
                 };
 
                 $scope.loadScales = function () {
-                    $scope.state.options.chart.xAxis.scale = eval('(' + $scope.state.options.chart.xAxis.strScale + ')');
-                    $scope.state.options.chart.yAxis.scale = eval('(' + $scope.state.options.chart.yAxis.strScale + ')');
+                    if ($scope.state.options.chart.xAxis.strScale) {
+                        $scope.state.options.chart.xAxis.scale = eval('(' + $scope.state.options.chart.xAxis.strScale + ')');
+                    }
+                    if ($scope.state.options.chart.yAxis.strScale) {
+                        $scope.state.options.chart.yAxis.scale = eval('(' + $scope.state.options.chart.yAxis.strScale + ')');
+                    }
                 }
 
                 $scope.toDynamicDateFormat = function (value) {
