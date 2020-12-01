@@ -797,6 +797,9 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 }, {
                     "label": "99th pcl",
                     "id": "99th pcl"
+                }, {
+                    "label": "pcl precision",
+                    "id": "pcl precision"
                 }];
 
 
