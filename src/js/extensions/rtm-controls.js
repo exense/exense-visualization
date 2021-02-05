@@ -269,15 +269,30 @@ function RTMRawValuesSlaveQuery() {
         var payload = response.data.payload;
         var metricSplit = args.metric.split(';');
         var retData = [];
+        var headers = [];
+        var resp ={};
+
+        headers.push('begin');
+        headers.push('name');
+
+        $.each(metricSplit, function (idx3, m) {
+            headers.push(m);
+        });
 
         $.each(payload, function (idx, dot) {
+            var row=[];
+            row.push(dot['begin']);
+            row.push(dot['name']);
             $.each(metricSplit, function (idx3, m) {
                 if (m && dot[m]) {
-                    retData.push({ 'x': dot['begin'], 'y': dot[m], 'z': dot['name'], 'm': m });
+                    row.push(dot[m]);
                 }
             });
+            retData.push(row);
         });
-        return retData;
+        resp.headers=headers;
+        resp.data=retData;
+        return resp;
     };
 
     var baseQuery = new RTMRawValuesBaseQuery();
@@ -501,10 +516,12 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                                     if (newValue === 'aggregates') {
                                         $scope.masterstate.query = new RTMAggregatesMasterQuery();
                                         $scope.slavestate.query = new RTMAggregatesSlaveQuery();
+                                        $scope.slavestate.options.chart.type = 'dualTable';
                                     } else {
                                         if (newValue === 'rawvalues') {
                                             $scope.masterstate.query = new RTMRawValuesMasterQuery();
                                             $scope.slavestate.query = new RTMRawValuesSlaveQuery();
+                                            $scope.slavestate.options.chart.type = 'table';
                                         } else {
                                             console.log("unsupported RTM service: " + newValue);
                                         }

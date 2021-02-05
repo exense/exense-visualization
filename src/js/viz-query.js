@@ -102,7 +102,7 @@ angular.module('viz-query', ['viz-view', 'ui.bootstrap', 'key-val-collection', '
             templateUrl: resolveTemplateURL('viz-query.js', 'viz-config.html'),
             controller: function ($scope) {
 
-                $scope.viztypes = ['seriesTable', 'dualTable', 'singleValueTable', 'singleValueFullText', 'lineChart', 'multiBarChart', 'scatterChart', 'discreteBarChart', 'stackedAreaChart'];
+                $scope.viztypes = ['table','seriesTable', 'dualTable', 'singleValueTable', 'singleValueFullText', 'lineChart', 'multiBarChart', 'scatterChart', 'discreteBarChart', 'stackedAreaChart'];
 
                 $scope.loadConfigPreset = function (preset) {
                     $scope.state.config = jsoncopy(preset);

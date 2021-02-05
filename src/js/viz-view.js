@@ -44,6 +44,8 @@ angular.module('viz-view', ['nvd3'])
                                         vizmdTransformation.toDualGrouping(newvalue.dashdata, zx.substring(0, 1), zx.substring(1, 2)),
                                         'xAxis', 'series');
                             }
+                        } else if ($scope.state.options.chart.type === 'table') {
+                            $scope.state.gui.tabledata = newvalue.dashdata;
                         }
                         if ($scope.state.options.chart.type.endsWith('Chart')) {
                             $scope.state.gui.chartdata = $scope.toChart(newvalue.dashdata);

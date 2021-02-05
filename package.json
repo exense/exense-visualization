@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "http-server -o",
+    "start_with_proxy": "http-server -o --proxy http://localhost:8080",
     "test": "mocha"
   },
   "author": "",

@@ -23,7 +23,7 @@
 				<viz-v-seriestable
 					ng-if="state.options.chart.type === 'seriesTable'" state="state"
 					presets="presets" inputsettingscol="inputsettingscol"></viz-v-seriestable>
-				<viz-v-dualtable ng-if="state.options.chart.type === 'dualTable'"
+				<viz-v-dualtable ng-if="(state.options.chart.type === 'dualTable' || state.options.chart.type === 'table')"
 					state="state" presets="presets" inputsettingscol="inputsettingscol"></viz-v-dualtable>
 				<viz-v-singlevaluetable
 					ng-if="state.options.chart.type === 'singleValueTable'"
