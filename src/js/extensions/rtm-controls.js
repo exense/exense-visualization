@@ -388,6 +388,11 @@ function RTMDashboard() {
 };
 
 function RTMserialize(guiPayload) {
+    var copy = RTMdeepCopy(guiPayload);
+    return angular.toJson(copy);
+}
+
+function RTMdeepCopy(guiPayload) {
     if (!guiPayload) {
         throw new Error('guiPayload is null or undefined');
     }
@@ -432,8 +437,7 @@ function RTMserialize(guiPayload) {
         });
 
     });
-
-    return angular.toJson(copy);
+    return copy;
 }
 
 
@@ -582,6 +586,32 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                     $scope.payload.selectors1.splice(idx, 1);
 
                 };
+
+                function getFileNameFromHeader(header) {
+                    if (!header) return null;        
+                    var result = header.split(";")[1].trim().split("=")[1];       
+                    return result.replace(/"/g, '');
+                }
+
+                $scope.exportRaw = function(format) {
+                    var copy = RTMdeepCopy($scope.masterstate.query.controls.rtmmodel);
+                    copy.serviceParams["measurementService.nextFactor"]="0";
+                    copy.serviceParams["measurementService.outputFormat"]=format;
+                    
+                    var form = document.createElement("form");
+                    form.setAttribute("method", "post");
+                    form.setAttribute("action", "/rtm/rest/measurement/export");
+                    form.setAttribute("target", "export");     
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'value';
+                    input.value = angular.toJson(copy);          
+                    form.appendChild(input) ;
+                    
+                    document.body.appendChild(form);                  
+                    form.submit();              
+                    document.body.removeChild(form);                  
+                }
 
                 $scope.init();
             }
