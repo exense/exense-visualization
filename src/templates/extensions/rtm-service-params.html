@@ -168,11 +168,11 @@
   <div class="row" style="display: block; text-align: left;">
     <div class="col-md-2 colcontain-grid">
       <label>Table sort</label>
-      <div class="btn-group viz-btn-group form-radio">
-        <label class="btn btn-success viz-btn-success" ng-model="slavestate.options.chart.dualzx" uib-btn-radio="'zx'"
-          ng-click="setDualTranspose(false)" uib-tooltip="Sort rows by series">series</label>
-        <label class="btn btn-success viz-btn-success" ng-model="slavestate.options.chart.dualzx" uib-btn-radio="'xz'"
-          ng-click="setDualTranspose(true)" uib-tooltip="Sort rows by time" >xAxis</label>
+      <div class="btn-group viz-btn-group form-radio" ng-disabled="query.controls.querytype === 'rawvalues'">
+        <button class="btn btn-success viz-btn-success" ng-model="slavestate.options.chart.dualzx" uib-btn-radio="'zx'"
+          ng-click="setDualTranspose(false)" uib-tooltip="Sort rows by series" ng-disabled="query.controls.querytype === 'rawvalues'">series</button>
+        <button class="btn btn-success viz-btn-success" ng-model="slavestate.options.chart.dualzx" uib-btn-radio="'xz'"
+          ng-click="setDualTranspose(true)" uib-tooltip="Sort rows by time" ng-disabled="query.controls.querytype === 'rawvalues'">xAxis</button>
       </div>
     </div> 
     <div class="col-md-2 colcontain-grid">

@@ -284,8 +284,10 @@ function RTMRawValuesSlaveQuery() {
             row.push(dot['begin']);
             row.push(dot['name']);
             $.each(metricSplit, function (idx3, m) {
-                if (m && dot[m]) {
+                if (m && (dot[m] || dot[m] === 0)) {
                     row.push(dot[m]);
+                } else {
+                    row.push('');
                 }
             });
             retData.push(row);
@@ -521,11 +523,17 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                                         $scope.masterstate.query = new RTMAggregatesMasterQuery();
                                         $scope.slavestate.query = new RTMAggregatesSlaveQuery();
                                         $scope.slavestate.options.chart.type = 'dualTable';
+                                        //force reset to default sorting
+                                        $scope.slavestate.options.chart.dualtranspose=true;
+                                        $scope.slavestate.options.chart.dualzx = 'xz';
                                     } else {
                                         if (newValue === 'rawvalues') {
                                             $scope.masterstate.query = new RTMRawValuesMasterQuery();
                                             $scope.slavestate.query = new RTMRawValuesSlaveQuery();
                                             $scope.slavestate.options.chart.type = 'table';
+                                            //sorting not supported in raw mode
+                                            $scope.slavestate.options.chart.dualtranspose=true;
+                                            $scope.slavestate.options.chart.dualzx = 'xz';
                                         } else {
                                             console.log("unsupported RTM service: " + newValue);
                                         }
@@ -679,7 +687,22 @@ angular.module('rtm-controls', ['angularjs-dropdown-multiselect'])
                 };
 
                 $scope.csvExport= function(){
+                    /*could be a workaound when exporting csv with table sorted by serie
+                    but this is not a deep copy -> so may have side effect, a deep copy shall not
+                    be implemented for perf consideration*/
+                    var localData = $scope.slavestate.gui.tabledata;
+                    if (!$scope.slavestate.options.chart.dualtranspose) {
+                        var header0 = localData.headers[0];
+                        localData.headers[0] = localData.headers[1];
+                        localData.headers[1] = header0;
+                    }
                     downloadCSV($scope.slavestate.gui.tabledata);
+                    //revert header change
+                    if (!$scope.slavestate.options.chart.dualtranspose) {
+                        var header0 = localData.headers[0];
+                        localData.headers[0] = localData.headers[1];
+                        localData.headers[1] = header0;
+                    }
                 };
 
                 $scope.setDualTranspose = function (istransposed) {
