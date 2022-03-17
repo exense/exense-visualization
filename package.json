@@ -1,25 +1,41 @@
 {
-  "name": "exense-viz",
-  "version": "1.0.0",
+  "name": "@exense/visualization",
+  "version": "0.6.9",
   "description": "vizualisation packages for exense's web apps",
-  "main": "index.html",
+  "homepage": "https://exense.ch",
   "scripts": {
     "start": "http-server -o",
-    "start_with_proxy": "http-server -o --proxy http://localhost:8080",
+    "start_with_proxy": "http-server -o --proxy http://localhost:4200",
+    "build": "grunt",
     "test": "mocha"
   },
-  "author": "",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Dorian Cransac <reachme@doriancransac.info>",
   "license": "ISC",
   "dependencies": {
-    "http-server": "^0.9.0"
+    "http-server": "0.9.0",
+    "angular-nvd3": "1.0.9",
+    "angular": "1.7.8",
+    "angular-route": "1.7.8",
+    "d3": "3.5.4",
+    "nvd3": "1.8.6",
+    "angular-ui-bootstrap": "2.5.0",
+    "bootstrap": "3.3.4",
+    "datatables.net": "1.10.20",
+    "datatables.net-bs": "1.10.20",
+    "datatables.net-select": "1.3.1",
+    "datatables.net-select-dt": "1.3.1",
+    "underscore": "1.9.2"
   },
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-contrib-uglify": "~0.2.4",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-concat": "~1.0.1",
-    "grunt-contrib-copy": "~1.0.0",
-    "grunt-contrib-cssmin": "~3.0.0",
+    "grunt": "0.4.2",
+    "grunt-contrib-uglify": "0.2.4",
+    "grunt-contrib-watch": "0.5.3",
+    "grunt-contrib-concat": "1.0.1",
+    "grunt-contrib-copy": "1.0.0",
+    "grunt-contrib-cssmin": "3.0.0",
     "mocha": "*",
     "jquery": "*",
     "jsdom": "*"

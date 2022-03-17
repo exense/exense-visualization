@@ -1,0 +1,13 @@
+**/.*
+node_modules
+src/
+processors/
+mocks/
+index.html
+gruntfile.js
+static-presets.js
+test
+tests
+array.txt
+img
+index.html
